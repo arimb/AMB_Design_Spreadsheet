@@ -18,7 +18,7 @@
 \begin{document}
 	\title{AMB Design Spreadsheet Equations}
 	\author{Ari Meles-Braverman}
-	\date{Version 1.0}
+	\date{Version 1.1}
 	\maketitle
 	
 	\section{General Motor Equations}
@@ -235,21 +235,32 @@
 	$L_{L,eq}$ = Equivalent Lower Load
 	
 	\section{Drivetrain Calculator}
-	
+	\subsection{Forward Calculation}
 	Equations taken from \href{https://www.chiefdelphi.com/uploads/default/original/3X/2/b/2bf9206b962f74ed5556a0ae936ef0bf365ac975.xlsx}{JVN's Mechanical Design Calculator}.
-	\begin{equation}
+	\begin{equation} \label{v_free}
 		v_{free} = \frac{\tilde{\omega_f} \cdot \pi d}{G}
 	\end{equation}
-	\begin{equation}
+	\begin{equation} \label{v_adj}
 		v_{adj} = v_{free} \cdot k_{SL}
 	\end{equation}
 	\begin{equation}
 		i_{slip} = \frac{\tilde{W} \mu d}{2 K_T \cdot n G} + \frac{\tilde{i_f}}{n}
 	\end{equation}
 	
+	\subsection{Reverse Calculation}
+	\begin{equation}
+		i_{tot} = \frac{V_{batt} - V_{min}}{R_{batt} + R_{main} + \frac{1}{n}R_{br}}
+	\end{equation}
+	\begin{equation}
+		G_{slip} = \frac{\mu d \tilde{W}}{2 K_T \left( i_{tot} - \tilde{i_f} \right)}
+	\end{equation}
+	Formulas for $v_{free}$ and $v_{adj}$ are the same as for the Forward Calculation -- (\ref{v_free}) and (\ref{v_adj}) respectively\\
+	
 	$v_{free}$ = Free Speed \\
 	$v_{adj}$ = Adjusted Speed \\
 	$i_{slip}$ = Wheel Slip Current \\
+	$i_{tot}$ = Maximum Total Current Draw \\
+	$G_{slip}$ = Maximum Gear Ratio to Slip Wheels above $V_{min}$ \\
 	$K_T$ = Motor Torque Constant \\
 	$\omega_f$ = Motor Free Speed \\
 	$i_f$ = Motor Free Current \\
@@ -257,7 +268,12 @@
 	$\mu$ = Wheel Coefficient of Friction \\
 	$\tilde{W}$ = Adjusted Robot Weight (i.e. weight resting on driven wheels) \\
 	$G$ = Total Gear Ratio \\
-	$k_{SL}$ = Speed Loss Constant
+	$k_{SL}$ = Speed Loss Constant \\
+	$V_{batt}$ = Battery Resting Voltage \\
+	$V_{min}$ = Minimum Allowable System Voltage \\
+	$R_{batt}$ = Battery Internal Resistance \\
+	$R_{main}$ = Resistance of Main Power Wiring \\
+	$R_{br}$ = Resistance of Each Branch Circuit
 	
 	\bigskip
 	\section{Beam Bend Calculator}
