@@ -130,7 +130,7 @@
 	\begin{equation} \label{max_eff}
 		G = \frac{r F}{\tilde{\tau_s}} \left( 1 + \sqrt{\frac{\tilde{i_s}}{\tilde{i_f}}} \right)
 	\end{equation}
-	For derivation, see Appendix \ref{appendixA}
+	For derivation, see Appendix \ref{max_eff_appendix}
 	
 	\newpage
 	\subsubsection{At Stall}
@@ -206,7 +206,7 @@
 	\eta = \frac{T_R |_{\mu=0}}{T_R} = \frac{n p}{\pi d_p} \cdot \frac{\pi d_p \cos(\alpha) - \mu n p}{\pi \mu d_p + n p \cos(\alpha)}
 	\end{equation}
 	
-	Equivalent radius/load formulas are designed to allow for lead screws as outputs in the Mechanism Gear Ratio Calculator. Derivations can be found in Appendix \ref{appendixB}.
+	Equivalent radius/load formulas are designed to allow for lead screws as outputs in the Mechanism Gear Ratio Calculator. Derivations can be found in Appendix \ref{lead_radius_appendix}.
 	\begin{equation} \label{r_eq}
 	r_{eq} = \frac{n p}{2 \pi}
 	\end{equation}
@@ -247,15 +247,6 @@
 		i_{slip} = \frac{\tilde{W} \mu d}{2 K_T \cdot n G} + \frac{\tilde{i_f}}{n}
 	\end{equation}
 	
-	\subsection{Reverse Calculation}
-	\begin{equation}
-		i_{tot} = \frac{V_{batt} - V_{min}}{R_{batt} + R_{main} + \frac{1}{n}R_{br}}
-	\end{equation}
-	\begin{equation}
-		G_{slip} = \frac{\mu d \tilde{W}}{2 K_T \left( i_{tot} - \tilde{i_f} \right)}
-	\end{equation}
-	Formulas for $v_{free}$ and $v_{adj}$ are the same as for the Forward Calculation -- (\ref{v_free}) and (\ref{v_adj}) respectively\\
-	
 	$v_{free}$ = Free Speed \\
 	$v_{adj}$ = Adjusted Speed \\
 	$i_{slip}$ = Wheel Slip Current \\
@@ -268,7 +259,26 @@
 	$\mu$ = Wheel Coefficient of Friction \\
 	$\tilde{W}$ = Adjusted Robot Weight (i.e. weight resting on driven wheels) \\
 	$G$ = Total Gear Ratio \\
-	$k_{SL}$ = Speed Loss Constant \\
+	$k_{SL}$ = Speed Loss Constant
+	
+	\begin{equation} \label{v_shift}
+		v_{shift} = \frac{v_1 v_2}{v_1 + v_2}
+	\end{equation}
+	
+	$v_{shift}$ = Optimal Shifting Speed \\
+	$v_2$ = Gear 1 Free Speed \\
+	$v_2$ = Gear 2 Free Speed \\ \\
+	For derivation see Appendix \ref{shift_speed_appendix}.
+	
+	\subsection{Reverse Calculation}
+	\begin{equation}
+		i_{tot} = \frac{V_{batt} - V_{min}}{R_{batt} + R_{main} + \frac{1}{n}R_{br}}
+	\end{equation}
+	\begin{equation}
+		G_{slip} = \frac{\mu d \tilde{W}}{2 K_T \left( i_{tot} - \tilde{i_f} \right)}
+	\end{equation}
+	Formulas for $v_{free}$ and $v_{adj}$ are the same as for the Forward Calculation -- (\ref{v_free}) and (\ref{v_adj}) respectively\\
+	
 	$V_{batt}$ = Battery Resting Voltage \\
 	$V_{min}$ = Minimum Allowable System Voltage \\
 	$R_{batt}$ = Battery Internal Resistance \\
@@ -344,7 +354,7 @@
 	\begin{equation} \label{btwn_y}
 		y = \frac{F x^2 (a-l)^2}{6 EI l^3} [3al-x(2a+l)]
 	\end{equation}
-	\newpage
+	
 	Take the derivative, set equal to zero, and solve for $x$:
 	\begin{equation}
 		0 = \frac{\partial y}{\partial x} = \frac{F x (l-a)^2}{2 EI l^3} (2a (l-x) - lx)
@@ -379,7 +389,6 @@
 	$E$ = Modulus of Elasticity \\
 	$I$ = Area Moment of Inertia
 	
-	\newpage
 	\subsection{Buckling Force}
 	This formula is taken from the Wikipedia page on  \href{https://en.wikipedia.org/wiki/Euler\%27s_critical_load}{Euler's Critical Load}
 	\begin{equation}
@@ -430,7 +439,7 @@
 	$v_i$ = Release	(Initial) Velocity \\
 	$d$ = Horizontal Distance to Target \\
 	$g$ = Acceleration Due to Gravity\\ \\
-	For derivation see Appendix \ref{appendixC}.
+	For derivation see Appendix \ref{projectile_appendix}.
 	
 	\bigskip
 	\section{Chain/Belt C-C Calculator}
@@ -446,7 +455,7 @@
 		C = D - (r_1 + r_2)
 	\end{equation}
 	
-	We can construct an equation to represent the path length of the chain relative to the center-to-center distance. A derivation of this equation can be found in Appendix \ref{appendixD}.
+	We can construct an equation to represent the path length of the chain relative to the center-to-center distance. A derivation of this equation can be found in Appendix \ref{chain_appendix}.
 	\begin{equation} \label{chain_len}
 		L = 2 \sqrt{D^2 - (r_1 - r_2)^2} + 2 (r_1 - r_2) \cos^{-1} \left( \frac{r_1 - r_2}{D} \right) + 2 \pi r_2
 	\end{equation}
@@ -538,7 +547,7 @@
 	\end{equation}
 	$\dot{V}_{comp}(P)$ is the compressor flow-rate as a function of the output pressure, taken from a fourth-degree polynomial interpolation of the data provided online. The volume of air is measured at atmospheric pressure, not at system pressure. $m$ is the number of actuations per second (can be 0 when not firing, 1 when firing, or $m>1$ if firing more than once per second). \\
 	
-	Derivations of these equations can be found in Appendix \ref{appendixE}. \\
+	Derivations of these equations can be found in Appendix \ref{pneu_appendix}. \\
 	
 	We can also calculate the pushing and pulling force of each cylinder using the formulas:
 	\begin{equation}
@@ -599,7 +608,7 @@
 	\newpage
 	\appendix
 	\part*{Derivations}
-	\section{Maximum Efficiency Derivation} \label{appendixA}
+	\section{Maximum Efficiency Derivation} \label{max_eff_appendix}
 	To find the maximum efficiency, we take the derivative of (\ref{motor_instant_eff}) and set it equal to 0:
 	\begin{equation}
 		0 = \frac{\partial \eta}{\partial \tau} = \frac{(\tilde{i_f} (\tau - \tilde{\tau_s})^2 - \tilde{i_s} \tau^2) \tilde{\omega_f}}{V (\tilde{i_s} \tau + \tilde{i_f} (\tilde{\tau_s} - \tau))^2}
@@ -621,7 +630,7 @@
 	\end{equation}
 	
 	\bigskip
-	\section{Equivalent Radius/Load Derivation} \label{appendixB}
+	\section{Equivalent Radius/Load Derivation} \label{lead_radius_appendix}
 	To find the equivalent radius, we equate the rotational $\to$ linear motion transformation equations for both a wheel (\ref{wheel_lin_rot}) and lead screw (\ref{lead_screw_lin_rot})
 	\begin{equation}
 		2 \pi r \cdot \omega = v = \omega \cdot n p
@@ -643,7 +652,60 @@
 	\end{equation}
 	
 	\newpage
-	\section{Projectile Equation Derivations} \label{appendixC}
+	\section{Optimal Shifting Speed Derivation} \label{shift_speed_appendix}
+	The optimal shifting speed is the speed where both high and low gears produce the same force at the wheel surface.\\
+	
+	We will start with the definition of instantaneous motor speed from (\ref{motor_instant_speed}). This can be solved for the motor torque $\tau$
+	
+	\begin{equation}
+		\tau = \tau_s \left( 1 - \frac{\omega}{\omega_f} \right)
+	\end{equation}
+	
+	Using the equations,
+	
+	\begin{equation} \label{rot_lin_speed}
+		v_w = \frac{\omega r}{G}
+	\end{equation}
+	
+	\begin{equation}
+		F_w = \frac{\tau G}{r}
+	\end{equation}
+	
+	we can transform the rotational speed and torque at the motor into the linear speed and force at the wheel
+	
+	\begin{equation}
+		F_w = \frac{\tau_s G}{r} \left( 1 - \frac{v_w G}{r \omega_f} \right)
+	\end{equation}
+	
+	To find the optimal shifting speed, we will set the wheel forces at both gear ratios, $G_1$ and $G_2$, and both wheel radii, $r_1$ and $r_2$, equal at the shifting speed $v_{shift}$
+	
+	\begin{equation}
+		\frac{\tau_s G_1}{r_1} \left( 1 - \frac{v_{shift} \cdot G_1}{r_1 \omega_f} \right) = \frac{\tau_s G_2}{r_2} \left( 1 - \frac{v_{shift} \cdot G_2}{r_2 \omega_f} \right)
+	\end{equation}
+	
+	This can then be simplified to 
+	
+	\begin{equation} \label{v_shift_pre}
+		v_{shift} = \frac{r_1 r_2 \omega_f}{G_2 r_1 + G_1 r_2}
+	\end{equation}
+	
+	Plugging in $\omega = \omega_f$ into (\ref{rot_lin_speed}) gives the free speeds $v_1$ and $v_2$ for each gear ratio
+	
+	\begin{equation}
+	\begin{split}
+		v_1 = \frac{\omega_f r_1}{G_1} \\
+		v_2 = \frac{\omega_f r_2}{G_2}
+	\end{split}
+	\end{equation}
+	
+	Then it is easy to see that 
+	
+	\begin{equation} \tag{\ref*{v_shift}}
+		v_{shift} = \frac{1}{\frac{1}{v_1} + \frac{1}{v_2}} = \frac{v_1 v_2}{v_1 + v_2} = v_1 \parallel v_2
+	\end{equation}
+	
+	\newpage
+	\section{Projectile Equation Derivations} \label{projectile_appendix}
 	Starting with basic projectile motion equations:
 	\begin{equation} \label{projX}
 		\Delta x = v_i \cos \theta_i \cdot t
@@ -695,7 +757,7 @@
 		v_i = \sec \theta_i \cdot \sqrt{\frac{g \cdot d}{\left| \tan \theta_i - \tan \theta_f \right|}}
 	\end{equation}
 	
-	\section{Chain Length Derivation} \label{appendixD}
+	\section{Chain Length Derivation} \label{chain_appendix}
 
 	\begin{figure}[H]
 		\centering
@@ -726,7 +788,7 @@
 	\end{equation}
 	
 	\newpage
-	\section{Pneumatics Simulation Derivation} \label{appendixE}
+	\section{Pneumatics Simulation Derivation} \label{pneu_appendix}
 	We know that the energy of the system at any point can be represented by:
 	\begin{equation} \label{pneu_energy_basic}
 		E = P \cdot V
