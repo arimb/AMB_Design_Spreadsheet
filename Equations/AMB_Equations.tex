@@ -8,6 +8,7 @@
 \usepackage{float}
 \setlength\parindent{0pt}
 \usepackage{hyperref}
+\setcounter{tocdepth}{1}
 \hypersetup{
 	colorlinks=true,
 	linkcolor=blue,
@@ -20,6 +21,8 @@
 	\author{Ari Meles-Braverman}
 	\date{Version 1.2}
 	\maketitle
+	\tableofcontents
+	\newpage
 	
 	\section{General Motor Equations}
 	\subsection{Motor System Equations}
@@ -215,7 +218,7 @@
 	C = D - (r_1 + r_2)
 	\end{equation}
 	
-	We can construct an equation to represent the path length of the chain relative to the center-to-center distance. A derivation of this equation can be found in Appendix \ref{appendixD}.
+	We can construct an equation to represent the path length of the chain relative to the center-to-center distance. A derivation of this equation can be found in Appendix \ref{chain_appendix}.
 	\begin{equation} \label{chain_len}
 	L = 2 \sqrt{D^2 - (r_1 - r_2)^2} + 2 (r_1 - r_2) \cos^{-1} \left( \frac{r_1 - r_2}{D} \right) + 2 \pi r_2
 	\end{equation}
@@ -294,7 +297,7 @@
 	$v_i$ = Release	(Initial) Velocity \\
 	$d$ = Horizontal Distance to Target \\
 	$g$ = Acceleration Due to Gravity\\ \\
-	For derivation see Appendix \ref{appendixC}.
+	For derivation see Appendix \ref{projectile_appendix}.
 	
 	\newpage
 	\section{Pneumatics Calculator}
@@ -312,7 +315,7 @@
 	\end{equation}
 	$\dot{V}_{comp}(P)$ is the compressor flow-rate as a function of the output pressure, taken from a fourth-degree polynomial interpolation of the data provided online. The volume of air is measured at atmospheric pressure, not at system pressure. $m$ is the number of actuations per second (can be 0 when not firing, 1 when firing, or $m>1$ if firing more than once per second). \\
 	
-	Derivations of these equations can be found in Appendix \ref{appendixE}. \\
+	Derivations of these equations can be found in Appendix \ref{pneu_appendix}. \\
 	
 	We can also calculate the pushing and pulling force of each cylinder using the formulas:
 	\begin{equation}
@@ -594,196 +597,6 @@
 	$J$ = Torsion Constant
 	
 	\newpage
-	\section{Projectile Trajectory Calculator}
-	\subsection{Forward Calculation}
-	\begin{equation} \label{proj_final_height}
-		h_f = h_i + d \tan \theta_i - \frac{g \cdot d^2}{2 v_i^2 \cos^2 \theta_i}
-	\end{equation}
-	\begin{equation} \label{proj_final_angle}
-		\theta_f = \tan^{-1} \left( 2 \frac{h_f - h_i}{d} - \tan \theta_i \right)
-	\end{equation}
-	
-	\subsection{Reverse Calculation}
-	\begin{equation} \label{proj_init_angle}
-		\theta_i = \tan^{-1} \left( 2 \frac{h_f - h_i}{d} - \tan \theta_f \right)
-	\end{equation}
-	\begin{equation} \label{proj_init_vel}
-		v_i = \sec \theta_i \cdot \sqrt{\frac{g \cdot d}{\left| \tan \theta_i - \tan \theta_f \right|}}
-	\end{equation}
-	$h_i$ = Release (Initial) Height \\
-	$h_f$ = Target (Final) Height \\
-	$\theta_i$ = Release (Initial) Angle \\
-	$\theta_f$ = Target (Final) Angle \\
-	$v_i$ = Release	(Initial) Velocity \\
-	$d$ = Horizontal Distance to Target \\
-	$g$ = Acceleration Due to Gravity\\ \\
-	For derivation see Appendix \ref{projectile_appendix}.
-	
-	\bigskip
-	\section{Chain/Belt C-C Calculator}
-	This method of solving for $D$ is inspired by and based on the formulas used in \href{https://www.chiefdelphi.com/t/paper-chain-belt-calculator/168971}{Clem1640's Chain/Belt Calculator}. The language in this section will only reference chain, sprockets, and chain links; but all equations also apply to belts, pulleys, and belt teeth, respectively. \\ \\		
-	First we start with basic equations for chain and sprockets:
-	\begin{equation}
-		2 \pi r_i = n_i p
-	\end{equation}
-	\begin{equation}
-		L = l p
-	\end{equation}
-	\begin{equation}
-		C = D - (r_1 + r_2)
-	\end{equation}
-	
-	We can construct an equation to represent the path length of the chain relative to the center-to-center distance. A derivation of this equation can be found in Appendix \ref{chain_appendix}.
-	\begin{equation} \label{chain_len}
-		L = 2 \sqrt{D^2 - (r_1 - r_2)^2} + 2 (r_1 - r_2) \cos^{-1} \left( \frac{r_1 - r_2}{D} \right) + 2 \pi r_2
-	\end{equation}
-	Unfortunately, we cannot solve this equation empirically to get $D$, even with the help of a computer. So we solve the function numerically, using the Newton-Raphson Method. For the forward calculation our initial guess for $D$ is $\frac{L}{2}$, which would be the case if both sprockets had diameters of 0. For the reverse calculation, we use the estimated value of $D$ as the initial guess. The Newton-Raphson Method then improves the accuracy of $D$ to the correct solution until the error is less than $10^{-12}$.\\ \\
-	$L$ = Chain Length \\
-	$l$ = \# of Links \\
-	$D$ = Center to Center Distance \\
-	$n_i$ = \# of Teeth on Sprocket $i \in [1,2]$ \\
-	$r_i$ = Radius of Sprocket $i \in [1,2]$ \\
-	$p$ = Chain Pitch \\
-	$C$ = Clearance \\ \\
-	
-	\bigskip
-	\section{Gear Clearance Calculator}
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.4\linewidth]{Gear_Clear}
-	\end{figure}
-	
-	Starting with the basic equations:
-	\begin{equation} \label{gear_pitch_diam}
-		r_p = \frac{n}{2p}
-	\end{equation}
-	\begin{equation} \label{gear_outside_diam}
-		r_o = \frac{n+2}{2p}
-	\end{equation}
-	\begin{equation} \label{axle_clear}
-		C_a = r_{o2} + r_{o3} - r_{o1} - \frac{d_{axle}}{2}
-	\end{equation}
-	\begin{equation} \label{gear_clear}
-		C_g = r_{o2} + r_{o3} - r_{o1} - r_{o4}
-	\end{equation}
-	
-	\newpage
-	Substituting (\ref{gear_outside_diam}) into (\ref{axle_clear}) and (\ref{gear_clear}), respectively, gives:
-	\begin{equation}
-		C_a = \frac{n_2 + n_3}{2 p_{23}} - \frac{n_1}{2 p_1} - \frac{d_{axle}}{2}
-	\end{equation}
-	\begin{equation}
-		C_g = \frac{n_2 + n_3}{2 p_{23}} - \frac{n_1}{2 p_1} - \frac{n_4}{2 p_4}
-	\end{equation}
-	The axle or gear clears if $C_a > 0$ or $C_g > 0$, respectively. \\ \\
-	$C_a$ = Axle Clearance \\
-	$C_g$ = Gear Clearance \\
-	$r_p$ = Pitch Radius \\
-	$r_o$ = Outside Radius \\
-	$n$ = \# of Teeth \\
-	$p$ = Diametrical Pitch (a.k.a. dp)\\
-	$d_{axle}$ = Axle Diameter
-	
-	\bigskip
-	\section{Ratio \& Distance Calculator}
-	We have the basic equations:
-	\begin{equation}
-		G = \frac{N}{n}
-	\end{equation}
-	\begin{equation}
-		d = \frac{N + n}{2 p}
-	\end{equation}
-	
-	Solving these equations for $n$ and $N$ gives:
-	\begin{equation}
-		n = \frac{2 d p}{G + 1}
-	\end{equation}
-	\begin{equation}
-		N = \frac{2 d p}{G + 1} G
-	\end{equation}
-	
-	For each gear we can get the pitch diameter and outside diameter using (\ref{gear_pitch_diam}) and (\ref{gear_outside_diam}), respectively. \\ \\
-	$N$ = \# of Teeth on Large Gear \\
-	$n$ = \# of Teeth on Small Gear \\
-	$G$ = Gear Ratio \\
-	$d$ = Center-to-Center Distance \\
-	$p$ = Diametrical Pitch (a.k.a. dp)\\
-	
-	\newpage
-	\section{Pneumatics Calculator}
-	The "simulation" is run at timesteps of $dt$ = 1 second for a duration of 150 seconds. \\ \\
-	
-	The pressure at the current step of the simulation can be calculated by:
-	\begin{equation} \label{pneu_press_timestep}
-		P_{n+1} = P_n + \frac{W_{comp} - \sum W_{cyl}}{V}
-	\end{equation}
-	\begin{equation} \label{pneu_w_comp}
-		W_{comp} = \dot{V}_{comp}(P) \cdot dt \cdot 1 \text{atm}
-	\end{equation}
-	\begin{equation} \label{pneu_w_cyl}
-		W_{cyl} = \left( \frac{\pi D^2}{4} P_{push} + \frac{\pi (D^2 - d^2)}{4} P_{pull} \right) L \cdot m
-	\end{equation}
-	$\dot{V}_{comp}(P)$ is the compressor flow-rate as a function of the output pressure, taken from a fourth-degree polynomial interpolation of the data provided online. The volume of air is measured at atmospheric pressure, not at system pressure. $m$ is the number of actuations per second (can be 0 when not firing, 1 when firing, or $m>1$ if firing more than once per second). \\
-	
-	Derivations of these equations can be found in Appendix \ref{pneu_appendix}. \\
-	
-	We can also calculate the pushing and pulling force of each cylinder using the formulas:
-	\begin{equation}
-		F_{push} = \frac{\pi D^2}{4} P_{push}
-	\end{equation}
-	\begin{equation}
-		F_{pull} = \frac{\pi (D^2 - d^2)}{4} P_{pull}
-	\end{equation}
-	$P_n$ = System Pressure at Step $n$\\
-	$V$ = System Volume \\
-	$W_{comp}$ = Work Done by the Compressor \\
-	$W_{cyl}$ = Work Done by Each Cylinder \\
-	$D$ = Cylinder Diameter \\
-	$d$ = Cylinder Rod Diameter \\
-	$L$ = Cylinder Length \\
-	$P_{push}$ = Pushing Pressure \\
-	$P_{pull}$ = Pulling Pressure \\
-	$F_{push}$ = Pushing Force \\
-	$F_{pull}$ = Pulling Force
-	
-	\newpage
-	\section{Pneumatic Linkage Calculator}
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.8\linewidth]{Pneu_Link}
-	\end{figure}
-	
-	Let $\theta_1$ and $\alpha_1$ represent the system when the cylinder is retracted, and $\theta_2$ and $\alpha_2$ represent it when extended. \\ \\
-	
-	In the horizontal direction we have:
-	\begin{equation} \label{link_x_ret}
-		A + X \cos \theta_1 - Y \sin \theta_1 = L \cos \alpha_1
-	\end{equation}
-	\begin{equation} \label{link_x_ext}
-		A + X \cos \theta_2 - Y \sin \theta_2 = (L + \Delta L) \cos \alpha_2
-	\end{equation}
-	
-	And in the vertical direction we have:
-	\begin{equation} \label{link_y_ret}
-		X \sin \theta_1 + Y \cos \theta_1 = B - L \sin \alpha_1
-	\end{equation}
-	\begin{equation} \label{link_y_ext}
-		X \sin \theta_2 + Y \cos \theta_2 = B - (L + \Delta L) \sin \alpha_2
-	\end{equation}
-	
-	We can combine (\ref{link_x_ret}) and (\ref{link_y_ext}) to remove $\alpha_1$ and get:
-	\begin{equation} \label{link_ret}
-		L^2 = A^2 + B^2 + X^2 + Y^2 + 2AX \cos \theta_1 - 2BY \cos \theta_1 - 2BX \sin \theta_1 - 2AY \sin \theta_1
-	\end{equation}
-	
-	And combine (\ref{link_x_ext}) and (\ref{link_y_ext}) to remove $\alpha_2$ and get:
-	\begin{equation} \label{link_ext}
-		(L + \Delta L)^2 = A^2 + B^2 + X^2 + Y^2 + 2AX \cos \theta_2 - 2BY \cos \theta_2 - 2BX \sin \theta_2 - 2AY \sin \theta_2
-	\end{equation}
-	
-	To derive the forward formulas, you can solve (\ref{link_ret}) and (\ref{link_ext}) separately to get expressions for $\theta_1$ and $\theta_2$. To derive the reverse formulas, you can solve (\ref{link_ret}) and (\ref{link_ext}) as a system of equations to get expressions for $A$ and $B$. I will not include these expressions in this document, because they are extremely long.
-	
-	\newpage
 	\appendix
 	\part*{Derivations}
 	\section{Maximum Efficiency Derivation} \label{max_eff_appendix}
@@ -807,26 +620,35 @@
 		G = \frac{r F}{\tilde{\tau_s}} \left( 1 + \sqrt{\frac{\tilde{i_s}}{\tilde{i_f}}} \right)
 	\end{equation}
 	
-	\bigskip
-	\section{Equivalent Radius/Load Derivation} \label{lead_radius_appendix}
-	To find the equivalent radius, we equate the rotational $\to$ linear motion transformation equations for both a wheel (\ref{wheel_lin_rot}) and lead screw (\ref{lead_screw_lin_rot})
-	\begin{equation}
-		2 \pi r \cdot \omega = v = \omega \cdot n p
+	\newpage
+	\section{Chain Length Derivation} \label{chain_appendix}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\linewidth]{Chain_Derivation}
+	\end{figure}
+	
+	It is clear that:
+	\begin{equation} \label{chain_L_general}
+	L = 2 X + r_1 \cdot 2 \beta + r_2 \cdot (2 \pi - 2 \beta)
 	\end{equation}
 	
-	We can then solve for $r = r_{eq}$ to find the radius that will provide the same rotational $\to$ linear motion transformation as the given lead screw
-	\begin{equation} \tag{\ref*{r_eq}}
-		r_{eq} = \frac{n p}{2 \pi}
+	Looking at the right triangle in the center of the image, we can see that:
+	\begin{equation} \label{chain_X}
+	D^2 = X^2 + (r_2 - r_1)^2 \implies X = \sqrt{D^2 - (r_1 - r_2)^2}
+	\end{equation}
+	\begin{equation} \label{chain_beta}
+	\beta = \cos^{-1} \left( \frac{r_2 - r_1}{D} \right) = \cos^{-1} \left( \frac{r_1 - r_2}{D} \right)
 	\end{equation}
 	
-	We want to conserve the work done by a lead screw and equivalent wheel across one rotation (where $x$ can be $L$ or $R$). 
+	Substituting (\ref{chain_X}) and (\ref{chain_beta}) into (\ref{chain_L_general}) gives:
 	\begin{equation}
-		W = 2 \pi r_{eq} \cdot L_{x,eq} = 2 \pi T_x
+	L = 2 \sqrt{D^2 - (r_1 - r_2)^2} + r_1 \cdot 2 \cos^{-1} \left( \frac{r_1 - r_2}{D} \right) + r_2 \cdot \left( 2 \pi - 2 \cos^{-1} \left( \frac{r_1 - r_2}{D} \right) \right)
 	\end{equation}
 	
-	Solving for $L_{x,eq}$, we get:
-	\begin{equation}
-		L_{x,eq} = \frac{T_x}{r_{eq}}
+	And rearranging gives:
+	\begin{equation} \tag{\ref*{chain_len}}
+	L = 2 \sqrt{D^2 - (r_1 - r_2)^2} + 2 (r_1 - r_2) \cos^{-1} \left( \frac{r_1 - r_2}{D} \right) + 2 \pi r_2
 	\end{equation}
 	
 	\newpage
@@ -935,36 +757,6 @@
 		v_i = \sec \theta_i \cdot \sqrt{\frac{g \cdot d}{\left| \tan \theta_i - \tan \theta_f \right|}}
 	\end{equation}
 	
-	\section{Chain Length Derivation} \label{chain_appendix}
-
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\linewidth]{Chain_Derivation}
-	\end{figure}
-	
-	It is clear that:
-	\begin{equation} \label{chain_L_general}
-		L = 2 X + r_1 \cdot 2 \beta + r_2 \cdot (2 \pi - 2 \beta)
-	\end{equation}
-	
-	Looking at the right triangle in the center of the image, we can see that:
-	\begin{equation} \label{chain_X}
-		D^2 = X^2 + (r_2 - r_1)^2 \implies X = \sqrt{D^2 - (r_1 - r_2)^2}
-	\end{equation}
-	\begin{equation} \label{chain_beta}
-		\beta = \cos^{-1} \left( \frac{r_2 - r_1}{D} \right) = \cos^{-1} \left( \frac{r_1 - r_2}{D} \right)
-	\end{equation}
-	
-	Substituting (\ref{chain_X}) and (\ref{chain_beta}) into (\ref{chain_L_general}) gives:
-	\begin{equation}
-		L = 2 \sqrt{D^2 - (r_1 - r_2)^2} + r_1 \cdot 2 \cos^{-1} \left( \frac{r_1 - r_2}{D} \right) + r_2 \cdot \left( 2 \pi - 2 \cos^{-1} \left( \frac{r_1 - r_2}{D} \right) \right)
-	\end{equation}
-	
-	And rearranging gives:
-	\begin{equation} \tag{\ref*{chain_len}}
-		L = 2 \sqrt{D^2 - (r_1 - r_2)^2} + 2 (r_1 - r_2) \cos^{-1} \left( \frac{r_1 - r_2}{D} \right) + 2 \pi r_2
-	\end{equation}
-	
 	\newpage
 	\section{Pneumatics Simulation Derivation} \label{pneu_appendix}
 	We know that the energy of the system at any point can be represented by:
@@ -1002,5 +794,27 @@
 		W_{comp} = \dot{V}_{comp}(P) \cdot dt \cdot 1 \text{atm}
 	\end{equation}
 	Note: since $\dot{V}_{comp}$ is measured at atmospheric pressure, $P$ must be 1 atm and not the system pressure
+	
+	\newpage
+	\section{Equivalent Radius/Load Derivation} \label{lead_radius_appendix}
+	To find the equivalent radius, we equate the rotational $\to$ linear motion transformation equations for both a wheel (\ref{wheel_lin_rot}) and lead screw (\ref{lead_screw_lin_rot})
+	\begin{equation}
+	2 \pi r \cdot \omega = v = \omega \cdot n p
+	\end{equation}
+	
+	We can then solve for $r = r_{eq}$ to find the radius that will provide the same rotational $\to$ linear motion transformation as the given lead screw
+	\begin{equation} \tag{\ref*{r_eq}}
+	r_{eq} = \frac{n p}{2 \pi}
+	\end{equation}
+	
+	We want to conserve the work done by a lead screw and equivalent wheel across one rotation (where $x$ can be $L$ or $R$). 
+	\begin{equation}
+	W = 2 \pi r_{eq} \cdot L_{x,eq} = 2 \pi T_x
+	\end{equation}
+	
+	Solving for $L_{x,eq}$, we get:
+	\begin{equation}
+	L_{x,eq} = \frac{T_x}{r_{eq}}
+	\end{equation}
 	
 \end{document}
