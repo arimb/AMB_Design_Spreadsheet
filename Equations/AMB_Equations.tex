@@ -18,7 +18,7 @@
 \begin{document}
 	\title{AMB Design Spreadsheet Equations}
 	\author{Ari Meles-Braverman}
-	\date{Version 1.1}
+	\date{Version 1.2}
 	\maketitle
 	
 	\section{General Motor Equations}
@@ -181,6 +181,196 @@
 	\end{equation}
 	
 	\newpage
+	\section{Gear Options Calculator}
+	This calculator uses a brute-force search algorithm to find combinations of gears that meet the set criteria. All gears in the list must have $dp = 20$. The formulas used to check the criteria are:
+	
+	\begin{equation}
+		\text{OD}_x = \frac{n_x + 2}{20} \text{ [in]}
+	\end{equation}
+	
+	\begin{equation}
+		\text{C-C}_{xy} = \frac{n_x + n_y}{40} \text{ [in]}
+	\end{equation}
+	
+	\begin{equation}
+		\text{clearance}_{xyz} = \text{C-C}_{xy} - \tfrac{1}{2} \text{OD}_z
+	\end{equation}
+	
+	$n_x$ = Number of teeth of gear $x \in [1,2,3,4]$ \\
+	$G$ = Total gear ratio \\
+	$\text{OD}_x$ = Outer diameter of gear $x$ \\
+	$\text{C-C}_{xy}$ = Center-to-center distance between gears $x$ and $y$ \\
+	$\text{clearance}_{xyz}$ = Clearance distance of gear $x$ shaft
+	
+	\section{Chain/Belt C-C Calculator}
+	This method of solving for $D$ is inspired by and based on the formulas used in \href{https://www.chiefdelphi.com/t/paper-chain-belt-calculator/168971}{Clem1640's Chain/Belt Calculator}. The language in this section will only reference chain, sprockets, and chain links; but all equations also apply to belts, pulleys, and belt teeth, respectively. \\ \\		
+	First we start with basic equations for chain and sprockets:
+	\begin{equation}
+	2 \pi r_i = n_i p
+	\end{equation}
+	\begin{equation}
+	L = l p
+	\end{equation}
+	\begin{equation}
+	C = D - (r_1 + r_2)
+	\end{equation}
+	
+	We can construct an equation to represent the path length of the chain relative to the center-to-center distance. A derivation of this equation can be found in Appendix \ref{appendixD}.
+	\begin{equation} \label{chain_len}
+	L = 2 \sqrt{D^2 - (r_1 - r_2)^2} + 2 (r_1 - r_2) \cos^{-1} \left( \frac{r_1 - r_2}{D} \right) + 2 \pi r_2
+	\end{equation}
+	Unfortunately we cannot solve this equation analytically to get $D$, even with the help of a computer. So we solve the function numerically using the Newton-Raphson Method. For the forward calculation our initial guess for $D$ is $\frac{L}{2}$, which would be the case if both sprockets had diameters of 0. For the reverse calculation, we use the estimated value of $D$ as the initial guess. The Newton-Raphson Method then improves the accuracy of $D$ to the correct solution until the error is less than $10^{-12}$.\\ \\
+	$L$ = Chain Length \\
+	$l$ = \# of Links \\
+	$D$ = Center to Center Distance \\
+	$n_i$ = \# of Teeth on Sprocket $i \in [1,2]$ \\
+	$r_i$ = Radius of Sprocket $i \in [1,2]$ \\
+	$p$ = Chain Pitch \\
+	$C$ = Clearance
+	
+	\newpage
+	\section{Drivetrain Calculator}
+	\subsection{Forward Calculation}
+	Equations taken from \href{https://www.chiefdelphi.com/uploads/default/original/3X/2/b/2bf9206b962f74ed5556a0ae936ef0bf365ac975.xlsx}{JVN's Mechanical Design Calculator}.
+	\begin{equation} \label{v_free}
+	v_{free} = \frac{\tilde{\omega_f} \cdot \pi d}{G}
+	\end{equation}
+	\begin{equation} \label{v_adj}
+	v_{adj} = v_{free} \cdot k_{SL}
+	\end{equation}
+	\begin{equation}
+	i_{slip} = \frac{\tilde{W} \mu d}{2 K_T \cdot n G} + \frac{\tilde{i_f}}{n}
+	\end{equation}
+	
+	\subsection{Reverse Calculation}
+	\begin{equation}
+	i_{tot} = \frac{V_{batt} - V_{min}}{R_{batt} + R_{main} + \frac{1}{n}R_{br}}
+	\end{equation}
+	\begin{equation}
+	G_{slip} = \frac{\mu d \tilde{W}}{2 K_T \left( i_{tot} - \tilde{i_f} \right)}
+	\end{equation}
+	Formulas for $v_{free}$ and $v_{adj}$ are the same as for the Forward Calculation -- (\ref{v_free}) and (\ref{v_adj}) respectively\\
+	
+	$v_{free}$ = Free Speed \\
+	$v_{adj}$ = Adjusted Speed \\
+	$i_{slip}$ = Wheel Slip Current \\
+	$i_{tot}$ = Maximum Total Current Draw \\
+	$G_{slip}$ = Maximum Gear Ratio to Slip Wheels above $V_{min}$ \\
+	$K_T$ = Motor Torque Constant \\
+	$\omega_f$ = Motor Free Speed \\
+	$i_f$ = Motor Free Current \\
+	$d$ = Wheel Diameter \\
+	$\mu$ = Wheel Coefficient of Friction \\
+	$\tilde{W}$ = Adjusted Robot Weight (i.e. weight resting on driven wheels) \\
+	$G$ = Total Gear Ratio \\
+	$k_{SL}$ = Speed Loss Constant \\
+	$V_{batt}$ = Battery Resting Voltage \\
+	$V_{min}$ = Minimum Allowable System Voltage \\
+	$R_{batt}$ = Battery Internal Resistance \\
+	$R_{main}$ = Resistance of Main Power Wiring \\
+	$R_{br}$ = Resistance of Each Branch Circuit
+	
+	\newpage
+	\section{Projectile Trajectory Calculator}
+	\subsection{Forward Calculation}
+	\begin{equation} \label{proj_final_height}
+	h_f = h_i + d \tan \theta_i - \frac{g \cdot d^2}{2 v_i^2 \cos^2 \theta_i}
+	\end{equation}
+	\begin{equation} \label{proj_final_angle}
+	\theta_f = \tan^{-1} \left( 2 \frac{h_f - h_i}{d} - \tan \theta_i \right)
+	\end{equation}
+	
+	\subsection{Reverse Calculation}
+	\begin{equation} \label{proj_init_angle}
+	\theta_i = \tan^{-1} \left( 2 \frac{h_f - h_i}{d} - \tan \theta_f \right)
+	\end{equation}
+	\begin{equation} \label{proj_init_vel}
+	v_i = \sec \theta_i \cdot \sqrt{\frac{g \cdot d}{\left| \tan \theta_i - \tan \theta_f \right|}}
+	\end{equation}
+	$h_i$ = Release (Initial) Height \\
+	$h_f$ = Target (Final) Height \\
+	$\theta_i$ = Release (Initial) Angle \\
+	$\theta_f$ = Target (Final) Angle \\
+	$v_i$ = Release	(Initial) Velocity \\
+	$d$ = Horizontal Distance to Target \\
+	$g$ = Acceleration Due to Gravity\\ \\
+	For derivation see Appendix \ref{appendixC}.
+	
+	\newpage
+	\section{Pneumatics Calculator}
+	The "simulation" is run at timesteps of $dt$ = 1 second for a duration of 150 seconds. \\ \\
+	
+	The pressure at the current step of the simulation can be calculated by:
+	\begin{equation} \label{pneu_press_timestep}
+	P_{n+1} = P_n + \frac{W_{comp} - \sum W_{cyl}}{V}
+	\end{equation}
+	\begin{equation} \label{pneu_w_comp}
+	W_{comp} = \dot{V}_{comp}(P) \cdot dt \cdot 1 \text{atm}
+	\end{equation}
+	\begin{equation} \label{pneu_w_cyl}
+	W_{cyl} = \left( \frac{\pi D^2}{4} P_{push} + \frac{\pi (D^2 - d^2)}{4} P_{pull} \right) L \cdot m
+	\end{equation}
+	$\dot{V}_{comp}(P)$ is the compressor flow-rate as a function of the output pressure, taken from a fourth-degree polynomial interpolation of the data provided online. The volume of air is measured at atmospheric pressure, not at system pressure. $m$ is the number of actuations per second (can be 0 when not firing, 1 when firing, or $m>1$ if firing more than once per second). \\
+	
+	Derivations of these equations can be found in Appendix \ref{appendixE}. \\
+	
+	We can also calculate the pushing and pulling force of each cylinder using the formulas:
+	\begin{equation}
+	F_{push} = \frac{\pi D^2}{4} P_{push}
+	\end{equation}
+	\begin{equation}
+	F_{pull} = \frac{\pi (D^2 - d^2)}{4} P_{pull}
+	\end{equation}
+	$P_n$ = System Pressure at Step $n$\\
+	$V$ = System Volume \\
+	$W_{comp}$ = Work Done by the Compressor \\
+	$W_{cyl}$ = Work Done by Each Cylinder \\
+	$D$ = Cylinder Diameter \\
+	$d$ = Cylinder Rod Diameter \\
+	$L$ = Cylinder Length \\
+	$P_{push}$ = Pushing Pressure \\
+	$P_{pull}$ = Pulling Pressure \\
+	$F_{push}$ = Pushing Force \\
+	$F_{pull}$ = Pulling Force
+	
+	\newpage
+	\section{Pneumatic Linkage Calculator}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{Pneu_Link}
+	\end{figure}
+	
+	Let $\theta_1$ and $\alpha_1$ represent the system when the cylinder is retracted, and $\theta_2$ and $\alpha_2$ represent it when extended. \\ \\
+	
+	In the horizontal direction we have:
+	\begin{equation} \label{link_x_ret}
+	A + X \cos \theta_1 - Y \sin \theta_1 = L \cos \alpha_1
+	\end{equation}
+	\begin{equation} \label{link_x_ext}
+	A + X \cos \theta_2 - Y \sin \theta_2 = (L + \Delta L) \cos \alpha_2
+	\end{equation}
+	
+	And in the vertical direction we have:
+	\begin{equation} \label{link_y_ret}
+	X \sin \theta_1 + Y \cos \theta_1 = B - L \sin \alpha_1
+	\end{equation}
+	\begin{equation} \label{link_y_ext}
+	X \sin \theta_2 + Y \cos \theta_2 = B - (L + \Delta L) \sin \alpha_2
+	\end{equation}
+	
+	We can combine (\ref{link_x_ret}) and (\ref{link_y_ext}) to remove $\alpha_1$ and get:
+	\begin{equation} \label{link_ret}
+	L^2 = A^2 + B^2 + X^2 + Y^2 + 2AX \cos \theta_1 - 2BY \cos \theta_1 - 2BX \sin \theta_1 - 2AY \sin \theta_1
+	\end{equation}
+	
+	And combine (\ref{link_x_ext}) and (\ref{link_y_ext}) to remove $\alpha_2$ and get:
+	\begin{equation} \label{link_ext}
+	(L + \Delta L)^2 = A^2 + B^2 + X^2 + Y^2 + 2AX \cos \theta_2 - 2BY \cos \theta_2 - 2BX \sin \theta_2 - 2AY \sin \theta_2
+	\end{equation}
+	
+	To derive the forward formulas, you can solve (\ref{link_ret}) and (\ref{link_ext}) separately to get expressions for $\theta_1$ and $\theta_2$. To derive the reverse formulas, you can solve (\ref{link_ret}) and (\ref{link_ext}) as a system of equations to get expressions for $A$ and $B$. I will not include these expressions in this document, because they are extremely long.
+	
+	
 	\section{Lead Screw Calculator}
 	
 	The basic transformation between rotational and linear motion is given by:
@@ -234,18 +424,6 @@
 	$L_{R,eq}$ = Equivalent Raise Load \\
 	$L_{L,eq}$ = Equivalent Lower Load
 	
-	\section{Drivetrain Calculator}
-	\subsection{Forward Calculation}
-	Equations taken from \href{https://www.chiefdelphi.com/uploads/default/original/3X/2/b/2bf9206b962f74ed5556a0ae936ef0bf365ac975.xlsx}{JVN's Mechanical Design Calculator}.
-	\begin{equation} \label{v_free}
-		v_{free} = \frac{\tilde{\omega_f} \cdot \pi d}{G}
-	\end{equation}
-	\begin{equation} \label{v_adj}
-		v_{adj} = v_{free} \cdot k_{SL}
-	\end{equation}
-	\begin{equation}
-		i_{slip} = \frac{\tilde{W} \mu d}{2 K_T \cdot n G} + \frac{\tilde{i_f}}{n}
-	\end{equation}
 	
 	$v_{free}$ = Free Speed \\
 	$v_{adj}$ = Adjusted Speed \\
