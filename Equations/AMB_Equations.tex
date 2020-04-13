@@ -9,6 +9,7 @@
 \setlength\parindent{0pt}
 \usepackage{hyperref}
 \setcounter{tocdepth}{1}
+\usepackage[titletoc]{appendix}
 \hypersetup{
 	colorlinks=true,
 	linkcolor=blue,
@@ -276,6 +277,56 @@
 	\newpage
 	\section{Projectile Trajectory Calculator}
 	\subsection{Forward Calculation}
+	The Forward Calculation uses equations taken from \href{http://baseball.physics.illinois.edu/ajpfeb08.pdf}{this paper by the University of Illinois}. Three forces can be identified as acting on the ball: gravity, $F_g$, air drag, $F_D$, and lift, $F_L$. The acceleration from these forces is applied at each timestep until the ball reaches the target or hits the ground. 
+	
+	\begin{equation}
+		F_g = mg\ (-\hat{y})
+	\end{equation}
+	
+	\begin{equation}
+		F_D = \frac{1}{2} \rho |\bar{v}|^2 A_c C_D\ (-\hat{v}) = \frac{\pi}{2} \rho r^2 v^2 C_D\ (-\hat{v})
+	\end{equation}
+	
+	\begin{equation}
+		F_L = \frac{1}{2} \rho |\bar{v}|^2 A_c C_L\ (\hat{\omega}\times\hat{v}) = \frac{\pi}{2} \rho r^2 v^2 C_L\ (\hat{\omega}\times\hat{v})
+	\end{equation}
+	
+	Combining these gives
+	
+	\begin{equation}
+	\begin{aligned}
+		\sum F_x &= m a_x = -F_L \sin\theta_v - F_D \cos\theta_v\\
+		&= -\frac{\pi}{2} \rho r^2 v^2 (C_L \sin\theta_v + C_D \cos\theta_v)\\
+		&= -\frac{\pi}{2} \rho r^2 v (C_L v_y + C_D v_x)
+	\end{aligned}
+	\end{equation}
+	
+	\begin{equation}
+	\begin{aligned}
+		\sum F_y &= m a_y = F_L \cos\theta_v - F_D \sin\theta_v - F_g\\
+		&= \frac{\pi}{2} \rho r^2 v^2 (C_L \cos\theta_v - C_D \sin\theta_v) - mg\\
+		&= \frac{\pi}{2} \rho r^2 v (C_L v_x - C_D v_y) - mg
+	\end{aligned}
+	\end{equation}
+	
+	\bigskip
+	To find the drag coefficient we use an empirically determined graph correlating the drag coefficient with the Reynolds number, $Re = \rho v D \mu^{-1}$. Since this is a strongly non-linear correlation, we will use an estimated average velocity to calculate an approximate drag coefficient to be used throughout the trajectory.\\
+	
+	To find the lift coefficient we use the spin factor, $S = r \omega v^{-1}$. The Illinois paper finds a strong correlation between $S$ and $C_L$, with $C_L = 1.6 S$ for $S<0.1$ and $C_L = 0.6 S + 0.1$ for $S>0.1$. At every timestep, $S$ and therefore $C_L$ are recalculated based on the updated velocity $v$. \\
+	
+	$C_D$ = Drag Coefficient \\
+	$C_L$ = Lift Coefficient \\
+	$\rho$ = Air Density \\
+	$r$ = Ball Radius \\
+	$v$ = Ball Velocity \\
+	$\omega$ = Ball Rotational Velocity \\
+	$m$ = Ball Mass \\
+	$g$ = Gravity Constant \\
+	$\theta_v$ = Velocity Angle (from $+\hat{x}$)
+	
+	\newpage
+	These equations are good approximations of drag and lift for spherical rotating balls. For any object in flight you can use the following traditional trajectory equations to calculate the object's path with negligible air drag and lift. These will give the same outputs as the simulation equations above when $C_D$ and $\omega$ are set to 0.
+		
 	\begin{equation} \label{proj_final_height}
 	h_f = h_i + d \tan \theta_i - \frac{g \cdot d^2}{2 v_i^2 \cos^2 \theta_i}
 	\end{equation}
@@ -597,7 +648,7 @@
 	$J$ = Torsion Constant
 	
 	\newpage
-	\appendix
+	\begin{appendices}
 	\part*{Derivations}
 	\section{Maximum Efficiency Derivation} \label{max_eff_appendix}
 	To find the maximum efficiency, we take the derivative of (\ref{motor_instant_eff}) and set it equal to 0:
@@ -816,5 +867,7 @@
 	\begin{equation}
 	L_{x,eq} = \frac{T_x}{r_{eq}}
 	\end{equation}
+	
+	\end{appendices}
 	
 \end{document}
