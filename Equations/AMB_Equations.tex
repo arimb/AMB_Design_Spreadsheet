@@ -20,7 +20,7 @@
 \begin{document}
 	\title{AMB Design Spreadsheet Equations}
 	\author{Ari Meles-Braverman}
-	\date{Version 1.2}
+	\date{Version 1.3}
 	\maketitle
 	\tableofcontents
 	\newpage
@@ -412,14 +412,14 @@
 	X \sin \theta_2 + Y \cos \theta_2 = B - (L + \Delta L) \sin \alpha_2
 	\end{equation}
 	
-	We can combine (\ref{link_x_ret}) and (\ref{link_y_ext}) to remove $\alpha_1$ and get:
+	We can combine (\ref{link_x_ret}) and (\ref{link_y_ret}) to remove $\alpha_1$ and get:
 	\begin{equation} \label{link_ret}
-	L^2 = A^2 + B^2 + X^2 + Y^2 + 2AX \cos \theta_1 - 2BY \cos \theta_1 - 2BX \sin \theta_1 - 2AY \sin \theta_1
+	L^2 = A^2 + B^2 + X^2 + Y^2 + 2(AX-BY) \cos \theta_1 - 2(BX+AY) \sin \theta_1
 	\end{equation}
 	
 	And combine (\ref{link_x_ext}) and (\ref{link_y_ext}) to remove $\alpha_2$ and get:
 	\begin{equation} \label{link_ext}
-	(L + \Delta L)^2 = A^2 + B^2 + X^2 + Y^2 + 2AX \cos \theta_2 - 2BY \cos \theta_2 - 2BX \sin \theta_2 - 2AY \sin \theta_2
+	(L + \Delta L)^2 = A^2 + B^2 + X^2 + Y^2 + 2(AX-BY) \cos \theta_2 - 2(BX+AY) \sin \theta_2
 	\end{equation}
 	
 	To derive the forward formulas, you can solve (\ref{link_ret}) and (\ref{link_ext}) separately to get expressions for $\theta_1$ and $\theta_2$. To derive the reverse formulas, you can solve (\ref{link_ret}) and (\ref{link_ext}) as a system of equations to get expressions for $A$ and $B$. I will not include these expressions in this document, because they are extremely long.
