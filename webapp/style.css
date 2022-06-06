@@ -1,15 +1,17 @@
 :root {
-    --background: #A3B18A;
-    --light: #EEECE8;
-    --med-light: #588157;
-    --med-dark: #3A5A40;
-    --dark: #344E41;
-    background-color: var(--background);
+    --white: #EEECE8;
+    --med-light: #608F60;
+    --med-dark: #588157;
+    --dark: #405a3f;
+    background-color: var(--white);
+    font-size: 0px;
 }
 
 .header {
     background-color: var(--med-dark);
     padding: 10px;
+    border: 3px solid black;
+    border-radius: 5px;
     text-align: center;
     display: block;
     width: 100%-20px;
@@ -20,10 +22,45 @@
     vertical-align: middle;
     font-size: 6vw;
     margin: 0.2em;
-    color: var(--light);
+    color: var(--white);
 }
 
 img.logo {
-    width: 6vw;
-    vertical-align: middle;
+    /* TODO: center vertically */
+    height: 8vw;
+    float: left;
+}
+
+.body {
+    margin: 10px;
+    width: 100%-20px;
+}
+
+.button-row {
+    width: 80%;
+    margin: 5px auto;
+}
+
+button.sheet {
+    background-color: var(--med-light);
+    padding: 8px;
+    border-radius: 15px;
+    width: 44%;
+    cursor: pointer;
+    margin-right: 3%;
+    margin-left: 3%;
+    box-shadow: 5px 5px 5px rgb(0,0,0,0.5);
+}
+
+button.sheet:hover {
+    background-color: var(--dark);
+}
+
+button.sheet img {
+    height: 10vw;
+}
+
+button.sheet h2 {
+    font-size: 3vw;
+    margin: 0.2em;
 }
