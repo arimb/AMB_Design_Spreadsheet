@@ -1,0 +1,29 @@
+:root {
+    --background: #A3B18A;
+    --light: #EEECE8;
+    --med-light: #588157;
+    --med-dark: #3A5A40;
+    --dark: #344E41;
+    background-color: var(--background);
+}
+
+.header {
+    background-color: var(--med-dark);
+    padding: 10px;
+    text-align: center;
+    display: block;
+    width: 100%-20px;
+}
+
+.header h1 {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 6vw;
+    margin: 0.2em;
+    color: var(--light);
+}
+
+img.logo {
+    width: 6vw;
+    vertical-align: middle;
+}
