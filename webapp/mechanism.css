@@ -1,0 +1,39 @@
+div.body {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+div.motor {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 600px;
+    border: 3px solid black;
+    border-radius: 5px;
+    gap: 4px;
+    margin: 10px;
+    padding: 10px;
+    background-color: var(--light);
+}
+
+select#motor_name {
+    flex: 0 1 auto;
+    min-width: 20em;
+    align-self: center;
+    margin: auto 100%;
+}
+
+div.field {
+    display: flex;
+}
+
+div.field input {
+    width: 7em;
+}
+
+div.field label {
+    margin: auto 5px;
+}

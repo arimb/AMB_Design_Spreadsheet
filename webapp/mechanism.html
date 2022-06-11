@@ -4,14 +4,54 @@
         <title>AMB Robotics Calculator</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="mechanism.css">
     </head>
     <body>
         <div class="header">
             <a href="index.html">
                 <img src="img/logo.png" class="logo" alt="logo">
+            </a>
+            <a href="index.html">
                 <h1>AMB Robotics Calculator</h1>
             </a>
+            <img src="img/logo_blank.png" class="logo" style="flex-shrink: 10;">
+        </div>
+        <div class="body">
+            <div class="motor">
+                <select id="motor_name">
+                    <option>Custom</option>
+                </select>
+                <div class="field">
+                    <label for="motor_free_speed">Free Speed (rpm)</label>
+                    <input id="motor_free_speed" type="number" min="0" readonly>
+                </div>
+                <div class="field">
+                    <label for="motor_stall_torque">Stall Torque (Nm)</label>
+                    <input id="motor_stall_torque" type="number" min="0" readonly>
+                </div>
+                <div class="field">
+                    <label for="motor_free_current">Free Current (A)</label>
+                    <input id="motor_free_current" type="number" min="0" readonly>
+                </div>
+                <div class="field">
+                    <label for="motor_stall_current">Stall Current (A)</label>
+                    <input id="motor_stall_current" type="number" min="0" readonly>
+                </div>
+                <div class="field">
+                    <label for="motor_count">Number of Motors</label>
+                    <input id="motor_count" type="number" min="1" step="1" value="1">
+                </div>
+                <div class="field">
+                    <label for="">Provided Voltage (V)</label>
+                    <input id="motor_voltage" type="number" min="0" value="12">
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <span>
+                Created by Ari Meles-Braverman &copy; 2022. For educational purposes only. Contact <a href="https://www.chiefdelphi.com/u/arimb/summary" style="text-decoration: underline;">@AriMB</a> on ChiefDelphi with questions or suggestions.
+            </span>
         </div>
     </body>
 </html>

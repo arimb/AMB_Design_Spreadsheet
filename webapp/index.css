@@ -1,0 +1,21 @@
+div.button-row {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+button.sheet {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 1 auto;
+    min-width: 100%;
+}
+
+button.sheet img {
+    max-width: 10vw;
+    width: auto;
+    height: auto;
+    margin-right: 1em;
+}
