@@ -12,39 +12,73 @@
             <a href="index.html">
                 <img src="img/logo.png" class="logo" alt="logo">
             </a>
-            <a href="index.html">
-                <h1>AMB Robotics Calculator</h1>
-            </a>
+            <h1>Mechanism Ratio Calculator</h1>
             <img src="img/logo_blank.png" class="logo" style="flex-shrink: 10;">
         </div>
         <div class="body">
-            <div class="motor">
+            <div class="page-element" id="motor">
+                <h2>Motor Selection</h2>
+                <div class="break"></div>
                 <select id="motor_name">
                     <option>Custom</option>
                 </select>
+                <div class="break"></div>
                 <div class="field">
-                    <label for="motor_free_speed">Free Speed (rpm)</label>
+                    <label for="motor_free_speed">Free Speed</label>
                     <input id="motor_free_speed" type="number" min="0" readonly>
+                    &nbsp;rpm
                 </div>
                 <div class="field">
-                    <label for="motor_stall_torque">Stall Torque (Nm)</label>
+                    <label for="motor_stall_torque">Stall Torque</label>
                     <input id="motor_stall_torque" type="number" min="0" readonly>
+                    &nbsp;Nm
                 </div>
                 <div class="field">
-                    <label for="motor_free_current">Free Current (A)</label>
+                    <label for="motor_free_current">Free Current</label>
                     <input id="motor_free_current" type="number" min="0" readonly>
+                    &nbsp;Amps
                 </div>
                 <div class="field">
-                    <label for="motor_stall_current">Stall Current (A)</label>
+                    <label for="motor_stall_current">Stall Current</label>
                     <input id="motor_stall_current" type="number" min="0" readonly>
+                    &nbsp;Amps
                 </div>
                 <div class="field">
                     <label for="motor_count">Number of Motors</label>
                     <input id="motor_count" type="number" min="1" step="1" value="1">
                 </div>
                 <div class="field">
-                    <label for="">Provided Voltage (V)</label>
+                    <label for="">Provided Voltage</label>
                     <input id="motor_voltage" type="number" min="0" value="12">
+                    &nbsp;Volts
+                </div>
+            </div>
+            <div class="page-element" id="load">
+                <h2>Applied Load</h2>
+                <div class="break"></div>
+                <div class="field">
+                    <label for="radius">Radius</label>
+                    <input id="radius" type="number" min="0">
+                    <select id="radius_units">
+                        <option>inch</option>
+                        <option>mm</option>
+                        <option>foot</option>
+                        <option>meter</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="load">Load Force</label>
+                    <input id="load" type="number" min="0">
+                    <select id="load_units">
+                        <option>lbs</option>
+                        <option>kg</option>
+                        <option>N</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="efficiency">Gearbox Efficiency</label>
+                    <input id="load" type="number" min="0" max="100">
+                    &nbsp;%
                 </div>
             </div>
         </div>

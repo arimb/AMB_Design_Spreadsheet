@@ -2,9 +2,11 @@ div.body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    flex-direction: row;
+    align-items: flex-start;
 }
 
-div.motor {
+div.page-element {
     display: flex;
     flex-direction: row;
     align-items: stretch;
@@ -13,17 +15,24 @@ div.motor {
     max-width: 600px;
     border: 3px solid black;
     border-radius: 5px;
-    gap: 4px;
+    gap: 4px 3em;
     margin: 10px;
     padding: 10px;
     background-color: var(--light);
+}
+
+div.page-element h2 {
+    margin: 0 auto;
 }
 
 select#motor_name {
     flex: 0 1 auto;
     min-width: 20em;
     align-self: center;
-    margin: auto 100%;
+}
+
+div.break {
+    flex-basis: 100%;
 }
 
 div.field {
@@ -31,9 +40,13 @@ div.field {
 }
 
 div.field input {
-    width: 7em;
+    max-width: 7em;
 }
 
 div.field label {
     margin: auto 5px;
+}
+
+div.page-element#load {
+    flex-direction: column;
 }
