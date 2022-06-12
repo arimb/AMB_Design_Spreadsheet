@@ -4,8 +4,12 @@
         <title>AMB Robotics Calculator</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="main.css">
-        <link rel="stylesheet" href="mechanism.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/calculators.css">
+        <link rel="stylesheet" href="css/mechanism.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="js/mechanism.js"></script>
     </head>
     <body>
         <div class="header">
@@ -17,30 +21,30 @@
         </div>
         <div class="body">
             <div class="page-element" id="motor">
-                <h2>Motor Selection</h2>
-                <div class="break"></div>
+                <!-- <h2>Motor Selection</h2>
+                <div class="break"></div> -->
                 <select id="motor_name">
                     <option>Custom</option>
                 </select>
                 <div class="break"></div>
                 <div class="field">
                     <label for="motor_free_speed">Free Speed</label>
-                    <input id="motor_free_speed" type="number" min="0" readonly>
+                    <input id="motor_free_speed" type="number" min="0" disabled>
                     &nbsp;rpm
                 </div>
                 <div class="field">
                     <label for="motor_stall_torque">Stall Torque</label>
-                    <input id="motor_stall_torque" type="number" min="0" readonly>
+                    <input id="motor_stall_torque" type="number" min="0" disabled>
                     &nbsp;Nm
                 </div>
                 <div class="field">
                     <label for="motor_free_current">Free Current</label>
-                    <input id="motor_free_current" type="number" min="0" readonly>
+                    <input id="motor_free_current" type="number" min="0" disabled>
                     &nbsp;Amps
                 </div>
                 <div class="field">
                     <label for="motor_stall_current">Stall Current</label>
-                    <input id="motor_stall_current" type="number" min="0" readonly>
+                    <input id="motor_stall_current" type="number" min="0" disabled>
                     &nbsp;Amps
                 </div>
                 <div class="field">
@@ -54,8 +58,8 @@
                 </div>
             </div>
             <div class="page-element" id="load">
-                <h2>Applied Load</h2>
-                <div class="break"></div>
+                <!-- <h2>Applied Load</h2>
+                <div class="break"></div> -->
                 <div class="field">
                     <label for="radius">Radius</label>
                     <input id="radius" type="number" min="0">
@@ -80,6 +84,72 @@
                     <input id="load" type="number" min="0" max="100">
                     &nbsp;%
                 </div>
+            </div>
+            <div class="break"></div>
+            <div class="page-element" id="calculation">
+                <div class="inputs">
+                    <div class="field">
+                        <label for="ratio">Gear Ratio</label>
+                        <input id="ratio" type="number" min="0">
+                        :1
+                    </div>
+                    <div class="field">
+                        <label for="rot_speed">Free Rotational Speed</label>
+                        <input id="rot_speed" type="number" min="0">
+                        <select id="rot_speed_units">
+                            <option>rev/s</option>
+                            <option>rpm</option>
+                            <option>rad/s</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="rot_speed_loaded">Loaded Rotational Speed</label>
+                        <input id="rot_speed_loaded" type="number" min="0">
+                        <select id="rot_speed_units">
+                            <option>rev/s</option>
+                            <option>rpm</option>
+                            <option>rad/s</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="lin_speed">Free Linear Speed</label>
+                        <input id="lin_speed" type="number" min="0">
+                        <select id="lin_speed_units">
+                            <option>feet/s</option>
+                            <option>m/s</option>
+                            <option>inch/s</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="lin_speed_loaded">Loaded Linear Speed</label>
+                        <input id="lin_speed_loaded" type="number" min="0">
+                        <select id="lin_speed_units">
+                            <option>feet/s</option>
+                            <option>m/s</option>
+                            <option>inch/s</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="current">Current Per Motor</label>
+                        <input id="current" type="number" min="0">
+                        &nbsp;Amps
+                    </div>
+                    <div class="field">
+                        <label for="stall_load">Stall Load</label>
+                        <input id="stall_load" type="number" min="0">
+                        <select id="load_units">
+                            <option>lbs</option>
+                            <option>kg</option>
+                            <option>N</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="stall_voltage">Stall Voltage</label>
+                        <input id="stall_voltage" type="number" min="0">
+                        &nbsp;Volts
+                    </div>
+                </div>
+                <canvas id="graph"></canvas>
             </div>
         </div>
         <div class="footer">

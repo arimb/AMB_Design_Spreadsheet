@@ -46,7 +46,3 @@ div.field input {
 div.field label {
     margin: auto 5px;
 }
-
-div.page-element#load {
-    flex-direction: column;
-}
