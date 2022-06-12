@@ -1,3 +1,8 @@
+:root {
+    --selected: #E9EA6A; 
+     /* #8D788D; */
+}
+
 div.page-element#load {
     flex-direction: column;
 }
@@ -14,8 +19,37 @@ div.inputs {
     gap: 4px;
 }
 
+div.field input[type=radio] {
+    border: 2px solid black;
+    padding: 0.4em;
+    margin: 3px 3px 3px 6px;
+    -webkit-appearance: none;
+}
+
+div.field input[type=radio]:checked {
+    background-color: var(--selected);
+}
+
 canvas#graph {
     height: 300px;
     width: 500px;
     background-color: white;
+}
+
+div.max-buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+button.max {
+    font-size: 0.8em;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 0px;
+    box-shadow: none;
+}
+
+button.max input {
+    display: none;
 }

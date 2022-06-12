@@ -13,6 +13,7 @@ body {
     align-items: stretch;
     max-width: 1200px;
     margin: 0 auto;
+    min-height: 100vh;
 }
 
 a {
@@ -47,7 +48,8 @@ div.body {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    
+    flex: 1;
+    align-content: flex-start;
 }
 
 button {
@@ -71,6 +73,7 @@ div.footer {
     justify-content: center;
     align-items: center;
     margin-top: 5px;
+    flex-shrink: 0;
 }
 
 table {

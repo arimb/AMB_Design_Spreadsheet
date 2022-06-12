@@ -1,3 +1,7 @@
+div.body {
+    align-content: center;
+}
+
 div.button-row {
     display: flex;
     justify-content: space-evenly;

@@ -35,7 +35,11 @@
                 <div class="field">
                     <label for="motor_stall_torque">Stall Torque</label>
                     <input id="motor_stall_torque" type="number" min="0" disabled>
-                    &nbsp;Nm
+                    <select id="motor_stall_torque_units">
+                        <option value="1">Nm</option>
+                        <option value="0.00706">oz-in</option>
+                        <option value="1.35582">ft-lbs</option>
+                    </select>
                 </div>
                 <div class="field">
                     <label for="motor_free_current">Free Current</label>
@@ -48,12 +52,12 @@
                     &nbsp;Amps
                 </div>
                 <div class="field">
-                    <label for="motor_count">Number of Motors</label>
-                    <input id="motor_count" type="number" min="1" step="1" value="1">
+                    <label for="num_motors">Number of Motors</label>
+                    <input id="num_motors" type="number" min="1" step="1" value="1">
                 </div>
                 <div class="field">
                     <label for="">Provided Voltage</label>
-                    <input id="motor_voltage" type="number" min="0" value="12">
+                    <input id="applied_voltage" type="number" min="0" value="12">
                     &nbsp;Volts
                 </div>
             </div>
@@ -62,26 +66,26 @@
                 <div class="break"></div> -->
                 <div class="field">
                     <label for="radius">Radius</label>
-                    <input id="radius" type="number" min="0">
+                    <input id="radius" type="number" min="0" value="1">
                     <select id="radius_units">
-                        <option>inch</option>
-                        <option>mm</option>
-                        <option>foot</option>
-                        <option>meter</option>
+                        <option value="0.0254">inch</option>
+                        <option value="0.001">mm</option>
+                        <option value="0.3048">foot</option>
+                        <option value="1">meter</option>
                     </select>
                 </div>
                 <div class="field">
                     <label for="load">Load Force</label>
-                    <input id="load" type="number" min="0">
+                    <input id="load" type="number" min="0" value="10">
                     <select id="load_units">
-                        <option>lbs</option>
-                        <option>kg</option>
-                        <option>N</option>
+                        <option value="4.448">lbs</option>
+                        <option value="9.81">kg</option>
+                        <option value="1">N</option>
                     </select>
                 </div>
                 <div class="field">
                     <label for="efficiency">Gearbox Efficiency</label>
-                    <input id="load" type="number" min="0" max="100">
+                    <input id="efficiency" type="number" min="0" max="100" value="90">
                     &nbsp;%
                 </div>
             </div>
@@ -89,64 +93,87 @@
             <div class="page-element" id="calculation">
                 <div class="inputs">
                     <div class="field">
-                        <label for="ratio">Gear Ratio</label>
-                        <input id="ratio" type="number" min="0">
-                        :1
+                        <label for="gear_ratio">Gear Ratio</label>
+                        <input id="gear_ratio" type="number" min="0">
+                        &nbsp;: 1
+                        <input id="gear_ratio_check" type="radio" name="driving" checked>
                     </div>
                     <div class="field">
                         <label for="rot_speed">Free Rotational Speed</label>
                         <input id="rot_speed" type="number" min="0">
                         <select id="rot_speed_units">
-                            <option>rev/s</option>
-                            <option>rpm</option>
-                            <option>rad/s</option>
+                            <option value="6.283">rev/s</option>
+                            <option value="0.10472">rpm</option>
+                            <option value="1">rad/s</option>
                         </select>
+                        <input id="rot_speed_check" type="radio" name="driving">
                     </div>
                     <div class="field">
                         <label for="rot_speed_loaded">Loaded Rotational Speed</label>
                         <input id="rot_speed_loaded" type="number" min="0">
-                        <select id="rot_speed_units">
-                            <option>rev/s</option>
-                            <option>rpm</option>
-                            <option>rad/s</option>
+                        <select id="rot_speed_loaded_units">
+                            <option value="6.283">rev/s</option>
+                            <option value="0.10472">rpm</option>
+                            <option value="1">rad/s</option>
                         </select>
+                        <input id="rot_speed_loaded_check" type="radio" name="driving">
                     </div>
                     <div class="field">
                         <label for="lin_speed">Free Linear Speed</label>
                         <input id="lin_speed" type="number" min="0">
                         <select id="lin_speed_units">
-                            <option>feet/s</option>
-                            <option>m/s</option>
-                            <option>inch/s</option>
+                            <option value="0.3048">feet/s</option>
+                            <option value="1">m/s</option>
+                            <option value="0.0254">inch/s</option>
                         </select>
+                        <input id="lin_speed_check" type="radio" name="driving">
                     </div>
                     <div class="field">
                         <label for="lin_speed_loaded">Loaded Linear Speed</label>
                         <input id="lin_speed_loaded" type="number" min="0">
-                        <select id="lin_speed_units">
-                            <option>feet/s</option>
-                            <option>m/s</option>
-                            <option>inch/s</option>
+                        <select id="lin_speed_loaded_units">
+                            <option value="0.3048">feet/s</option>
+                            <option value="1">m/s</option>
+                            <option value="0.0254">inch/s</option>
                         </select>
+                        <input id="lin_speed_loaded_check" type="radio" name="driving">
                     </div>
                     <div class="field">
                         <label for="current">Current Per Motor</label>
                         <input id="current" type="number" min="0">
                         &nbsp;Amps
+                        <input id="current_check" type="radio" name="driving">
                     </div>
                     <div class="field">
                         <label for="stall_load">Stall Load</label>
                         <input id="stall_load" type="number" min="0">
-                        <select id="load_units">
-                            <option>lbs</option>
-                            <option>kg</option>
-                            <option>N</option>
+                        <select id="stall_load_units">
+                            <option value="4.448">lbs</option>
+                            <option value="9.81">kg</option>
+                            <option value="1">N</option>
                         </select>
+                        <input id="stall_load_check" type="radio" name="driving">
                     </div>
                     <div class="field">
                         <label for="stall_voltage">Stall Voltage</label>
                         <input id="stall_voltage" type="number" min="0">
                         &nbsp;Volts
+                        <input id="stall_voltage_check" type="radio" name="driving">
+                    </div>
+                    <div class="max-buttons">
+                        <button class="max" id="max_power">
+                            <a></a>
+                            <input id="max_power_check" type="radio" name="driving">
+                            MAX POWER
+                        </button>
+                        <button class="max" id="max_efficiency">
+                            <input id="max_efficiency_check" type="radio" name="driving">
+                            MAX EFFICIENCY
+                        </button>
+                        <button class="max" id="stall">
+                            <input id="stall_check" type="radio" name="driving">
+                            STALL
+                        </button>
                     </div>
                 </div>
                 <canvas id="graph"></canvas>
