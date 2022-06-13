@@ -1,0 +1,29 @@
+div.page-element {
+    flex-direction: column;
+    align-items: center;
+    row-gap: 0.4em;
+}
+
+div#units {
+    flex-direction: row;
+}
+
+select#units {
+    width: 10em;
+}
+
+select {
+    width: 10em;
+}
+
+h3 {
+    margin: 0 0 0.5em 0;
+}
+
+div.field input {
+    max-width: 5em;
+}
+
+div#dimensions {
+    align-items: flex-end;
+}
