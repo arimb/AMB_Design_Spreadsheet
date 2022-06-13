@@ -53,3 +53,17 @@ button.max {
 button.max input {
     display: none;
 }
+
+div.graph {
+    display: flex;
+    flex-direction: column;
+}
+
+div.graph-limits {
+    display: flex;
+    gap: 0.3em;
+}
+
+div.graph-limits input {
+    width: 3em;
+}

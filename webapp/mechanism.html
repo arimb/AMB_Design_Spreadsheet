@@ -176,7 +176,16 @@
                         </button>
                     </div>
                 </div>
-                <canvas id="graph"></canvas>
+                <div class="graph">
+                    <canvas id="graph"></canvas>
+                    <div class="graph-limits">
+                        <input id="graph-min" type="number" value="5">
+                        <label for="graph-min">min</label>
+                        <div style="flex: 1;"></div>
+                        <label for="graph-max">max</label>
+                        <input id="graph-max" type="number" value="500">
+                    </div>
+                </div>
             </div>
         </div>
         <div class="footer">
