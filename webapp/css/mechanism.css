@@ -30,9 +30,12 @@ div.field input[type=radio]:checked {
     background-color: var(--selected);
 }
 
+div.graph {
+    width: 50vw;
+    max-width: 700px;
+}
+
 canvas#graph {
-    height: 300px;
-    width: 500px;
     background-color: white;
 }
 
@@ -66,4 +69,13 @@ div.graph-limits {
 
 div.graph-limits input {
     width: 3em;
+}
+
+div.graph-limits input::-webkit-outer-spin-button,
+div.graph-limits input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+div.graph-limits input[type=number] {
+  -moz-appearance: textfield;
 }

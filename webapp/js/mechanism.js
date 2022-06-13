@@ -34,19 +34,27 @@ $(document).ready(function(){
     // Update motor properties
     function update_motor(){
         wf = parseFloat($("input#motor_free_speed").val()) * (Math.PI/30) * (parseFloat($("input#applied_voltage").val()) / 12);
-        Ts = parseFloat($("input#motor_stall_torque").val()) * parseFloat($("select#motor_stall_torque_units").val()) * (parseFloat($("input#applied_voltage").val()) / 12) * (parseFloat($("input#efficiency").val()) / 100) * parseInt($("input#num_motors").val());
+        Ts = parseFloat($("input#motor_stall_torque").val()) * parseFloat($("select#motor_stall_torque_units").val()) * (parseFloat($("input#applied_voltage").val()) / 12) * (parseFloat($("input#gearbox_efficiency").val()) / 100) * parseInt($("input#num_motors").val());
         If = parseFloat($("input#motor_free_current").val()) * (parseFloat($("input#applied_voltage").val()) / 12) * parseInt($("input#num_motors").val());
         Is = parseFloat($("input#motor_stall_current").val()) * (parseFloat($("input#applied_voltage").val()) / 12) * parseInt($("input#num_motors").val());
+        
+        // Update graph min (max power) and max (max efficiency) then redraw
+        $("input#graph-min").val((2*load*radius/Ts).toFixed(2));
+        $("input#graph-max").val((radius*load/Ts*(1+Math.sqrt(Is/If))).toFixed(2));
         draw_graph();
     }
     $("input[id^=motor_]").change(update_motor);
     $("input#num_motors").change(update_motor);
     $("input#applied_voltage").change(update_motor);
-    $("input#efficiency").change(update_motor);
+    $("input#gearbox_efficiency").change(update_motor);
 
     // Update radius
     function update_radius(){
         radius = parseFloat($("input#radius").val()) * parseFloat($("select#radius_units").val());
+        
+        // Update graph min (max power) and max (max efficiency) then redraw
+        $("input#graph-min").val((2*load*radius/Ts).toFixed(2));
+        $("input#graph-max").val((radius*load/Ts*(1+Math.sqrt(Is/If))).toFixed(2));
         draw_graph();
     }
     $("input#radius").change(update_radius);
@@ -56,6 +64,10 @@ $(document).ready(function(){
     // Update load
     function update_load(){
         load = parseFloat($("input#load").val()) * parseFloat($("select#load_units").val());
+
+        // Update graph min (max power) and max (max efficiency) then redraw
+        $("input#graph-min").val((2*load*radius/Ts).toFixed(2));
+        $("input#graph-max").val((radius*load/Ts*(1+Math.sqrt(Is/If))).toFixed(2));
         draw_graph();
     }
     $("input#load").change(update_load);
@@ -63,7 +75,7 @@ $(document).ready(function(){
     update_load();
 
     function calculate_vals(ratio){
-        return [
+        tmp = [
             wf / ratio / parseFloat($("select#rot_speed_units").val()),     // rot_speed
             wf/ratio * radius / parseFloat($("select#lin_speed_units").val()),      // lin_speed
             Ts * ratio  / radius / parseFloat($("select#stall_load_units").val()),      // stall_load
@@ -72,6 +84,8 @@ $(document).ready(function(){
             ((Is-If)/Ts * radius*load / ratio + If) / parseInt($("input#num_motors").val()),    // current
             radius*load / ratio / Ts * parseFloat($("input#applied_voltage").val())     // stall_voltage
         ];
+        tmp.push(tmp[4]*parseFloat($("select#lin_speed_loaded_units").val()) * load / (tmp[5]*parseInt($("input#num_motors").val()) * parseFloat($("input#applied_voltage").val())));     // efficiency
+        return tmp;
     }
 
     function update_vals(){
@@ -127,6 +141,7 @@ $(document).ready(function(){
         $("input#lin_speed_loaded").val( vals[4].toFixed(2) );
         $("input#current").val( vals[5].toFixed(2) );
         $("input#stall_voltage").val( vals[6].toFixed(2) );
+        $("input#efficiency").val( vals[7].toFixed(2) );
     }
 
     $("div.field select").change(update_vals);
@@ -165,40 +180,52 @@ $(document).ready(function(){
 
     // Draw graph
     function draw_graph(){
+        $("canvas#graph").remove();
+        $("div.graph").prepend('<canvas id="graph"></canvas>');
+        
         var ratios = [];
         var data = [];
-        const min = parseInt($("input#graph-min").val());
-        const max = parseInt($("input#graph-max").val());
-        console.log(min, max);
-        for (let r = min; r < max; r+=(max-min)/30) {
+        const min = parseFloat($("input#graph-min").val());
+        const max = parseFloat($("input#graph-max").val());
+        for (let r = min; r < max; r*=Math.pow(max/min, 1/30)) {
             ratios.push(r);
             data.push(calculate_vals(r));
         }
-        console.log(data);
         var graph = new Chart("graph", {
             type: "line",
             data: {
                 labels: ratios,
                 datasets: [{
-                    data: data.map(function(value,index) { return value[0]; }),
+                    data: data.map(function(value,index) { return value[0]*parseFloat($("select#rot_speed_units").val())/6.283; }),
                     label: "Free Rotational Speed",
                     borderColor: "red",
-                    fill: false
+                    fill: false,
+                    pointRadius: 0
                 },{
-                    data: data.map(function(value,index) { return value[1]; }),
+                    data: data.map(function(value,index) { return value[3]*parseFloat($("select#rot_speed_loaded_units").val())/6.283; }),
                     label: "Loaded Rotational Speed",
-                    borderColor: "orange",
-                    fill: false
-                },{
-                    data: data.map(function(value,index) { return value[4]; }),
-                    label: "Current Per Motor",
                     borderColor: "magenta",
-                    fill: false
+                    fill: false,
+                    pointRadius: 0
+                },{
+                    data: data.map(function(value,index) { return value[5]; }),
+                    label: "Current Per Motor",
+                    borderColor: "orange",
+                    fill: false,
+                    pointRadius: 0
                 },{
                     data: data.map(function(value,index) { return value[6]; }),
                     label: "Stall Voltage",
                     borderColor: "green",
-                    fill: false
+                    fill: false,
+                    yAxisID: "right",
+                    pointRadius: 0
+                },{
+                    data: data.map(function(value,index) { return 100*value[7]; }),
+                    label: "Efficiency",
+                    borderColor: "blue",
+                    fill: false,
+                    pointRadius: 0
                 }]
             },
             options: {
@@ -208,24 +235,27 @@ $(document).ready(function(){
                         display: true,
                         type: "logarithmic",
                         title: {
-                            text: "Gear Ratio"
+                            display: true,
+                            text: "Gear Ratio (X:1)",
+                            padding: {
+                                top: 0
+                            }
                         }
                     },
-                    y: {
+                    left: {
                         display: true,
-                        position: "left"
+                        position: "left",
+                        title: {
+                            display: true,
+                            text: "Speed (rev/s), Current (A), Efficiency (%)"
+                        }
                     },
-                    y1: {
+                    right: {
                         display: true,
-                        position: "right"
-                    }
-                },
-                legend: {
-                    display: true,
-                    position: "top",
-                    labels: {
-                        font: {
-                            lineHeight: 0.5
+                        position: "right",
+                        title: {
+                            display: true,
+                            text: "Voltage (V)"
                         }
                     }
                 }
@@ -233,5 +263,4 @@ $(document).ready(function(){
         })
     }
     $("div.graph-limits input").change(draw_graph);
-
 });

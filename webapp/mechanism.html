@@ -7,8 +7,9 @@
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/calculators.css">
         <link rel="stylesheet" href="css/mechanism.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="js/mechanism.js"></script>
     </head>
     <body>
@@ -17,7 +18,6 @@
                 <img src="img/logo.png" class="logo" alt="logo">
             </a>
             <h1>Mechanism Ratio Calculator</h1>
-            <img src="img/logo_blank.png" class="logo" style="flex-shrink: 10;">
         </header>
         <main>
             <div class="page-element" id="motor">
@@ -84,8 +84,8 @@
                     </select>
                 </div>
                 <div class="field">
-                    <label for="efficiency">Gearbox Efficiency</label>
-                    <input id="efficiency" type="number" min="0" max="100" value="90">
+                    <label for="gearbox_efficiency">Gearbox Efficiency</label>
+                    <input id="gearbox_efficiency" type="number" min="0" max="100" value="90">
                     &nbsp;%
                 </div>
             </div>
@@ -160,6 +160,12 @@
                         &nbsp;Volts
                         <input id="stall_voltage_check" type="radio" name="driving">
                     </div>
+                    <div class="field">
+                        <label for="efficiency">Total Efficiency</label>
+                        <input id="efficiency" type="number" disabled>
+                        &nbsp;%
+                        <input id="stall_voltage_check" type="radio" name="driving" style="border: 2px solid transparent;" disabled>
+                    </div>
                     <div class="max-buttons">
                         <button class="max" id="max_power">
                             <a></a>
@@ -179,11 +185,11 @@
                 <div class="graph">
                     <canvas id="graph"></canvas>
                     <div class="graph-limits">
-                        <input id="graph-min" type="number" value="5">
-                        <label for="graph-min">min</label>
+                        <input id="graph-min" type="number">
+                        <label for="graph-min">min (default: max-power)</label>
                         <div style="flex: 1;"></div>
-                        <label for="graph-max">max</label>
-                        <input id="graph-max" type="number" value="500">
+                        <label for="graph-max">(default: max-efficiency) max</label>
+                        <input id="graph-max" type="number">
                     </div>
                 </div>
             </div>

@@ -6,6 +6,7 @@
     --dark: #405a3f;
     background-color: var(--white);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 0.9em;
 }
 
 body {
