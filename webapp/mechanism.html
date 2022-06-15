@@ -95,7 +95,7 @@
                     <div class="field">
                         <label for="gear_ratio">Gear Ratio</label>
                         <input id="gear_ratio" type="number" min="0">
-                        &nbsp;: 1
+                        <span>&nbsp;: 1</span>
                         <input id="gear_ratio_check" type="radio" name="driving" checked>
                     </div>
                     <div class="field">
@@ -141,7 +141,7 @@
                     <div class="field">
                         <label for="current">Current Per Motor</label>
                         <input id="current" type="number" min="0">
-                        &nbsp;Amps
+                        <span>&nbsp;Amps</span>
                         <input id="current_check" type="radio" name="driving">
                     </div>
                     <div class="field">
@@ -157,14 +157,14 @@
                     <div class="field">
                         <label for="stall_voltage">Stall Voltage</label>
                         <input id="stall_voltage" type="number" min="0">
-                        &nbsp;Volts
+                        <span>&nbsp;Volts</span>
                         <input id="stall_voltage_check" type="radio" name="driving">
                     </div>
                     <div class="field">
                         <label for="efficiency">Total Efficiency</label>
-                        <input id="efficiency" type="number" disabled>
-                        &nbsp;%
-                        <input id="stall_voltage_check" type="radio" name="driving" style="border: 2px solid transparent;" disabled>
+                        <input id="efficiency" type="number" readonly>
+                        <span>&nbsp;%</span>
+                        <input id="stall_voltage_check" type="radio" name="driving" class="hidden" disabled>
                     </div>
                     <div class="max-buttons">
                         <button class="max" id="max_power">

@@ -40,7 +40,16 @@ div.field {
 }
 
 div.field input {
-    max-width: 7em;
+    max-width: 5em;
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+div.graph-limits input[type=number] {
+  -moz-appearance: textfield;
 }
 
 div.field label {

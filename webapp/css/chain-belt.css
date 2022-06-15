@@ -1,7 +1,15 @@
 div.page-element {
     flex-direction: column;
     align-items: center;
+    justify-content: space-evenly;
     row-gap: 0.4em;
+}
+
+div.sprockets {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 div#units {
@@ -24,6 +32,23 @@ div.field input {
     max-width: 5em;
 }
 
+div.field span {
+    min-width: 2em;
+}
+
 div#dimensions {
     align-items: flex-end;
+}
+
+div#dimensions span {
+    min-width: 3em;
+}
+
+div.driving {
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+}
+div.driving input {
+    margin-left: 3px;
 }

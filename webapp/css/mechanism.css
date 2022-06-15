@@ -23,11 +23,31 @@ div.field input[type=radio] {
     border: 2px solid black;
     padding: 0.4em;
     margin: 3px 3px 3px 6px;
+    background-color: var(--med-light);
     -webkit-appearance: none;
+}
+
+div.field input[type=radio]:hover {
+    background-color: var(--dark);
 }
 
 div.field input[type=radio]:checked {
     background-color: var(--selected);
+}
+
+div.field input.hidden[type=radio] {
+    background-color: transparent;
+    border: 2px solid transparent;
+}
+
+div.inputs span {
+    min-width: calc(4.5em - 3px);
+    box-sizing: content-box;
+}
+
+div.inputs select {
+    min-width: 4.5em;
+    box-sizing: content-box;
 }
 
 div.graph {
@@ -35,14 +55,12 @@ div.graph {
     max-width: 700px;
 }
 
-canvas#graph {
-    background-color: white;
-}
-
 div.max-buttons {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    font-size: large;
+    margin-top: 1em;
 }
 
 button.max {
@@ -53,8 +71,16 @@ button.max {
     box-shadow: none;
 }
 
+button.max:hover {
+    background-color: var(--dark);
+}
+
 button.max input {
     display: none;
+}
+
+canvas#graph {
+    background-color: white;
 }
 
 div.graph {
@@ -69,13 +95,4 @@ div.graph-limits {
 
 div.graph-limits input {
     width: 3em;
-}
-
-div.graph-limits input::-webkit-outer-spin-button,
-div.graph-limits input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-div.graph-limits input[type=number] {
-  -moz-appearance: textfield;
 }

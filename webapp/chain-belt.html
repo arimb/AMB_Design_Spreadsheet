@@ -21,14 +21,14 @@
         </header>
         <main>
             <div style="flex-direction: column;">
-                <div class="page-element" id="units">
+                <div class="page-element" id="units" style="justify-content: center;">
                     <div>
                         <label for="inch">inch</label>
-                        <input id="inch" name="units" type="radio" value='["in",25.4,"lbs",1]' checked>
+                        <input id="inch" name="units" type="radio" value='["in",25.4,"lbs",1,"lbs/ft",1]' checked>
                     </div>
                     <div>
                         <label for="mm">mm</label>
-                        <input id="mm" name="units" type="radio" value='["mm",1,"N",4.448]'>
+                        <input id="mm" name="units" type="radio" value='["mm",1,"N",0.2228,"kg/m",1.4882]'>
                     </div>
                 </div>
                 <div class="page-element" id="type">
@@ -36,47 +36,45 @@
                         <option>Custom</option>
                     </select>
                     <div class="field">
-                        <label for="pitch_dist">Pitch Distance</label>
-                        <input id="pitch_dist" type="number" min="0" disabled>
+                        <label for="pitch">Pitch Distance</label>
+                        <input id="pitch" type="number" min="0" disabled>
                         &nbsp;
                         <span class="dist_unit"></span>
                     </div>
                 </div>
             </div>
-            <div class="page-element" id="sprocket1">
-                <h3>Sprocket 1</h3>
-                <div class="field">
-                    <label for="teeth1">Tooth Count</label>
-                    <input id="teeth1" type="number" min="0" step="1">
+            <div class="sprockets">
+                <div class="page-element" id="sprocket1">
+                    <h3>Sprocket 1</h3>
+                    <div class="field">
+                        <label for="teeth1">Tooth Count</label>
+                        <input id="teeth1" type="number" min="0" step="1">
+                    </div>
+                    <div class="field">
+                        <label for="diam1">Diameter</label>
+                        <input id="diam1" type="number" disabled>
+                        &nbsp;
+                        <span class="dist_unit"></span>
+                    </div>
                 </div>
-                <div class="field">
-                    <label for="diam1">Diameter</label>
-                    <input id="diam1" type="number" disabled>
-                    &nbsp;
-                    <span class="dist_unit"></span>
+                <div class="page-element" id="sprocket2">
+                    <h3>Sprocket 2</h3>
+                    <div class="field">
+                        <label for="teeth2">Tooth Count</label>
+                        <input id="teeth2" type="number" min="0" step="1">
+                    </div>
+                    <div class="field">
+                        <label for="diam2">Diameter</label>
+                        <input id="diam2" type="number" disabled>
+                        &nbsp;
+                        <span class="dist_unit"></span>
+                    </div>
                 </div>
             </div>
-            <div class="page-element" id="sprocket2">
-                <h3>Sprocket 2</h3>
-                <div class="field">
-                    <label for="teeth2">Tooth Count</label>
-                    <input id="teeth2" type="number" min="0" step="1">
-                </div>
-                <div class="field">
-                    <label for="diam2">Diameter</label>
-                    <input id="diam2" type="number" disabled>
-                    &nbsp;
-                    <span class="dist_unit"></span>
-                </div>
-            </div>
+            
             <div class="break"></div>
             <div class="page-element" id="dimensions">
-                <div class="field">
-                    <label for="pitch">Pitch Length</label>
-                    <input id="pitch" type="number" disabled>
-                    &nbsp;
-                    <span class="dist_unit"></span>
-                </div>
+                <h3 style="align-self: center;">Useful Dimensions</h3>
                 <div class="field">
                     <label for="width">Standard Width</label>
                     <input id="width" type="number" disabled>
@@ -106,6 +104,40 @@
                     <input id="load_rating" type="number" disabled>
                     &nbsp;
                     <span class="force_unit"></span>
+                </div>
+            </div>
+            <div class="page-element" id="calculation">
+                <div class="driving">
+                    <div>
+                        <label for="by_links">By # Links</label>
+                        <input id="by_links" name="driving" type="radio" checked>
+                    </div>
+                    <div>
+                        <label for="mm">By Approx. C-C</label>
+                        <input id="mm" name="driving" type="radio">
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="links">Number of Links</label>
+                    <input id="links" type="number">
+                </div>
+                <div class="field">
+                    <label for="dist">C-C Distance</label>
+                    <input id="dist" type="number">
+                    &nbsp;
+                    <span class="dist_unit"></span>
+                </div>
+                <div class="field">
+                    <label for="chain_length">Chain Length</label>
+                    <input id="chain_length" type="number">
+                    &nbsp;
+                    <span class="dist_unit"></span>
+                </div>
+                <div class="field">
+                    <label for="clearance">Clearance</label>
+                    <input id="clearance" type="number">
+                    &nbsp;
+                    <span class="dist_unit"></span>
                 </div>
             </div>
         </main>

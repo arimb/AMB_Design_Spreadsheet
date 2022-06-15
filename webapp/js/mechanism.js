@@ -6,6 +6,7 @@ $(document).ready(function(){
     $("select#motor_name").change(function(){
         if($("select#motor_name").val() == "Custom"){
             $("input[id^=motor_]").prop("disabled", false);
+            $("select#motor_stall_torque_units").prop("disabled", false);
         }else{
             $("input#motor_free_speed").val(motors[$("select#motor_name").val()][0]);
             $("input#motor_stall_torque").val(motors[$("select#motor_name").val()][1]);
@@ -13,6 +14,7 @@ $(document).ready(function(){
             $("input#motor_free_current").val(motors[$("select#motor_name").val()][2]);
             $("input#motor_stall_current").val(motors[$("select#motor_name").val()][3]);
             $("input[id^=motor_]").prop("disabled", true);
+            $("select#motor_stall_torque_units").prop("disabled", true);
         }
         update_motor();
     });
@@ -44,6 +46,7 @@ $(document).ready(function(){
         draw_graph();
     }
     $("input[id^=motor_]").change(update_motor);
+    $("select#motor_stall_torque_units").change(update_motor);
     $("input#num_motors").change(update_motor);
     $("input#applied_voltage").change(update_motor);
     $("input#gearbox_efficiency").change(update_motor);
@@ -176,6 +179,16 @@ $(document).ready(function(){
         $("button#stall input").prop("checked", true);
         $("button#stall").css("background-color", "var(--selected)");
         update_vals();
+    });
+
+    $("button.max").hover(function(){
+        if (!$(this).children("input").prop("checked")) {
+            $(this).css("background-color", "var(--dark)");
+        }
+    }, function(){
+        if (!$(this).children("input").prop("checked")) {
+            $(this).css("background-color", "var(--med-light)");
+        }
     });
 
     // Draw graph

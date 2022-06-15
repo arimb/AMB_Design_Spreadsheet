@@ -4,6 +4,8 @@ $(document).ready(function(){
         const tmp = JSON.parse($("input[type=radio][name=units]:checked").val());
         $("span.dist_unit").html(tmp[0]);
         $("span.force_unit").html(tmp[2]);
+        $("span.weight_unit").html(tmp[4])
+        $("select#type").change();
     });
     $("input[type=radio][name=units]").change();
 
@@ -18,7 +20,8 @@ $(document).ready(function(){
             $("input#width").val((dimensions[$("select#type").val()][1] / tmp[1]).toFixed(3));
             $("input#thickness").val((dimensions[$("select#type").val()][2] / tmp[1]).toFixed(3));
             $("input#adder").val((dimensions[$("select#type").val()][3] / tmp[1]).toFixed(3));
-            $("input#load_rating").val((dimensions[$("select#type").val()][4] / tmp[3]).toFixed(3));
+            $("input#weight").val((dimensions[$("select#type").val()][4] / tmp[5]).toFixed(3));
+            $("input#load_rating").val((dimensions[$("select#type").val()][5] / tmp[3]).toFixed(0));
             $("input#pitch_dist").prop("disabled", true);
         }
     });
