@@ -40,4 +40,22 @@ $(document).ready(function(){
     request.open("GET", "ref/chain-belt.json");
     request.send();
 
+    $("input[type=radio][name=driving]").change(function(){
+        switch( $("input[type=radio][name=driving]:checked").attr("id") ){
+            case "by_links":
+                $("div.field:has(#approx_dist)").css("display", "none");
+                $("div.field:has(#round)").css("display", "none");
+                $("div.field:has(#round_to)").css("display", "none");
+                $("input#links").prop("disabled", false);
+                break;
+            case "by_dist":
+                $("div.field:has(#approx_dist)").css("display", "flex");
+                $("div.field:has(#round)").css("display", "flex");
+                $("div.field:has(#round_to)").css("display", "flex");
+                $("input#links").prop("disabled", true);
+                break;
+        }
+    });
+    $("input[type=radio][name=driving]").change();
+
 });

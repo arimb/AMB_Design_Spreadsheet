@@ -16,11 +16,11 @@ div#units {
     flex-direction: row;
 }
 
-select#units {
-    width: 10em;
+select {
+    padding: 1px;
 }
 
-select {
+select#type {
     width: 10em;
 }
 
@@ -38,17 +38,37 @@ div.field span {
 
 div#dimensions {
     align-items: flex-end;
+    align-self: flex-start;
 }
 
 div#dimensions span {
     min-width: 3em;
 }
 
+div#calculation {
+    justify-content: space-between;
+}
+
 div.driving {
     display: flex;
     flex-direction: row;
     gap: 2em;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
 }
+
 div.driving input {
     margin-left: 3px;
+}
+
+div.geometry {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    /* align-items: center; */
+    gap: 0.4em;
+}
+
+div.geometry span {
+    width: 2em;
 }

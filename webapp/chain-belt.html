@@ -113,31 +113,57 @@
                         <input id="by_links" name="driving" type="radio" checked>
                     </div>
                     <div>
-                        <label for="mm">By Approx. C-C</label>
-                        <input id="mm" name="driving" type="radio">
+                        <label for="by_dist">By Approx. C-C</label>
+                        <input id="by_dist" name="driving" type="radio">
                     </div>
                 </div>
-                <div class="field">
-                    <label for="links">Number of Links</label>
-                    <input id="links" type="number">
-                </div>
-                <div class="field">
-                    <label for="dist">C-C Distance</label>
-                    <input id="dist" type="number">
-                    &nbsp;
-                    <span class="dist_unit"></span>
-                </div>
-                <div class="field">
-                    <label for="chain_length">Chain Length</label>
-                    <input id="chain_length" type="number">
-                    &nbsp;
-                    <span class="dist_unit"></span>
-                </div>
-                <div class="field">
-                    <label for="clearance">Clearance</label>
-                    <input id="clearance" type="number">
-                    &nbsp;
-                    <span class="dist_unit"></span>
+                <div class="geometry">
+                    <div class="field" style="display: none;">
+                        <label for="approx_dist">Approx. Distance</label>
+                        <input id="approx_dist" type="number">
+                        &nbsp;
+                        <span class="dist_unit"></span>
+                    </div>
+                    <div class="field" style="display: none;">
+                        <label for="round">Round Direction</label>
+                        <select id="round">
+                            <option>Nearest</option>
+                            <option>Up</option>
+                            <option>Down</option>
+                        </select>
+                        &nbsp;
+                        <span></span>
+                    </div>
+                    <div class="field" style="display: none;">
+                        <label for="round_to">Round To</label>
+                        <input id="round_to" type="number">
+                        &nbsp;
+                        <span></span>
+                    </div>
+                    <div class="field">
+                        <label for="links">Number of Links</label>
+                        <input id="links" type="number">
+                        &nbsp;
+                        <span></span>
+                    </div>
+                    <div class="field">
+                        <label for="dist">C-C Distance</label>
+                        <input id="dist" type="number" disabled>
+                        &nbsp;
+                        <span class="dist_unit"></span>
+                    </div>
+                    <div class="field">
+                        <label for="chain_length">Chain Length</label>
+                        <input id="chain_length" type="number" disabled>
+                        &nbsp;
+                        <span class="dist_unit"></span>
+                    </div>
+                    <div class="field">
+                        <label for="clearance">Clearance</label>
+                        <input id="clearance" type="number" disabled>
+                        &nbsp;
+                        <span class="dist_unit"></span>
+                    </div>
                 </div>
             </div>
         </main>
