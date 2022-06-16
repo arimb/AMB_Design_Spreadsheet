@@ -8,7 +8,7 @@ div.body {
 
 div.page-element {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: stretch;
     justify-content: center;
     flex-wrap: wrap;
@@ -54,4 +54,12 @@ div.graph-limits input[type=number] {
 
 div.field label {
     margin: auto 5px;
+}
+
+h3 {
+    margin: 0 0 0.5em 0;
+}
+
+input[type=radio] {
+    margin-left: 3px;
 }

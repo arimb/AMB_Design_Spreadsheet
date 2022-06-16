@@ -3,11 +3,12 @@
      /* #8D788D; */
 }
 
-div.page-element#load {
-    flex-direction: column;
+div.page-element#motor {
+    flex-direction: row;
 }
 
 div.page-element#calculation {
+    flex-direction: row;
     max-width: 100%;
     align-items: center;
 }

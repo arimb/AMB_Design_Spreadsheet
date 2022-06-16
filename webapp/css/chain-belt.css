@@ -1,5 +1,4 @@
 div.page-element {
-    flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
     row-gap: 0.4em;
@@ -22,10 +21,6 @@ select {
 
 select#type {
     width: 10em;
-}
-
-h3 {
-    margin: 0 0 0.5em 0;
 }
 
 div.field input {

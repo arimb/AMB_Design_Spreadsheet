@@ -1,0 +1,56 @@
+div.page-element#options {
+    align-items: flex-end;
+    justify-content: space-evenly;
+    width: 220px;
+}
+
+div.page-element#options span {
+    min-width: 1.5em;
+}
+
+div.num_stages {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+div.break#break1 {
+    display: none;
+}
+
+div#space1 {
+    display: flex;
+    flex: 1;
+    max-width: 266px;
+}
+
+@media only screen and (max-width: 1114px) {
+    div.break#break1 {
+        display: flex;
+    }
+
+    div#space1 {
+        display: none;
+    }
+}
+
+
+div.gear-options {
+    align-items: center;
+}
+
+div.field input[id$="diam"], div.field input[id$="dist"] {
+    max-width: 3em;
+}
+
+div.page-element#dist14 {
+    align-items: center;
+}
+
+div.cc {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+    align-items: center;
+}
