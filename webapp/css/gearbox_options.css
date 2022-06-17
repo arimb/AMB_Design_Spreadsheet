@@ -19,19 +19,24 @@ div.break#break1 {
     display: none;
 }
 
-div#space1 {
+div.page-element#clearance {
+    width: 220px;
+    justify-content: space-around;
+}
+
+div.clearance-type {
     display: flex;
-    flex: 1;
-    max-width: 266px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+div#clearance div.field {
+    justify-content: flex-end;
 }
 
 @media only screen and (max-width: 1114px) {
     div.break#break1 {
         display: flex;
-    }
-
-    div#space1 {
-        display: none;
     }
 }
 
@@ -53,4 +58,18 @@ div.cc {
     flex-direction: column;
     gap: 0.3em;
     align-items: center;
+}
+
+div.stock {
+    margin-top: 2em;
+    width: 100%;
+}
+
+summary {
+    margin-left: 4em;
+}
+
+summary > * {
+    cursor: pointer;
+    display: inline;
 }

@@ -21,6 +21,15 @@
         </header>
         <main>
             <div class="page-element" id="options">
+                <div>
+                    <label for="gear-list">Gear List Source</label>
+                    <select id="gear-list">
+                        <option value="ref/gears-am_vex.json">AM + Vex</option>
+                        <option value="ref/gears-vexonly.json">Vex Only</option>
+                        <option>Custom</option>
+                    </select>
+                    <input id="gear-list-custom" type="file" hidden>
+                </div>
                 <div class="field">
                     <label for="ratio">Total Ratio</label>
                     <input id="ratio" type="number" min="0">
@@ -135,7 +144,39 @@
                 </div>
             </div>
             <div class="break 2stage" id="break2"></div>
-            <div class="2stage row2" id="space1"></div>
+            <div class="page-element 2stage row2" id="clearance">
+                <div class="clearance-type">
+                    <label for="clearance1">Axle 1 Clearance</label>
+                    <select id="clearance1">
+                        <option>None</option>
+                        <option>Axle Bore</option>
+                        <option>Custom</option>
+                    </select>
+                </div>
+                <div class="field" style="visibility: hidden;">
+                    <label for="clearance1custom">Diameter</label>
+                    <input id="clearance1custom" type="number" min="0">
+                    <select id="clearance1custom_units">
+                        <option value="1">in</option>
+                        <option value="0.03937">mm</option>
+                    </select>
+                </div>
+                <div class="clearance-type">
+                    <label for="clearance4">Axle 4 Clearance</label>
+                    <select id="clearance4">
+                        <option>None</option>
+                        <option>Axle Bore</option>
+                        <option>Custom</option>
+                    </select>
+                </div>
+                <div class="field" style="visibility: hidden;">
+                    <input id="clearance4custom" type="number" min="0">
+                    <select id="clearance4custom_units">
+                        <option value="1">in</option>
+                        <option value="0.03937">mm</option>
+                    </select>
+                </div>
+            </div>
             <div class="page-element gear-options 2stage row2" id="gear3">
                 <h3>Gear 3</h3>
                 <select class="gear-type" id="type3"></select>
@@ -201,6 +242,20 @@
                         <option value="0.03937">mm</option>
                     </select>
                 </div>
+            </div>
+            <div class="break"></div>
+            <img id="diagram">
+            <div class="page-element">
+                
+            </div>
+            <div class="stock">
+                <details>
+                    <summary>
+                        <h3>
+                            Gear Options
+                        </h3>
+                    </summary>
+                </details>
             </div>
         </main>
         <footer>
