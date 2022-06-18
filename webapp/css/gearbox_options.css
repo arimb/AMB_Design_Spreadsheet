@@ -4,6 +4,11 @@ div.page-element#options {
     width: 220px;
 }
 
+div.page-element#options input {
+    text-align: right;
+    max-width: 3em;
+}
+
 div.page-element#options span {
     min-width: 1.5em;
 }
@@ -53,6 +58,10 @@ div.page-element#dist14 {
     align-items: center;
 }
 
+div[id^=dist] {
+    align-items: center;
+}
+
 div.cc {
     display: flex;
     flex-direction: column;
@@ -60,16 +69,61 @@ div.cc {
     align-items: center;
 }
 
-div.stock {
-    margin-top: 2em;
-    width: 100%;
+div.cc div {
+    align-content: center;
 }
 
-summary {
-    margin-left: 4em;
+img {
+    margin: 10px;
+    align-self: flex-start;
+}
+
+div.page-element#gearbox-options {
+    align-items: center;
+    justify-content: flex-start;
+}
+
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    background-color: whitesmoke;
+}
+
+td, th {
+    border: 1px solid black;
+    padding: 0.2em 0.4em;
+    text-align: center;
+}
+
+div.stock-main {
+    margin: 2em 4em;
+    width: 100%;
 }
 
 summary > * {
     cursor: pointer;
     display: inline;
+}
+
+div.stock {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+}
+
+div.gear-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1.5px solid black;
+    flex-shrink: 0;
+}
+
+div.gear-list:first-child {
+    border-left: 1.5px solid black;
+}
+
+div.gear-list h4 {
+    margin: 0.5em 1em;
 }
