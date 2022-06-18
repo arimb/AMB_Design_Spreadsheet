@@ -1,0 +1,25 @@
+div.page-element#motor {
+    flex-direction: row;
+}
+
+div.page-element#electrical {
+    align-items: flex-end;
+}
+
+div.page-element#electrical span {
+    min-width: 3em;
+}
+
+div.page-element#robot-specs {
+    align-items: flex-end;
+}
+
+div.page-element#robot-specs span {
+    min-width: calc(3.5em - 3px);
+    box-sizing: border-box;
+}
+
+div.page-element#robot-specs select {
+    min-width: 3.5em;
+    box-sizing: border-box;
+}

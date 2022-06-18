@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Drivetrain Simulator - AMB Robotics Calculator</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/calculators.css">
+        <link rel="stylesheet" href="css/drivetrain.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="js/drivetrain.js"></script>
+    </head>
+    <body>
+        <header>
+            <a href="index.html">
+                <img src="img/logo.png" class="logo" alt="logo">
+            </a>
+            <h1>Drivetrain Simulator</h1>
+        </header>
+        <main>
+            <div class="page-element" id="motor">
+                <select id="motor_name">
+                    <option>Custom</option>
+                </select>
+                <div class="break"></div>
+                <div class="field">
+                    <label for="motor_free_speed">Free Speed</label>
+                    <input id="motor_free_speed" type="number" min="0" disabled>
+                    &nbsp;rpm
+                </div>
+                <div class="field">
+                    <label for="motor_stall_torque">Stall Torque</label>
+                    <input id="motor_stall_torque" type="number" min="0" disabled>
+                    <select id="motor_stall_torque_units">
+                        <option value="1">Nm</option>
+                        <option value="0.00706">oz-in</option>
+                        <option value="1.35582">ft-lbs</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="motor_free_current">Free Current</label>
+                    <input id="motor_free_current" type="number" min="0" disabled>
+                    &nbsp;Amps
+                </div>
+                <div class="field">
+                    <label for="motor_stall_current">Stall Current</label>
+                    <input id="motor_stall_current" type="number" min="0" disabled>
+                    &nbsp;Amps
+                </div>
+                <div class="field">
+                    <label for="num_motors">Number of Motors</label>
+                    <input id="num_motors" type="number" min="1" step="1" value="1">
+                </div>
+                <div class="field">
+                    <label for="gearbox_efficiency">Gearbox Efficiency</label>
+                    <input id="gearbox_efficiency" type="number" min="0" max="100" value="90">
+                    &nbsp;%
+                </div>
+            </div>
+            <div class="page-element" id="electrical">
+                <div class="field">
+                    <label for="rest_voltage">Resting Voltage</label>
+                    <input id="rest_voltage" type="number" min="0" value="12.7">
+                    &nbsp;
+                    <span>Volts</span>
+                </div>
+                <div class="field">
+                    <label for="resistance">System Resistance</label>
+                    <input id="resistance" type="number" min="0" value="25">
+                    &nbsp;
+                    <span>m&Omega;</span>
+                </div>
+                <div class="field">
+                    <label for="current_limit">Per Motor Current Limit</label>
+                    <input id="current_limit" type="number" min="0">
+                    &nbsp;
+                    <span>Amps</span>
+                </div>
+                <div class="field">
+                    <label for="voltage_ramp">Voltage Ramp</label>
+                    <input id="voltage_ramp" type="number" min="0">
+                    &nbsp;
+                    <span>V/s</span>
+                </div>
+            </div>
+            <div class="page-element" id="robot-specs">
+                <div class="field">
+                    <label for="weight">Robot Weight</label>
+                    <input id="weight" type="number" min="0">
+                    <select class="weight_units" id="weight_units">
+                        <option value="2.205">lbs</option>
+                        <option value="1">kg</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="driven_weight">Driven Weight</label>
+                    <input id="driven_weight" type="number" min="0" max="100">
+                    <span>&nbsp;%</span>
+                </div>
+                <div class="field">
+                    <label for="wheel_diam">Wheel Diameter</label>
+                    <input id="wheel_diam" type="number" min="0">
+                    <select id="wheel_diam_units">
+                        <option value="1">in</option>
+                        <option value="0.03937">mm</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="static_cof">Static CoF</label>
+                    <input id="static_cof" type="number" min="0">
+                    <span></span>
+                </div>
+                <div class="field">
+                    <label for="dynamic_cof">Dynamic CoF</label>
+                    <input id="dynamic_cof" type="number" min="0">
+                    <span></span>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <span>
+                Created by Ari Meles-Braverman &copy; 2022. For educational purposes only. Contact <a href="https://www.chiefdelphi.com/u/arimb/summary" style="text-decoration: underline;">@AriMB</a> on ChiefDelphi with questions or suggestions.
+            </span>
+        </footer>
+    </body>
+</html>7
