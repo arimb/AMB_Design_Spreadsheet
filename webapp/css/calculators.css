@@ -40,7 +40,8 @@ div.field {
 }
 
 div.field input {
-    max-width: 5em;
+    max-width: 4em;
+    text-align: right;
 }
 
 input[type=number]::-webkit-outer-spin-button,
@@ -57,7 +58,7 @@ div.field label {
 }
 
 h3 {
-    margin: 0 0 0.5em 0;
+    margin: 0 0 0.3em 0;
 }
 
 input[type=radio] {
