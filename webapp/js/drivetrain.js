@@ -73,6 +73,7 @@ $(document).ready(function(){
 
         const km = Ts/(Is-If);
         const ke = 12/wf;
+        const R = 12/(Is-If);
         const Tslip_s = 9.8*m*mu_s*r;
         const Tslip_k = 9.8*m*mu_k*r;
         const Tloss = Ts * (1-eff);
@@ -80,25 +81,27 @@ $(document).ready(function(){
 
         console.log(Vrest, Rtot, Imax, dVmax, m, r, mu_s, mu_k, xmax, tmax, dt, km, Tslip_s, Tslip_k, Tloss, vmax);
 
-        var t=0, x=0, v=0, a, V=Vrest, slip=false, T, Tmotor, F, stop=false;
+        var t=0, x=0, v=0, a, V=Vrest, I, slip=false, T, Tmotor, F, stop=false, connected=true;
         var times = [], data = [];
         main: while (t < tmax) {
             // initial torque calculation
-            Tmotor = Ts*(1-v/r*G/wf)*(V/12);
-            T = Tmotor * G - Tloss * (v/vmax) - (stop ? Tloss/eff : 0);
+            // Tmotor = Ts*(1-v/r*G/wf)*(V/12);
+            I = connected ? (V-v*G/r*ke)/R : 0;
+            Tmotor = (I-If)*km;
+            T = Tmotor*G - Tloss*(v/vmax) - (stop ? Tloss/eff : 0);
             // slip detection
-            if (slip && T < Tslip_k) slip = false;
-            else if (!slip && T > Tslip_s) slip = true;
+            if (slip && Math.abs(T) < Tslip_k) slip = false;
+            else if (!slip && Math.abs(T) > Tslip_s) slip = true;
             if (slip) {
                 T = Tslip_k;
                 Tmotor = T/(G*eff);
+                I = Tmotor/km + If;
             }
             // current limiting
-            I = Tmotor/km + If;
             if (I > Imax) {
                 I = Imax;
                 Tmotor = (I-If)*km;
-                T = Tmotor * G * eff;
+                T = Tmotor*G - Tloss*(v/vmax) - (stop ? Tloss/eff : 0);
                 if (slip && T < Tslip_k) slip = false;
             }
             // acceleration calculation
@@ -107,6 +110,7 @@ $(document).ready(function(){
             v += a*dt;
             x += v*dt + 0.5*a*dt**2;
 
+            console.log(t, x, v, a, T, Tmotor, I, V, slip, stop, connected);
             times.push(t);
             data.push([x, v, a, I, V, T, slip]);
 
@@ -136,20 +140,20 @@ $(document).ready(function(){
                 switch ($("select#stop-method").val()) {
                     case "Coast":
                         V = 0;
+                        connected = false;
                         break;
                     case "Brake":
-                        V = -ke*(v*G/r);
+                        V = 0;
                         break;
                     case "Reverse":
-                        V = -(Vrest - Rtot*I);
+                        // V = -(Vrest - Rtot*I);
+                        V = Vrest;
                         break;
                 }
             }
 
             t += dt;
         }
-        console.log(times);
-        console.log(data);
         
 
         // plot graph
@@ -173,13 +177,13 @@ $(document).ready(function(){
                     // yaxisID: "right",
                     pointRadius: 0
                 },{
-                    data: data.map(function(value,index) { return value[2] * $("select#distance_units").val(); }),
+                    data: data.map(function(value,index) { return Math.abs(value[2]) * $("select#distance_units").val(); }),
                     label: "Acceleration",
                     borderColor: "red",
                     fill: false,
                     pointRadius: 0
                 },{
-                    data: data.map(function(value,index) { return value[3] / $("input#num_motors").val(); }),
+                    data: data.map(function(value,index) { return Math.abs(value[3]) / $("input#num_motors").val(); }),
                     label: "Current Per Motor",
                     borderColor: "orange",
                     fill: false,
