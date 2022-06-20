@@ -205,7 +205,6 @@ $(document).ready(function(){
             ratios.push(r);
             data.push(calculate_vals(r));
         }
-        console.log(ratio);
         var graph = new Chart("graph", {
             type: "line",
             data: {
@@ -282,6 +281,17 @@ $(document).ready(function(){
                         title: {
                             display: true,
                             text: "Voltage (V)"
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: "top",
+                        labels: {
+                            filter: function(legend_item, data) {
+                                return legend_item["lineDash"].length == 0;
+                            }
                         }
                     }
                 }

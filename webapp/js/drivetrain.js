@@ -57,19 +57,20 @@ $(document).ready(function(){
     $("div#gear-ratio input:first").change();
 
     function simulate(){
-        const Vrest = $("input#rest_voltage").val();
+        const xmax = $("input#distance").val() / $("select#distance_units").val();
+        const tmax = $("input#max_time").val();
+        const dt = $("input#timestep").val() / 1000;
+        const filtering = 0.6;
+        
+        const Vrest = parseFloat($("input#rest_voltage").val());
         const Rtot = $("input#resistance").val() / 1000;
         const Imax = $("input#current_limit").val() ? $("input#current_limit").val() * $("input#num_motors").val() : Infinity;
-        const dVmax = $("input#voltage_ramp").val() ? $("input#voltage_ramp").val() : 120;
+        const dVmax = ($("input#voltage_ramp").val() ? $("input#voltage_ramp").val() : 1200) * dt;
 
         const m = $("input#weight").val() / $("select#weight_units").val();
         const r = $("input#wheel_diam").val()/2 / $("select#wheel_diam_units").val();
         const mu_s = $("input#static_cof").val() * ($("input#driven_weight").val() / 100);
         const mu_k = $("input#dynamic_cof").val() * ($("input#driven_weight").val() / 100);
-
-        const xmax = $("input#distance").val() / $("select#distance_units").val();
-        const tmax = $("input#max_time").val();
-        const dt = $("input#timestep").val() / 1000;
 
         const km = Ts/(Is-If);
         const ke = 12/wf;
@@ -81,7 +82,7 @@ $(document).ready(function(){
 
         console.log(Vrest, Rtot, Imax, dVmax, m, r, mu_s, mu_k, xmax, tmax, dt, km, Tslip_s, Tslip_k, Tloss, vmax);
 
-        var t=0, x=0, v=0, a, V=Vrest, I, slip=false, T, Tmotor, F, stop=false, connected=true;
+        var t=0, x=0, v=0, a, V=Vrest, Vnew, I, slip=false, T, Tmotor, F, stop=false, connected=true;
         var times = [], data = [];
         main: while (t < tmax) {
             // initial torque calculation
@@ -135,23 +136,23 @@ $(document).ready(function(){
             }
             
             if (!stop) {
-                V = Vrest - Rtot*I;
+                Vnew = Vrest - Rtot*I;
             } else {
                 switch ($("select#stop-method").val()) {
                     case "Coast":
-                        V = 0;
+                        Vnew = 0;
                         connected = false;
                         break;
                     case "Brake":
-                        V = 0;
+                        Vnew = 0;
                         break;
                     case "Reverse":
-                        // V = -(Vrest - Rtot*I);
-                        V = Vrest;
+                        V = -(Vrest - Rtot*I);
+                        // Vnew = -Vrest;
                         break;
                 }
             }
-
+            V = (Math.abs(Vnew-V)>dVmax ? V+dVmax*Math.sign(Vnew-V) : Vnew*filtering + V*(1-filtering));
             t += dt;
         }
         

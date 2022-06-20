@@ -1,0 +1,22 @@
+div.inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+div.page-element#initial {
+    align-items: flex-end;
+}
+
+div.page-element#initial span {
+    min-width: calc(3.5em - 3px);
+    box-sizing: border-box;
+}
+
+div.page-element#initial select {
+    min-width: 3.5em;
+    box-sizing: border-box;
+}
+
+h3 {
+    align-self: center;
+}
