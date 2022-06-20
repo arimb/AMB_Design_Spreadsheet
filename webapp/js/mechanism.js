@@ -43,7 +43,7 @@ $(document).ready(function(){
         // Update graph min (max power) and max (max efficiency) then redraw
         $("input#graph-min").val((2*load*radius/Ts).toFixed(2));
         $("input#graph-max").val((radius*load/Ts*(1+Math.sqrt(Is/If))).toFixed(2));
-        draw_graph();
+        // draw_graph();
     }
     $("input[id^=motor_]").change(update_motor);
     $("select#motor_stall_torque_units").change(update_motor);
@@ -58,7 +58,7 @@ $(document).ready(function(){
         // Update graph min (max power) and max (max efficiency) then redraw
         $("input#graph-min").val((2*load*radius/Ts).toFixed(2));
         $("input#graph-max").val((radius*load/Ts*(1+Math.sqrt(Is/If))).toFixed(2));
-        draw_graph();
+        // draw_graph();
     }
     $("input#radius").change(update_radius);
     $("select#radius_units").change(update_radius);
@@ -71,7 +71,7 @@ $(document).ready(function(){
         // Update graph min (max power) and max (max efficiency) then redraw
         $("input#graph-min").val((2*load*radius/Ts).toFixed(2));
         $("input#graph-max").val((radius*load/Ts*(1+Math.sqrt(Is/If))).toFixed(2));
-        draw_graph();
+        // draw_graph();
     }
     $("input#load").change(update_load);
     $("select#load_units").change(update_load);
@@ -145,6 +145,7 @@ $(document).ready(function(){
         $("input#current").val( vals[5].toFixed(2) );
         $("input#stall_voltage").val( vals[6].toFixed(2) );
         $("input#efficiency").val( vals[7].toFixed(2) );
+        draw_graph(ratio);
     }
 
     $("div.field select").change(update_vals);
@@ -192,7 +193,7 @@ $(document).ready(function(){
     });
 
     // Draw graph
-    function draw_graph(){
+    function draw_graph(ratio){
         $("canvas#graph").remove();
         $("div.graph").prepend('<canvas id="graph"></canvas>');
         
@@ -204,6 +205,7 @@ $(document).ready(function(){
             ratios.push(r);
             data.push(calculate_vals(r));
         }
+        console.log(ratio);
         var graph = new Chart("graph", {
             type: "line",
             data: {
@@ -239,6 +241,15 @@ $(document).ready(function(){
                     borderColor: "blue",
                     fill: false,
                     pointRadius: 0
+                },
+                {
+                    data: [{x: (ratio ? ratio : 0), y: 0}, {x: (ratio ? ratio : 0), y: (ratio ? Math.max.apply(null, data.map(value => value[6])) : 0)}],
+                    borderColor: "red",
+                    borderDash: [5, 5],
+                    fill: false,
+                    pointRadius: 0,
+                    yAxisID: "right",
+                    hiddenLegend: true
                 }]
             },
             options: {
@@ -253,7 +264,9 @@ $(document).ready(function(){
                             padding: {
                                 top: 0
                             }
-                        }
+                        },
+                        min: min,
+                        max: max
                     },
                     left: {
                         display: true,
@@ -275,5 +288,6 @@ $(document).ready(function(){
             }
         })
     }
-    $("div.graph-limits input").change(draw_graph);
+    setTimeout(() => { draw_graph(); }, 100);
+    // $("div.graph-limits input").change(draw_graph);
 });

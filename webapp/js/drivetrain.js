@@ -85,7 +85,7 @@ $(document).ready(function(){
         main: while (t < tmax) {
             // initial torque calculation
             Tmotor = Ts*(1-v/r*G/wf)*(V/12);
-            T = Tmotor * G - Tloss * (v/vmax);
+            T = Tmotor * G - Tloss * (v/vmax) - (stop ? Tloss/eff : 0);
             // slip detection
             if (slip && T < Tslip_k) slip = false;
             else if (!slip && T > Tslip_s) slip = true;
@@ -119,13 +119,13 @@ $(document).ready(function(){
                 case "Stop After":
                     if (x > xmax) {
                         stop = true;
-                        if (v < 0.01) break main;
+                        if (v < 0.1) break main;
                     }
                     break;
                 case "Predictive":
                     if (x > xmax - v**2/(2*9.8*mu_k)) {
                         stop = true;
-                        if (v < 0.01) break main;
+                        if (v < 0.1) break main;
                     }
                     break;
             }
@@ -138,7 +138,7 @@ $(document).ready(function(){
                         V = 0;
                         break;
                     case "Brake":
-                        V = -ke*(v/r);
+                        V = -ke*(v*G/r);
                         break;
                     case "Reverse":
                         V = -(Vrest - Rtot*I);
@@ -158,7 +158,7 @@ $(document).ready(function(){
         var graph = new Chart("simulation", {
             type: "line",
             data: {
-                labels: times,
+                labels: times.map(time => time.toFixed(3)),
                 datasets: [{
                     data: data.map(function(value,index) { return value[0] * $("select#distance_units").val(); }),
                     label: "Position",
@@ -218,20 +218,21 @@ $(document).ready(function(){
                             display: true,
                             // text: "Position (ft), Acceleration (ft/s^2)"
                         }
+                    },
+                    y2: {
+                        display: true,
+                        position: "right",
+                        title: {
+                            display: true,
+                            // text: "Speed (ft/s)"
+                        }
                     }
-                    // y2: {
-                    //     display: true,
-                    //     position: "right",
-                    //     title: {
-                    //         display: true,
-                    //         // text: "Speed (ft/s)"
-                    //     }
-                    // }
                 }
             }
         });
         
     }
     setTimeout(() => { simulate(); }, 100);
+    $("input, select").change(simulate);
 
 });
