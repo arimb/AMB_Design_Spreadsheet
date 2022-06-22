@@ -1,22 +1,20 @@
 div.inputs {
     display: flex;
     flex-direction: column;
+    align-self: flex-start;
 }
 
-div.page-element#initial {
-    align-items: flex-end;
-}
-
-div.page-element#initial span {
-    min-width: calc(3.5em - 3px);
-    box-sizing: border-box;
-}
-
-div.page-element#initial select {
-    min-width: 3.5em;
-    box-sizing: border-box;
+div.page-element {
+    align-items: center;
 }
 
 h3 {
     align-self: center;
+}
+
+div.graph {
+    display: flex;
+    align-items: stretch;
+    width: 800px;
+    max-width: 800px;
 }

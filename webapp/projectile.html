@@ -68,6 +68,54 @@
                         <span>&nbsp;&deg;</span>
                     </div>
                 </div>
+                <div class="page-element" id="drag">
+                    <h3>Drag & Magnus</h3>
+                    <div class="field">
+                        <input id="drag-enable" type="checkbox">
+                        <label for="drag-enable">Enable</label>
+                    </div>
+                    <div class="field">
+                        <label for="drag_coeff">Drag Coefficient</label>
+                        <input id="drag_coeff" type="number" min="0" disabled>
+                        <span></span>
+                    </div>
+                    <div class="field">
+                        <label for="diameter">Ball Diameter</label>
+                        <input id="diameter" type="number" min="0" disabled>
+                        <select id="diameter_units" disabled>
+                            <option value="25.4">in</option>
+                            <option value="1">mm</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="mass">Ball Mass</label>
+                        <input id="mass" type="number" min="0" disabled>
+                        <select id="mass_units" disabled>
+                            <option value="2.205">lbs</option>
+                            <option value="1">kg</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="avg_vel">Avg. Velocity</label>
+                        <input id="avg_vel" type="number" min="0" disabled>
+                        <select id="avg_vel_units" disabled>
+                            <option value="3.281">ft/s</option>
+                            <option value="1">m/s</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="rotation">Avg. Spin</label>
+                        <input id="rotation" type="number" min="0" disabled>
+                        <select id="rotation_units" disabled>
+                            <option value="6.283">rev/s</option>
+                            <option value="0.10472">rpm</option>
+                            <option value="1">rad/s</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="page-element graph">
+                <canvas id="graph"></canvas>
             </div>
         </main>
         <footer>
