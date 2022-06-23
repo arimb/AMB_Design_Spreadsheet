@@ -1,3 +1,7 @@
+:root {
+    --selected: #E9EA6A; 
+}
+
 div.inputs {
     display: flex;
     flex-direction: column;
@@ -15,6 +19,43 @@ h3 {
 div.graph {
     display: flex;
     align-items: stretch;
-    width: 800px;
+    width: 600px;
     max-width: 800px;
+}
+
+canvas {
+    background-color: white;
+}
+
+div.field {
+    width: 100%;
+}
+
+input.driving {
+    align-self: flex-start;
+}
+
+div#drag div.drag-enable {
+    justify-content: center;
+}
+
+div.field input[type=checkbox].driving {
+    border: 2px solid black;
+    padding: 0.4em;
+    margin: 3px 3px 3px 6px;
+    background-color: var(--med-light);
+    -webkit-appearance: none;
+}
+
+div.field input[type=checkbox].driving:disabled {
+    background-color: lightgray;
+    border-color: gray;
+}
+
+div.field input[type=checkbox].driving:hover:not(:disabled) {
+    background-color: var(--dark);
+}
+
+div.field input[type=checkbox].driving:checked {
+    background-color: var(--selected) !important;
 }

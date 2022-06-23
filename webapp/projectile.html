@@ -23,90 +23,106 @@
                 <div class="page-element" id="initial">
                     <h3>Initial Values</h3>
                     <div class="field">
+                        <input id="initial_height-driving" type="checkbox" class="driving">
                         <label for="initial_height">Height</label>
-                        <input id="initial_height" type="number" min="0">
+                        <input id="initial_height" type="number" min="0" value="0">
                         <select id="initial_height_units">
                             <option value="3.281">ft</option>
                             <option value="1">m</option>
                         </select>
                     </div>
                     <div class="field">
+                        <input id="initial_vel-driving" type="checkbox" class="driving">
                         <label for="initial_vel">Velocity</label>
-                        <input id="initial_vel" type="number" min="0">
+                        <input id="initial_vel" type="number" min="0" value="20">
                         <select id="initial_vel_units">
                             <option value="3.281">ft/s</option>
                             <option value="1">m/s</option>
                         </select>
                     </div>
                     <div class="field">
+                        <input id="initial_angle-driving" type="checkbox" class="driving">
                         <label for="initial_angle">Angle</label>
-                        <input id="initial_angle" type="number" min="0">
+                        <input id="initial_angle" type="number" min="0" value="45">
                         <span>&nbsp;&deg;</span>
                     </div>
                 </div>
                 <div class="page-element" id="target">
                     <h3>Target Values</h3>
                     <div class="field">
-                        <label for="initial_height">Height</label>
-                        <input id="initial_height" type="number" min="0">
-                        <select id="initial_height_units">
+                        <input id="target_distance-driving" type="checkbox" class="driving">
+                        <label for="target_distance">Distance</label>
+                        <input id="target_distance" type="number" min="0">
+                        <select id="target_distance_units">
                             <option value="3.281">ft</option>
                             <option value="1">m</option>
                         </select>
                     </div>
                     <div class="field">
-                        <label for="initial_vel">Velocity</label>
-                        <input id="initial_vel" type="number" min="0">
-                        <select id="initial_vel_units">
+                        <input id="target_height-driving" type="checkbox" class="driving">
+                        <label for="target_height">Height</label>
+                        <input id="target_height" type="number" min="0">
+                        <select id="target_height_units">
+                            <option value="3.281">ft</option>
+                            <option value="1">m</option>
+                        </select>
+                        <input id="target_height-direction" type="checkbox" class="direction">
+                    </div>
+                    <!-- <div class="field">
+                        <input id="target_vel-driving" type="checkbox" class="driving">
+                        <label for="target_vel">Velocity</label>
+                        <input id="target_vel" type="number" min="0">
+                        <select id="target_vel_units">
                             <option value="3.281">ft/s</option>
                             <option value="1">m/s</option>
                         </select>
-                    </div>
+                    </div> -->
                     <div class="field">
-                        <label for="initial_angle">Angle</label>
-                        <input id="initial_angle" type="number" min="0">
+                        <input id="target_angle-driving" type="checkbox" class="driving">
+                        <label for="target_angle">Angle</label>
+                        <input id="target_angle" type="number" min="0">
                         <span>&nbsp;&deg;</span>
                     </div>
                 </div>
                 <div class="page-element" id="drag">
                     <h3>Drag & Magnus</h3>
-                    <div class="field">
-                        <input id="drag-enable" type="checkbox">
+                    <div class="field drag-enable">
+                        <input id="drag-enable" type="checkbox" checked>
                         <label for="drag-enable">Enable</label>
                     </div>
                     <div class="field">
                         <label for="drag_coeff">Drag Coefficient</label>
-                        <input id="drag_coeff" type="number" min="0" disabled>
+                        <input id="drag_coeff" type="number" min="0" value="0.1">
                         <span></span>
                     </div>
                     <div class="field">
                         <label for="diameter">Ball Diameter</label>
-                        <input id="diameter" type="number" min="0" disabled>
-                        <select id="diameter_units" disabled>
-                            <option value="25.4">in</option>
-                            <option value="1">mm</option>
+                        <input id="diameter" type="number" min="0" value="9">
+                        <select id="diameter_units">
+                            <option value="0.0254">in</option>
+                            <option value="0.001">mm</option>
                         </select>
                     </div>
                     <div class="field">
                         <label for="mass">Ball Mass</label>
-                        <input id="mass" type="number" min="0" disabled>
-                        <select id="mass_units" disabled>
+                        <input id="mass" type="number" min="0" value="0.27">
+                        <select id="mass_units">
                             <option value="2.205">lbs</option>
-                            <option value="1">kg</option>
+                            <option value="1" selected>kg</option>
                         </select>
                     </div>
-                    <div class="field">
+                    <!-- <div class="field">
                         <label for="avg_vel">Avg. Velocity</label>
-                        <input id="avg_vel" type="number" min="0" disabled>
+                        <input id="avg_vel" type="number" min="0" disabled value="20">
                         <select id="avg_vel_units" disabled>
                             <option value="3.281">ft/s</option>
                             <option value="1">m/s</option>
                         </select>
-                    </div>
+                    </div> -->
                     <div class="field">
                         <label for="rotation">Avg. Spin</label>
-                        <input id="rotation" type="number" min="0" disabled>
-                        <select id="rotation_units" disabled>
+                        <input id="rotation" type="number" min="0" value="0">
+                        <select id="rotation_units">
                             <option value="6.283">rev/s</option>
                             <option value="0.10472">rpm</option>
                             <option value="1">rad/s</option>
