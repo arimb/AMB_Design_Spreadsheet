@@ -6,30 +6,60 @@ $(document).ready(function(){
         $("input[type=checkbox].driving:not(:checked)").attr("disabled", ($("input[type=checkbox].driving:checked").length >= 2));
         $("input[type=checkbox].driving:checked").siblings("input").attr("disabled", true);
         $("input[type=checkbox].driving:not(:checked)").siblings("input").attr("disabled", false);
+        // $("input[type=checkbox].driving:checked").siblings("input[type=checkbox]").css("display", "none");
+        // $("input[type=checkbox].driving:not(:checked)").siblings("input[type=checkbox]").css("display", "inline-block");
     });
 
     $("input, select").change(function(){
         $("canvas#graph").remove();
         $("div.graph").prepend('<canvas id="graph"></canvas>');
         
-        var h0, v0, theta0, end_fcn, output;
+        var h0, v0, theta0, end_fcn, output, goal, last, last2, output_last, output_last2;
         if ($("input#target_distance-driving").prop("checked")) {
+            h0 = parseFloat($("input#initial_height").val() / $("select#initial_height_units").val());
+            v0 = parseFloat($("input#initial_vel").val() / $("select#initial_vel_units").val());
+            theta0 = parseFloat($("input#initial_angle").val()) * Math.PI/180;
             if ($("input#target_angle-driving").prop("checked")) {
-                h0 = parseFloat($("input#initial_height").val() / $("select#initial_height_units").val());
-                v0 = parseFloat($("input#initial_vel").val() / $("select#initial_vel_units").val());
-                theta0 = parseFloat($("input#initial_angle").val()) * Math.PI/180;
                 end_fcn = $("input#target_height-direction").prop("checked") ? `v[1]>=0 && x[1]>=${$("input#target_height").val() / $("select#target_height_units").val()}` : `v[1]<=0 && x[1]<=${$("input#target_height").val() / $("select#target_height_units").val()}`;
                 output = simulate(h0, v0, theta0, end_fcn);
             } else if ($("input#target_height-driving").prop("checked")) {
-                h0 = parseFloat($("input#initial_height").val() / $("select#initial_height_units").val());
-                v0 = parseFloat($("input#initial_vel").val() / $("select#initial_vel_units").val());
-                theta0 = parseFloat($("input#initial_angle").val()) * Math.PI/180;
-                end_fcn = `Math.abs( Math.atan2(v[1], v[0])*180/Math.PI - ${$("input#target_angle").val()} ) < 0.5`;
+                end_fcn = `Math.abs( angle(v) - ${$("input#target_angle").val()} ) < 0.5`;
                 output = simulate(h0, v0, theta0, end_fcn);
+            } else if ($("input#initial_height-driving").prop("checked")) {
+                end_fcn = $("input#target_height-direction").prop("checked") ? `v[1]>=0 && x[1]>=${$("input#target_height").val() / $("select#target_height_units").val()}` : `v[1]<=0 && x[1]<=${$("input#target_height").val() / $("select#target_height_units").val()}`;
+                goal = parseFloat($("input#target_angle").val());
+                last2 = 0;
+                output_last2 = simulate(last2, v0, theta0, end_fcn);
+                last = 1;
+                output_last = simulate(last, v0, theta0, end_fcn);
+                do {
+                    h0 = (last2 * (angle(output_last[1])-goal) - last * (angle(output_last2[1])-goal)) / (angle(output_last[1]) - angle(output_last2[1]));
+                    output = simulate(h0, v0, theta0, end_fcn);
+                    last2 = last;
+                    output_last2 = output_last;
+                    last = h0;
+                    output_last = output;
+                } while (Math.abs(angle(output[1]) - goal) > 0.5);
+            } else if ($("input#initial_vel-driving").prop("checked")) {
+                end_fcn = $("input#target_height-direction").prop("checked") ? `v[1]>=0 && x[1]>=${$("input#target_height").val() / $("select#target_height_units").val()}` : `v[1]<=0 && x[1]<=${$("input#target_height").val() / $("select#target_height_units").val()}`;
+                goal = parseFloat($("input#target_angle").val());
+                last2 = 2;
+                output_last2 = simulate(h0, last2, theta0, end_fcn);
+                last = 1;
+                output_last = simulate(h0, last, theta0, end_fcn);
+                console.log(output_last2, output_last);
+                do {
+                    v0 = (last2 * (angle(output_last[1])-goal) - last * (angle(output_last2[1])-goal)) / (angle(output_last[1]) - angle(output_last2[1]));
+                    console.log(v0);
+                    output = simulate(h0, v0, theta0, end_fcn);
+                    console.log(output);
+                    last2 = last;
+                    output_last2 = output_last;
+                    last = v0;
+                    output_last = output;
+                } while (Math.abs(angle(output[1]) - goal) > 0.5);
             }
         }
-
-        
         console.log(output);
         
         if ($("input#initial_height-driving").prop("checked")) $("input#initial_height").val(h0 * $("select#initial_height_units").val());
@@ -37,13 +67,11 @@ $(document).ready(function(){
         if ($("input#initial_angle-driving").prop("checked")) $("input#initial_angle").val(theta0 * 180/Math.PI);
         if ($("input#target_distance-driving").prop("checked")) $("input#target_distance").val(output[0][output[0].length-1][0]);
         if ($("input#target_height-driving").prop("checked")) $("input#target_height").val(output[0][output[0].length-1][1]);
-        // if ($("input#target_vel-driving").prop("checked")) $("input#target_vel").val(mag(output[output.length-1][1]));
         if ($("input#target_angle-driving").prop("checked")) $("input#target_angle").val( (Math.atan2(output[1][1], output[1][0]) * 180/Math.PI).toFixed(1) );
 
         var max = Math.max(Math.max.apply(null, output[0].map(x => x[0])), Math.max.apply(null, output[0].map(x => x[1])));
         if ($("input[type=checkbox].driving:checked").length == 2) {
             var graph = new Chart("graph", {
-                // type: "line",
                 data: {
                     labels: output[0].map(x => x[0].toFixed(2)),
                     datasets: [{
@@ -120,4 +148,8 @@ function simulate(h0, v0, theta0, end_fcn) {
 
 function mag(x) {
     return Math.sqrt(x[0]**2 + x[1]**2);
+}
+
+function angle(x) {
+    return Math.atan2(x[1], x[0]) * 180/Math.PI;
 }
