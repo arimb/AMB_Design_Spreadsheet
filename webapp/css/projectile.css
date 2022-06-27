@@ -27,7 +27,7 @@ div.field {
     width: 100%;
 }
 
-div#drag div.drag-enable {
+div.enable {
     justify-content: center;
 }
 
@@ -45,26 +45,40 @@ h3 {
     justify-self: center;
 }
 
-input[type=radio][name=driving] {
+input[type=radio][name=driven] {
     width: 0;
     border: 2px solid black;
     padding: 0.6em;
-    margin: 3px;
+    /* margin: 3px; */
+    margin: 0;
     background-color: var(--med-light);
     -webkit-appearance: none;
-    position: absolute;
-    right: 0;
+    
 }
 
-input[type=radio][name=driving]:hover {
+input[type=radio][name=driven]:hover {
     background-color: var(--dark);
 }
 
-input[type=radio][name=driving]:checked {
+input[type=radio][name=driven]:checked {
     background-color: var(--selected) !important;
 }
 
 div.element-header div {
-    flex: 1;
-    margin: calc(5px + 0.6em);
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 0;
+    /* flex: 1;
+    margin: calc(5px + 0.6em); */
+}
+
+details > div {
+    display: flex;
+    flex-direction: column;
+}
+
+a.show-link {
+    text-decoration: underline;
+    color: -webkit-link;
 }

@@ -23,74 +23,77 @@
                 <div class="page-element" id="initial">
                     <div class="element-header">
                         <h3>Initial Values</h3>
-                        <!-- <button class="driving" id="initial-driving">SET</button> -->
-                        <input id="initial-driving" type="radio" name="driving" checked>
+                        <div>
+                            <input id="initial-driven" type="radio" name="driven" checked>
+                        </div>
                     </div>
                     <div class="field">
-                        <label for="initial_height-driving">Height</label>
-                        <input id="initial_height" type="number" min="0" value="0">
+                        <label for="initial_height">Height</label>
+                        <input id="initial_height" type="number" min="0">
                         <select id="initial_height_units">
                             <option value="3.281">ft</option>
                             <option value="1">m</option>
                         </select>
                     </div>
                     <div class="field">
-                        <label for="initial_vel-driving">Velocity</label>
-                        <input id="initial_vel" class="rev" type="number" min="0" value="20">
+                        <label for="initial_vel">Velocity</label>
+                        <input id="initial_vel" class="initial-driven" type="number" min="0">
                         <select id="initial_vel_units">
                             <option value="3.281">ft/s</option>
                             <option value="1">m/s</option>
                         </select>
                     </div>
                     <div class="field">
-                        <label for="initial_angle-driving">Angle</label>
-                        <input id="initial_angle" class="rev" type="number" min="0" value="45">
+                        <label for="initial_angle">Angle</label>
+                        <input id="initial_angle" class="initial-driven" type="number" min="0">
                         <span>&nbsp;&deg;</span>
                     </div>
                 </div>
                 <div class="page-element" id="target">
                     <div class="element-header">
                         <h3>Target Values</h3>
-                        <!-- <button class="driving" id="initial-driving">SET</button> -->
-                        <input id="target-driving" type="radio" name="driving">
+                        <div>
+                            <input id="target-distance-driven" type="radio" name="driven">
+                            <input id="target-height-driven" type="radio" name="driven">
+                        </div>
                     </div>
                     <div class="field">
-                        <label for="target_distance-driving">Distance</label>
-                        <input id="target_distance" class="fwd" type="number" min="0" value="3">
+                        <label for="target_distance">Distance</label>
+                        <input id="target_distance" class="target-distance-driven" type="number" min="0">
                         <select id="target_distance_units">
                             <option value="3.281">ft</option>
                             <option value="1" selected>m</option>
                         </select>
                     </div>
                     <div class="field">
-                        <label for="target_height-driving">Height</label>
-                        <input id="target_height" type="number" min="0" value="1">
+                        <label for="target_height">Height</label>
+                        <input id="target_height" class="target-height-driven" type="number" min="0">
                         <select id="target_height_units">
                             <option value="3.281">ft</option>
                             <option value="1" selected>m</option>
                         </select>
-                        <input id="target_height-direction" type="checkbox" class="direction">
+                        <input id="target_height-direction" type="checkbox" class="direction target-height-driven initial-driven">
                     </div>
                     <div class="field">
-                        <label for="target_angle-driving">Angle</label>
-                        <input id="target_angle" class="fwd" type="number" min="0" value="-30">
+                        <label for="target_angle">Angle</label>
+                        <input id="target_angle" class="target-height-driven target-distance-driven" type="number" min="0">
                         <span>&nbsp;&deg;</span>
                     </div>
                 </div>
-                <div class="page-element" id="drag">
+                <div class="page-element initial-driven" id="drag">
                     <h3>Drag & Magnus</h3>
-                    <div class="field drag-enable">
+                    <div class="field enable">
                         <input id="drag-enable" type="checkbox" checked>
                         <label for="drag-enable">Enable</label>
                     </div>
                     <div class="field">
                         <label for="drag_coeff">Drag Coefficient</label>
-                        <input id="drag_coeff" type="number" min="0" value="0.1">
+                        <input id="drag_coeff" type="number" min="0">
                         <span></span>
                     </div>
                     <div class="field">
                         <label for="diameter">Ball Diameter</label>
-                        <input id="diameter" type="number" min="0" value="9">
+                        <input id="diameter" type="number" min="0">
                         <select id="diameter_units">
                             <option value="0.0254">in</option>
                             <option value="0.001">mm</option>
@@ -98,7 +101,7 @@
                     </div>
                     <div class="field">
                         <label for="mass">Ball Mass</label>
-                        <input id="mass" type="number" min="0" value="0.27">
+                        <input id="mass" type="number" min="0">
                         <select id="mass_units">
                             <option value="2.205">lbs</option>
                             <option value="1" selected>kg</option>
@@ -106,11 +109,53 @@
                     </div>
                     <div class="field">
                         <label for="rotation">Avg. Spin</label>
-                        <input id="rotation" type="number" min="0" value="0">
+                        <input id="rotation" type="number" min="0">
                         <select id="rotation_units">
                             <option value="6.283">rev/s</option>
                             <option value="0.10472">rpm</option>
                             <option value="1">rad/s</option>
+                        </select>
+                    </div>
+                    <!-- <details class="drag-coeff">
+                        <summary>Drag Coefficient Calculation</summary>
+                        <div>
+                            <div class="field">
+                                <label for="avg_vel">Avg. Velocity</label>
+                                <input id="avg_vel" type="number" min="0">
+                                <select id="avg_vel_units">
+                                    <option value="3.281">ft/s</option>
+                                    <option value="1">m/s</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="reynolds">Reynolds Number</label>
+                                <input id="reynolds" type="number" min="0" disabled>
+                                <span></span>
+                            </div>
+                            <a class="show-link" href="https://upload.wikimedia.org/wikipedia/commons/c/c6/Drag_sphere_nasa.svg" target="_blank" style="align-self: center;">Drag Coeff Graph</a>
+                        </div>
+                    </details> -->
+                </div>
+                <div class="page-element">
+                    <h3>Obstacle</h3>
+                    <div class="field enable">
+                        <input id="obstacle-enable" type="checkbox" checked>
+                        <label for="obstacle-enable">Enable</label>
+                    </div>
+                    <div class="field">
+                        <label for="obstacle_distance">Distance</label>
+                        <input id="obstacle_distance" type="number" min="0">
+                        <select id="obstacle_distance_units">
+                            <option value="3.281">ft</option>
+                            <option value="1" selected>m</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="obstacle_height">Height</label>
+                        <input id="obstacle_height" type="number" min="0">
+                        <select id="obstacle_height_units">
+                            <option value="3.281">ft</option>
+                            <option value="1" selected>m</option>
                         </select>
                     </div>
                 </div>
