@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Pneumatics System Simulator - AMB Robotics Calculator</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/calculators.css">
+        <link rel="stylesheet" href="css/pneumatics.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="js/pneumatics.js"></script>
+    </head>
+    <body>
+        <header>
+            <a href="index.html">
+                <img src="img/logo.png" class="logo" alt="logo">
+            </a>
+            <h1>Pneumatics System Simulator</h1>
+        </header>
+        <main>
+            <div class="page-element" id="cylinders">
+                <div style="display: flex; flex-direction: row;">
+                    <button class="add">ADD</button>
+                    <h2>
+                        Cylinders
+                    </h2>
+                </div>
+                <div class="cyl-list">
+                    <div class="cyl" id="0">
+                        <input class="name" type="text" size="1" disabled>
+                        <select class="units" disabled>
+                            <option>inch</option>
+                            <option>mm</option>
+                        </select>
+                        <label>Bore Diam.</label>
+                        <div class="field">
+                            <input class="bore" type="number" min="0" disabled>
+                            &nbsp;<span class="unit">inch</span>
+                        </div>
+                        <label>Rod Diam.</label>
+                        <div class="field">
+                            <input class="rod" type="number" min="0" disabled>
+                            &nbsp;<span class="unit">inch</span>
+                        </div>
+                        <label>Stroke Length</label>
+                        <div class="field">
+                            <input class="stroke" type="number" min="0" disabled>
+                            &nbsp;<span class="unit">inch</span>
+                        </div>
+                        <br>
+                        <label>Push Pressure</label>
+                        <div class="field">
+                            <input class="push_pressure" type="number" min="0" max="60" value="60" disabled>
+                            &nbsp;<span>psig</span>
+                        </div>
+                        <label>Pull Pressure</label>
+                        <div class="field">
+                            <input class="pull_pressure" type="number" min="0" max="60" value="60" disabled>
+                            &nbsp;<span>psig</span>
+                        </div>
+                        <br>
+                        <label>Time per Cycle</label>
+                        <div class="field">
+                            <input class="period" type="number" min="0" disabled>
+                            &nbsp;<span>sec</span>
+                        </div>
+                        <label>Start Time</label>
+                        <div class="field">
+                            <input class="start" type="number" min="0" max="150" value="0" disabled>
+                            &nbsp;<span>sec</span>
+                        </div>
+                        <label>End Time</label>
+                        <div class="field">
+                            <input class="end" type="number" min="0" max="150" value="150" disabled>
+                            &nbsp;<span>sec</span>
+                        </div>
+                        <button class="delete" id="0">DELETE</button>
+                    </div>
+                </div>
+            </div>
+            <div class="page-element" id="tanks">
+                <h2>
+                    Tanks
+                </h2>
+                <div class="tank-list">
+                    <div class="tank">
+                        <input class="name" type="text" size="1" value="Clippard">
+                        <label>Tank Volume</label>
+                        <div class="field">
+                            <input class="tank_vol" type="number" min="0" value="574">
+                            <select class="tank_vol_units">
+                                <option value="1">in³</option>
+                                <option value="16.3871" selected>ml</option>
+                            </select>
+                        </div>
+                        <label>Quantity</label>
+                        <div class="field">
+                            <input class="tank_qty" type="number" min="0">
+                            <span></span>
+                        </div>
+                        <label>Pressure</label>
+                        <div class="field">
+                            <input class="tank_press" type="number" min="0" value="120">
+                            <span>&nbsp;psig</span>
+                        </div>
+                    </div>
+                    <div class="tank">
+                        <input class="name" type="text" size="1">
+                        <label>Tank Volume</label>
+                        <div class="field">
+                            <input class="tank_vol" type="number" min="0">
+                            <select class="tank_vol_units">
+                                <option value="1">in³</option>
+                                <option value="16.3871">ml</option>
+                            </select>
+                        </div>
+                        <label>Quantity</label>
+                        <div class="field">
+                            <input class="tank_qty" type="number" min="0">
+                            <span></span>
+                        </div>
+                        <label>Pressure</label>
+                        <div class="field">
+                            <input class="tank_press" type="number" min="0" value="120">
+                            <span>&nbsp;psig</span>
+                        </div>
+                    </div>
+                    <div class="tank">
+                        <input class="name" type="text" size="1">
+                        <label>Tank Volume</label>
+                        <div class="field">
+                            <input class="tank_vol" type="number" min="0">
+                            <select class="tank_vol_units">
+                                <option value="1">in³</option>
+                                <option value="16.3871">ml</option>
+                            </select>
+                        </div>
+                        <label>Quantity</label>
+                        <div class="field">
+                            <input class="tank_qty" type="number" min="0">
+                            <span></span>
+                        </div>
+                        <label>Pressure</label>
+                        <div class="field">
+                            <input class="tank_press" type="number" min="0" value="120">
+                            <span>&nbsp;psig</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tanks-total">
+                    <label>Total Equiv. Volume</label>
+                    <input id="tanks-total" type="number" size="10" disabled>
+                    <select class="tank_vol_units">
+                        <option value="1">in³</option>
+                        <option value="16.3871">ml</option>
+                    </select>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <span>
+                Created by Ari Meles-Braverman &copy; 2022. For educational purposes only. Contact <a href="https://www.chiefdelphi.com/u/arimb/summary" style="text-decoration: underline;">@AriMB</a> on ChiefDelphi with questions or suggestions.
+            </span>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,100 @@
+main {
+    align-items: flex-start;
+}
+
+div.page-element#cylinders {
+    width: 100%;
+    align-items: flex-start;
+}
+
+button.add {
+    padding: 8px;
+    margin: -3px 10px 8px -3px;
+}
+
+div.cyl-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    overflow-x: scroll;
+    width: 100%;
+    border-top: 2px solid black;
+}
+
+div.cyl, div.tank {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0 0.5em;
+    border-right: 1px solid black;
+}
+
+div.cyl:last-child, div.tank:last-child {
+    border: none;
+}
+
+div.cyl label {
+    white-space: nowrap;
+}
+
+input.name {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+    margin-bottom: 5px;
+    font-size: medium;
+    margin-top: 5px;
+}
+
+div.field {
+    justify-content: flex-end;
+}
+
+select.units {
+    align-self: flex-end;
+}
+
+button.delete {
+    padding: 4px 8px;
+    margin: 8px;
+    align-self: center;
+    background-color: gray;
+}
+
+button.delete:hover {
+    background-color: dimgray;
+}
+
+div.page-element#tanks {
+    align-items: flex-start;
+}
+
+h2 {
+    margin: 0 auto 0 0 !important; 
+}
+
+div.tank-list {
+    display: flex;
+    flex-direction: row;
+    border-top: 2px solid black;
+}
+
+div.tank {
+    display: flex;
+    flex-direction: column;
+}
+div.tank span {
+    min-width: 2.4em;
+}
+
+div.tanks-total {
+    display: flex;
+    flex-direction: row;
+    margin-top: 3px;
+}
+
+input#tanks-total {
+    width: 5em;
+    margin-left: 3px;
+}
