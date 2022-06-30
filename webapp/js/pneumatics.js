@@ -1,3 +1,5 @@
+var total_vol;
+
 $(document).ready(function(){
 
     $("button.add").click(function(){
@@ -6,8 +8,8 @@ $(document).ready(function(){
             `<div class="cyl">
                 <input class="name" type="text" size="1">
                 <select class="units">
-                    <option>inch</option>
-                    <option>mm</option>
+                    <option value="1">inch</option>
+                    <option value="25.4">mm</option>
                 </select>
                 <label>Bore Diam.</label>
                 <div class="field">
@@ -59,10 +61,131 @@ $(document).ready(function(){
             if($("div.cyl").length == 1) $("div.cyl").css("display", "flex");
         });
         $("select.units").change(function(){
-            $(this).parent().find("span.unit").text($(this).val());
+            $(this).parent().find("span.unit").text($(this).children(":selected").text());
         });
         $("select.units").change();
+        $("input, select").change(simulate);
+        $("button").click(simulate);
     });
 
+    $("div#tanks").find("input:not(.name), select").change(function(){
+        total_vol = 0;
+        $("div#tanks").find("div.tank").each(function(){
+            total_vol += $(this).find("input.tank_vol").val() / $(this).find("select.tank_vol_units").val() * $(this).find("input.tank_qty").val() * $(this).find("input.tank_press").val();
+        });
+        total_vol /= 120;
+        $("input#tanks-total").val((total_vol * $("select#tanks-total-units").val()).toFixed(2));
+    });
+    $("input.tank_qty").change();
+
+    simulate();
 
 });
+
+function simulate(){
+    const coeffs = JSON.parse($("select#compressor").val());
+    const trigger = $("input#trigger_press").val();
+    var min_press;
+    const cyls = $("div.cyl:not(#0)").map((i,cyl) => {
+        const bore = $(cyl).find("input.bore").val() / $(cyl).find("select.units").val();
+        const rod = $(cyl).find("input.rod").val() / $(cyl).find("select.units").val();
+        const stroke = $(cyl).find("input.stroke").val() / $(cyl).find("select.units").val();
+        const push_pressure = $(cyl).find("input.push_pressure").val();
+        const pull_pressure = $(cyl).find("input.pull_pressure").val();
+        // console.log(bore, rod, stroke, push_pressure, pull_pressure);
+        min_press = Math.min([min_press, push_pressure, pull_pressure]);
+
+        return {
+            vol: Math.PI*(bore/2)**2 * stroke * (push_pressure/120) + Math.PI*((bore/2)**2 - (rod/2)**2) * stroke * (pull_pressure/120),
+            period: $(cyl).find("input.period").val(),
+            start: $(cyl).find("input.start").val(),
+            end: $(cyl).find("input.end").val()
+        };
+    }).get();
+    const dt = 1;
+    var P = parseFloat($("input#initial_press").val());
+    
+    var data = [];
+    for (var t=0; t<=150; t+=dt) {
+        data.push([t,P]);
+        var VP_add = 0;
+        if (P <= trigger) VP_add += coeffs.map((val,i) => val * P**i * dt).reduce((a,b) => a+b); 
+        // console.log(VP_add);
+        
+        cyls.forEach(({vol,period,start,end}) => {
+            if (t >= start && t <= end) {
+                if (period >= dt && (t-start)%period < dt) VP_add -= vol*P;
+                else if (period < dt) VP_add -= vol*P/period;
+            }
+        });
+        // console.log(VP_add);
+
+        P += VP_add/total_vol;
+        P = Math.max(P, 0);
+    }
+    console.log(data);
+
+    // plot graph
+    $("canvas#graph").remove();
+    $("div.graph").prepend('<canvas id="graph"></canvas>');
+    var graph = new Chart("graph", {
+        type: "line",
+        labels: data.map(x => x[0]),
+        data: {
+            datasets: [{
+                data: data.map(x => x[1]),
+                borderColor: "black",
+                fill: false,
+                pointRadius: 0
+            },{
+                data: [{x: 0, y: trigger}, {x: 150, y: trigger}],
+                borderColor: "magenta",
+                borderDash: [5, 5],
+                fill: false,
+                pointRadius: 0
+            },{
+                data: [{x: 0, y: min_press}, {x: 150, y: min_press}],
+                borderColor: "red",
+                borderDash: [5, 5],
+                fill: false,
+                pointRadius: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: "Time (s)",
+                        padding: {
+                            top: 0
+                        }
+                    },
+                    ticks: {
+                        callback: function(value, index, ticks) {
+                            return times[index].toFixed(2);
+                        }
+                    }
+                },
+                y: {
+                    display: true,
+                    position: "left",
+                    title: {
+                        display: true,
+                        // text: "Position (ft), Acceleration (ft/s^2)"
+                    }
+                },
+                y2: {
+                    display: true,
+                    position: "right",
+                    title: {
+                        display: true,
+                        // text: "Speed (ft/s)"
+                    }
+                }
+            }
+        }
+    });
+}

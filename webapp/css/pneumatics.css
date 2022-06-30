@@ -66,6 +66,12 @@ button.delete:hover {
     background-color: dimgray;
 }
 
+div.col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 div.page-element#tanks {
     align-items: flex-start;
 }
@@ -84,9 +90,10 @@ div.tank {
     display: flex;
     flex-direction: column;
 }
-div.tank span {
+
+/* div.tank span {
     min-width: 2.4em;
-}
+} */
 
 div.tanks-total {
     display: flex;
@@ -97,4 +104,13 @@ div.tanks-total {
 input#tanks-total {
     width: 5em;
     margin-left: 3px;
+}
+
+div.page-element.graph {
+    width: 40vw;
+    min-width: 700px;
+}
+
+canvas#graph {
+    background-color: white;
 }

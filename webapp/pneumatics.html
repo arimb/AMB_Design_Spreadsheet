@@ -30,8 +30,8 @@
                     <div class="cyl" id="0">
                         <input class="name" type="text" size="1" disabled>
                         <select class="units" disabled>
-                            <option>inch</option>
-                            <option>mm</option>
+                            <option value="1">inch</option>
+                            <option value="25.4">mm</option>
                         </select>
                         <label>Bore Diam.</label>
                         <div class="field">
@@ -79,83 +79,106 @@
                     </div>
                 </div>
             </div>
-            <div class="page-element" id="tanks">
-                <h2>
-                    Tanks
-                </h2>
-                <div class="tank-list">
-                    <div class="tank">
-                        <input class="name" type="text" size="1" value="Clippard">
-                        <label>Tank Volume</label>
-                        <div class="field">
-                            <input class="tank_vol" type="number" min="0" value="574">
-                            <select class="tank_vol_units">
-                                <option value="1">in³</option>
-                                <option value="16.3871" selected>ml</option>
-                            </select>
+            <div class="col">
+                <div class="page-element" id="tanks">
+                    <h2>
+                        Tanks
+                    </h2>
+                    <div class="tank-list">
+                        <div class="tank">
+                            <input class="name" type="text" size="1" value="Clippard">
+                            <label>Tank Volume</label>
+                            <div class="field">
+                                <input class="tank_vol" type="number" min="0" value="35">
+                                <select class="tank_vol_units">
+                                    <option value="1">in³</option>
+                                    <option value="16.3871">ml</option>
+                                </select>
+                            </div>
+                            <label>Quantity</label>
+                            <div class="field">
+                                <input class="tank_qty" type="number" min="0" value="1">
+                                <span></span>
+                            </div>
+                            <label>Pressure</label>
+                            <div class="field">
+                                <input class="tank_press" type="number" min="0" value="120">
+                                <span>&nbsp;psig</span>
+                            </div>
                         </div>
-                        <label>Quantity</label>
-                        <div class="field">
-                            <input class="tank_qty" type="number" min="0">
-                            <span></span>
+                        <div class="tank">
+                            <input class="name" type="text" size="1">
+                            <label>Tank Volume</label>
+                            <div class="field">
+                                <input class="tank_vol" type="number" min="0">
+                                <select class="tank_vol_units">
+                                    <option value="1">in³</option>
+                                    <option value="16.3871">ml</option>
+                                </select>
+                            </div>
+                            <label>Quantity</label>
+                            <div class="field">
+                                <input class="tank_qty" type="number" min="0">
+                                <span></span>
+                            </div>
+                            <label>Pressure</label>
+                            <div class="field">
+                                <input class="tank_press" type="number" min="0" value="120">
+                                <span>&nbsp;psig</span>
+                            </div>
                         </div>
-                        <label>Pressure</label>
-                        <div class="field">
-                            <input class="tank_press" type="number" min="0" value="120">
-                            <span>&nbsp;psig</span>
+                        <div class="tank">
+                            <input class="name" type="text" size="1">
+                            <label>Tank Volume</label>
+                            <div class="field">
+                                <input class="tank_vol" type="number" min="0">
+                                <select class="tank_vol_units">
+                                    <option value="1">in³</option>
+                                    <option value="16.3871">ml</option>
+                                </select>
+                            </div>
+                            <label>Quantity</label>
+                            <div class="field">
+                                <input class="tank_qty" type="number" min="0">
+                                <span></span>
+                            </div>
+                            <label>Pressure</label>
+                            <div class="field">
+                                <input class="tank_press" type="number" min="0" value="120">
+                                <span>&nbsp;psig</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="tank">
-                        <input class="name" type="text" size="1">
-                        <label>Tank Volume</label>
-                        <div class="field">
-                            <input class="tank_vol" type="number" min="0">
-                            <select class="tank_vol_units">
-                                <option value="1">in³</option>
-                                <option value="16.3871">ml</option>
-                            </select>
-                        </div>
-                        <label>Quantity</label>
-                        <div class="field">
-                            <input class="tank_qty" type="number" min="0">
-                            <span></span>
-                        </div>
-                        <label>Pressure</label>
-                        <div class="field">
-                            <input class="tank_press" type="number" min="0" value="120">
-                            <span>&nbsp;psig</span>
-                        </div>
-                    </div>
-                    <div class="tank">
-                        <input class="name" type="text" size="1">
-                        <label>Tank Volume</label>
-                        <div class="field">
-                            <input class="tank_vol" type="number" min="0">
-                            <select class="tank_vol_units">
-                                <option value="1">in³</option>
-                                <option value="16.3871">ml</option>
-                            </select>
-                        </div>
-                        <label>Quantity</label>
-                        <div class="field">
-                            <input class="tank_qty" type="number" min="0">
-                            <span></span>
-                        </div>
-                        <label>Pressure</label>
-                        <div class="field">
-                            <input class="tank_press" type="number" min="0" value="120">
-                            <span>&nbsp;psig</span>
-                        </div>
+                    <div class="tanks-total">
+                        <label>Total Equiv. Volume</label>
+                        <input id="tanks-total" type="number" size="10" disabled>
+                        <select id="tanks-total-units">
+                            <option value="1">in³</option>
+                            <option value="16.3871">ml</option>
+                        </select>
+                        <label>&nbsp;@ 120 psig</label>
                     </div>
                 </div>
-                <div class="tanks-total">
-                    <label>Total Equiv. Volume</label>
-                    <input id="tanks-total" type="number" size="10" disabled>
-                    <select class="tank_vol_units">
-                        <option value="1">in³</option>
-                        <option value="16.3871">ml</option>
+                <div class="page-element" id="compressor">
+                    <select id="compressor">
+                        <option value="[0, 0, 0, 0]">No Compressor</option>
+                        <option value="[-4.37e-7, 1.23e-4, -0.01186, 0.6123]">Viair 90C</option>
+                        <option value="[3.865e-7, -3.916e-5, -0.003809, 0.692]">1.1 Pump</option>
                     </select>
+                    <label>Initial Pressure</label>
+                    <div class="field">
+                        <input id="initial_press" type="number" min="0" value="0">
+                        <span>&nbsp;psig</span>
+                    </div>
+                    <label>Compressor Trigger</label>
+                    <div class="field">
+                        <input id="trigger_press" type="number" min="0" value="95">
+                        <span>&nbsp;psig</span>
+                    </div>
                 </div>
+            </div>
+            <div class="page-element graph">
+                <canvas id="graph"></canvas>
             </div>
         </main>
         <footer>
