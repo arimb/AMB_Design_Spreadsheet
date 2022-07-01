@@ -162,17 +162,22 @@
                 <div class="page-element" id="compressor">
                     <select id="compressor">
                         <option value="[0, 0, 0, 0]">No Compressor</option>
-                        <option value="[-4.37e-7, 1.23e-4, -0.01186, 0.6123]">Viair 90C</option>
-                        <option value="[3.865e-7, -3.916e-5, -0.003809, 0.692]">1.1 Pump</option>
+                        <option value="[0.6123, -0.01186, 1.23e-4, -4.37e-7]">Viair 90C</option>
+                        <option value="[0.692, -0.003809, -3.916e-5, 3.865e-7]">1.1 Pump</option>
                     </select>
                     <label>Initial Pressure</label>
                     <div class="field">
-                        <input id="initial_press" type="number" min="0" value="0">
+                        <input id="initial_press" type="number" min="0" value="120">
                         <span>&nbsp;psig</span>
                     </div>
                     <label>Compressor Trigger</label>
                     <div class="field">
                         <input id="trigger_press" type="number" min="0" value="95">
+                        <span>&nbsp;psig</span>
+                    </div>
+                    <label>Compressor Cutoff</label>
+                    <div class="field">
+                        <input id="cutoff_press" type="number" min="0" value="120">
                         <span>&nbsp;psig</span>
                     </div>
                 </div>

@@ -67,6 +67,7 @@ $(document).ready(function(){
         $("input, select").change(simulate);
         $("button").click(simulate);
     });
+    $("input, select").change(simulate);
 
     $("div#tanks").find("input:not(.name), select").change(function(){
         total_vol = 0;
@@ -85,32 +86,35 @@ $(document).ready(function(){
 function simulate(){
     const coeffs = JSON.parse($("select#compressor").val());
     const trigger = $("input#trigger_press").val();
-    var min_press;
+    const cutoff = $("input#cutoff_press").val();
+    var min_press = 0;
     const cyls = $("div.cyl:not(#0)").map((i,cyl) => {
         const bore = $(cyl).find("input.bore").val() / $(cyl).find("select.units").val();
         const rod = $(cyl).find("input.rod").val() / $(cyl).find("select.units").val();
         const stroke = $(cyl).find("input.stroke").val() / $(cyl).find("select.units").val();
         const push_pressure = $(cyl).find("input.push_pressure").val();
         const pull_pressure = $(cyl).find("input.pull_pressure").val();
-        // console.log(bore, rod, stroke, push_pressure, pull_pressure);
-        min_press = Math.min([min_press, push_pressure, pull_pressure]);
+        min_press = Math.max(min_press, push_pressure, pull_pressure);
 
+        const period = $(cyl).find("input.period").val();
         return {
             vol: Math.PI*(bore/2)**2 * stroke * (push_pressure/120) + Math.PI*((bore/2)**2 - (rod/2)**2) * stroke * (pull_pressure/120),
-            period: $(cyl).find("input.period").val(),
+            period: period=="" ? Infinity : period,
             start: $(cyl).find("input.start").val(),
             end: $(cyl).find("input.end").val()
         };
     }).get();
     const dt = 1;
     var P = parseFloat($("input#initial_press").val());
+    var comp_state = true;
     
     var data = [];
     for (var t=0; t<=150; t+=dt) {
         data.push([t,P]);
         var VP_add = 0;
-        if (P <= trigger) VP_add += coeffs.map((val,i) => val * P**i * dt).reduce((a,b) => a+b); 
-        // console.log(VP_add);
+        if (P <= trigger) comp_state = true;
+        if (P >= cutoff) comp_state = false;
+        if (comp_state) VP_add += coeffs.map((val,i) => val * P**i).reduce((a,b) => a+b) * 12**3/60*14.7 * dt; 
         
         cyls.forEach(({vol,period,start,end}) => {
             if (t >= start && t <= end) {
@@ -118,20 +122,18 @@ function simulate(){
                 else if (period < dt) VP_add -= vol*P/period;
             }
         });
-        // console.log(VP_add);
 
         P += VP_add/total_vol;
         P = Math.max(P, 0);
     }
-    console.log(data);
 
     // plot graph
     $("canvas#graph").remove();
     $("div.graph").prepend('<canvas id="graph"></canvas>');
     var graph = new Chart("graph", {
         type: "line",
-        labels: data.map(x => x[0]),
         data: {
+            labels: data.map(x => x[0]),
             datasets: [{
                 data: data.map(x => x[1]),
                 borderColor: "black",
@@ -156,17 +158,10 @@ function simulate(){
             scales: {
                 x: {
                     display: true,
+                    position: "bottom",
                     title: {
                         display: true,
-                        text: "Time (s)",
-                        padding: {
-                            top: 0
-                        }
-                    },
-                    ticks: {
-                        callback: function(value, index, ticks) {
-                            return times[index].toFixed(2);
-                        }
+                        text: "Time (sec)"
                     }
                 },
                 y: {
@@ -174,16 +169,14 @@ function simulate(){
                     position: "left",
                     title: {
                         display: true,
-                        // text: "Position (ft), Acceleration (ft/s^2)"
-                    }
-                },
-                y2: {
-                    display: true,
-                    position: "right",
-                    title: {
-                        display: true,
-                        // text: "Speed (ft/s)"
-                    }
+                        text: "Pressure (psig)"
+                    },
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
                 }
             }
         }

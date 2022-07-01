@@ -91,10 +91,6 @@ div.tank {
     flex-direction: column;
 }
 
-/* div.tank span {
-    min-width: 2.4em;
-} */
-
 div.tanks-total {
     display: flex;
     flex-direction: row;
@@ -104,6 +100,11 @@ div.tanks-total {
 input#tanks-total {
     width: 5em;
     margin-left: 3px;
+}
+
+select#compressor {
+    font-size: 1em;
+    margin-bottom: 0.5em;
 }
 
 div.page-element.graph {
