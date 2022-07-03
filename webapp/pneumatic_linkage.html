@@ -23,28 +23,28 @@
                 <div class="page-element" id="piston">
                     <h2>Piston Geometry</h2>
                     <div class="driven-set">
-                        <input name="driven" type="radio">
+                        <input name="driven" type="radio" id="LdL">
                         <div class="fields">
                             <div class="field">
                                 <label for="retracted">Retracted Length</label>
-                                <input id="retracted" type="number" min="0">
+                                <input id="retracted" type="number" min="0" value="100">
                             </div>
                             <div class="field">
                                 <label for="stroke">Stroke Length</label>
-                                <input id="stroke" type="number" min="0">
+                                <input id="stroke" type="number" min="0" value="50">
                             </div>
                         </div>
                     </div>
                     <div class="driven-set">
-                        <input name="driven" type="radio">
+                        <input name="driven" type="radio" id="AB">
                         <div class="fields">
                             <div class="field">
                                 <label for="mount_x">Mount Horiz. Offset</label>
-                                <input id="mount_x" type="number">
+                                <input id="mount_x" type="number" value="40">
                             </div>
                             <div class="field">
                                 <label for="mount_y">Mount Vert. Offset</label>
-                                <input id="mount_y" type="number">
+                                <input id="mount_y" type="number" value="90">
                             </div>
                         </div>
                     </div>
@@ -52,28 +52,28 @@
                 <div class="page-element" id="linkage">
                     <h2>Linkage Geometry</h2>
                     <div class="driven-set">
-                        <input name="driven" type="radio" checked>
+                        <input name="driven" type="radio" id="h1h2" checked>
                         <div class="fields">
-                            <div class="field">
-                                <label for="extended_angle">Extended Angle</label>
-                                <input id="extended_angle" type="number" disabled>
-                            </div>
                             <div class="field">
                                 <label for="retracted_angle">Retracted Angle</label>
                                 <input id="retracted_angle" type="number" disabled>
                             </div>
+                            <div class="field">
+                                <label for="extended_angle">Extended Angle</label>
+                                <input id="extended_angle" type="number" disabled>
+                            </div>
                         </div>
                     </div>
                     <div class="driven-set">
-                        <input name="driven" type="radio">
+                        <input name="driven" type="radio" id="XY">
                         <div class="fields">
                             <div class="field">
                                 <label for="parallel_dist">Pivot Parallel Dist.</label>
-                                <input id="parallel_dist" type="number" min="0">
+                                <input id="parallel_dist" type="number" min="0" value="100">
                             </div>
                             <div class="field">
                                 <label for="cross_dist">Pivot Cross Dist.</label>
-                                <input id="cross_dist" type="number" min="0">
+                                <input id="cross_dist" type="number" min="0" value="20">
                             </div>
                         </div>
                     </div>
