@@ -4,6 +4,7 @@
     --med-light: #608F60;
     --med-dark: #588157;
     --dark: #405a3f;
+    --selected: #E9EA6A; 
     background-color: var(--white);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 0.9em;

@@ -1,0 +1,28 @@
+input[type=radio][name=driven] {
+    width: 0;
+    border: 2px solid black;
+    padding: 0.6em;
+    margin: 0;
+    margin-right: 0.5em;
+    background-color: var(--med-light);
+    -webkit-appearance: none;
+}
+
+input[type=radio][name=driven]:hover {
+    background-color: var(--dark);
+}
+
+input[type=radio][name=driven]:checked {
+    background-color: var(--selected) !important;
+}
+
+div.driven-set {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+div.fields {
+    display: flex;
+    flex-direction: column;
+}

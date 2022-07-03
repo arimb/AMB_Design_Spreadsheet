@@ -1,7 +1,3 @@
-:root {
-    --selected: #E9EA6A; 
-}
-
 div.inputs {
     display: flex;
     flex-direction: column;

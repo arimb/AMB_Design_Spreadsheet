@@ -1,8 +1,3 @@
-:root {
-    --selected: #E9EA6A; 
-     /* #8D788D; */
-}
-
 div.page-element#motor {
     flex-direction: row;
 }
