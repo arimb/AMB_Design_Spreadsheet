@@ -1,3 +1,9 @@
+div.inputs {
+    display: flex;
+    flex-direction: column;
+    justify-items: flex-start;
+}
+
 input[type=radio][name=driven] {
     width: 0;
     border: 2px solid black;
@@ -25,4 +31,27 @@ div.driven-set {
 div.fields {
     display: flex;
     flex-direction: column;
+}
+
+div.page-element#sketch {
+    width: 40vw;
+    min-width: 700px;
+}
+
+div.controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+input#piston-pos {
+    flex: 1;
+}
+
+canvas#sketch {
+    background-color: white;
+}
+
+input[type=checkbox] {
+    zoom: 1.5;
 }

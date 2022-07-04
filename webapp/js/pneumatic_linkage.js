@@ -39,12 +39,12 @@ $(document).ready(function(){
                 $("input#mount_y").val(B.toFixed(2));
                 break;
             case "h1h2":
-                h1 = Math.atan2(A**2*B**2*X**2 + B**4*X**2 - B**2*L**2*X**2 + B**2*X**4 + 2*A**3*B*X*Y + 2*A*B**3*X*Y - 2*A*B*L**2*X*Y + 2*A*B*X**3*Y + A**4*Y**2 + A**2*B**2*Y**2 - A**2*L**2*Y**2 + A**2*X**2*Y**2 + B**2*X**2*Y**2 + 2*A*B*X*Y**3 + A**2*Y**4 + A*X*Math.sqrt(-((B*X + A*Y)**2*(A**4 + B**4 + 2*A**2*(B**2 - L**2 - X**2 - Y**2) + (X**2 + Y**2 - L**2)**2 - 2*B**2*(L**2 + X**2 + Y**2)))) - B*Y*Math.sqrt(-((B*X + A*Y)**2*(A**4 + B**4 + 2*A**2*(B**2 - L**2 - X**2 - Y**2) + (X**2 + Y**2 - L**2)**2 - 2*B**2*(L**2 + X**2 + Y**2)))), (B*X + A*Y)*(-(A**3*X) - A*B**2*X + A*L**2*X - A*X**3 + A**2*B*Y + B**3*Y - B*L**2*Y + B*X**2*Y - A*X*Y**2 + B*Y**3 + Math.sqrt(-((B*X + A*Y)**2*(A**4 + B**4 + 2*A**2*(B**2 - L**2 - X**2 - Y**2) + (X**2 + Y**2 - L**2)**2 - 2*B**2*(L**2 + X**2 + Y**2))))));
-
-                h2 = Math.atan2(A**2*B**2*X**2 + B**4*X**2 - B**2*dL**2*X**2 - 2*B**2*dL*L*X**2 - B**2*L**2*X**2 + B**2*X**4 + 2*A**3*B*X*Y + 2*A*B**3*X*Y - 2*A*B*dL**2*X*Y - 4*A*B*dL*L*X*Y - 2*A*B*L**2*X*Y + 2*A*B*X**3*Y + A**4*Y**2 + A**2*B**2*Y**2 - A**2*dL**2*Y**2 - 2*A**2*dL*L*Y**2 - A**2*L**2*Y**2 + A**2*X**2*Y**2 + B**2*X**2*Y**2 + 2*A*B*X*Y**3 + A**2*Y**4 + A*X*Math.sqrt(-((B*X + A*Y)**2*(A**4 + B**4 + 2*A**2*(B**2 - dL**2 - 2*dL*L - L**2 - X**2 - Y**2) + (dL**2 + 2*dL*L + L**2 - X**2 - Y**2)**2 - 2*B**2*(dL**2 + 2*dL*L + L**2 + X**2 + Y**2)))) - B*Y*Math.sqrt(-((B*X + A*Y)**2*(A**4 + B**4 + 2*A**2*(B**2 - dL**2 - 2*dL*L - L**2 - X**2 - Y**2) + (dL**2 + 2*dL*L + L**2 - X**2 - Y**2)**2 - 2*B**2*(dL**2 + 2*dL*L + L**2 + X**2 + Y**2)))), (B*X + A*Y)*(-(A**3*X) - A*B**2*X + A*dL**2*X + 2*A*dL*L*X + A*L**2*X - A*X**3 + A**2*B*Y + B**3*Y - B*dL**2*Y - 2*B*dL*L*Y - B*L**2*Y + B*X**2*Y - A*X*Y**2 + B*Y**3 + Math.sqrt(-((B*X + A*Y)**2*(A**4 + B**4 + 2*A**2*(B**2 - dL**2 - 2*dL*L - L**2 - X**2 - Y**2) + (dL**2 + 2*dL*L + L**2 - X**2 - Y**2)**2 - 2*B**2*(dL**2 + 2*dL*L + L**2 + X**2 + Y**2))))));
+                h1 = link_angle(A, B, L, 0, X, Y);
+                h2 = link_angle(A, B, L, dL, X, Y);
 
                 $("input#extended_angle").val((h2 * 180 / Math.PI).toFixed(1));
                 $("input#retracted_angle").val((h1 * 180 / Math.PI).toFixed(1));
+                $("input#extended_angle").val((h2 * 180 / Math.PI).toFixed(1));
                 break;
             case "XY":
                 X = (-(A*(A**2 + B**2 + dL**2 + 2*dL*L)*Math.cos(h1)) + A**3*Math.cos(h1 - 2*h2) + A*B**2*Math.cos(h1 - 2*h2) + A**3*Math.cos(2*h1 - h2) + A*B**2*Math.cos(2*h1 - h2) - A**3*Math.cos(h2) - A*B**2*Math.cos(h2) + A*dL**2*Math.cos(h2) + 2*A*dL*L*Math.cos(h2) + A**2*B*Math.sin(h1) + B**3*Math.sin(h1) + B*dL**2*Math.sin(h1) + 2*B*dL*L*Math.sin(h1) + A**2*B*Math.sin(h1 - 2*h2) + B**3*Math.sin(h1 - 2*h2) - A**2*B*Math.sin(2*h1 - h2) - B**3*Math.sin(2*h1 - h2) + A**2*B*Math.sin(h2) + B**3*Math.sin(h2) - B*dL**2*Math.sin(h2) - 2*B*dL*L*Math.sin(h2) + 2*Math.sqrt(-((-2*A**2 - 2*B**2 + dL**2 + 2*(A**2 + B**2)*Math.cos(h1 - h2))*(-2*A**2 - 2*B**2 + dL**2 + 4*dL*L + 4*L**2 + 2*(A**2 + B**2)*Math.cos(h1 - h2))*Math.sin((h1 - h2)/2)**2*(A*Math.cos((h1 + h2)/2) - B*Math.sin((h1 + h2)/2))**2)))/(8*(A**2 + B**2)*Math.sin((h1 - h2)/2)**2);
@@ -55,7 +55,57 @@ $(document).ready(function(){
                 $("input#cross_dist").val(Y.toFixed(2));
                 break;
         }
+
+        // plot graph
+        $("canvas#sketch").remove();
+        $("div.sketch").append('<canvas id="sketch"></canvas>');
+        const dLtmp = $("input#piston-pos").val() * dL;
+        const h = link_angle(A, B, L, dLtmp, X, Y);
+        console.log(1.5*X*Math.cos(h));
+        var data = [
+            {
+                data: [{x: 0, y: 0}, {x: 1.5*X*Math.cos(h), y: 1.5*X*Math.sin(h)}],
+                borderColor: "black",
+                fill: false,
+                pointRadius: 0
+            }
+        ];
+        if ($("input#retract").val()) {
+            data.push({
+                data: [{x: 0, y: 0}, {x: 1.5*X*Math.cos(h1), y: 1.5*X*Math.sin(h1)}],
+                borderColor: "black",
+                fill: false,
+                pointRadius: 0
+            });
+        }
+        if ($("input#extend").val()) {
+            data.push({
+                data: [{x: 0, y: 0}, {x: 1.5*X*Math.cos(h2), y: 1.5*X*Math.sin(h2)}],
+                borderColor: "black",
+                fill: false,
+                pointRadius: 0
+            });
+        }
+        
+        var graph = new Chart("sketch", {
+            type: "line",
+            data: {
+                datasets: data
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
     });
     $("input#retracted").change();
 
 });
+
+function link_angle(A, B, L, dL, X, Y){
+    return Math.atan2(A**2*B**2*X**2 + B**4*X**2 - B**2*dL**2*X**2 - 2*B**2*dL*L*X**2 - B**2*L**2*X**2 + B**2*X**4 + 2*A**3*B*X*Y + 2*A*B**3*X*Y - 2*A*B*dL**2*X*Y - 4*A*B*dL*L*X*Y - 2*A*B*L**2*X*Y + 2*A*B*X**3*Y + A**4*Y**2 + A**2*B**2*Y**2 - A**2*dL**2*Y**2 - 2*A**2*dL*L*Y**2 - A**2*L**2*Y**2 + A**2*X**2*Y**2 + B**2*X**2*Y**2 + 2*A*B*X*Y**3 + A**2*Y**4 + A*X*Math.sqrt(-((B*X + A*Y)**2*(A**4 + B**4 + 2*A**2*(B**2 - dL**2 - 2*dL*L - L**2 - X**2 - Y**2) + (dL**2 + 2*dL*L + L**2 - X**2 - Y**2)**2 - 2*B**2*(dL**2 + 2*dL*L + L**2 + X**2 + Y**2)))) - B*Y*Math.sqrt(-((B*X + A*Y)**2*(A**4 + B**4 + 2*A**2*(B**2 - dL**2 - 2*dL*L - L**2 - X**2 - Y**2) + (dL**2 + 2*dL*L + L**2 - X**2 - Y**2)**2 - 2*B**2*(dL**2 + 2*dL*L + L**2 + X**2 + Y**2)))), (B*X + A*Y)*(-(A**3*X) - A*B**2*X + A*dL**2*X + 2*A*dL*L*X + A*L**2*X - A*X**3 + A**2*B*Y + B**3*Y - B*dL**2*Y - 2*B*dL*L*Y - B*L**2*Y + B*X**2*Y - A*X*Y**2 + B*Y**3 + Math.sqrt(-((B*X + A*Y)**2*(A**4 + B**4 + 2*A**2*(B**2 - dL**2 - 2*dL*L - L**2 - X**2 - Y**2) + (dL**2 + 2*dL*L + L**2 - X**2 - Y**2)**2 - 2*B**2*(dL**2 + 2*dL*L + L**2 + X**2 + Y**2))))));
+}
