@@ -70,7 +70,7 @@ $(document).ready(function(){
                 pointRadius: 0
             }
         ];
-        if ($("input#retract").val()) {
+        if ($("input#retract").prop("checked")) {
             data.push({
                 data: [{x: 0, y: 0}, {x: 1.5*X*Math.cos(h1), y: 1.5*X*Math.sin(h1)}],
                 borderColor: "black",
@@ -78,7 +78,7 @@ $(document).ready(function(){
                 pointRadius: 0
             });
         }
-        if ($("input#extend").val()) {
+        if ($("input#extend").prop("checked")) {
             data.push({
                 data: [{x: 0, y: 0}, {x: 1.5*X*Math.cos(h2), y: 1.5*X*Math.sin(h2)}],
                 borderColor: "black",
@@ -87,16 +87,29 @@ $(document).ready(function(){
             });
         }
         
+        console.log(data);
         var graph = new Chart("sketch", {
             type: "line",
             data: {
-                datasets: data
+                datasets: [{
+                    data: [{x: 0, y: 0}, {x: 1.5*X*Math.cos(h), y: 1.5*X*Math.sin(h)}],
+                    borderColor: "black"
+                }]
             },
             options: {
                 responsive: true,
                 plugins: {
                     legend: {
                         display: false
+                    }
+                },
+                animation: {
+                    duration: 0
+                },
+                datasets: {
+                    line: {
+                        fill: false,
+                        pointRadius: 0
                     }
                 }
             }
