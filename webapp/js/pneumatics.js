@@ -4,6 +4,7 @@ $(document).ready(function(){
 
     $("button.add").click(function(){
         $("div.cyl#0").css("display", "none");
+        $("div.cyl-list").css("background-color", "inherit");
         $("div.cyl-list").append(
             `<div class="cyl">
                 <input class="name" type="text" size="1">
@@ -58,7 +59,10 @@ $(document).ready(function(){
         );
         $("button.delete:not(#0)").click(function(){
             $(this).parent().remove();
-            if($("div.cyl").length == 1) $("div.cyl").css("display", "flex");
+            if($("div.cyl").length == 1) {
+                $("div.cyl").css("display", "flex");
+                $("div.cyl-list").css("background-color", "#b3bdb3");
+            }
         });
         $("select.units").change(function(){
             $(this).parent().find("span.unit").text($(this).children(":selected").text());
@@ -72,7 +76,7 @@ $(document).ready(function(){
     $("div#tanks").find("input:not(.name), select").change(function(){
         total_vol = 0;
         $("div#tanks").find("div.tank").each(function(){
-            total_vol += $(this).find("input.tank_vol").val() / $(this).find("select.tank_vol_units").val() * $(this).find("input.tank_qty").val() * $(this).find("input.tank_press").val();
+            total_vol += $(this).find("input.tank_vol").val() / $(this).find("select.tank_vol-units").val() * $(this).find("input.tank_qty").val() * $(this).find("input.tank_press").val();
         });
         total_vol /= 120;
         $("input#tanks-total").val((total_vol * $("select#tanks-total-units").val()).toFixed(2));

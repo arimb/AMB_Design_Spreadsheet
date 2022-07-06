@@ -90,16 +90,16 @@ $(document).ready(function(){
         gear1options = gear1options.filter(function(gear){
             if ($("input#min1").val() && gear[0] < $("input#min1").val()) return false;
             if ($("input#max1").val() && gear[0] > $("input#max1").val()) return false;
-            if ($("input#min1diam").val() && gear.last()/20+0.1 < $("input#min1diam").val()/$("select#min1diam_units").val()) return false;
-            if ($("input#max1diam").val() && gear.last()/20+0.1 > $("input#max1diam").val()/$("select#max1diam_units").val()) return false;
+            if ($("input#min1diam").val() && gear.last()/20+0.1 < $("input#min1diam").val()/$("select#min1diam-units").val()) return false;
+            if ($("input#max1diam").val() && gear.last()/20+0.1 > $("input#max1diam").val()/$("select#max1diam-units").val()) return false;
             return true;
         });
         var gear4options = gears[$("select#type4 option:selected").text()]["gears"];
         gear4options = gear4options.filter(function(gear){
             if ($("input#min4").val() && gear[0] < $("input#min4").val()) return false;
             if ($("input#max4").val() && gear[0] > $("input#max4").val()) return false;
-            if ($("input#min4diam").val() && gear.last()/20+0.1 < $("input#min4diam").val()/$("select#min4diam_units").val()) return false;
-            if ($("input#max4diam").val() && gear.last()/20+0.1 > $("input#max4diam").val()/$("select#max4diam_units").val()) return false;
+            if ($("input#min4diam").val() && gear.last()/20+0.1 < $("input#min4diam").val()/$("select#min4diam-units").val()) return false;
+            if ($("input#max4diam").val() && gear.last()/20+0.1 > $("input#max4diam").val()/$("select#max4diam-units").val()) return false;
             return true;
         });
         if (two_stage){
@@ -107,16 +107,16 @@ $(document).ready(function(){
             gear2options = gear2options.filter(function(gear){
                 if ($("input#min2").val() && gear[0] < $("input#min2").val()) return false;
                 if ($("input#max2").val() && gear[0] > $("input#max2").val()) return false;
-                if ($("input#min2diam").val() && gear.last()/20+0.1 < $("input#min2diam").val()/$("select#min2diam_units").val()) return false;
-                if ($("input#max2diam").val() && gear.last()/20+0.1 > $("input#max2diam").val()/$("select#max2diam_units").val()) return false;
+                if ($("input#min2diam").val() && gear.last()/20+0.1 < $("input#min2diam").val()/$("select#min2diam-units").val()) return false;
+                if ($("input#max2diam").val() && gear.last()/20+0.1 > $("input#max2diam").val()/$("select#max2diam-units").val()) return false;
                 return true;
             });
             var gear3options = gears[$("select#type3 option:selected").text()]["gears"];
             gear3options = gear3options.filter(function(gear){
                 if ($("input#min3").val() && gear[0] < $("input#min3").val()) return false;
                 if ($("input#max3").val() && gear[0] > $("input#max3").val()) return false;
-                if ($("input#min3diam").val() && gear.last()/20+0.1 < $("input#min3diam").val()/$("select#min3diam_units").val()) return false;
-                if ($("input#max3diam").val() && gear.last()/20+0.1 > $("input#max3diam").val()/$("select#max3diam_units").val()) return false;
+                if ($("input#min3diam").val() && gear.last()/20+0.1 < $("input#min3diam").val()/$("select#min3diam-units").val()) return false;
+                if ($("input#max3diam").val() && gear.last()/20+0.1 > $("input#max3diam").val()/$("select#max3diam-units").val()) return false;
                 return true;
             });
         }
@@ -129,22 +129,22 @@ $(document).ready(function(){
                         gear3options.forEach(gear3 => {
                             ratio = gear2[0]/gear1[0] * gear4[0]/gear3[0];
                             if (ratio < min_ratio || ratio > max_ratio) return;
-                            if ($("input#min12dist").val() && (gear1.last()+gear2.last())/40 < $("input#min12dist").val()/$("select#min12dist_units").val()) return;
-                            if ($("input#max12dist").val() && (gear1.last()+gear2.last())/40 > $("input#max12dist").val()/$("select#min12dist_units").val()) return;
-                            if ($("input#min34dist").val() && (gear3.last()+gear4.last())/40 < $("input#min34dist").val()/$("select#min34dist_units").val()) return;
-                            if ($("input#max34dist").val() && (gear3.last()+gear4.last())/40 > $("input#max34dist").val()/$("select#min34dist_units").val()) return;
+                            if ($("input#min12dist").val() && (gear1.last()+gear2.last())/40 < $("input#min12dist").val()/$("select#min12dist-units").val()) return;
+                            if ($("input#max12dist").val() && (gear1.last()+gear2.last())/40 > $("input#max12dist").val()/$("select#min12dist-units").val()) return;
+                            if ($("input#min34dist").val() && (gear3.last()+gear4.last())/40 < $("input#min34dist").val()/$("select#min34dist-units").val()) return;
+                            if ($("input#max34dist").val() && (gear3.last()+gear4.last())/40 > $("input#max34dist").val()/$("select#min34dist-units").val()) return;
                             if ($("select#clearance1").val() != "None" && (gear1.last()+gear2.last()-(gear3.last()+2))/40 < ($("select#clearance1").val() == "Custom" ? 
-                                $("input#clearance1custom").val()/$("select#clearance1custom_units").val() : $("select#type1").val())) return;
+                                $("input#clearance1custom").val()/$("select#clearance1custom-units").val() : $("select#type1").val())) return;
                             if ($("select#clearance4").val() != "None" && (gear3.last()+gear4.last()-(gear2.last()+2))/40 < ($("select#clearance4").val() == "Custom" ? 
-                                $("input#clearance4custom").val()/$("select#clearance4custom_units").val() : $("select#type4").val())) return;
+                                $("input#clearance4custom").val()/$("select#clearance4custom-units").val() : $("select#type4").val())) return;
                             gearboxes.push([gear1[0], gear2[0], gear3[0], gear4[0], ratio]);
                         });
                     });
                 } else {
                     ratio = gear4[0]/gear1[0];
                     if (ratio < min_ratio || ratio > max_ratio) return;
-                    if ($("input#min14dist").val() && (gear1.last()+gear4.last())/40 < $("input#min14dist").val()/$("select#min14dist_units").val()) return;
-                    if ($("input#max14dist").val() && (gear1.last()+gear4.last())/40 > $("input#max14dist").val()/$("select#min14dist_units").val()) return;
+                    if ($("input#min14dist").val() && (gear1.last()+gear4.last())/40 < $("input#min14dist").val()/$("select#min14dist-units").val()) return;
+                    if ($("input#max14dist").val() && (gear1.last()+gear4.last())/40 > $("input#max14dist").val()/$("select#min14dist-units").val()) return;
                     gearboxes.push([gear1[0], gear4[0], ratio]);
                 } 
             });

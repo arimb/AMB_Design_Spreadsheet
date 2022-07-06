@@ -7,9 +7,20 @@ div.page-element#cylinders {
     align-items: flex-start;
 }
 
-button.add {
+/* button.add {
     padding: 8px;
     margin: -3px 10px 8px -3px;
+} */
+
+button.add {
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 8px;
+    /* margin: -3px 10px 8px -3px; */
+    margin: 0;
+    border: 1px solid black;
+    border-radius: 0px;
+    box-shadow: none;
 }
 
 div.cyl-list {
@@ -19,6 +30,7 @@ div.cyl-list {
     overflow-x: scroll;
     width: 100%;
     border-top: 2px solid black;
+    background-color: #b3bdb3;
 }
 
 div.cyl, div.tank {
@@ -56,10 +68,15 @@ select.units {
 }
 
 button.delete {
+    font-size: 1.2em;
+    font-weight: bold;
     padding: 4px 8px;
     margin: 8px;
     align-self: center;
     background-color: gray;
+    border: 1px solid black;
+    border-radius: 0px;
+    box-shadow: none;
 }
 
 button.delete:hover {
@@ -76,8 +93,8 @@ div.page-element#tanks {
     align-items: flex-start;
 }
 
-h2 {
-    margin: 0 auto 0 0 !important; 
+div.page-element h2 {
+    margin: 0 auto 0 0;
 }
 
 div.tank-list {

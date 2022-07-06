@@ -21,15 +21,15 @@ $(document).ready(function(){
     $("select#motor_name").change(function(){
         if($("select#motor_name").val() == "Custom"){
             $("input[id^=motor_]").prop("disabled", false);
-            $("select#motor_stall_torque_units").prop("disabled", false);
+            $("select#motor_stall_torque-units").prop("disabled", false);
         }else{
             $("input#motor_free_speed").val(motors[$("select#motor_name").val()][0]);
             $("input#motor_stall_torque").val(motors[$("select#motor_name").val()][1]);
-            $("select#motor_stall_torque_units").val($("select#motor_stall_torque_units").children()[0].value);
+            $("select#motor_stall_torque-units").val($("select#motor_stall_torque-units").children()[0].value);
             $("input#motor_free_current").val(motors[$("select#motor_name").val()][2]);
             $("input#motor_stall_current").val(motors[$("select#motor_name").val()][3]);
             $("input[id^=motor_]").prop("disabled", true);
-            $("select#motor_stall_torque_units").prop("disabled", true);
+            $("select#motor_stall_torque-units").prop("disabled", true);
         }
         update_motor();
     });
@@ -37,7 +37,7 @@ $(document).ready(function(){
     // Update motor properties
     function update_motor(){
         wf = $("input#motor_free_speed").val() * (Math.PI/30);
-        Ts = $("input#motor_stall_torque").val() * $("select#motor_stall_torque_units").val() * $("input#num_motors").val();
+        Ts = $("input#motor_stall_torque").val() * $("select#motor_stall_torque-units").val() * $("input#num_motors").val();
         eff = $("input#gearbox_efficiency").val() / 100;
         If = $("input#motor_free_current").val() * $("input#num_motors").val();
         Is = $("input#motor_stall_current").val() * $("input#num_motors").val();
@@ -57,7 +57,7 @@ $(document).ready(function(){
     $("div#gear-ratio input:first").change();
 
     function simulate(){
-        const xmax = $("input#distance").val() / $("select#distance_units").val();
+        const xmax = $("input#distance").val() / $("select#distance-units").val();
         const tmax = $("input#max_time").val();
         const dt = $("input#timestep").val() / 1000;
         const filtering = 0.6;
@@ -67,8 +67,8 @@ $(document).ready(function(){
         const Imax = $("input#current_limit").val() ? $("input#current_limit").val() * $("input#num_motors").val() : Infinity;
         const dVmax = ($("input#voltage_ramp").val() ? $("input#voltage_ramp").val() : 1200) * dt;
 
-        const m = $("input#weight").val() / $("select#weight_units").val();
-        const r = $("input#wheel_diam").val()/2 / $("select#wheel_diam_units").val();
+        const m = $("input#weight").val() / $("select#weight-units").val();
+        const r = $("input#wheel_diam").val()/2 / $("select#wheel_diam-units").val();
         const mu_s = $("input#static_cof").val() * ($("input#driven_weight").val() / 100);
         const mu_k = $("input#dynamic_cof").val() * ($("input#driven_weight").val() / 100);
 
@@ -165,20 +165,20 @@ $(document).ready(function(){
             data: {
                 labels: times.map(time => time.toFixed(3)),
                 datasets: [{
-                    data: data.map(function(value,index) { return value[0] * $("select#distance_units").val(); }),
+                    data: data.map(function(value,index) { return value[0] * $("select#distance-units").val(); }),
                     label: "Position",
                     borderColor: "blue",
                     fill: false,
                     pointRadius: 0
                 },{
-                    data: data.map(function(value,index) { return value[1] * $("select#distance_units").val(); }),
+                    data: data.map(function(value,index) { return value[1] * $("select#distance-units").val(); }),
                     label: "Velocity",
                     borderColor: "green",
                     fill: false,
                     // yaxisID: "right",
                     pointRadius: 0
                 },{
-                    data: data.map(function(value,index) { return Math.abs(value[2]) * $("select#distance_units").val(); }),
+                    data: data.map(function(value,index) { return Math.abs(value[2]) * $("select#distance-units").val(); }),
                     label: "Acceleration",
                     borderColor: "red",
                     fill: false,
