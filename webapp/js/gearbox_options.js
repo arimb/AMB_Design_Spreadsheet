@@ -159,7 +159,7 @@ $(document).ready(function(){
                     `<tr>
                         <td>${gearbox[0]} : ${gearbox[1]}</td>
                         <td>${gearbox[2]} : ${gearbox[3]}</td>
-                        <td>${gearbox[4].toFixed(2)} : 1</td>
+                        <td>${+(gearbox[4].toFixed(2))} : 1</td>
                     </tr>`
                 )
             });    
@@ -168,7 +168,7 @@ $(document).ready(function(){
                 $("table.gearbox-options tbody").append(
                     `<tr>
                         <td>${gearbox[0]} : ${gearbox[1]}</td>
-                        <td>${gearbox[2].toFixed(2)} : 1</td>
+                        <td>${+(gearbox[2].toFixed(2))} : 1</td>
                     </tr>`
                 )
             });

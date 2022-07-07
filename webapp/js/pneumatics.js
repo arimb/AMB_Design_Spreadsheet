@@ -14,17 +14,17 @@ $(document).ready(function(){
                 </select>
                 <label>Bore Diam.</label>
                 <div class="field">
-                    <input class="bore" type="number" min="0">
+                    <input class="bore dist" type="number" min="0">
                     &nbsp;<span class="unit"></span>
                 </div>
                 <label>Rod Diam.</label>
                 <div class="field">
-                    <input class="rod" type="number" min="0">
+                    <input class="rod dist" type="number" min="0">
                     &nbsp;<span class="unit"></span>
                 </div>
                 <label>Stroke Length</label>
                 <div class="field">
-                    <input class="stroke" type="number" min="0">
+                    <input class="stroke dist" type="number" min="0">
                     &nbsp;<span class="unit"></span>
                 </div>
                 <br>
@@ -66,6 +66,8 @@ $(document).ready(function(){
         });
         $("select.units").change(function(){
             $(this).parent().find("span.unit").text($(this).children(":selected").text());
+            $(this).parent().find("input.dist").each( (i, el) => $(el).val(+(($(el).val() * $(this).data("unit-factor") / $(this).val()).toFixed(3))) );
+            $(this).data("unit-factor", $(this).val());
         });
         $("select.units").change();
         $("input, select").change(simulate);
@@ -73,15 +75,24 @@ $(document).ready(function(){
     });
     $("input, select").change(simulate);
 
-    $("div#tanks").find("input:not(.name), select").change(function(){
+    function update_tanks(){
         total_vol = 0;
         $("div#tanks").find("div.tank").each(function(){
-            total_vol += $(this).find("input.tank_vol").val() / $(this).find("select.tank_vol-units").val() * $(this).find("input.tank_qty").val() * $(this).find("input.tank_press").val();
+            total_vol += $(this).find("input.tank_vol").val() * $(this).find("select.tank_vol-units").val() * $(this).find("input.tank_qty").val() * $(this).find("input.tank_press").val();
         });
         total_vol /= 120;
-        $("input#tanks-total").val((total_vol * $("select#tanks-total-units").val()).toFixed(2));
+        $("input#tanks-total").val(+((total_vol / $("select#tanks-total-units").val()).toFixed(2)));
+    }
+
+    $("div#tanks").find("input:not(.name), select").change(update_tanks);
+    update_tanks();
+
+    $("select.tank_vol-units").each((i, el) => $(el).data("unit-factor", $(el).val())).change(function(){
+        let input = $(this).siblings("input." + $(this).prop("class").split("-")[0]);
+        input.val(+((input.val() * $(this).data("unit-factor") / $(this).val()).toFixed(3)));
+        $(this).data("unit-factor", $(this).val());
+        update_tanks();
     });
-    $("input.tank_qty").change();
 
     simulate();
 
@@ -93,9 +104,9 @@ function simulate(){
     const cutoff = $("input#cutoff_press").val();
     var min_press = 0;
     const cyls = $("div.cyl:not(#0)").map((i,cyl) => {
-        const bore = $(cyl).find("input.bore").val() / $(cyl).find("select.units").val();
-        const rod = $(cyl).find("input.rod").val() / $(cyl).find("select.units").val();
-        const stroke = $(cyl).find("input.stroke").val() / $(cyl).find("select.units").val();
+        const bore = $(cyl).find("input.bore").val() * $(cyl).find("select.units").val();
+        const rod = $(cyl).find("input.rod").val() * $(cyl).find("select.units").val();
+        const stroke = $(cyl).find("input.stroke").val() * $(cyl).find("select.units").val();
         const push_pressure = $(cyl).find("input.push_pressure").val();
         const pull_pressure = $(cyl).find("input.pull_pressure").val();
         min_press = Math.max(min_press, push_pressure, pull_pressure);

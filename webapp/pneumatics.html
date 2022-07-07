@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="css/pneumatics.css">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="js/calculators.js"></script>
         <script src="js/pneumatics.js"></script>
     </head>
     <body>
@@ -31,21 +32,21 @@
                         <input class="name" type="text" size="1" disabled>
                         <select class="units" disabled>
                             <option value="1">inch</option>
-                            <option value="25.4">mm</option>
+                            <option value="0.03937">mm</option>
                         </select>
                         <label>Bore Diam.</label>
                         <div class="field">
-                            <input class="bore" type="number" min="0" disabled>
+                            <input class="bore dist" type="number" min="0" disabled>
                             &nbsp;<span class="unit">inch</span>
                         </div>
                         <label>Rod Diam.</label>
                         <div class="field">
-                            <input class="rod" type="number" min="0" disabled>
+                            <input class="rod dist" type="number" min="0" disabled>
                             &nbsp;<span class="unit">inch</span>
                         </div>
                         <label>Stroke Length</label>
                         <div class="field">
-                            <input class="stroke" type="number" min="0" disabled>
+                            <input class="stroke dist" type="number" min="0" disabled>
                             &nbsp;<span class="unit">inch</span>
                         </div>
                         <br>
@@ -92,7 +93,7 @@
                                 <input class="tank_vol" type="number" min="0" value="35">
                                 <select class="tank_vol-units">
                                     <option value="1">in³</option>
-                                    <option value="16.3871">ml</option>
+                                    <option value="0.0610237">ml</option>
                                 </select>
                             </div>
                             <label>Quantity</label>
@@ -113,7 +114,7 @@
                                 <input class="tank_vol" type="number" min="0">
                                 <select class="tank_vol-units">
                                     <option value="1">in³</option>
-                                    <option value="16.3871">ml</option>
+                                    <option value="0.0610237">ml</option>
                                 </select>
                             </div>
                             <label>Quantity</label>
@@ -134,7 +135,7 @@
                                 <input class="tank_vol" type="number" min="0">
                                 <select class="tank_vol-units">
                                     <option value="1">in³</option>
-                                    <option value="16.3871">ml</option>
+                                    <option value="0.0610237">ml</option>
                                 </select>
                             </div>
                             <label>Quantity</label>
@@ -154,7 +155,7 @@
                         <input id="tanks-total" type="number" size="10" disabled>
                         <select id="tanks-total-units">
                             <option value="1">in³</option>
-                            <option value="16.3871">ml</option>
+                            <option value="0.0610237">ml</option>
                         </select>
                         <label>&nbsp;@ 120 psig</label>
                     </div>

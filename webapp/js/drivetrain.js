@@ -57,7 +57,7 @@ $(document).ready(function(){
     $("div#gear-ratio input:first").change();
 
     function simulate(){
-        const xmax = $("input#distance").val() / $("select#distance-units").val();
+        const xmax = $("input#distance").val() * $("select#distance-units").val();
         const tmax = $("input#max_time").val();
         const dt = $("input#timestep").val() / 1000;
         const filtering = 0.6;
@@ -67,8 +67,8 @@ $(document).ready(function(){
         const Imax = $("input#current_limit").val() ? $("input#current_limit").val() * $("input#num_motors").val() : Infinity;
         const dVmax = ($("input#voltage_ramp").val() ? $("input#voltage_ramp").val() : 1200) * dt;
 
-        const m = $("input#weight").val() / $("select#weight-units").val();
-        const r = $("input#wheel_diam").val()/2 / $("select#wheel_diam-units").val();
+        const m = $("input#weight").val() * $("select#weight-units").val();
+        const r = $("input#wheel_diam").val()/2 * $("select#wheel_diam-units").val();
         const mu_s = $("input#static_cof").val() * ($("input#driven_weight").val() / 100);
         const mu_k = $("input#dynamic_cof").val() * ($("input#driven_weight").val() / 100);
 

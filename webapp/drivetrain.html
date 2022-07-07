@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="css/drivetrain.css">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="js/calculators.js"></script>
         <script src="js/drivetrain.js"></script>
     </head>
     <body>
@@ -90,7 +91,7 @@
                     <label for="weight">Robot Weight</label>
                     <input id="weight" type="number" min="0" value="154">
                     <select class="weight-units" id="weight-units">
-                        <option value="2.205">lbs</option>
+                        <option value="0.453592">lbs</option>
                         <option value="1">kg</option>
                     </select>
                 </div>
@@ -103,8 +104,8 @@
                     <label for="wheel_diam">Wheel Diameter</label>
                     <input id="wheel_diam" type="number" min="0" value="4">
                     <select id="wheel_diam-units">
-                        <option value="39.37">in</option>
-                        <option value="1000">mm</option>
+                        <option value="0.0254">in</option>
+                        <option value="0.001">mm</option>
                     </select>
                 </div>
                 <div class="field">
@@ -146,7 +147,7 @@
                     <label for="distance">Sprint Diatance</label>
                     <input id="distance" type="number" min="0" value="6">
                     <select id="distance-units">
-                        <option value="3.281">feet</option>
+                        <option value="0.3048">feet</option>
                         <option value="1" selected>meters</option>
                     </select>
                 </div>
@@ -178,7 +179,7 @@
                 </div>
             </div>
             <div class="break"></div>
-            <div class="graphs">
+            <div class="page-element graphs">
                 <canvas id="simulation"></canvas>
             </div>
         </main>

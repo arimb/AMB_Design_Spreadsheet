@@ -13,6 +13,13 @@ div.graph {
     align-items: stretch;
     width: 600px;
     max-width: 800px;
+    align-content: center;
+}
+
+div.graph span.warn {
+    color: rgb(205, 0, 0);
+    font-size: larger;
+    font-weight: bolder;
 }
 
 canvas {

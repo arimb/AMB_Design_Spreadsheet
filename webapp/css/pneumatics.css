@@ -115,8 +115,8 @@ div.tanks-total {
 }
 
 input#tanks-total {
-    width: 5em;
-    margin-left: 3px;
+    width: 3.5em;
+    margin-left: 6px;
 }
 
 select#compressor {
@@ -125,8 +125,9 @@ select#compressor {
 }
 
 div.page-element.graph {
-    width: 40vw;
+    width: 70vw;
     min-width: 700px;
+    max-width: 100%;
 }
 
 canvas#graph {

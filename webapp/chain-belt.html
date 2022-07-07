@@ -28,7 +28,7 @@
                     </div>
                     <div>
                         <label for="mm">mm</label>
-                        <input id="mm" name="units" type="radio" value='["mm",1,"N",0.2228,"kg/m",1.4882]'>
+                        <input id="mm" name="units" type="radio" value='["mm",1,"N",0.2228,"kg/m",0.671969]'>
                     </div>
                 </div>
                 <div class="page-element" id="type">
@@ -118,13 +118,13 @@
                     </div>
                 </div>
                 <div class="geometry">
-                    <div class="field" style="display: none;">
+                    <div class="field bydist-in">
                         <label for="approx_dist">Approx. Distance</label>
                         <input id="approx_dist" type="number">
                         &nbsp;
                         <span class="dist_unit"></span>
                     </div>
-                    <div class="field" style="display: none;">
+                    <div class="field bydist-in">
                         <label for="round">Round Direction</label>
                         <select id="round">
                             <option>Nearest</option>
@@ -134,31 +134,31 @@
                         &nbsp;
                         <span></span>
                     </div>
-                    <div class="field" style="display: none;">
+                    <div class="field bydist-in">
                         <label for="round_to">Round To</label>
                         <input id="round_to" type="number">
                         &nbsp;
                         <span></span>
                     </div>
-                    <div class="field">
+                    <div class="field bylinks-in bydist-out">
                         <label for="links">Number of Links</label>
-                        <input id="links" type="number">
+                        <input id="links" type="number" disabled>
                         &nbsp;
                         <span></span>
                     </div>
-                    <div class="field">
+                    <div class="field bylinks-out bydist-out">
                         <label for="dist">C-C Distance</label>
                         <input id="dist" type="number" disabled>
                         &nbsp;
                         <span class="dist_unit"></span>
                     </div>
-                    <div class="field">
+                    <div class="field bylinks-out bydist-out">
                         <label for="chain_length">Chain Length</label>
                         <input id="chain_length" type="number" disabled>
                         &nbsp;
                         <span class="dist_unit"></span>
                     </div>
-                    <div class="field">
+                    <div class="field bylinks-out bydist-out">
                         <label for="clearance">Clearance</label>
                         <input id="clearance" type="number" disabled>
                         &nbsp;

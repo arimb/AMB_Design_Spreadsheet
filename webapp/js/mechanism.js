@@ -35,59 +35,49 @@ $(document).ready(function(){
 
     // Update motor properties
     function update_motor(){
-        wf = parseFloat($("input#motor_free_speed").val()) * (Math.PI/30) * (parseFloat($("input#applied_voltage").val()) / 12);
-        Ts = parseFloat($("input#motor_stall_torque").val()) * parseFloat($("select#motor_stall_torque-units").val()) * (parseFloat($("input#applied_voltage").val()) / 12) * (parseFloat($("input#gearbox_efficiency").val()) / 100) * parseInt($("input#num_motors").val());
-        If = parseFloat($("input#motor_free_current").val()) * (parseFloat($("input#applied_voltage").val()) / 12) * parseInt($("input#num_motors").val());
-        Is = parseFloat($("input#motor_stall_current").val()) * (parseFloat($("input#applied_voltage").val()) / 12) * parseInt($("input#num_motors").val());
+        wf = $("input#motor_free_speed").val() * (Math.PI/30) * ($("input#applied_voltage").val()/12);
+        Ts = $("input#motor_stall_torque").val() * $("select#motor_stall_torque-units").val() * ($("input#applied_voltage").val()/12) * ($("input#gearbox_efficiency").val()/100) * parseInt($("input#num_motors").val());
+        If = $("input#motor_free_current").val() * ($("input#applied_voltage").val()/12) * parseInt($("input#num_motors").val());
+        Is = $("input#motor_stall_current").val() * ($("input#applied_voltage").val()/12) * parseInt($("input#num_motors").val());
         
         // Update graph min (max power) and max (max efficiency) then redraw
-        $("input#graph-min").val((2*load*radius/Ts).toFixed(2));
-        $("input#graph-max").val((radius*load/Ts*(1+Math.sqrt(Is/If))).toFixed(2));
-        // draw_graph();
+        graph_lims();
+        update_vals();
     }
-    $("input[id^=motor_]").change(update_motor);
-    $("select#motor_stall_torque-units").change(update_motor);
-    $("input#num_motors").change(update_motor);
-    $("input#applied_voltage").change(update_motor);
-    $("input#gearbox_efficiency").change(update_motor);
+    $(".motor-update").change(update_motor);
 
     // Update radius
     function update_radius(){
-        radius = parseFloat($("input#radius").val()) * parseFloat($("select#radius-units").val());
+        radius = $("input#radius").val() * $("select#radius-units").val();
         
         // Update graph min (max power) and max (max efficiency) then redraw
-        $("input#graph-min").val((2*load*radius/Ts).toFixed(2));
-        $("input#graph-max").val((radius*load/Ts*(1+Math.sqrt(Is/If))).toFixed(2));
-        // draw_graph();
+        graph_lims();
+        update_vals();
     }
-    $("input#radius").change(update_radius);
-    $("select#radius-units").change(update_radius);
+    $("input#radius, select#radius-units").change(update_radius);
     update_radius();
 
     // Update load
     function update_load(){
-        load = parseFloat($("input#load").val()) * parseFloat($("select#load-units").val());
+        load = $("input#load").val() * $("select#load-units").val();
 
-        // Update graph min (max power) and max (max efficiency) then redraw
-        $("input#graph-min").val((2*load*radius/Ts).toFixed(2));
-        $("input#graph-max").val((radius*load/Ts*(1+Math.sqrt(Is/If))).toFixed(2));
-        // draw_graph();
+        graph_lims();
+        update_vals();
     }
-    $("input#load").change(update_load);
-    $("select#load-units").change(update_load);
+    $("input#load, select#load-units").change(update_load);
     update_load();
 
     function calculate_vals(ratio){
         tmp = [
-            wf / ratio / parseFloat($("select#rot_speed-units").val()),     // rot_speed
-            wf/ratio * radius / parseFloat($("select#lin_speed-units").val()),      // lin_speed
-            Ts * ratio  / radius / parseFloat($("select#stall_load-units").val()),      // stall_load
-            wf/ratio * (1 - (load*radius)/(Ts*ratio)) / parseFloat($("select#rot_speed_loaded-units").val()),      // rot_speed_loaded
-            wf/ratio * (1 - (load*radius)/(Ts*ratio)) * radius / parseFloat($("select#lin_speed_loaded-units").val()),      // lin_speed_loaded
+            wf / ratio / $("select#rot_speed-units").val(),     // rot_speed
+            wf/ratio * radius / $("select#lin_speed-units").val(),      // lin_speed
+            Ts * ratio  / radius / $("select#stall_load-units").val(),      // stall_load
+            wf/ratio * (1 - (load*radius)/(Ts*ratio)) / $("select#rot_speed_loaded-units").val(),      // rot_speed_loaded
+            wf/ratio * (1 - (load*radius)/(Ts*ratio)) * radius / $("select#lin_speed_loaded-units").val(),      // lin_speed_loaded
             ((Is-If)/Ts * radius*load / ratio + If) / parseInt($("input#num_motors").val()),    // current
-            radius*load / ratio / Ts * parseFloat($("input#applied_voltage").val())     // stall_voltage
+            radius*load / ratio / Ts * $("input#applied_voltage").val()     // stall_voltage
         ];
-        tmp.push(tmp[4]*parseFloat($("select#lin_speed_loaded-units").val()) * load / (tmp[5]*parseInt($("input#num_motors").val()) * parseFloat($("input#applied_voltage").val())));     // efficiency
+        tmp.push(tmp[4]*$("select#lin_speed_loaded-units").val() * load / (tmp[5]*parseInt($("input#num_motors").val()) * $("input#applied_voltage").val()));     // efficiency
         return tmp;
     }
 
@@ -97,32 +87,32 @@ $(document).ready(function(){
                 var ratio = parseFloat($("input#gear_ratio").val());
                 break;
             case "rot_speed_check":
-                var rot_speed = parseFloat($("input#rot_speed").val()) * parseFloat($("select#rot_speed-units").val());
+                var rot_speed = $("input#rot_speed").val() * $("select#rot_speed-units").val();
                 var ratio = wf / rot_speed;
                 break;
             case "rot_speed_loaded_check":
-                var rot_speed = parseFloat($("input#rot_speed_loaded").val()) * parseFloat($("select#rot_speed_loaded-units").val());
+                var rot_speed = $("input#rot_speed_loaded").val() * $("select#rot_speed_loaded-units").val();
                 var ratio = wf/(2*rot_speed) * (1 + Math.sqrt(1 - 4*(radius*load/Ts)*(rot_speed/wf)));
                 break;
             case "lin_speed_check":
-                var lin_speed = parseFloat($("input#lin_speed").val()) * parseFloat($("select#lin_speed-units").val());
+                var lin_speed = $("input#lin_speed").val() * $("select#lin_speed-units").val();
                 var ratio = wf / lin_speed * radius;
                 break;
             case "lin_speed_loaded_check":
-                var lin_speed = parseFloat($("input#lin_speed_loaded").val()) * parseFloat($("select#lin_speed_loaded-units").val());
+                var lin_speed = $("input#lin_speed_loaded").val() * $("select#lin_speed_loaded-units").val();
                 var ratio = wf/(2*lin_speed/radius) * (1 + Math.sqrt(1 - 4*(radius*load/Ts)*(lin_speed/radius/wf)));
                 break;
             case "current_check":
-                var current = parseFloat($("input#current").val());
+                var current = $("input#current").val();
                 var ratio = radius*load / (Ts/(Is-If)) / (parseInt($("input#num_motors").val()) * current - If);
                 break;
             case "stall_load_check":
-                var stall_load = parseFloat($("input#stall_load").val()) * parseFloat($("select#stall_load-units").val());
+                var stall_load = $("input#stall_load").val() * $("select#stall_load-units").val();
                 var ratio = radius*stall_load/Ts;
                 break;
             case "stall_voltage_check":
-                var stall_voltage = parseFloat($("input#stall_voltage").val());
-                var ratio = radius*load/(Ts * stall_voltage/parseFloat($("input#applied_voltage").val()) );
+                var stall_voltage = $("input#stall_voltage").val();
+                var ratio = radius*load/(Ts * stall_voltage / $("input#applied_voltage").val() );
                 break;
             case "max_power_check":
                 var ratio = 2*load*radius/Ts;
@@ -136,20 +126,20 @@ $(document).ready(function(){
         }
         
         var vals = calculate_vals(ratio);
-        $("input#gear_ratio").val( ratio.toFixed(2) );
-        $("input#rot_speed").val( vals[0].toFixed(2) );
-        $("input#lin_speed").val( vals[1].toFixed(2) );
-        $("input#stall_load").val( vals[2].toFixed(2) );
-        $("input#rot_speed_loaded").val( vals[3].toFixed(2) );
-        $("input#lin_speed_loaded").val( vals[4].toFixed(2) );
-        $("input#current").val( vals[5].toFixed(2) );
-        $("input#stall_voltage").val( vals[6].toFixed(2) );
-        $("input#efficiency").val( vals[7].toFixed(2) );
-        draw_graph(ratio);
+        $("input#gear_ratio").val( +(ratio.toFixed(2)) );
+        $("input#rot_speed").val( +(vals[0].toFixed(2)) );
+        $("input#lin_speed").val( +(vals[1].toFixed(2)) );
+        $("input#stall_load").val( +(vals[2].toFixed(2)) );
+        $("input#rot_speed_loaded").val( +(vals[3].toFixed(2)) );
+        $("input#lin_speed_loaded").val( +(vals[4].toFixed(2)) );
+        $("input#current").val( +(vals[5].toFixed(2)) );
+        $("input#stall_voltage").val( +(vals[6].toFixed(2)) );
+        $("input#efficiency").val( +((vals[7]*100).toFixed(1)) );
+        draw_graph(+(ratio.toFixed(2)));
     }
 
     $("div.field select").change(update_vals);
-    $("div.field input[type=number]").change(function(){
+    $("div.inputs input[type=number]").change(function(){
         $(this).siblings("input[type=radio]").prop("checked", true);
         update_vals();
     });
@@ -192,6 +182,11 @@ $(document).ready(function(){
         }
     });
 
+    function graph_lims(){
+        $("input#graph-min").val(+((2*load*radius/Ts).toFixed(2)));
+        $("input#graph-max").val(+((radius*load/Ts*(1+Math.sqrt(Is/If))).toFixed(2)));
+    }
+
     // Draw graph
     function draw_graph(ratio){
         $("canvas#graph").remove();
@@ -210,13 +205,13 @@ $(document).ready(function(){
             data: {
                 labels: ratios,
                 datasets: [{
-                    data: data.map(function(value,index) { return value[0]*parseFloat($("select#rot_speed-units").val())/6.283; }),
+                    data: data.map(function(value,index) { return value[0]*$("select#rot_speed-units").val()/6.283; }),
                     label: "Free Rotational Speed",
                     borderColor: "red",
                     fill: false,
                     pointRadius: 0
                 },{
-                    data: data.map(function(value,index) { return value[3]*parseFloat($("select#rot_speed_loaded-units").val())/6.283; }),
+                    data: data.map(function(value,index) { return value[3]*$("select#rot_speed_loaded-units").val()/6.283; }),
                     label: "Loaded Rotational Speed",
                     borderColor: "magenta",
                     fill: false,
@@ -253,6 +248,9 @@ $(document).ready(function(){
             },
             options: {
                 responsive: true,
+                animation: {
+                    duration: 0
+                },
                 scales: {
                     x: {
                         display: true,
@@ -299,5 +297,5 @@ $(document).ready(function(){
         })
     }
     setTimeout(() => { draw_graph(); }, 100);
-    // $("div.graph-limits input").change(draw_graph);
+    $("div.graph-limits input").change(draw_graph);
 });

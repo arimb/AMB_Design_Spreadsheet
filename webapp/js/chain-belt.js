@@ -6,13 +6,13 @@ $(document).ready(function(){
 
     $("input#teeth1").change(function(){
         diam1 = $("input#teeth1").val() * pitch / Math.PI;
-        $("input#diam1").val(diam1.toFixed(dist_decimals));
+        $("input#diam1").val(+(diam1.toFixed(dist_decimals)));
         recalculate();
     });
 
     $("input#teeth2").change(function(){
         diam2 = $("input#teeth2").val() * pitch / Math.PI;
-        $("input#diam2").val(diam2.toFixed(dist_decimals));
+        $("input#diam2").val(+(diam2.toFixed(dist_decimals)));
         recalculate();
     });
 
@@ -23,6 +23,8 @@ $(document).ready(function(){
         $("span.force_unit").html(tmp[2]);
         $("span.weight_unit").html(tmp[4])
         $("select#type").change();
+        if ($("input#approx_dist").val()!="")   $("input#approx_dist").val(+(($("input#approx_dist").val() * 25.4**(tmp[0]=="in"?-1:1)).toFixed(dist_decimals)));
+        recalculate();
     });
     $("input[type=radio][name=units]").change();
 
@@ -37,12 +39,12 @@ $(document).ready(function(){
         }else{
             const tmp = JSON.parse($("input[type=radio][name=units]:checked").val());
             pitch = dimensions[$("select#type").val()][0] / tmp[1];
-            $("input#pitch").val(pitch.toFixed(dist_decimals));
-            $("input#width").val((dimensions[$("select#type").val()][1] / tmp[1]).toFixed(dist_decimals));
-            $("input#thickness").val((dimensions[$("select#type").val()][2] / tmp[1]).toFixed(dist_decimals));
-            $("input#adder").val((dimensions[$("select#type").val()][3] / tmp[1]).toFixed(dist_decimals));
-            $("input#weight").val((dimensions[$("select#type").val()][4] / tmp[5]).toFixed(3));
-            $("input#load_rating").val((dimensions[$("select#type").val()][5] / tmp[3]).toFixed(0));
+            $("input#pitch").val(+(pitch.toFixed(dist_decimals)));
+            $("input#width").val(+((dimensions[$("select#type").val()][1] / tmp[1]).toFixed(dist_decimals)));
+            $("input#thickness").val(+((dimensions[$("select#type").val()][2] / tmp[1]).toFixed(dist_decimals)));
+            $("input#adder").val(+((dimensions[$("select#type").val()][3] / tmp[1]).toFixed(dist_decimals)));
+            $("input#weight").val(+((dimensions[$("select#type").val()][4] / tmp[5]).toFixed(3)));
+            $("input#load_rating").val(+((dimensions[$("select#type").val()][5] / tmp[3]).toFixed(0)));
             $("input#pitch_dist").prop("disabled", true);
             $("input#pitch_dist").change(function(){});
         }
@@ -65,20 +67,17 @@ $(document).ready(function(){
     request.send();
 
     $("input[type=radio][name=driving]").change(function(){
+        $("div.geometry div.field").css("display", "none");
         switch( $("input[type=radio][name=driving]:checked").attr("id") ){
             case "by_links":
-                $("div.field:has(#approx_dist)").css("display", "none");
-                $("div.field:has(#round)").css("display", "none");
-                $("div.field:has(#round_to)").css("display", "none");
-                $("input#links").prop("disabled", false);
-                $("div.geometry").css("margin-bottom", "1em");
+                $("div.bylinks-in, div.bylinks-out").css("display", "flex");
+                $("div.bylinks-in input").prop("disabled", false);
+                $("div.bylinks-out input").prop("disabled", true);
                 break;
             case "by_dist":
-                $("div.field:has(#approx_dist)").css("display", "flex");
-                $("div.field:has(#round)").css("display", "flex");
-                $("div.field:has(#round_to)").css("display", "flex");
-                $("input#links").prop("disabled", true);
-                $("div.geometry").css("margin-bottom", "auto");
+                $("div.bydist-in, div.bydist-out").css("display", "flex");
+                $("div.bydist-in input").prop("disabled", false);
+                $("div.bydist-out input").prop("disabled", true);
                 $("input#approx_dist").val($("input#dist").val());
                 break;
         }
@@ -88,7 +87,8 @@ $(document).ready(function(){
     $("input#approx_dist").change(recalculate);
     $("select#round").change(recalculate);
     $("input#round_to").change(recalculate);
-    $("input[type=radio][name=driving]").change();
+    // $("input[type=radio][name=driving]").change();
+    recalculate();
 
 });
 
@@ -109,13 +109,10 @@ function recalculate(){
                 last = current;
                 current = (2*L + diam1*alpha + diam2*(Math.PI-alpha))/pitch;
             } while (Math.abs(target - current) > 0.001);
-            $("input#dist").val(D.toFixed(dist_decimals));
-            $("input#chain_length").val((target * pitch).toFixed(dist_decimals));
-            $("input#clearance").val((D - (diam1+diam2)/2).toFixed(dist_decimals));
             break;
         case "by_dist":
             var D = parseFloat($("input#approx_dist").val());
-            var mod = parseInt($("input#round_to").val());
+            var mod = parseInt($("input#round_to").val()=="" ? 1 : $("input#round_to").val());
             var lastD = NaN, lastD2, alpha, L, current, last, target = NaN, dydx;
             do {
                 alpha = Math.acos((diam2 - diam1) / (2*D));
@@ -142,9 +139,9 @@ function recalculate(){
 
             } while (Math.abs(target - current) > 0.001);
             $("input#links").val(target);
-            $("input#dist").val(D.toFixed(dist_decimals));
-            $("input#chain_length").val((target * pitch).toFixed(dist_decimals));
-            $("input#clearance").val((D - (diam1+diam2)/2).toFixed(dist_decimals));
             break;
     }
+    $("input#dist").val(+(D.toFixed(dist_decimals)));
+    $("input#chain_length").val(+((target * pitch).toFixed(dist_decimals)));
+    $("input#clearance").val(+((D - (diam1+diam2)/2).toFixed(dist_decimals)));
 }

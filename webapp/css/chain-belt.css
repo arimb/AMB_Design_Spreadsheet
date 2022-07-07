@@ -41,7 +41,7 @@ div#dimensions span {
 }
 
 div#calculation {
-    justify-content: space-between;
+    min-height: 160px;
 }
 
 div.driving {
@@ -60,7 +60,6 @@ div.geometry {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    /* align-items: center; */
     gap: 0.4em;
 }
 

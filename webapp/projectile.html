@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="css/projectile.css">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="js/calculators.js"></script>
         <script src="js/projectile.js"></script>
     </head>
     <body>
@@ -31,7 +32,7 @@
                         <label for="initial_height">Height</label>
                         <input id="initial_height" type="number" min="0">
                         <select id="initial_height-units">
-                            <option value="3.281">ft</option>
+                            <option value="0.3048">ft</option>
                             <option value="1">m</option>
                         </select>
                     </div>
@@ -39,7 +40,7 @@
                         <label for="initial_vel">Velocity</label>
                         <input id="initial_vel" class="initial-driven" type="number" min="0">
                         <select id="initial_vel-units">
-                            <option value="3.281">ft/s</option>
+                            <option value="0.3048">ft/s</option>
                             <option value="1">m/s</option>
                         </select>
                     </div>
@@ -61,16 +62,16 @@
                         <label for="target_distance">Distance</label>
                         <input id="target_distance" class="target-distance-driven" type="number" min="0">
                         <select id="target_distance-units">
-                            <option value="3.281">ft</option>
-                            <option value="1" selected>m</option>
+                            <option value="0.3048">ft</option>
+                            <option value="1">m</option>
                         </select>
                     </div>
                     <div class="field">
                         <label for="target_height">Height</label>
                         <input id="target_height" class="target-height-driven" type="number" min="0">
                         <select id="target_height-units">
-                            <option value="3.281">ft</option>
-                            <option value="1" selected>m</option>
+                            <option value="0.3048">ft</option>
+                            <option value="1">m</option>
                         </select>
                         <input id="target_height-direction" type="checkbox" class="direction target-height-driven initial-driven">
                     </div>
@@ -83,7 +84,7 @@
                 <div class="page-element initial-driven" id="drag">
                     <h3>Drag & Magnus</h3>
                     <div class="field enable">
-                        <input id="drag-enable" type="checkbox" checked>
+                        <input id="drag-enable" type="checkbox">
                         <label for="drag-enable">Enable</label>
                     </div>
                     <div class="field">
@@ -103,7 +104,7 @@
                         <label for="mass">Ball Mass</label>
                         <input id="mass" type="number" min="0">
                         <select id="mass-units">
-                            <option value="2.205">lbs</option>
+                            <option value="0.453592">lbs</option>
                             <option value="1" selected>kg</option>
                         </select>
                     </div>
@@ -111,8 +112,8 @@
                         <label for="rotation">Avg. Spin</label>
                         <input id="rotation" type="number" min="0">
                         <select id="rotation-units">
-                            <option value="6.283">rev/s</option>
-                            <option value="0.10472">rpm</option>
+                            <option value="0.159155">rev/s</option>
+                            <option value="9.5493">rpm</option>
                             <option value="1">rad/s</option>
                         </select>
                     </div>
@@ -146,7 +147,7 @@
                         <label for="obstacle_distance">Distance</label>
                         <input id="obstacle_distance" type="number" min="0">
                         <select id="obstacle_distance-units">
-                            <option value="3.281">ft</option>
+                            <option value="0.3048">ft</option>
                             <option value="1" selected>m</option>
                         </select>
                     </div>
@@ -154,13 +155,14 @@
                         <label for="obstacle_height">Height</label>
                         <input id="obstacle_height" type="number" min="0">
                         <select id="obstacle_height-units">
-                            <option value="3.281">ft</option>
+                            <option value="0.3048">ft</option>
                             <option value="1" selected>m</option>
                         </select>
                     </div>
                 </div>
             </div>
             <div class="page-element graph">
+                <span class="warn">ENTER INPUTS TO SEE TRAJECTORY</span>
                 <canvas id="graph"></canvas>
             </div>
         </main>

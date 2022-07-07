@@ -10,6 +10,7 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="js/calculators.js"></script>
         <script src="js/mechanism.js"></script>
     </head>
     <body>
@@ -29,13 +30,13 @@
                 <div class="break"></div>
                 <div class="field">
                     <label for="motor_free_speed">Free Speed</label>
-                    <input id="motor_free_speed" type="number" min="0" disabled>
+                    <input id="motor_free_speed" class="motor-update" type="number" min="0" disabled>
                     &nbsp;rpm
                 </div>
                 <div class="field">
                     <label for="motor_stall_torque">Stall Torque</label>
-                    <input id="motor_stall_torque" type="number" min="0" disabled>
-                    <select id="motor_stall_torque-units">
+                    <input id="motor_stall_torque" class="motor-update" type="number" min="0" disabled>
+                    <select id="motor_stall_torque-units" class="motor-update">
                         <option value="1">Nm</option>
                         <option value="0.00706">oz-in</option>
                         <option value="1.35582">ft-lbs</option>
@@ -43,21 +44,21 @@
                 </div>
                 <div class="field">
                     <label for="motor_free_current">Free Current</label>
-                    <input id="motor_free_current" type="number" min="0" disabled>
+                    <input id="motor_free_current" class="motor-update" type="number" min="0" disabled>
                     &nbsp;Amps
                 </div>
                 <div class="field">
                     <label for="motor_stall_current">Stall Current</label>
-                    <input id="motor_stall_current" type="number" min="0" disabled>
+                    <input id="motor_stall_current" class="motor-update" type="number" min="0" disabled>
                     &nbsp;Amps
                 </div>
                 <div class="field">
                     <label for="num_motors">Number of Motors</label>
-                    <input id="num_motors" type="number" min="1" step="1" value="1">
+                    <input id="num_motors" class="motor-update" type="number" min="1" step="1" value="1">
                 </div>
                 <div class="field">
                     <label for="">Provided Voltage</label>
-                    <input id="applied_voltage" type="number" min="0" value="12">
+                    <input id="applied_voltage" class="motor-update" type="number" min="0" value="12">
                     &nbsp;Volts
                 </div>
             </div>

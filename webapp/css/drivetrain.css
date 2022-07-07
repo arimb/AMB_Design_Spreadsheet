@@ -37,8 +37,9 @@ div.graphs {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    width: 40vw;
+    width: 70vw;
     min-width: 700px;
+    max-width: 100%;
 }
 
 canvas {
