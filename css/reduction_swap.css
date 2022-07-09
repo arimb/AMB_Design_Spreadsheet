@@ -1,0 +1,42 @@
+div.inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+div.page-element {
+    align-items: center;
+    gap: 0.7em;
+}
+
+div.page-element#current {
+    min-height: 190px;
+    justify-content: flex-start;
+}
+
+div.current {
+    display: flex;
+    flex-direction: row;
+    gap: 0.7em;
+}
+
+div.current div {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+}
+
+div.current input[type=radio] {
+    margin-bottom: 3px;
+}
+
+div.in-gears, div.in-belt, div.in-custom, div.deviations {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+    align-items: center;
+}
+
+h4 {
+    margin: auto 0;
+}

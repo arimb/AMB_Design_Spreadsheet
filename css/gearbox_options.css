@@ -19,6 +19,12 @@ div.num_stages {
     justify-content: space-between;
 }
 
+div.num_stages div {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+}
+
 div.break#break1 {
     display: none;
 }

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Reduction Swap Calculator - AMB Robotics Calculator</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/calculators.css">
+        <link rel="stylesheet" href="css/reduction_swap.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="js/calculators.js"></script>
+        <script src="js/reduction_swap.js"></script>
+    </head>
+    <body>
+        <header>
+            <a href="index.html">
+                <img src="img/logo.png" class="logo" alt="logo">
+            </a>
+            <h1>Reduction Swap Calculator</h1>
+        </header>
+        <main>
+            <div class="inputs">
+                <div class="page-element" id="current">
+                    <h2>Current Ratio</h2>
+                    <div class="current">
+                        <div>
+                            <label for="gears">Gears</label>
+                            <input id="gears" name="current" type="radio" checked>
+                        </div>
+                        <div>
+                            <label for="belt">Belt/Chain</label>
+                            <input id="belt" name="current" type="radio">
+                        </div>
+                        <div>
+                            <label for="custom">Custom</label>
+                            <input id="custom" name="current" type="radio">
+                        </div>
+                    </div>
+                    <div class="input in-gears">
+                        <div class="field">
+                            <label for="in-gear1">Gear 1</label>
+                            <input id="in-gear1" type="number" min="0">
+                        </div>
+                        <div class="field">
+                            <label for="in-gear2">Gear 2</label>
+                            <input id="in-gear2" type="number" min="0">
+                        </div>
+                        <div class="field">
+                            <label for="in-gear_dp">Gear DP</label>
+                            <input id="in-gear_dp" min="0" value="20">
+                        </div>
+                        <div class="field">
+                            <label for="in-gear_cc">C-C Dist.</label>
+                            <input id="in-gear_cc" disabled>
+                            <select id="in-gear_cc-units">
+                                <option value="1">inch</option>
+                                <option value="0.03937">mm</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input in-belt">
+                        <div class="field">
+                            <label for="in-pulley1">Pulley/Sprocket 1</label>
+                            <input id="in-pulley1" type="number" min="0">
+                        </div>
+                        <div class="field">
+                            <label for="in-pulley2">Pulley/Sprocket 2</label>
+                            <input id="in-pulley2" type="number" min="0">
+                        </div>
+                        <div class="field">
+                            <label for="in-links"># of Teeth/Links</label>
+                            <input id="in-links" min="0">
+                        </div>
+                        <div class="field">
+                            <label for="in-belt_pitch">Belt/Chain Pitch</label>
+                            <input id="in-belt_pitch">
+                            <select id="in-belt_pitch-units">
+                                <option value="1">inch</option>
+                                <option value="0.03937">mm</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="in-belt_cc">C-C Dist.</label>
+                            <input id="in-belt_cc" disabled>
+                            <select id="in-belt_cc-units">
+                                <option value="1">inch</option>
+                                <option value="0.03937">mm</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input in-custom">
+                        <div class="field">
+                            <label for="in-custom_cc">C-C Dist.</label>
+                            <input id="in-custom_cc" min="0">
+                            <select id="in-custom_cc-units">
+                                <option value="1">inch</option>
+                                <option value="0.03937">mm</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-element" id="desired">
+                    <h2>Desired Ratio</h2>
+                    <div class="field">
+                        <input id="out-ratio" type="number" min="0">
+                        <span>&nbsp;: 1</span>
+                    </div>
+                    <div class="deviations">
+                        <h4>Max. Deviations</h4>
+                        <div class="field">
+                            <label for="out-ratio_dev">Ratio</label>
+                            <input id="out-ratio_dev" type="number" min="0">
+                            <span>&nbsp;%</span>
+                        </div>
+                        <div class="field">
+                            <label for="out-dist_dev">C-C Dist.</label>
+                            <input id="out-dist_dev" type="number" min="0">
+                            <select id="out-dist_dev-units">
+                                <option value="1">inch</option>
+                                <option value="0.03937">mm</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+        <footer>
+            <span>
+                Created by Ari Meles-Braverman &copy; 2022. For educational purposes only. Contact <a href="https://www.chiefdelphi.com/u/arimb/summary" style="text-decoration: underline;">@AriMB</a> on ChiefDelphi with questions or suggestions.
+            </span>
+        </footer>
+    </body>
+</html>
