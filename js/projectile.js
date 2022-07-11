@@ -69,7 +69,7 @@ $(document).ready(function(){
 
         $("canvas#graph").remove();
         if (output[0].length > 1) {
-            $("span.warn").css("display", "none");
+            $("span.warn").hide();
             $("div.graph").prepend('<canvas id="graph"></canvas>');
             var graph = new Chart("graph", {
                 data: {
@@ -114,7 +114,7 @@ $(document).ready(function(){
                     }
                 }
             });
-        } else $("span.warn").css("display", "block ");
+        } else $("span.warn").show();
         
     });
     $("input#initial_height").change();

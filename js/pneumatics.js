@@ -3,7 +3,7 @@ var total_vol;
 $(document).ready(function(){
 
     $("button.add").click(function(){
-        $("div.cyl#0").css("display", "none");
+        $("div.cyl#0").hide();
         $("div.cyl-list").css("background-color", "inherit");
         $("div.cyl-list").append(
             `<div class="cyl">
@@ -60,7 +60,7 @@ $(document).ready(function(){
         $("button.delete:not(#0)").click(function(){
             $(this).parent().remove();
             if($("div.cyl").length == 1) {
-                $("div.cyl").css("display", "flex");
+                $("div.cyl").show();
                 $("div.cyl-list").css("background-color", "#b3bdb3");
             }
         });

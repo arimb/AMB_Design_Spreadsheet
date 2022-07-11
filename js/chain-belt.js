@@ -67,15 +67,15 @@ $(document).ready(function(){
     request.send();
 
     $("input[type=radio][name=driving]").change(function(){
-        $("div.geometry div.field").css("display", "none");
+        $("div.geometry div.field").hide();
         switch( $("input[type=radio][name=driving]:checked").attr("id") ){
             case "by_links":
-                $("div.bylinks-in, div.bylinks-out").css("display", "flex");
+                $("div.bylinks-in, div.bylinks-out").show();
                 $("div.bylinks-in input").prop("disabled", false);
                 $("div.bylinks-out input").prop("disabled", true);
                 break;
             case "by_dist":
-                $("div.bydist-in, div.bydist-out").css("display", "flex");
+                $("div.bydist-in, div.bydist-out").show();
                 $("div.bydist-in input").prop("disabled", false);
                 $("div.bydist-out input").prop("disabled", true);
                 $("input#approx_dist").val($("input#dist").val());

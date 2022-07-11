@@ -3,8 +3,8 @@ var current_cc, unit = 1;
 $(document).ready(function(){
 
     $("input[name=current]").change(function(){
-        $("div.input").css("display", "none");
-        $("div." + $("input[name=current]:checked").prop("id")).css("display", "flex");
+        $("div.input").hide();
+        $("div." + $("input[name=current]:checked").prop("id")).show();
     });
     $("input[name=current]").change();
 
