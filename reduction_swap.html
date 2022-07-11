@@ -37,63 +37,63 @@
                             <input id="custom" name="current" type="radio">
                         </div>
                     </div>
-                    <div class="input in-gears">
+                    <div class="input gears">
                         <div class="field">
-                            <label for="in-gear1">Gear 1</label>
-                            <input id="in-gear1" type="number" min="0" value="18">
+                            <label for="gear1">Gear 1</label>
+                            <input id="gear1" type="number" min="0" value="18">
                         </div>
                         <div class="field">
-                            <label for="in-gear2">Gear 2</label>
-                            <input id="in-gear2" type="number" min="0">
+                            <label for="gear2">Gear 2</label>
+                            <input id="gear2" type="number" min="0">
                         </div>
                         <div class="field">
-                            <label for="in-gear_dp">Gear DP</label>
-                            <input id="in-gear_dp" min="0" value="20">
+                            <label for="gear_dp">Gear DP</label>
+                            <input id="gear_dp" min="0" value="20">
                         </div>
                         <div class="field">
-                            <label for="in-gear_cc">C-C Dist.</label>
-                            <input id="in-gear_cc" disabled>
-                            <select id="in-gear_cc-units">
+                            <label for="gear_cc">C-C Dist.</label>
+                            <input id="gear_cc" disabled>
+                            <select id="gear_cc-units">
                                 <option value="1">inch</option>
                                 <option value="0.03937">mm</option>
                             </select>
                         </div>
                     </div>
-                    <div class="input in-belt">
+                    <div class="input belt">
                         <div class="field">
-                            <label for="in-pulley1">Pulley/Sprocket 1</label>
-                            <input id="in-pulley1" type="number" min="0">
+                            <label for="pulley1">Pulley/Sprocket 1</label>
+                            <input id="pulley1" type="number" min="0">
                         </div>
                         <div class="field">
-                            <label for="in-pulley2">Pulley/Sprocket 2</label>
-                            <input id="in-pulley2" type="number" min="0">
+                            <label for="pulley2">Pulley/Sprocket 2</label>
+                            <input id="pulley2" type="number" min="0">
                         </div>
                         <div class="field">
-                            <label for="in-links"># of Teeth/Links</label>
-                            <input id="in-links" min="0">
+                            <label for="links"># of Teeth/Links</label>
+                            <input id="links" min="0">
                         </div>
                         <div class="field">
-                            <label for="in-belt_pitch">Belt/Chain Pitch</label>
-                            <input id="in-belt_pitch">
-                            <select id="in-belt_pitch-units">
+                            <label for="belt_pitch">Belt/Chain Pitch</label>
+                            <input id="belt_pitch">
+                            <select id="belt_pitch-units">
                                 <option value="1">inch</option>
                                 <option value="0.03937">mm</option>
                             </select>
                         </div>
                         <div class="field">
-                            <label for="in-belt_cc">C-C Dist.</label>
-                            <input id="in-belt_cc" disabled>
-                            <select id="in-belt_cc-units">
+                            <label for="belt_cc">C-C Dist.</label>
+                            <input id="belt_cc" disabled>
+                            <select id="belt_cc-units">
                                 <option value="1">inch</option>
                                 <option value="0.03937">mm</option>
                             </select>
                         </div>
                     </div>
-                    <div class="input in-custom">
+                    <div class="input custom">
                         <div class="field">
-                            <label for="in-custom_cc">C-C Dist.</label>
-                            <input id="in-custom_cc" min="0">
-                            <select id="in-custom_cc-units">
+                            <label for="custom_cc">C-C Dist.</label>
+                            <input id="custom_cc" min="0">
+                            <select id="custom_cc-units">
                                 <option value="1">inch</option>
                                 <option value="0.03937">mm</option>
                             </select>
@@ -103,54 +103,68 @@
                 <div class="page-element" id="desired">
                     <h2>Desired Ratio</h2>
                     <div class="field">
-                        <input id="out-ratio" type="number" min="0" value="2">
-                        <span>&nbsp;: 1</span>
+                        <input id="ratio" type="number" min="0" value="2">
+                        <span>: 1</span>
                     </div>
-                    <div class="deviations">
-                        <h4>Max. Deviations</h4>
-                        <div class="field">
-                            <label for="out-ratio_dev">Ratio</label>
-                            <input id="out-ratio_dev" type="number" min="0" value="10">
-                            <span>&nbsp;%</span>
+                    <details>
+                        <summary>
+                            <h4>Max. Deviations</h4>
+                        </summary>
+                        <div class="deviations">
+                            <div class="field">
+                                <label for="ratio_dev">Ratio</label>
+                                <input id="ratio_dev" type="number" min="0" value="5">
+                                <span>%</span>
+                            </div>
+                            <div class="field">
+                                <label for="dist_dev">C-C Dist.</label>
+                                <input id="dist_dev" type="number" min="0" value="0.01">
+                                <select id="dist_dev-units">
+                                    <option value="1">inch</option>
+                                    <option value="0.03937">mm</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="field">
-                            <label for="out-dist_dev">C-C Dist.</label>
-                            <input id="out-dist_dev" type="number" min="0" value="0.1">
-                            <select id="out-dist_dev-units">
-                                <option value="1">inch</option>
-                                <option value="0.03937">mm</option>
-                            </select>
-                        </div>
-                    </div>
+                    </details>
                     <details>
                         <summary>
                             <h4>Ranges to Check</h4>
                         </summary>
                         <div class="ranges">
                             <div class="field">
-                                <input id="out-gear_min" type="number" min="0" value="14">
-                                <label>&nbsp;&leq; 20dp Gears &leq;&nbsp;</label>
-                                <input id="out-gear_max" type="number" min="0" value="84">
+                                <input id="gear_enable" type="checkbox" checked>
+                                <input id="gear_min" type="number" min="0" value="14">
+                                <label for="gear_enable">&leq; 20dp Gears &leq;</label>
+                                <input id="gear_max" type="number" min="0" value="84">
+                                <div class="ph"></div>
                             </div>
                             <div class="field">
-                                <input id="out-pulley3_min" type="number" min="0" value="18">
-                                <label>&nbsp;&leq; 3mm Pulleys &leq;&nbsp;</label>
-                                <input id="out-pulley3_max" type="number" min="0" value="60">
+                                <input id="pulley3_enable" type="checkbox" checked>
+                                <input id="pulley3_min" type="number" min="0" value="18">
+                                <label for="pulley3_enable">&leq; 3mm Pulleys &leq;</label>
+                                <input id="pulley3_max" type="number" min="0" value="60">
+                                <div class="ph"></div>
                             </div>
                             <div class="field">
-                                <input id="out-pulley5_min" type="number" min="0" value="18">
-                                <label>&nbsp;&leq; 5mm Pulleys &leq;&nbsp;</label>
-                                <input id="out-pulley5_max" type="number" min="0" value="60">
+                                <input id="pulley5_enable" type="checkbox" checked>
+                                <input id="pulley5_min" type="number" min="0" value="18">
+                                <label for="pulley5_enable">&leq; 5mm Pulleys &leq;</label>
+                                <input id="pulley5_max" type="number" min="0" value="60">
+                                <div class="ph"></div>
                             </div>
                             <div class="field">
-                                <input id="out-sprocket25_min" type="number" min="0" value="16">
-                                <label>&nbsp;&leq; #25 Chain &leq;&nbsp;</label>
-                                <input id="out-sprocket25_max" type="number" min="0" value="72">
+                                <input id="sprocket25_enable" type="checkbox" checked>
+                                <input id="sprocket25_min" type="number" min="0" value="16">
+                                <label for="sprocket25_enable">&leq; #25 Sprockets &leq;</label>
+                                <input id="sprocket25_max" type="number" min="0" value="72">
+                                <div class="ph"></div>
                             </div>
                             <div class="field">
-                                <input id="out-sprocket35_min" type="number" min="0" value="12">
-                                <label>&nbsp;&leq; #35 Chain &leq;&nbsp;</label>
-                                <input id="out-sprocket35_max" type="number" min="0" value="60">
+                                <input id="sprocket35_enable" type="checkbox" checked>
+                                <input id="sprocket35_min" type="number" min="0" value="12">
+                                <label for="sprocket35_enable">&leq; #35 Sprockets &leq;</label>
+                                <input id="sprocket35_max" type="number" min="0" value="60">
+                                <div class="ph"></div>
                             </div>
                         </div>
                     </details>
@@ -163,13 +177,15 @@
                             <th>Type</th>
                             <th>Gear 1</th>
                             <th>Gear 2</th>
-                            <th>Ratio</th>
-                            <th>C-C Dist.</th>
-                            <th>Belt/Chain Length</th>
+                            <th style="min-width: 5em;">Ratio</th>
+                            <th class="unit">C-C (in)</th>
+                            <th># Links</th>
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        <tr>
+                            <td colspan='6'>No options found</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

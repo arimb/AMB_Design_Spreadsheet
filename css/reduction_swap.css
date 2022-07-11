@@ -1,3 +1,7 @@
+main {
+    align-items: flex-start;
+}
+
 div.inputs {
     display: flex;
     flex-direction: column;
@@ -11,6 +15,7 @@ div.page-element {
 
 div.page-element#current {
     min-height: 190px;
+    min-width: 293px;
     justify-content: flex-start;
 }
 
@@ -18,6 +23,8 @@ div.current {
     display: flex;
     flex-direction: row;
     gap: 0.7em;
+    width: 100%;
+    justify-content: space-evenly;
 }
 
 div.current div {
@@ -30,7 +37,7 @@ div.current input[type=radio] {
     margin-bottom: 3px;
 }
 
-div.in-gears, div.in-belt, div.in-custom, div.deviations, div.ranges {
+div.input, div.deviations, div.ranges {
     display: flex;
     flex-direction: column;
     gap: 0.3em;
@@ -39,6 +46,7 @@ div.in-gears, div.in-belt, div.in-custom, div.deviations, div.ranges {
 
 summary {
     text-align: center;
+    margin-bottom: 5px;
 }
 
 h4 {
@@ -50,21 +58,27 @@ div.ranges {
     gap: 0;
 }
 
-table {
-    border-collapse: collapse;
+div.ranges div.field {
+    width: 100%;
+    justify-content: space-between;
 }
 
-thead tr {
-    margin-bottom: 5px;
+div.ranges input[type=checkbox] {
+    justify-self: flex-start;
+}
+
+div.ph {
+    width: 0;
+}
+
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    background-color: whitesmoke;
 }
 
 td, th {
+    border: 1px solid black;
+    padding: 0.2em 0.4em;
     text-align: center;
-    border-right: 1px solid black;
-    border-left: 1px solid black;
-    border-bottom: 1px solid gray;
-}
-
-th {
-    border-bottom: 2px solid black;
 }
