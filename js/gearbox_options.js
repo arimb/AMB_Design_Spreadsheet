@@ -52,12 +52,12 @@ $(document).ready(function(){
             case "1":
                 $("div.1stage").show();    
                 $(".2stage").hide();
-                $("img#diagram").attr("src", "img/gear_options_1stage.png");
+                $("img#diagram").attr("src", "../img/gear_options_1stage.png");
                 break;
             case "2":
                 $("div.1stage").hide();
                 $(".2stage").show();
-                $("img#diagram").attr("src", "img/gear_options_2stage.png");
+                $("img#diagram").attr("src", "../img/gear_options_2stage.png");
                 break;
         }
     });
