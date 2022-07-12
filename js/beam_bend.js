@@ -27,6 +27,7 @@ $(document).ready(function(){
             $("select.material").prepend(`<option value="[${materials[x]}]">${x}</option>`);
         }
         $("select.material option:first-child").prop("selected", true);
+        $("select.material").change();
     };
     request.open("GET", "ref/materials.json");
     request.send();
@@ -48,9 +49,34 @@ $(document).ready(function(){
         switch(el.currentTarget.value) {
             case "Hex":
                 parent.children("div.hex").show();
+                
                 break;
-                // ADD STUFF HERE
+            case "Round":
+                parent.children("div.round").show();
+                break;
+            case "Round Tube":
+                parent.children("div.round-tube").show();
+                break;
+            case "Rectangle":
+                parent.children("div.rect").show();
+                break;
+            case "Rectangular Tube":
+                parent.children("div.rect-tube").show();
+                break;
+            case "Custom":
+                parent.children("div.custom").show();
+                break;
         }
+    });
+    $("select.cross_section").change();
+
+    $("div.hex input, div.hex select").change(el => {
+        let parent = $(el.currentTarget).parents("div.cross_section");
+        console.log(parent);
+        let hex_width = parent.find("input[id$=-hex_size]").val() * parent.find("select[id$=-hex_size-units]").val();
+        console.log(hex_width);
+        parent.find("input[id$=-I]").val( +((0.0601*Math.pow(hex_width, 4)).toFixed(3)) );
+        parent.find("input[id$=-J]").val( +((0.1154*Math.pow(hex_width, 4)).toFixed(3)) );
     });
 
 });

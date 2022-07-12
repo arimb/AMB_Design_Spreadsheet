@@ -1,6 +1,8 @@
 main {
     flex-direction: column;
     align-content: center;
+    justify-content: flex-start;
+    margin-top: 1em;
 }
 
 div.page-element {
@@ -23,6 +25,7 @@ div.tab {
     min-width: 12em;
     cursor: pointer;
     border: 1px solid black;
+    border-bottom: 0;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     background-color: var(--med-dark);
@@ -51,11 +54,19 @@ div.options {
 div.material, div.cross_section {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 2px;
+}
+
+div.material {
+    align-items: center;
     min-width: 225px;
 }
 
 select.material {
     font-size: 1em;
+}
+
+div.cross_section {
+    align-items: flex-end;
+    min-height: 90px;
 }

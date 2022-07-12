@@ -20,113 +20,111 @@
             <h1>Beam Bending Calculator</h1>
         </header>
         <main>
-            <!-- <div class="page-element"> -->
-                <div class="tab-header">
-                    <div class="tab" id="between">
-                        <h4>Between Fixtures</h4>
-                        <input id="between-select" type="radio" name="tab">
-                    </div>
-                    <div class="tab" id="cantilever">
-                        <h4>Cantilevered</h4>
-                        <input id="cantilever-select" type="radio" name="tab">
-                    </div>
-                    <div class="tab" id="one_fixed">
-                        <h4>One End Fixed</h4>
-                        <input id="one_fixed-select" type="radio" name="tab">
-                    </div>
-                    <div class="tab" id="twist">
-                        <h4>Shaft Twist</h4>
-                        <input id="twist-select" type="radio" name="tab">
-                    </div>
+            <div class="tab-header">
+                <div class="tab" id="between">
+                    <h4>Between Fixtures</h4>
+                    <input id="between-select" type="radio" name="tab">
                 </div>
-                <div class="tab-body">
-                    <div class="tab-content" id="between-content">
-                        <div class="options">
-                            <div class="material">
-                                <div class="field">
-                                    <label>Material:</label>
-                                    <select id="between-material" class="material">
-                                        <option>Custom</option>
-                                    </select>
-                                </div>
-                                <div class="field">
-                                    <label>Young's Modulus</label>
-                                    <input id="between-material-E" type="number">
-                                    <span>&nbsp;GPa</span>
-                                </div>
-                                <div class="field">
-                                    <label>Shear Modulus</label>
-                                    <input id="between-material-G" type="number">
-                                    <span>&nbsp;GPa</span>
-                                </div>
+                <div class="tab" id="cantilever">
+                    <h4>Cantilevered</h4>
+                    <input id="cantilever-select" type="radio" name="tab">
+                </div>
+                <div class="tab" id="one_fixed">
+                    <h4>One End Fixed</h4>
+                    <input id="one_fixed-select" type="radio" name="tab">
+                </div>
+                <div class="tab" id="twist">
+                    <h4>Shaft Twist</h4>
+                    <input id="twist-select" type="radio" name="tab">
+                </div>
+            </div>
+            <div class="tab-body">
+                <div class="tab-content" id="between-content">
+                    <div class="options">
+                        <div class="material">
+                            <div class="field">
+                                <label>Material:</label>
+                                <select id="between-material" class="material">
+                                    <option>Custom</option>
+                                </select>
                             </div>
-                            <div class="cross_section">
-                                <div class="field">
-                                    <label>Cross-Section:</label>
-                                    <select id="between-cross_section" class="cross_section">
-                                        <option>Hex</option>
-                                        <option>Round</option>
-                                        <option>Round Tube</option>
-                                        <option>Rectangle</option>
-                                        <option>Rectangular Tube</option>
-                                        <option>Custom</option>
-                                    </select>
-                                </div>
-                                <div class="field hex">
-                                    <label>Hex Size</label>
-                                    <input id="between-hex_size" type="number" value="0.5">
-                                    <select id="between-hex_size-units">
-                                        <option value="0.0254">in</option>
-                                        <option value="0.001">mm</option>
-                                    </select>
-                                </div>
-                                <div class="field round round-tube">
-                                    <label>Outer Diameter</label>
-                                    <input id="between-od" type="number">
-                                    <select id="between-od-units">
-                                        <option value="0.0254">in</option>
-                                        <option value="0.001">mm</option>
-                                    </select>
-                                </div>
-                                <div class="field rect rect-tube">
-                                    <label>Width</label>
-                                    <input id="between-width" type="number">
-                                    <select id="between-width-units">
-                                        <option value="0.0254">in</option>
-                                        <option value="0.001">mm</option>
-                                    </select>
-                                </div>
-                                <div class="field rect rect-tube">
-                                    <label>Height</label>
-                                    <input id="between-height" type="number">
-                                    <select id="between-height-units">
-                                        <option value="0.0254">in</option>
-                                        <option value="0.001">mm</option>
-                                    </select>
-                                </div>
-                                <div class="field round-tube rect-tube">
-                                    <label>Wall Thickness</label>
-                                    <input id="between-thick" type="number">
-                                    <select id="between-thick-units">
-                                        <option value="0.0254">in</option>
-                                        <option value="0.001">mm</option>
-                                    </select>
-                                </div>
-                                <div class="field custom">
-                                    <label>Area MoI</label>
-                                    <input id="between-I" type="number">
-                                    <span>&nbsp;mm⁴</span>
-                                </div>
-                                <div class="field custom">
-                                    <label>Polar Area MoI</label>
-                                    <input id="between-J" type="number">
-                                    <span>&nbsp;mm⁴</span>
-                                </div>
+                            <div class="field">
+                                <label>Young's Modulus</label>
+                                <input id="between-material-E" type="number">
+                                <span>&nbsp;GPa</span>
+                            </div>
+                            <div class="field">
+                                <label>Shear Modulus</label>
+                                <input id="between-material-G" type="number">
+                                <span>&nbsp;GPa</span>
+                            </div>
+                        </div>
+                        <div class="cross_section">
+                            <div class="field">
+                                <label>Cross-Section:</label>
+                                <select id="between-cross_section" class="cross_section">
+                                    <option>Hex</option>
+                                    <option>Round</option>
+                                    <option>Round Tube</option>
+                                    <option>Rectangle</option>
+                                    <option>Rectangular Tube</option>
+                                    <option>Custom</option>
+                                </select>
+                            </div>
+                            <div class="field hex">
+                                <label>Hex Size</label>
+                                <input id="between-hex_size" type="number" value="0.5">
+                                <select id="between-hex_size-units">
+                                    <option value="25.4">in</option>
+                                    <option value="1">mm</option>
+                                </select>
+                            </div>
+                            <div class="field round round-tube">
+                                <label>Outer Diameter</label>
+                                <input id="between-od" type="number">
+                                <select id="between-od-units">
+                                    <option value="25.4">in</option>
+                                    <option value="1">mm</option>
+                                </select>
+                            </div>
+                            <div class="field rect rect-tube">
+                                <label>Width</label>
+                                <input id="between-width" type="number">
+                                <select id="between-width-units">
+                                    <option value="25.4">in</option>
+                                    <option value="1">mm</option>
+                                </select>
+                            </div>
+                            <div class="field rect rect-tube">
+                                <label>Height</label>
+                                <input id="between-height" type="number">
+                                <select id="between-height-units">
+                                    <option value="25.4">in</option>
+                                    <option value="1">mm</option>
+                                </select>
+                            </div>
+                            <div class="field round-tube rect-tube">
+                                <label>Wall Thickness</label>
+                                <input id="between-thick" type="number">
+                                <select id="between-thick-units">
+                                    <option value="25.4">in</option>
+                                    <option value="1">mm</option>
+                                </select>
+                            </div>
+                            <div class="field custom">
+                                <label>Area MoI</label>
+                                <input id="between-I" type="number">
+                                <span>&nbsp;mm⁴</span>
+                            </div>
+                            <div class="field custom">
+                                <label>Polar Area MoI</label>
+                                <input id="between-J" type="number">
+                                <span>&nbsp;mm⁴</span>
                             </div>
                         </div>
                     </div>
                 </div>
-            <!-- </div> -->
+            </div>
         </main>
         <footer>
             <span>
