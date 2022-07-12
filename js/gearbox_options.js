@@ -3,49 +3,53 @@ var min_ratio, max_ratio;
 
 $(document).ready(function(){
 
-    function load_gears(response){
-        gears = JSON.parse(response);
-        const shaft_types = Object.keys(gears);
-        for (let i = shaft_types.length-1; i >= 0; i--) {
-            $("select.gear-type").prepend("<option value='" + gears[shaft_types[i]]["diam"] + "'>" + shaft_types[i] + "</option>");
-        }
-        $("select.gear-type>:first-child").attr('selected', 'selected');
-
-        Object.keys(gears).forEach(geartype => {
-            $("div.stock").append(
-                `<div class="gear-list" id="${geartype.replaceAll(/\s|"|\//g, '')}">
-                    <h4>${geartype}</h4>`
-            );
-            gears[geartype]["gears"].forEach(gear => {
-                if (gear.length == 1) {
-                    $("div.gear-list#" + geartype.replaceAll(/\s|"|\//g, '')).append(`<span>${gear[0]}</span>`);
-                } else {
-                    $("div.gear-list#" + geartype.replaceAll(/\s|"|\//g, '')).append(`<span>${gear[0]} (${gear[1]})</span>`);
+    $("div.sources input").change(function(){
+        gears = {};
+        $("div.sources input:checked").each((i,el) => {
+            let request = new XMLHttpRequest();
+            request.onload = function(){
+                let data = JSON.parse(this.responseText);
+                const shaft_types = Object.keys(data);
+                for (let i = shaft_types.length-1; i >= 0; i--) {
+                    if ($("select.gear-type option").map((i,el) => el.text).get().indexOf(shaft_types[i]) == -1)
+                        $("select.gear-type").prepend("<option value='" + data[shaft_types[i]]["diam"] + "'>" + shaft_types[i] + "</option>");
                 }
-            });
-        });
-        
-    }
+                $("select.gear-type>:first-child").attr('selected', 'selected');
 
-    $("select#gear-list").change(function(){
-        
-        if ($("select#gear-list").val() == "Custom"){
-            $("input#gear-list-custom").click();
-        } else {
-            const request = new XMLHttpRequest();
-            request.onload = function(){ load_gears(this.responseText); };
-            request.open("GET", $("select#gear-list").val());
+                var prev_keys = Object.keys(gears);
+                $("div.gear-list span").remove();
+                Object.keys(data).forEach(geartype => {
+                    let geartype_name = geartype.replaceAll(/\s|"|\//g, '');
+                    if ($("div.gear-list").map((i,el) => el.id).get().indexOf(geartype_name) == -1) {
+                        $("div.stock").append(
+                            `<div class="gear-list" id="${geartype_name}">
+                                <h4>${geartype}</h4>
+                            </div>`
+                        );
+                    }
+                    if (prev_keys.indexOf(geartype) == -1)
+                        gears[geartype] = [];
+                    
+                    data[geartype]["gears"].forEach(gear => {
+                        if (gears[geartype].map(x=>x.toString()).indexOf(gear.toString()) == -1)
+                            gears[geartype].push(gear);
+                    });
+                    gears[geartype].sort();
+                    gears[geartype].forEach(gear => {
+                        if (gear.length == 1)
+                            $("div.gear-list#" + geartype_name).append(`<span>${gear[0]}</span>`);
+                        else
+                            $("div.gear-list#" + geartype_name).append(`<span>${gear[0]} (${gear[1]})</span>`);
+                    });
+                });
+            };
+            request.open("GET", `ref/gears-${el.id}.json`);
             request.send();
-        }
+        })
+            
         
     });
-    $("select#gear-list").change();
-
-    $("input#gear-list-custom").change(function(){
-        var reader = new FileReader();
-        reader.onload = function(){ load_gears(this.result); };
-        reader.readAsText($("input#gear-list-custom")[0].files[0]);
-    });
+    $("input#vex").change();
 
     $("input[type=radio][name=num_stages]").change(function(){
         switch ($("input[type=radio][name=num_stages]:checked").val()) {

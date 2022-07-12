@@ -31,11 +31,8 @@ $(document).ready(function(){
     var dimensions;
     $("select#type").change(function(){
         if($("select#type").val() == "Custom"){
-            $("input#pitch_dist").prop("disabled", false);
+            $("input#pitch").prop("disabled", false);
             $("div#dimensions input").val("");
-            $("input#pitch_dist").change(function(){
-                pitch = $("input#pitch_dist").val();
-            });
         }else{
             const tmp = JSON.parse($("input[type=radio][name=units]:checked").val());
             pitch = dimensions[$("select#type").val()][0] / tmp[1];
@@ -45,14 +42,13 @@ $(document).ready(function(){
             $("input#adder").val(+((dimensions[$("select#type").val()][3] / tmp[1]).toFixed(dist_decimals)));
             $("input#weight").val(+((dimensions[$("select#type").val()][4] / tmp[5]).toFixed(3)));
             $("input#load_rating").val(+((dimensions[$("select#type").val()][5] / tmp[3]).toFixed(0)));
-            $("input#pitch_dist").prop("disabled", true);
-            $("input#pitch_dist").change(function(){});
+            $("input#pitch").prop("disabled", true);
         }
         $("input#teeth1").change();
         $("input#teeth2").change();
     });
+    $("input#pitch").change(() => pitch = $("input#pitch").val() );
 
-    // Load motor properties
     const request = new XMLHttpRequest();
     request.onload = function() {
         dimensions = JSON.parse(this.responseText);

@@ -40,11 +40,11 @@
                     <div class="input gears">
                         <div class="field">
                             <label for="gear1">Gear 1</label>
-                            <input id="gear1" type="number" min="0" value="18">
+                            <input id="gear1" type="number" step="any" min="0">
                         </div>
                         <div class="field">
                             <label for="gear2">Gear 2</label>
-                            <input id="gear2" type="number" min="0">
+                            <input id="gear2" type="number" step="any" min="0">
                         </div>
                         <div class="field">
                             <label for="gear_dp">Gear DP</label>
@@ -62,11 +62,11 @@
                     <div class="input belt">
                         <div class="field">
                             <label for="pulley1">Pulley/Sprocket 1</label>
-                            <input id="pulley1" type="number" min="0">
+                            <input id="pulley1" type="number" step="any" min="0">
                         </div>
                         <div class="field">
                             <label for="pulley2">Pulley/Sprocket 2</label>
-                            <input id="pulley2" type="number" min="0">
+                            <input id="pulley2" type="number" step="any" min="0">
                         </div>
                         <div class="field">
                             <label for="links"># of Teeth/Links</label>
@@ -103,7 +103,7 @@
                 <div class="page-element" id="desired">
                     <h2>Desired Ratio</h2>
                     <div class="field">
-                        <input id="ratio" type="number" min="0" value="2">
+                        <input id="ratio" type="number" step="any" min="0" value="2">
                         <span>: 1</span>
                     </div>
                     <details>
@@ -113,12 +113,12 @@
                         <div class="deviations">
                             <div class="field">
                                 <label for="ratio_dev">Ratio</label>
-                                <input id="ratio_dev" type="number" min="0" value="5">
+                                <input id="ratio_dev" type="number" step="any" min="0" value="5">
                                 <span>%</span>
                             </div>
                             <div class="field">
                                 <label for="dist_dev">C-C Dist.</label>
-                                <input id="dist_dev" type="number" min="0" value="0.01">
+                                <input id="dist_dev" type="number" step="any" min="0" value="0.01">
                                 <select id="dist_dev-units">
                                     <option value="1">inch</option>
                                     <option value="0.03937">mm</option>

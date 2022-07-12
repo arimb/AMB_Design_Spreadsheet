@@ -50,12 +50,12 @@
                             </div>
                             <div class="field">
                                 <label>Young's Modulus</label>
-                                <input id="between-material-E" type="number">
+                                <input id="between-material-E" type="number" min="0" step="any">
                                 <span>&nbsp;GPa</span>
                             </div>
                             <div class="field">
                                 <label>Shear Modulus</label>
-                                <input id="between-material-G" type="number">
+                                <input id="between-material-G" type="number" min="0" step="any">
                                 <span>&nbsp;GPa</span>
                             </div>
                         </div>
@@ -73,7 +73,7 @@
                             </div>
                             <div class="field hex">
                                 <label>Hex Size</label>
-                                <input id="between-hex_size" type="number" value="0.5">
+                                <input id="between-hex_size" type="number" value="0.5" min="0" step="any">
                                 <select id="between-hex_size-units">
                                     <option value="25.4">in</option>
                                     <option value="1">mm</option>
@@ -81,7 +81,7 @@
                             </div>
                             <div class="field round round-tube">
                                 <label>Outer Diameter</label>
-                                <input id="between-od" type="number">
+                                <input id="between-od" type="number" min="0" step="any">
                                 <select id="between-od-units">
                                     <option value="25.4">in</option>
                                     <option value="1">mm</option>
@@ -89,7 +89,7 @@
                             </div>
                             <div class="field rect rect-tube">
                                 <label>Width</label>
-                                <input id="between-width" type="number">
+                                <input id="between-width" type="number" step="any" min="0">
                                 <select id="between-width-units">
                                     <option value="25.4">in</option>
                                     <option value="1">mm</option>
@@ -97,7 +97,7 @@
                             </div>
                             <div class="field rect rect-tube">
                                 <label>Height</label>
-                                <input id="between-height" type="number">
+                                <input id="between-height" type="number" step="any" min="0">
                                 <select id="between-height-units">
                                     <option value="25.4">in</option>
                                     <option value="1">mm</option>
@@ -105,7 +105,7 @@
                             </div>
                             <div class="field round-tube rect-tube">
                                 <label>Wall Thickness</label>
-                                <input id="between-thick" type="number">
+                                <input id="between-thick" type="number" step="any" min="0">
                                 <select id="between-thick-units">
                                     <option value="25.4">in</option>
                                     <option value="1">mm</option>
@@ -113,12 +113,12 @@
                             </div>
                             <div class="field custom">
                                 <label>Area MoI</label>
-                                <input id="between-I" type="number">
+                                <input id="between-I" type="number" step="any" min="0">
                                 <span>&nbsp;mm⁴</span>
                             </div>
                             <div class="field custom">
                                 <label>Polar Area MoI</label>
-                                <input id="between-J" type="number">
+                                <input id="between-J" type="number" step="any" min="0">
                                 <span>&nbsp;mm⁴</span>
                             </div>
                         </div>

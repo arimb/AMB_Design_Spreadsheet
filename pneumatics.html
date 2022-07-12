@@ -36,47 +36,47 @@
                         </select>
                         <label>Bore Diam.</label>
                         <div class="field">
-                            <input class="bore dist" type="number" min="0" disabled>
+                            <input class="bore dist" type="number" step="any" min="0" disabled>
                             &nbsp;<span class="unit">inch</span>
                         </div>
                         <label>Rod Diam.</label>
                         <div class="field">
-                            <input class="rod dist" type="number" min="0" disabled>
+                            <input class="rod dist" type="number" step="any" min="0" disabled>
                             &nbsp;<span class="unit">inch</span>
                         </div>
                         <label>Stroke Length</label>
                         <div class="field">
-                            <input class="stroke dist" type="number" min="0" disabled>
+                            <input class="stroke dist" type="number" step="any" min="0" disabled>
                             &nbsp;<span class="unit">inch</span>
                         </div>
                         <br>
                         <label>Push Pressure</label>
                         <div class="field">
-                            <input class="push_pressure" type="number" min="0" max="60" value="60" disabled>
+                            <input class="push_pressure" type="number" step="any" min="0" max="60" value="60" disabled>
                             &nbsp;<span>psig</span>
                         </div>
                         <label>Pull Pressure</label>
                         <div class="field">
-                            <input class="pull_pressure" type="number" min="0" max="60" value="60" disabled>
+                            <input class="pull_pressure" type="number" step="any" min="0" max="60" value="60" disabled>
                             &nbsp;<span>psig</span>
                         </div>
                         <br>
                         <label>Time per Cycle</label>
                         <div class="field">
-                            <input class="period" type="number" min="0" disabled>
+                            <input class="period" type="number" step="any" min="0" disabled>
                             &nbsp;<span>sec</span>
                         </div>
                         <label>Start Time</label>
                         <div class="field">
-                            <input class="start" type="number" min="0" max="150" value="0" disabled>
+                            <input class="start" type="number" step="any" min="0" max="150" value="0" disabled>
                             &nbsp;<span>sec</span>
                         </div>
                         <label>End Time</label>
                         <div class="field">
-                            <input class="end" type="number" min="0" max="150" value="150" disabled>
+                            <input class="end" type="number" step="any" min="0" max="150" value="150" disabled>
                             &nbsp;<span>sec</span>
                         </div>
-                        <button class="delete" id="0">DELETE</button>
+                        <button class="delete" id="0" disabled>DELETE</button>
                     </div>
                 </div>
             </div>
@@ -90,7 +90,7 @@
                             <input class="name" type="text" size="1" value="Clippard">
                             <label>Tank Volume</label>
                             <div class="field">
-                                <input class="tank_vol" type="number" min="0" value="35">
+                                <input class="tank_vol" type="number" step="any" min="0" value="35">
                                 <select class="tank_vol-units">
                                     <option value="1">in³</option>
                                     <option value="0.0610237">ml</option>
@@ -98,12 +98,12 @@
                             </div>
                             <label>Quantity</label>
                             <div class="field">
-                                <input class="tank_qty" type="number" min="0" value="1">
+                                <input class="tank_qty" type="number" step="any" min="0" value="1">
                                 <span></span>
                             </div>
                             <label>Pressure</label>
                             <div class="field">
-                                <input class="tank_press" type="number" min="0" value="120">
+                                <input class="tank_press" type="number" step="any" min="0" value="120">
                                 <span>&nbsp;psig</span>
                             </div>
                         </div>
@@ -111,7 +111,7 @@
                             <input class="name" type="text" size="1">
                             <label>Tank Volume</label>
                             <div class="field">
-                                <input class="tank_vol" type="number" min="0">
+                                <input class="tank_vol" type="number" step="any" min="0">
                                 <select class="tank_vol-units">
                                     <option value="1">in³</option>
                                     <option value="0.0610237">ml</option>
@@ -119,12 +119,12 @@
                             </div>
                             <label>Quantity</label>
                             <div class="field">
-                                <input class="tank_qty" type="number" min="0">
+                                <input class="tank_qty" type="number" step="any" min="0">
                                 <span></span>
                             </div>
                             <label>Pressure</label>
                             <div class="field">
-                                <input class="tank_press" type="number" min="0" value="120">
+                                <input class="tank_press" type="number" step="any" min="0" value="120">
                                 <span>&nbsp;psig</span>
                             </div>
                         </div>
@@ -132,7 +132,7 @@
                             <input class="name" type="text" size="1">
                             <label>Tank Volume</label>
                             <div class="field">
-                                <input class="tank_vol" type="number" min="0">
+                                <input class="tank_vol" type="number" step="any" min="0">
                                 <select class="tank_vol-units">
                                     <option value="1">in³</option>
                                     <option value="0.0610237">ml</option>
@@ -140,19 +140,19 @@
                             </div>
                             <label>Quantity</label>
                             <div class="field">
-                                <input class="tank_qty" type="number" min="0">
+                                <input class="tank_qty" type="number" step="any" min="0">
                                 <span></span>
                             </div>
                             <label>Pressure</label>
                             <div class="field">
-                                <input class="tank_press" type="number" min="0" value="120">
+                                <input class="tank_press" type="number" step="any" min="0" value="120">
                                 <span>&nbsp;psig</span>
                             </div>
                         </div>
                     </div>
                     <div class="tanks-total">
                         <label>Total Equiv. Volume</label>
-                        <input id="tanks-total" type="number" size="10" disabled>
+                        <input id="tanks-total" type="number" step="any" size="10" disabled>
                         <select id="tanks-total-units">
                             <option value="1">in³</option>
                             <option value="0.0610237">ml</option>
@@ -168,17 +168,17 @@
                     </select>
                     <label>Initial Pressure</label>
                     <div class="field">
-                        <input id="initial_press" type="number" min="0" value="120">
+                        <input id="initial_press" type="number" step="any" min="0" value="120">
                         <span>&nbsp;psig</span>
                     </div>
                     <label>Compressor Trigger</label>
                     <div class="field">
-                        <input id="trigger_press" type="number" min="0" value="95">
+                        <input id="trigger_press" type="number" step="any" min="0" value="95">
                         <span>&nbsp;psig</span>
                     </div>
                     <label>Compressor Cutoff</label>
                     <div class="field">
-                        <input id="cutoff_press" type="number" min="0" value="120">
+                        <input id="cutoff_press" type="number" step="any" min="0" value="120">
                         <span>&nbsp;psig</span>
                     </div>
                 </div>

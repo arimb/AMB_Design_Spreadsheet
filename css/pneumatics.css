@@ -22,6 +22,10 @@ button.add {
     border-radius: 0px;
     box-shadow: none;
 }
+button.add:hover:disabled {
+    cursor: default;
+    background-color: var(--med-light);
+}
 
 div.cyl-list {
     display: flex;
@@ -77,9 +81,11 @@ button.delete {
     border: 1px solid black;
     border-radius: 0px;
     box-shadow: none;
+    cursor: default;
 }
 
-button.delete:hover {
+button.delete:hover:not(:disabled) {
+    cursor: pointer;
     background-color: dimgray;
 }
 

@@ -1,7 +1,13 @@
 div.page-element#options {
     align-items: flex-end;
     justify-content: space-evenly;
-    width: 220px;
+    width: 260px;
+}
+
+div.sources {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
 }
 
 div.page-element#options input {
@@ -30,14 +36,15 @@ div.break#break1 {
 }
 
 div.page-element#clearance {
-    width: 220px;
+    width: 260px;
     justify-content: space-around;
 }
 
 div.clearance-type {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-end;
+    gap: 8px;
 }
 
 div#clearance div.field {

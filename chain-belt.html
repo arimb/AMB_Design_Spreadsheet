@@ -37,7 +37,7 @@
                     </select>
                     <div class="field">
                         <label for="pitch">Pitch Distance</label>
-                        <input id="pitch" type="number" min="0" disabled>
+                        <input id="pitch" type="number" step="any" min="0" disabled>
                         &nbsp;
                         <span class="dist_unit"></span>
                     </div>
@@ -52,7 +52,7 @@
                     </div>
                     <div class="field">
                         <label for="diam1">Diameter</label>
-                        <input id="diam1" type="number" disabled>
+                        <input id="diam1" type="number" step="any" disabled>
                         &nbsp;
                         <span class="dist_unit"></span>
                     </div>
@@ -61,11 +61,11 @@
                     <h3>Sprocket 2</h3>
                     <div class="field">
                         <label for="teeth2">Tooth Count</label>
-                        <input id="teeth2" type="number" min="0" step="1">
+                        <input id="teeth2" type="number" step="any" min="0" step="1">
                     </div>
                     <div class="field">
                         <label for="diam2">Diameter</label>
-                        <input id="diam2" type="number" disabled>
+                        <input id="diam2" type="number" step="any" disabled>
                         &nbsp;
                         <span class="dist_unit"></span>
                     </div>
@@ -77,31 +77,31 @@
                 <h3 style="align-self: center;">Useful Dimensions</h3>
                 <div class="field">
                     <label for="width">Standard Width</label>
-                    <input id="width" type="number" disabled>
+                    <input id="width" type="number" step="any" disabled>
                     &nbsp;
                     <span class="dist_unit"></span>
                 </div>
                 <div class="field">
                     <label for="thickness">Thickness</label>
-                    <input id="thickness" type="number" disabled>
+                    <input id="thickness" type="number" step="any" disabled>
                     &nbsp;
                     <span class="dist_unit"></span>
                 </div>
                 <div class="field">
                     <label for="adder">Suggested C-C Adder</label>
-                    <input id="adder" type="number" disabled>
+                    <input id="adder" type="number" step="any" disabled>
                     &nbsp;
                     <span class="dist_unit"></span>
                 </div>
                 <div class="field">
                     <label for="weight">Weight</label>
-                    <input id="weight" type="number" disabled>
+                    <input id="weight" type="number" step="any" disabled>
                     &nbsp;
                     <span class="weight_unit"></span>
                 </div>
                 <div class="field">
                     <label for="load_rating">Load Rating</label>
-                    <input id="load_rating" type="number" disabled>
+                    <input id="load_rating" type="number" step="any" disabled>
                     &nbsp;
                     <span class="force_unit"></span>
                 </div>
@@ -120,7 +120,7 @@
                 <div class="geometry">
                     <div class="field bydist-in">
                         <label for="approx_dist">Approx. Distance</label>
-                        <input id="approx_dist" type="number">
+                        <input id="approx_dist" type="number" step="any">
                         &nbsp;
                         <span class="dist_unit"></span>
                     </div>
@@ -136,31 +136,31 @@
                     </div>
                     <div class="field bydist-in">
                         <label for="round_to">Round To</label>
-                        <input id="round_to" type="number">
+                        <input id="round_to" type="number" step="any" min="0" placeholder="1">
                         &nbsp;
                         <span></span>
                     </div>
                     <div class="field bylinks-in bydist-out">
                         <label for="links">Number of Links</label>
-                        <input id="links" type="number" disabled>
+                        <input id="links" type="number" step="any" disabled>
                         &nbsp;
                         <span></span>
                     </div>
                     <div class="field bylinks-out bydist-out">
                         <label for="dist">C-C Distance</label>
-                        <input id="dist" type="number" disabled>
+                        <input id="dist" type="number" step="any" disabled>
                         &nbsp;
                         <span class="dist_unit"></span>
                     </div>
                     <div class="field bylinks-out bydist-out">
                         <label for="chain_length">Chain Length</label>
-                        <input id="chain_length" type="number" disabled>
+                        <input id="chain_length" type="number" step="any" disabled>
                         &nbsp;
                         <span class="dist_unit"></span>
                     </div>
                     <div class="field bylinks-out bydist-out">
                         <label for="clearance">Clearance</label>
-                        <input id="clearance" type="number" disabled>
+                        <input id="clearance" type="number" step="any" disabled>
                         &nbsp;
                         <span class="dist_unit"></span>
                     </div>
