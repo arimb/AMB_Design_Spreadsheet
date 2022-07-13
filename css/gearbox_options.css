@@ -1,13 +1,17 @@
 div.page-element#options {
     align-items: flex-end;
     justify-content: space-evenly;
-    width: 260px;
+    width: 253px;
 }
 
 div.sources {
     display: flex;
     flex-direction: row;
     gap: 1em;
+}
+
+div.sources > label {
+    margin-right: -0.5em;
 }
 
 div.page-element#options input {
@@ -22,7 +26,8 @@ div.num_stages {
     display: flex;
     flex-direction: row;
     width: 100%;
-    justify-content: space-between;
+    justify-content: flex-end;
+    gap: 0.7em;
 }
 
 div.num_stages div {
@@ -36,7 +41,7 @@ div.break#break1 {
 }
 
 div.page-element#clearance {
-    width: 260px;
+    width: 253px;
     justify-content: space-around;
 }
 

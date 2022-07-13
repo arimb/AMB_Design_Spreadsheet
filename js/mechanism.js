@@ -74,6 +74,8 @@ $(document).ready(function(){
         $("input#total-ratio").val(+(ratio.toFixed(2)));
     });
 
+    $("input#total-ratio").click(() => $("input#gear_ratio").val($("input#total-ratio").val()));
+
     function calculate_vals(ratio){
         tmp = [
             wf / ratio / $("select#rot_speed-units").val(),     // rot_speed

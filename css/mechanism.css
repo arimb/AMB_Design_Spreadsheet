@@ -114,6 +114,12 @@ div.graph-limits input {
 }
 
 h4 {
-    margin: 0 1em;
+    margin: -3px 1em 0 1em;
     text-align: center;
+}
+
+input#total-ratio {
+    cursor: pointer;
+    background-color: lightgray;
+    border: 1px solid gray;
 }
