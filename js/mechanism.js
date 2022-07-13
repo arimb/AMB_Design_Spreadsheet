@@ -1,25 +1,9 @@
 let wf, Ts, If, Is, radius, load
 
 $(document).ready(function(){
-    var motors;
-    // Set motor properties
-    $("select#motor_name").change(function(){
-        if($("select#motor_name").val() == "Custom"){
-            $("input[id^=motor_]").prop("disabled", false);
-            $("select#motor_stall_torque-units").prop("disabled", false);
-        }else{
-            $("input#motor_free_speed").val(motors[$("select#motor_name").val()][0]);
-            $("input#motor_stall_torque").val(motors[$("select#motor_name").val()][1]);
-            $("select#motor_stall_torque-units").val($("select#motor_stall_torque-units").children()[0].value);
-            $("input#motor_free_current").val(motors[$("select#motor_name").val()][2]);
-            $("input#motor_stall_current").val(motors[$("select#motor_name").val()][3]);
-            $("input[id^=motor_]").prop("disabled", true);
-            $("select#motor_stall_torque-units").prop("disabled", true);
-        }
-        update_motor();
-    });
-
+    
     // Load motor properties
+    var motors;
     const request = new XMLHttpRequest();
     request.onload = function() {
         motors = JSON.parse(this.responseText);
@@ -32,50 +16,59 @@ $(document).ready(function(){
     };
     request.open("GET", "ref/motors.json");
     request.send();
+    
+    // Set motor properties
+    $("select#motor_name").change(() => {
+        if($("select#motor_name").val() == "Custom"){
+            $(".motor-prop").prop("disabled", false);
+        }else{
+            $("input#motor_free_speed").val(motors[$("select#motor_name").val()][0]);
+            $("input#motor_stall_torque").val(motors[$("select#motor_name").val()][1]);
+            $("select#motor_stall_torque-units").val($("select#motor_stall_torque-units").children()[0].value);
+            $("input#motor_free_current").val(motors[$("select#motor_name").val()][2]);
+            $("input#motor_stall_current").val(motors[$("select#motor_name").val()][3]);
+            $(".motor-prop").prop("disabled", true);
+        }
+        $("input#num_motors").change();
+    });
 
     // Update motor properties
-    function update_motor(){
+    $(".motor-prop, input#num_motors, input#applied_voltage").change(() => {
         wf = $("input#motor_free_speed").val() * (Math.PI/30) * ($("input#applied_voltage").val()/12);
         Ts = $("input#motor_stall_torque").val() * $("select#motor_stall_torque-units").val() * ($("input#applied_voltage").val()/12) * ($("input#gearbox_efficiency").val()/100) * parseInt($("input#num_motors").val());
         If = $("input#motor_free_current").val() * ($("input#applied_voltage").val()/12) * parseInt($("input#num_motors").val());
         Is = $("input#motor_stall_current").val() * ($("input#applied_voltage").val()/12) * parseInt($("input#num_motors").val());
         
-        // Update graph min (max power) and max (max efficiency) then redraw
         graph_lims();
         update_vals();
-    }
-    $(".motor-update").change(update_motor);
+    });
 
     // Update radius
-    function update_radius(){
+    $("input#radius, select#radius-units").change(() => {
         radius = $("input#radius").val() * $("select#radius-units").val();
-        
-        // Update graph min (max power) and max (max efficiency) then redraw
         graph_lims();
         update_vals();
-    }
-    $("input#radius, select#radius-units").change(update_radius);
-    update_radius();
+    });
+    $("input#radius").change();
 
     // Update load
-    function update_load(){
+    $("input#load, select#load-units").change(() => {
         load = $("input#load").val() * $("select#load-units").val();
-
         graph_lims();
         update_vals();
-    }
-    $("input#load, select#load-units").change(update_load);
-    update_load();
+    });
+    $("input#load").change();
 
+    // Ratio tester
     $("div#ratio-tester input").change(() => {
         let ratio = 1;
         $("input.gearB").each((i,el) => ratio *= $(el).val()=="" ? 1 : parseFloat($(el).val()));
         $("input.gearA").each((i,el) => ratio /= $(el).val()=="" ? 1 : parseFloat($(el).val()));
         $("input#total-ratio").val(+(ratio.toFixed(2)));
     });
-
     $("input#total-ratio").click(() => $("input#gear_ratio").val($("input#total-ratio").val()));
 
+    // Calculate outputs from ratio
     function calculate_vals(ratio){
         tmp = [
             wf / ratio / $("select#rot_speed-units").val(),     // rot_speed
@@ -90,6 +83,7 @@ $(document).ready(function(){
         return tmp;
     }
 
+    // Update ratio based on driving output
     function update_vals(){
         switch( $("input[type=radio][name=driving]:checked").attr("id") ) {
             case "gear_ratio_check":
@@ -148,49 +142,29 @@ $(document).ready(function(){
     }
 
     $("div.field select").change(update_vals);
-    $("div.inputs input[type=number]").change(function(){
+    $("div.inputs input[type=number]").change(() => {
         $(this).siblings("input[type=radio]").prop("checked", true);
         update_vals();
     });
 
-    $("input[type=radio][name=driving]").change(function(){
+    // Max power, max efficiency, stall buttons
+    $("input[type=radio][name=driving]").change(() => {
         $("button.max").css("background-color", "var(--med-light)");
     })
-
-    // Max Power
-    $("button#max_power").click(function(){
+    $("button.max").click(function(){
         $("button.max").css("background-color", "var(--med-light)");
-        $("button#max_power input").prop("checked", true);
-        $("button#max_power").css("background-color", "var(--selected)");
+        $(this).css("background-color", "var(--selected)").find("input").prop("checked", true);
         update_vals();
     });
-
-    // Max Efficiency
-    $("button#max_efficiency").click(function(){
-        $("button.max").css("background-color", "var(--med-light)");
-        $("button#max_efficiency input").prop("checked", true);
-        $("button#max_efficiency").css("background-color", "var(--selected)");
-        update_vals();
-    });
-
-    // At Stall
-    $("button#stall").click(function(){
-        $("button.max").css("background-color", "var(--med-light)");
-        $("button#stall input").prop("checked", true);
-        $("button#stall").css("background-color", "var(--selected)");
-        update_vals();
-    });
-
     $("button.max").hover(function(){
-        if (!$(this).children("input").prop("checked")) {
+        if (!$(this).children("input").prop("checked"))
             $(this).css("background-color", "var(--dark)");
-        }
     }, function(){
-        if (!$(this).children("input").prop("checked")) {
+        if (!$(this).children("input").prop("checked"))
             $(this).css("background-color", "var(--med-light)");
-        }
     });
 
+    // Update graph limits
     function graph_lims(){
         $("input#graph-min").val(+((2*load*radius/Ts).toFixed(2)));
         $("input#graph-max").val(+((radius*load/Ts*(1+Math.sqrt(Is/If))).toFixed(2)));
