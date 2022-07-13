@@ -77,7 +77,7 @@
                 </div>
                 <div class="field">
                     <label for="load">Load Force</label>
-                    <input id="load" type="number" step="any" min="0" value="10">
+                    <input id="load" type="number" step="any" min="0" value="50">
                     <select id="load-units">
                         <option value="4.448">lbs</option>
                         <option value="9.81">kg</option>
@@ -88,6 +88,34 @@
                     <label for="gearbox_efficiency">Efficiency</label>
                     <input id="gearbox_efficiency" type="number" step="any" min="0" max="100" value="90">
                     <span>&nbsp;%</span>
+                </div>
+            </div>
+            <div class="page-element" id="ratio-tester">
+                <h4>Ratio Tester</h4>
+                <div class="field">
+                    <input class="gearA" type="number" step="any" min="0">
+                    <span>&nbsp;:&nbsp;</span>
+                    <input class="gearB" type="number" step="any" min="0">
+                </div>
+                <div class="field">
+                    <input class="gearA" type="number" step="any" min="0">
+                    <span>&nbsp;:&nbsp;</span>
+                    <input class="gearB" type="number" step="any" min="0">
+                </div>
+                <div class="field">
+                    <input class="gearA" type="number" step="any" min="0">
+                    <span>&nbsp;:&nbsp;</span>
+                    <input class="gearB" type="number" step="any" min="0">
+                </div>
+                <div class="field">
+                    <input class="gearA" type="number" step="any" min="0">
+                    <span>&nbsp;:&nbsp;</span>
+                    <input class="gearB" type="number" step="any" min="0">
+                </div>
+                <div class="field">
+                    <label>Total: </label>
+                    <input id="total-ratio" type="number" step="any" min="0" disabled>
+                    <span>&nbsp;: 1</span>
                 </div>
             </div>
             <div class="break"></div>

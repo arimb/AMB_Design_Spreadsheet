@@ -1,9 +1,15 @@
 div.page-element#motor {
     flex-direction: row;
+    align-content: space-around;
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
 }
 
 div.page-element#load {
     align-items: flex-end;
+    justify-content: space-around;
+    padding-top: 2em;
+    padding-bottom: 2em;
 }
 
 div.page-element#load span {
@@ -105,4 +111,9 @@ div.graph-limits {
 
 div.graph-limits input {
     width: 3em;
+}
+
+h4 {
+    margin: 0 1em;
+    text-align: center;
 }

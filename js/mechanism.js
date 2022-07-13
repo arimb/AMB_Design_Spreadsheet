@@ -67,6 +67,13 @@ $(document).ready(function(){
     $("input#load, select#load-units").change(update_load);
     update_load();
 
+    $("div#ratio-tester input").change(() => {
+        let ratio = 1;
+        $("input.gearB").each((i,el) => ratio *= $(el).val()=="" ? 1 : parseFloat($(el).val()));
+        $("input.gearA").each((i,el) => ratio /= $(el).val()=="" ? 1 : parseFloat($(el).val()));
+        $("input#total-ratio").val(+(ratio.toFixed(2)));
+    });
+
     function calculate_vals(ratio){
         tmp = [
             wf / ratio / $("select#rot_speed-units").val(),     // rot_speed
