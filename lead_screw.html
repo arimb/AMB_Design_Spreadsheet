@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Lead Screw Calculator - AMB Robotics Calculator</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/calculators.css">
+        <link rel="stylesheet" href="css/lead_screw.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="js/calculators.js"></script>
+        <script src="js/lead_screw.js"></script>
+    </head>
+    <body>
+        <header>
+            <a href="index.html">
+                <img src="img/logo.png" class="logo" alt="logo">
+            </a>
+            <h1>Lead Screw Calculator</h1>
+        </header>
+        <main>
+            <div class="calculation">
+                <div class="page-element" id="params">
+                    <div class="field">
+                        <label for="diameter">Diameter</label>
+                        <input id="diameter" type="number" step="any" min="0">
+                        <select id="diameter-units">
+                            <option value="25.4">in</option>
+                            <option value="1">mm</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="pitch">Pitch</label>
+                        <input id="pitch" type="number" step="any" min="0">
+                        &nbsp;<span class="pitch">in</span>
+                    </div>
+                    <div class="field">
+                        <label for="starts"># of Starts</label>
+                        <input id="starts" type="number" step="any" min="0">
+                    </div>
+                    <div class="field">
+                        <label for="angle">Thread Angle</label>
+                        <input id="angle" type="number" step="any" min="0">
+                        <span>&nbsp;&deg;</span>
+                    </div>
+                </div>
+                <div class="page-element" id="material">
+                    <div class="field">
+                        <label for="screw-material">Screw Material</label>
+                        <select id="screw-material">
+                            <option>Steel</option>
+                            <option>Bronze</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="nut-material">Nut Material</label>
+                        <select id="nut-material">
+                            <option>Steel</option>
+                            <option>Bronze</option>
+                            <option>Brass</option>
+                            <option>Cast Iron</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="lube">Lubricated</label>
+                        <input id="lube" type="checkbox">
+                    </div>
+                </div>
+                <div class="page-element" id="equiv">
+                    <div class="field">
+                        <label for="eff">Efficiency</label>
+                        <input id="eff" type="number" disabled>
+                    </div>
+                    <div class="field">
+                        <label for="equiv_radius">Equiv. Radius</label>
+                        <input id="equiv_radius" type="number" disabled>
+                        <select id="equiv_radius-units">
+                            <option value="25.4">in</option>
+                            <option value="1">mm</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="page-element" id="forces">
+                    <div class="fields">
+                        <div class="field">
+                            <label for="force">Applied Force</label>
+                            <input id="force" type="number" step="any" min="0">
+                            <select id="force-units">
+                                <option value="4.448">lbs</option>
+                                <option value="9.801">kg</option>
+                                <option value="1">N</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="raise_torque">Raise Torque</label>
+                            <input id="raise_torque" type="number" step="any" min="0">
+                            <select id="raise_torque-units">
+                                <option value="0.113">in-lbs</option>
+                                <option value="1">Nm</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="lower_torque">Lower Torque</label>
+                            <input id="lower_torque" type="number" step="any" min="0">
+                            <select id="lower_torque-units">
+                                <option value="0.113">in-lbs</option>
+                                <option value="1">Nm</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="raise_load">Equiv. Raise Load</label>
+                            <input id="raise_load" type="number" step="any" min="0">
+                            <select id="raise_load-units">
+                                <option value="4.448">lbs</option>
+                                <option value="9.801">kg</option>
+                                <option value="1">N</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="lower_load">Equiv. Lower Load</label>
+                            <input id="lower_load" type="number" step="any" min="0">
+                            <select id="lower_load-units">
+                                <option value="4.448">lbs</option>
+                                <option value="9.801">kg</option>
+                                <option value="1">N</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <input id="force-check" type="radio" name="driving" checked>
+                        <input id="raise_torque-check" type="radio" name="driving">
+                        <input id="lower_torque-check" type="radio" name="driving">
+                        <input id="raise_load-check" type="radio" name="driving">
+                        <input id="lower_load-check" type="radio" name="driving">
+                    </div>
+                </div>
+                <div class="page-element" id="speeds">
+                    <div class="field">
+                        <label for="lin_speed">Linear Speed</label>
+                        <input id="lin_speed" type="number" step="any" min="0">
+                        <select id="lin_speed-units">
+                            <option value="0.3048">feet/s</option>
+                            <option value="1">m/s</option>
+                            <option value="0.0254">inch/s</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="rot_speed">Rotational Speed</label>
+                        <input id="rot_speed" type="number" step="any" min="0">
+                        <select id="rot_speed-units">
+                            <option value="6.283">rev/s</option>
+                            <option value="0.10472">rpm</option>
+                            <option value="1">rad/s</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+        <footer>
+            <span>
+                Created by Ari Meles-Braverman &copy; 2022. For educational purposes only. Contact <a href="https://www.chiefdelphi.com/u/arimb/summary" style="text-decoration: underline;">@AriMB</a> on ChiefDelphi with questions or suggestions.
+            </span>
+        </footer>
+    </body>
+</html>

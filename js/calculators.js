@@ -6,6 +6,7 @@ $(document).ready(function(){
 
 function update_units(){
     let input = $(this).siblings("input#" + $(this).prop("id").split("-")[0]);
-    input.val(+((input.val() * $(this).data("unit-factor") / $(this).val()).toFixed(3)));
+    if (input.val() != "")
+        input.val(+((input.val() * $(this).data("unit-factor") / $(this).val()).toFixed(3)));
     $(this).data("unit-factor", $(this).val());
 }
