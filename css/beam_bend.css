@@ -12,7 +12,7 @@ div.page-element {
 }
 
 div.tab-header {
-    width: 100%;
+    width: 80%;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -45,6 +45,12 @@ div.tab-body {
     padding: 1em;
 }
 
+div.tab-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
 div.options {
     display: flex;
     flex-direction: row;
@@ -69,4 +75,16 @@ select.material {
 div.cross_section {
     align-items: flex-end;
     min-height: 90px;
+}
+
+img.diagram {
+    align-self: center;
+    border: 2px solid black;
+    max-width: 600px;
+}
+
+div.forces {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }

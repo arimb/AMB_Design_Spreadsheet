@@ -29,10 +29,6 @@
                     <h4>Cantilevered</h4>
                     <input id="cantilever-select" type="radio" name="tab">
                 </div>
-                <div class="tab" id="one_fixed">
-                    <h4>One End Fixed</h4>
-                    <input id="one_fixed-select" type="radio" name="tab">
-                </div>
                 <div class="tab" id="twist">
                     <h4>Shaft Twist</h4>
                     <input id="twist-select" type="radio" name="tab">
@@ -117,10 +113,290 @@
                                 <span>&nbsp;mm⁴</span>
                             </div>
                             <div class="field custom">
-                                <label>Polar Area MoI</label>
+                                <label>Torsional Constant</label>
                                 <input id="between-J" type="number" step="any" min="0">
                                 <span>&nbsp;mm⁴</span>
                             </div>
+                        </div>
+                    </div>
+                    <img class="diagram" src="img/beambend_between.png">
+                    <div class="forces">
+                        <div class="field">
+                            <label for="between-l">&ell;</label>
+                            <input id="between-l" type="number" step="any" min="0">
+                            <select id="between-l-units">
+                                <option value="0.0254">in</option>
+                                <option value="0.001" selected>mm</option>
+                                <option value="0.3048">ft</option>
+                                <option value="1">m</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="between-a">a</label>
+                            <input id="between-a" type="number" step="any" min="0">
+                            <select id="between-a-units">
+                                <option value="0.0254">in</option>
+                                <option value="0.001" selected>mm</option>
+                                <option value="0.3048">ft</option>
+                                <option value="1">m</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="between-F">F</label>
+                            <input id="between-F" type="number" step="any" min="0">
+                            <select id="between-F-units">
+                                <option value="4.448">lbs</option>
+                                <option value="9.801">kg</option>
+                                <option value="1">N</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="between-del">Max Displacement</label>
+                            <input id="between-del" type="number" step="any" min="0" disabled>
+                            <select id="between-del-units">
+                                <option value="0.0254">in</option>
+                                <option value="0.001">mm</option>
+                                <option value="0.3048">ft</option>
+                                <option value="1">m</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content" id="cantilever-content">
+                    <div class="options">
+                        <div class="material">
+                            <div class="field">
+                                <label>Material:</label>
+                                <select id="cantilever-material" class="material">
+                                    <option>Custom</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label>Young's Modulus</label>
+                                <input id="cantilever-material-E" type="number" min="0" step="any">
+                                <span>&nbsp;GPa</span>
+                            </div>
+                            <div class="field">
+                                <label>Shear Modulus</label>
+                                <input id="cantilever-material-G" type="number" min="0" step="any">
+                                <span>&nbsp;GPa</span>
+                            </div>
+                        </div>
+                        <div class="cross_section">
+                            <div class="field">
+                                <label>Cross-Section:</label>
+                                <select id="cantilever-cross_section" class="cross_section">
+                                    <option>Hex</option>
+                                    <option>Round</option>
+                                    <option>Round Tube</option>
+                                    <option>Rectangle</option>
+                                    <option>Rectangular Tube</option>
+                                    <option>Custom</option>
+                                </select>
+                            </div>
+                            <div class="field hex">
+                                <label>Hex Size</label>
+                                <input id="cantilever-hex_size" type="number" value="0.5" min="0" step="any">
+                                <select id="cantilever-hex_size-units">
+                                    <option value="25.4">in</option>
+                                    <option value="1">mm</option>
+                                </select>
+                            </div>
+                            <div class="field round round-tube">
+                                <label>Outer Diameter</label>
+                                <input id="cantilever-od" type="number" min="0" step="any">
+                                <select id="cantilever-od-units">
+                                    <option value="25.4">in</option>
+                                    <option value="1">mm</option>
+                                </select>
+                            </div>
+                            <div class="field rect rect-tube">
+                                <label>Width</label>
+                                <input id="cantilever-width" type="number" step="any" min="0">
+                                <select id="cantilever-width-units">
+                                    <option value="25.4">in</option>
+                                    <option value="1">mm</option>
+                                </select>
+                            </div>
+                            <div class="field rect rect-tube">
+                                <label>Height</label>
+                                <input id="cantilever-height" type="number" step="any" min="0">
+                                <select id="cantilever-height-units">
+                                    <option value="25.4">in</option>
+                                    <option value="1">mm</option>
+                                </select>
+                            </div>
+                            <div class="field round-tube rect-tube">
+                                <label>Wall Thickness</label>
+                                <input id="cantilever-thick" type="number" step="any" min="0">
+                                <select id="cantilever-thick-units">
+                                    <option value="25.4">in</option>
+                                    <option value="1">mm</option>
+                                </select>
+                            </div>
+                            <div class="field custom">
+                                <label>Area MoI</label>
+                                <input id="cantilever-I" type="number" step="any" min="0">
+                                <span>&nbsp;mm⁴</span>
+                            </div>
+                            <div class="field custom">
+                                <label>Torsional Constant</label>
+                                <input id="cantilever-J" type="number" step="any" min="0">
+                                <span>&nbsp;mm⁴</span>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="diagram" src="img/beambend_cantilever.png">
+                    <div class="forces">
+                        <div class="field">
+                            <label for="cantilever-l">&ell;</label>
+                            <input id="cantilever-l" type="number" step="any" min="0">
+                            <select id="cantilever-l-units">
+                                <option value="0.0254">in</option>
+                                <option value="0.001">mm</option>
+                                <option value="0.3048">ft</option>
+                                <option value="1">m</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="cantilever-a">a</label>
+                            <input id="cantilever-a" type="number" step="any" min="0">
+                            <select id="cantilever-a-units">
+                                <option value="0.0254">in</option>
+                                <option value="0.001">mm</option>
+                                <option value="0.3048">ft</option>
+                                <option value="1">m</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="cantilever-F">F</label>
+                            <input id="cantilever-F" type="number" step="any" min="0">
+                            <select id="cantilever-F-units">
+                                <option value="4.448">lbs</option>
+                                <option value="9.801">kg</option>
+                                <option value="1">N</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="cantilever-del">Max Displacement</label>
+                            <input id="cantilever-del" type="number" step="any" min="0" disabled>
+                            <select id="cantilever-del-units">
+                                <option value="0.0254">in</option>
+                                <option value="0.001">mm</option>
+                                <option value="0.3048">ft</option>
+                                <option value="1">m</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content" id="twist-content">
+                    <div class="options">
+                        <div class="material">
+                            <div class="field">
+                                <label>Material:</label>
+                                <select id="twist-material" class="material">
+                                    <option>Custom</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label>Young's Modulus</label>
+                                <input id="twist-material-E" type="number" min="0" step="any">
+                                <span>&nbsp;GPa</span>
+                            </div>
+                            <div class="field">
+                                <label>Shear Modulus</label>
+                                <input id="twist-material-G" type="number" min="0" step="any">
+                                <span>&nbsp;GPa</span>
+                            </div>
+                        </div>
+                        <div class="cross_section">
+                            <div class="field">
+                                <label>Cross-Section:</label>
+                                <select id="twist-cross_section" class="cross_section">
+                                    <option>Hex</option>
+                                    <option>Round</option>
+                                    <option>Round Tube</option>
+                                    <option>Rectangle</option>
+                                    <option>Rectangular Tube</option>
+                                    <option>Custom</option>
+                                </select>
+                            </div>
+                            <div class="field hex">
+                                <label>Hex Size</label>
+                                <input id="twist-hex_size" type="number" value="0.5" min="0" step="any">
+                                <select id="twist-hex_size-units">
+                                    <option value="25.4">in</option>
+                                    <option value="1">mm</option>
+                                </select>
+                            </div>
+                            <div class="field round round-tube">
+                                <label>Outer Diameter</label>
+                                <input id="twist-od" type="number" min="0" step="any">
+                                <select id="twist-od-units">
+                                    <option value="25.4">in</option>
+                                    <option value="1">mm</option>
+                                </select>
+                            </div>
+                            <div class="field rect rect-tube">
+                                <label>Width</label>
+                                <input id="twist-width" type="number" step="any" min="0">
+                                <select id="twist-width-units">
+                                    <option value="25.4">in</option>
+                                    <option value="1">mm</option>
+                                </select>
+                            </div>
+                            <div class="field rect rect-tube">
+                                <label>Height</label>
+                                <input id="twist-height" type="number" step="any" min="0">
+                                <select id="twist-height-units">
+                                    <option value="25.4">in</option>
+                                    <option value="1">mm</option>
+                                </select>
+                            </div>
+                            <div class="field round-tube rect-tube">
+                                <label>Wall Thickness</label>
+                                <input id="twist-thick" type="number" step="any" min="0">
+                                <select id="twist-thick-units">
+                                    <option value="25.4">in</option>
+                                    <option value="1">mm</option>
+                                </select>
+                            </div>
+                            <div class="field custom">
+                                <label>Area MoI</label>
+                                <input id="twist-I" type="number" step="any" min="0">
+                                <span>&nbsp;mm⁴</span>
+                            </div>
+                            <div class="field custom">
+                                <label>Torsional Constant</label>
+                                <input id="twist-J" type="number" step="any" min="0">
+                                <span>&nbsp;mm⁴</span>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="diagram" src="img/beambend_twist.jpg">
+                    <div class="forces">
+                        <div class="field">
+                            <label for="twist-l">Length</label>
+                            <input id="twist-l" type="number" step="any" min="0">
+                            <select id="twist-l-units">
+                                <option value="0.0254">in</option>
+                                <option value="0.001">mm</option>
+                                <option value="0.3048">ft</option>
+                                <option value="1">m</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="twist-T">Torque</label>
+                            <input id="twist-T" type="number" step="any" min="0">
+                            <select id="twist-T-units">
+                                <option value="0.113">in-lbs</option>
+                                <option value="1" selected>Nm</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="twist-del">Max Twist</label>
+                            <input id="twist-del" type="number" step="any" min="0" disabled>
+                            <span>&nbsp;&deg;</span>
                         </div>
                     </div>
                 </div>

@@ -33,12 +33,12 @@
 \contentsline {subsubsection}{\numberline {10.1.5}Rectangular Tube}{13}{subsubsection.10.1.5}% 
 \contentsline {subsection}{\numberline {10.2}Displacement Equations}{13}{subsection.10.2}% 
 \contentsline {subsubsection}{\numberline {10.2.1}Force Between Supports}{13}{subsubsection.10.2.1}% 
-\contentsline {subsubsection}{\numberline {10.2.2}Cantilevered Force}{14}{subsubsection.10.2.2}% 
+\contentsline {subsubsection}{\numberline {10.2.2}Cantilevered Force}{15}{subsubsection.10.2.2}% 
 \contentsline {subsection}{\numberline {10.3}Buckling Force}{15}{subsection.10.3}% 
-\contentsline {subsection}{\numberline {10.4}Twisting Torque}{15}{subsection.10.4}% 
-\contentsline {section}{Appendix \numberline {A}Maximum Efficiency Derivation}{16}{appendix.1.A}% 
-\contentsline {section}{Appendix \numberline {B}Chain Length Derivation}{17}{appendix.1.B}% 
-\contentsline {section}{Appendix \numberline {C}Optimal Shifting Speed Derivation}{18}{appendix.1.C}% 
-\contentsline {section}{Appendix \numberline {D}Projectile Equation Derivations}{19}{appendix.1.D}% 
-\contentsline {section}{Appendix \numberline {E}Pneumatics Simulation Derivation}{20}{appendix.1.E}% 
-\contentsline {section}{Appendix \numberline {F}Equivalent Radius/Load Derivation}{21}{appendix.1.F}% 
+\contentsline {subsection}{\numberline {10.4}Twisting Torque}{16}{subsection.10.4}% 
+\contentsline {section}{Appendix \numberline {A}Maximum Efficiency Derivation}{17}{appendix.1.A}% 
+\contentsline {section}{Appendix \numberline {B}Chain Length Derivation}{18}{appendix.1.B}% 
+\contentsline {section}{Appendix \numberline {C}Optimal Shifting Speed Derivation}{19}{appendix.1.C}% 
+\contentsline {section}{Appendix \numberline {D}Projectile Equation Derivations}{20}{appendix.1.D}% 
+\contentsline {section}{Appendix \numberline {E}Pneumatics Simulation Derivation}{21}{appendix.1.E}% 
+\contentsline {section}{Appendix \numberline {F}Equivalent Radius/Load Derivation}{22}{appendix.1.F}% 

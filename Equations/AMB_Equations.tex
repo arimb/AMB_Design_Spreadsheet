@@ -20,7 +20,7 @@
 \begin{document}
 	\title{AMB Design Spreadsheet Equations}
 	\author{Ari Meles-Braverman}
-	\date{Version 1.3}
+	\date{Version 1.4}
 	\maketitle
 	\tableofcontents
 	\newpage
@@ -579,25 +579,46 @@
 		\includegraphics[width=0.7\linewidth]{"Force_Btwn_Supports"}
 	\end{figure}
 	
-	\begin{equation}
-		y = \frac{F x^2 b^2}{6 EI l^3} [3al-x(3a+b)]
-	\end{equation}
-	Substitute $b=l-a$ to get:
-	\begin{equation} \label{btwn_y}
-		y = \frac{F x^2 (a-l)^2}{6 EI l^3} [3al-x(2a+l)]
-	\end{equation}
+	\begin{gather}
+	\begin{aligned}
+		y (x\leq a) &= \frac{F b^2 x^2}{6 EI l^3} \left( x (3a+b) - 3al \right) \\
+		y (x\geq a) &= \frac{F a^2 (l-x)^2}{6 EI l^3} \left( (l-x) (3b+a) - 3bl \right)
+	\end{aligned}
+	\end{gather}\\
 	
-	Take the derivative, set equal to zero, and solve for $x$:
+	Substitute $ b = l-a $, where $ a \leq \frac{l}{2} \leq b $:
+	
+	\begin{gather} \label{btwn_y}
+	\begin{aligned}
+		y (x\leq a) &= \frac{F x^2 (l-a)^2}{6 EI l^3} \left( x (l+2a) - 3al \right) \\
+		y (x\geq a) &= \frac{F a^2 (l-x)^2}{6 EI l^3} \left( a (l+2x) - 3lx \right)
+	\end{aligned}
+	\end{gather}\\
+	
+	Take the derivative, set equal to zero, and solve for $ x $:
+	
+	\begin{gather}
+	\begin{aligned}
+		x_{x\leq a} &= 0,\ \frac{2al}{2a+l} \\
+		x_{x\geq a} &= \frac{l^2}{3l-2a},\ l
+	\end{aligned}
+	\end{gather}\\
+
+	$ x=0 $ and $ x=l $ are the trivial solutions. We must test the non-trivial solutions to make sure they fulfil their domain requirement:
+	
+	\begin{gather}
+	\begin{aligned}
+		\frac{2al}{2a+l} \leq a &\implies a \geq \frac{l}{2}\ , \\
+		\frac{l^2}{3l-2a} \geq a &\implies a \leq \frac{l}{2} \cup l \leq a < \frac{3}{2} l
+	\end{aligned}
+	\end{gather}\\
+	
+	The domain $ a \geq \frac{l}{2} $ for the first solution contradicts our definition of $ a < \frac{l}{2} < b $ therefore that solution is not valid. The maximum deflection occurs at $ x = \frac{l^2}{3l-2a} $. Plugging this into (\ref{btwn_y}) gives:
+	
 	\begin{equation}
-		0 = \frac{\partial y}{\partial x} = \frac{F x (l-a)^2}{2 EI l^3} (2a (l-x) - lx)
-	\end{equation}
-	\begin{equation} \label{btwn_x}
-		x = \frac{2al}{2a + l}
-	\end{equation}
-	Substitute (\ref{btwn_x}) into (\ref{btwn_y}) to get:
-	\begin{equation}
-		y_{max} = \frac{2 F a^3 (l-a)^2}{3 EI (2a+l)^2}
-	\end{equation}
+		y_{max} = \frac{2 F a^2 (a-l)^3}{3 EI (2a-3l)^2}
+	\end{equation}\\
+	
 	$y$ = Vertical Displacement \\
 	$F$ = Load Force \\
 	$a$ = Distance to Closer Support \\
