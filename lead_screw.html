@@ -24,7 +24,7 @@
                 <div class="page-element" id="params">
                     <div class="field">
                         <label for="diameter">Diameter</label>
-                        <input id="diameter" type="number" step="any" min="0">
+                        <input id="diameter" type="number" step="any" min="0" value="0.375">
                         <select id="diameter-units">
                             <option value="25.4">in</option>
                             <option value="1">mm</option>
@@ -32,16 +32,16 @@
                     </div>
                     <div class="field">
                         <label for="pitch">Pitch</label>
-                        <input id="pitch" type="number" step="any" min="0">
+                        <input id="pitch" type="number" step="any" min="0" value="0.1">
                         &nbsp;<span class="pitch">in</span>
                     </div>
                     <div class="field">
                         <label for="starts"># of Starts</label>
-                        <input id="starts" type="number" step="any" min="0">
+                        <input id="starts" type="number" step="any" min="0" value="1">
                     </div>
                     <div class="field">
                         <label for="angle">Thread Angle</label>
-                        <input id="angle" type="number" step="any" min="0">
+                        <input id="angle" type="number" step="any" min="0" value="29">
                         <span>&nbsp;&deg;</span>
                     </div>
                 </div>
@@ -57,14 +57,14 @@
                         <label for="nut-material">Nut Material</label>
                         <select id="nut-material">
                             <option>Steel</option>
-                            <option>Bronze</option>
+                            <option selected>Bronze</option>
                             <option>Brass</option>
                             <option>Cast Iron</option>
                         </select>
                     </div>
                     <div class="field">
                         <label for="lube">Lubricated</label>
-                        <input id="lube" type="checkbox">
+                        <input id="lube" type="checkbox" checked>
                     </div>
                 </div>
                 <div class="page-element" id="equiv">
@@ -75,11 +75,9 @@
                     <div class="field">
                         <label for="equiv_radius">Equiv. Radius</label>
                         <input id="equiv_radius" type="number" disabled>
-                        <select id="equiv_radius-units">
-                            <option value="25.4">in</option>
-                            <option value="1">mm</option>
-                        </select>
+                        &nbsp;<span class="pitch">in</span>
                     </div>
+                    <button class="insert">INSERT IN MECHANISM CALC</button>
                 </div>
                 <div class="page-element" id="forces">
                     <div class="fields">
@@ -156,7 +154,9 @@
                     </div>
                 </div>
             </div>
-            
+            <div class="page-element" id="img">
+                <img src="img/lead_screw.jpg" height="auto">
+            </div>
         </main>
         <footer>
             <span>

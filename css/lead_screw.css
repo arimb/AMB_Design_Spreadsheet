@@ -36,3 +36,14 @@ input[type=radio]:hover {
 input[type=radio]:checked {
     background-color: var(--selected);
 }
+
+button.insert {
+    padding: 5px;
+    border-radius: 0;
+    box-shadow: none;
+    margin-bottom: 0;
+}
+
+img {
+    height: 600px;
+}
