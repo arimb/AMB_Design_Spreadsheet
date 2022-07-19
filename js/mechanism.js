@@ -66,7 +66,10 @@ $(document).ready(function(){
         $("input.gearA").each((i,el) => ratio /= $(el).val()=="" ? 1 : parseFloat($(el).val()));
         $("input#total-ratio").val(+(ratio.toFixed(2)));
     });
-    $("input#total-ratio").click(() => $("input#gear_ratio").val($("input#total-ratio").val()));
+    $("input#total-ratio").click(() => {
+        if ($("input#total-ratio").val() != "")
+            $("input#gear_ratio").val($("input#total-ratio").val()).change();
+    });
 
     // Calculate outputs from ratio
     function calculate_vals(ratio){
@@ -142,18 +145,22 @@ $(document).ready(function(){
     }
 
     $("div.field select").change(update_vals);
-    $("div.inputs input[type=number]").change(() => {
-        $(this).siblings("input[type=radio]").prop("checked", true);
+    $("div.inputs input[type=number]").change(function(){
+        $(this).siblings("input[type=radio]").prop("checked", true).change();
         update_vals();
     });
 
-    // Max power, max efficiency, stall buttons
-    $("input[type=radio][name=driving]").change(() => {
+    $("input[type=radio]").change(function(){
         $("button.max").css("background-color", "var(--med-light)");
+        $("div.inputs input[type=number]").css("background-color", "white");
+        console.log($("input[type=radio]:checked"));
+        $("input[type=radio]:checked").siblings("input[type=number]").css("background-color", "var(--selected)");
     })
+
     $("button.max").click(function(){
         $("button.max").css("background-color", "var(--med-light)");
-        $(this).css("background-color", "var(--selected)").find("input").prop("checked", true);
+        $(this).find("input").prop("checked", true).change();
+        $(this).css("background-color", "var(--selected)");
         update_vals();
     });
     $("button.max").hover(function(){
