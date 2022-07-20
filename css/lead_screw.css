@@ -10,31 +10,8 @@ div.page-element, div.fields {
     gap: 4px;
 }
 
-div.page-element#forces {
-    flex-direction: row;
-    gap: 0;
-}
-
-div.buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
 input[type=radio] {
-    border: 2px solid black;
-    padding: 0.4em;
-    margin: 3px 3px 3px 6px;
-    background-color: var(--med-light);
-    -webkit-appearance: none;
-}
-
-input[type=radio]:hover {
-    background-color: var(--dark);
-}
-
-input[type=radio]:checked {
-    background-color: var(--selected);
+    display: none;
 }
 
 button.insert {

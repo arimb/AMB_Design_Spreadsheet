@@ -143,8 +143,8 @@ $(document).ready(function(){
         $("input#efficiency").val( +((vals[7]*100).toFixed(1)) );
         draw_graph(+(ratio.toFixed(2)));
     }
-
     $("div.field select").change(update_vals);
+
     $("div.inputs input[type=number]").change(function(){
         $(this).siblings("input[type=radio]").prop("checked", true).change();
         update_vals();
@@ -153,7 +153,6 @@ $(document).ready(function(){
     $("input[type=radio]").change(function(){
         $("button.max").css("background-color", "var(--med-light)");
         $("div.inputs input[type=number]").css("background-color", "white");
-        console.log($("input[type=radio]:checked"));
         $("input[type=radio]:checked").siblings("input[type=number]").css("background-color", "var(--selected)");
     })
 

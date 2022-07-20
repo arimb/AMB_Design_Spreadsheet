@@ -35,10 +35,6 @@ div.inputs {
     gap: 4px;
 }
 
-input[type=number] {
-    border: 1px solid gray;
-}
-
 div.inputs span {
     min-width: calc(4.5em - 3px);
     box-sizing: content-box;

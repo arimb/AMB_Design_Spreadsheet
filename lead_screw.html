@@ -24,24 +24,24 @@
                 <div class="page-element" id="params">
                     <div class="field">
                         <label for="diameter">Diameter</label>
-                        <input id="diameter" type="number" step="any" min="0" value="0.375">
+                        <input id="diameter" type="number" step="any" min="0">
                         <select id="diameter-units">
-                            <option value="25.4">in</option>
-                            <option value="1">mm</option>
+                            <option value="0.0254">in</option>
+                            <option value="0.001">mm</option>
                         </select>
                     </div>
                     <div class="field">
                         <label for="pitch">Pitch</label>
-                        <input id="pitch" type="number" step="any" min="0" value="0.1">
+                        <input id="pitch" type="number" step="any" min="0">
                         &nbsp;<span class="pitch">in</span>
                     </div>
                     <div class="field">
                         <label for="starts"># of Starts</label>
-                        <input id="starts" type="number" step="any" min="0" value="1">
+                        <input id="starts" type="number" step="any" min="0">
                     </div>
                     <div class="field">
                         <label for="angle">Thread Angle</label>
-                        <input id="angle" type="number" step="any" min="0" value="29">
+                        <input id="angle" type="number" step="any" min="0">
                         <span>&nbsp;&deg;</span>
                     </div>
                 </div>
@@ -57,14 +57,14 @@
                         <label for="nut-material">Nut Material</label>
                         <select id="nut-material">
                             <option>Steel</option>
-                            <option selected>Bronze</option>
+                            <option>Bronze</option>
                             <option>Brass</option>
                             <option>Cast Iron</option>
                         </select>
                     </div>
                     <div class="field">
                         <label for="lube">Lubricated</label>
-                        <input id="lube" type="checkbox" checked>
+                        <input id="lube" type="checkbox">
                     </div>
                 </div>
                 <div class="page-element" id="equiv">
@@ -80,57 +80,53 @@
                     <button class="insert">INSERT IN MECHANISM CALC</button>
                 </div>
                 <div class="page-element" id="forces">
-                    <div class="fields">
-                        <div class="field">
-                            <label for="force">Applied Force</label>
-                            <input id="force" type="number" step="any" min="0">
-                            <select id="force-units">
-                                <option value="4.448">lbs</option>
-                                <option value="9.801">kg</option>
-                                <option value="1">N</option>
-                            </select>
-                        </div>
-                        <div class="field">
-                            <label for="raise_torque">Raise Torque</label>
-                            <input id="raise_torque" type="number" step="any" min="0">
-                            <select id="raise_torque-units">
-                                <option value="0.113">in-lbs</option>
-                                <option value="1">Nm</option>
-                            </select>
-                        </div>
-                        <div class="field">
-                            <label for="lower_torque">Lower Torque</label>
-                            <input id="lower_torque" type="number" step="any" min="0">
-                            <select id="lower_torque-units">
-                                <option value="0.113">in-lbs</option>
-                                <option value="1">Nm</option>
-                            </select>
-                        </div>
-                        <div class="field">
-                            <label for="raise_load">Equiv. Raise Load</label>
-                            <input id="raise_load" type="number" step="any" min="0">
-                            <select id="raise_load-units">
-                                <option value="4.448">lbs</option>
-                                <option value="9.801">kg</option>
-                                <option value="1">N</option>
-                            </select>
-                        </div>
-                        <div class="field">
-                            <label for="lower_load">Equiv. Lower Load</label>
-                            <input id="lower_load" type="number" step="any" min="0">
-                            <select id="lower_load-units">
-                                <option value="4.448">lbs</option>
-                                <option value="9.801">kg</option>
-                                <option value="1">N</option>
-                            </select>
-                        </div>
+                    <div class="field">
+                        <label for="force">Applied Force</label>
+                        <input id="force" type="number" step="any" min="0">
+                        <select id="force-units">
+                            <option value="4.448">lbs</option>
+                            <option value="9.801">kg</option>
+                            <option value="1">N</option>
+                        </select>
+                        <input id="force-check" type="radio" name="force">
                     </div>
-                    <div class="buttons">
-                        <input id="force-check" type="radio" name="driving" checked>
-                        <input id="raise_torque-check" type="radio" name="driving">
-                        <input id="lower_torque-check" type="radio" name="driving">
-                        <input id="raise_load-check" type="radio" name="driving">
-                        <input id="lower_load-check" type="radio" name="driving">
+                    <div class="field">
+                        <label for="raise_torque">Raise Torque</label>
+                        <input id="raise_torque" type="number" step="any" min="0">
+                        <select id="raise_torque-units">
+                            <option value="0.113">in-lbs</option>
+                            <option value="1">Nm</option>
+                        </select>
+                        <input id="raise_torque-check" type="radio" name="force">
+                    </div>
+                    <div class="field">
+                        <label for="lower_torque">Lower Torque</label>
+                        <input id="lower_torque" type="number" step="any" min="0">
+                        <select id="lower_torque-units">
+                            <option value="0.113">in-lbs</option>
+                            <option value="1">Nm</option>
+                        </select>
+                        <input id="lower_torque-check" type="radio" name="force">
+                    </div>
+                    <div class="field">
+                        <label for="raise_load">Equiv. Raise Load</label>
+                        <input id="raise_load" type="number" step="any" min="0">
+                        <select id="raise_load-units">
+                            <option value="4.448">lbs</option>
+                            <option value="9.801">kg</option>
+                            <option value="1">N</option>
+                        </select>
+                        <input id="raise_load-check" type="radio" name="force">
+                    </div>
+                    <div class="field">
+                        <label for="lower_load">Equiv. Lower Load</label>
+                        <input id="lower_load" type="number" step="any" min="0">
+                        <select id="lower_load-units">
+                            <option value="4.448">lbs</option>
+                            <option value="9.801">kg</option>
+                            <option value="1">N</option>
+                        </select>
+                        <input id="lower_load-check" type="radio" name="force">
                     </div>
                 </div>
                 <div class="page-element" id="speeds">
@@ -142,15 +138,17 @@
                             <option value="1">m/s</option>
                             <option value="0.0254">inch/s</option>
                         </select>
+                        <input id="lin_speed-check" type="radio" name="speed">
                     </div>
                     <div class="field">
                         <label for="rot_speed">Rotational Speed</label>
                         <input id="rot_speed" type="number" step="any" min="0">
                         <select id="rot_speed-units">
-                            <option value="6.283">rev/s</option>
-                            <option value="0.10472">rpm</option>
-                            <option value="1">rad/s</option>
+                            <option value="0.01667">rpm</option>
+                            <option value="1">rev/s</option>
+                            <option value="6.283">rad/s</option>
                         </select>
+                        <input id="rot_speed-check" type="radio" name="speed">
                     </div>
                 </div>
             </div>
