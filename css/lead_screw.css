@@ -8,6 +8,11 @@ div.page-element, div.fields {
     gap: 4px;
 }
 
+input:disabled {
+    background-color: #d0ded0;
+    border: 1px solid gray;
+}
+
 input[type=radio] {
     display: none;
 }

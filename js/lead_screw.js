@@ -31,6 +31,7 @@ $(document).ready(function(){
         if (d==0 || p==0 || n=="" || a==0) return;
         $("input#eff").val(+(( n*p/(Math.PI*dp) * (Math.PI*dp*Math.cos(a)-mu*n*p)/(Math.PI*mu*dp+n*p*Math.cos(a)) * 100 ).toFixed(1)));
         $("input#equiv_radius").val(+(( n*p/(2*Math.PI) / $("select#diameter-units").val() ).toFixed(4)));
+        $("input#backdrive").val( (n*p*Math.cos(a) > Math.PI*mu*dp) ? "Yes" : "No" );
     });
 
     $("div#forces input[type=radio]").change(() => {
