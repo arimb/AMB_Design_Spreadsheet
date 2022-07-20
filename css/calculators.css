@@ -1,5 +1,26 @@
+div.header-left {
+    flex-direction: row-reverse;
+    justify-self: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+
+div.units-buttons {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 5px;
+}
+
+button.header-button {
+    margin: 0;
+}
+
+button.copy-link {
+    padding: 8px;
+}
+
 div.body {
-    display: flex;
     flex-wrap: wrap;
     justify-content: center;
     flex-direction: row;
@@ -7,7 +28,6 @@ div.body {
 }
 
 div.page-element {
-    display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: center;
@@ -33,10 +53,6 @@ select#motor_name {
 
 div.break {
     flex-basis: 100%;
-}
-
-div.field {
-    display: flex;
 }
 
 div.field input {

@@ -19,6 +19,14 @@
                 <img src="img/logo.png" class="logo" alt="logo">
             </a>
             <h1>Mechanism Ratio Calculator</h1>
+            <div style="flex: 1;"></div>
+            <div class="header-left">
+                <div class="units-buttons">
+                    <button class="header-button imperial">IMPERIAL</button>
+                    <button class="header-button metric">METRIC</button>
+                </div>
+                <button class="header-button copy-link">COPY<br>LINK</button>
+            </div>
         </header>
         <main>
             <div class="page-element" id="motor">
@@ -69,8 +77,8 @@
                     <label for="radius">Radius</label>
                     <input id="radius" type="number" step="any" min="0" value="1">
                     <select id="radius-units">
-                        <option value="0.0254">inch</option>
-                        <option value="0.001">mm</option>
+                        <option value="0.0254" class="imperial">inch</option>
+                        <option value="0.001" class="metric">mm</option>
                         <option value="0.3048">foot</option>
                         <option value="1">meter</option>
                     </select>
@@ -79,9 +87,9 @@
                     <label for="load">Load Force</label>
                     <input id="load" type="number" step="any" min="0" value="50">
                     <select id="load-units">
-                        <option value="4.448">lbs</option>
+                        <option value="4.448" class="imperial">lbs</option>
                         <option value="9.81">kg</option>
-                        <option value="1">N</option>
+                        <option value="1" class="metric">N</option>
                     </select>
                 </div>
                 <div class="field">
@@ -151,8 +159,8 @@
                         <label for="lin_speed">Free Linear Speed</label>
                         <input id="lin_speed" type="number" step="any" min="0">
                         <select id="lin_speed-units">
-                            <option value="0.3048">feet/s</option>
-                            <option value="1">m/s</option>
+                            <option value="0.3048" class="imperial">feet/s</option>
+                            <option value="1" class="metric">m/s</option>
                             <option value="0.0254">inch/s</option>
                         </select>
                         <input id="lin_speed_check" type="radio" name="driving">
@@ -161,8 +169,8 @@
                         <label for="lin_speed_loaded">Loaded Linear Speed</label>
                         <input id="lin_speed_loaded" type="number" step="any" min="0">
                         <select id="lin_speed_loaded-units">
-                            <option value="0.3048">feet/s</option>
-                            <option value="1">m/s</option>
+                            <option value="0.3048" class="imperial">feet/s</option>
+                            <option value="1" class="metric">m/s</option>
                             <option value="0.0254">inch/s</option>
                         </select>
                         <input id="lin_speed_loaded_check" type="radio" name="driving">
@@ -177,9 +185,9 @@
                         <label for="stall_load">Stall Load</label>
                         <input id="stall_load" type="number" step="any" min="0">
                         <select id="stall_load-units">
-                            <option value="4.448">lbs</option>
+                            <option value="4.448" class="imperial">lbs</option>
                             <option value="9.81">kg</option>
-                            <option value="1">N</option>
+                            <option value="1" class="metric">N</option>
                         </select>
                         <input id="stall_load_check" type="radio" name="driving">
                     </div>

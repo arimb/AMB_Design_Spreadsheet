@@ -18,6 +18,14 @@
                 <img src="img/logo.png" class="logo" alt="logo">
             </a>
             <h1>Projectile Trajectory Calculator</h1>
+            <div style="flex: 1;"></div>
+            <div class="header-left">
+                <div class="units-buttons">
+                    <button class="header-button imperial">IMPERIAL</button>
+                    <button class="header-button metric">METRIC</button>
+                </div>
+                <button class="header-button copy-link">COPY<br>LINK</button>
+            </div>
         </header>
         <main>
             <div class="inputs">
@@ -32,16 +40,16 @@
                         <label for="initial_height">Height</label>
                         <input id="initial_height" type="number" step="any" min="0">
                         <select id="initial_height-units">
-                            <option value="0.3048">ft</option>
-                            <option value="1">m</option>
+                            <option value="0.3048" class="imperial">ft</option>
+                            <option value="1" class="metric">m</option>
                         </select>
                     </div>
                     <div class="field">
                         <label for="initial_vel">Velocity</label>
                         <input id="initial_vel" class="initial-driven" type="number" step="any" min="0">
                         <select id="initial_vel-units">
-                            <option value="0.3048">ft/s</option>
-                            <option value="1">m/s</option>
+                            <option value="0.3048" class="imperial">ft/s</option>
+                            <option value="1" class="metric">m/s</option>
                         </select>
                     </div>
                     <div class="field">
@@ -62,16 +70,16 @@
                         <label for="target_distance">Distance</label>
                         <input id="target_distance" class="target-distance-driven" type="number" step="any" min="0">
                         <select id="target_distance-units">
-                            <option value="0.3048">ft</option>
-                            <option value="1">m</option>
+                            <option value="0.3048" class="imperial">ft</option>
+                            <option value="1" class="metric">m</option>
                         </select>
                     </div>
                     <div class="field">
                         <label for="target_height">Height</label>
                         <input id="target_height" class="target-height-driven" type="number" step="any" min="0">
                         <select id="target_height-units">
-                            <option value="0.3048">ft</option>
-                            <option value="1">m</option>
+                            <option value="0.3048" class="imperial">ft</option>
+                            <option value="1" class="metric">m</option>
                         </select>
                         <input id="target_height-direction" type="checkbox" class="direction target-height-driven initial-driven">
                     </div>
@@ -96,16 +104,16 @@
                         <label for="diameter">Ball Diameter</label>
                         <input id="diameter" type="number" step="any" min="0">
                         <select id="diameter-units">
-                            <option value="0.0254">in</option>
-                            <option value="0.001">mm</option>
+                            <option value="0.0254" class="imperial">in</option>
+                            <option value="0.001" class="metric">mm</option>
                         </select>
                     </div>
                     <div class="field">
                         <label for="mass">Ball Mass</label>
                         <input id="mass" type="number" step="any" min="0">
                         <select id="mass-units">
-                            <option value="0.453592">lbs</option>
-                            <option value="1" selected>kg</option>
+                            <option value="0.453592" class="imperial">lbs</option>
+                            <option value="1" class="metric">kg</option>
                         </select>
                     </div>
                     <div class="field">
@@ -147,16 +155,16 @@
                         <label for="obstacle_distance">Distance</label>
                         <input id="obstacle_distance" type="number" step="any" min="0">
                         <select id="obstacle_distance-units">
-                            <option value="0.3048">ft</option>
-                            <option value="1" selected>m</option>
+                            <option value="0.3048" class="imperial">ft</option>
+                            <option value="1" class="metric">m</option>
                         </select>
                     </div>
                     <div class="field">
                         <label for="obstacle_height">Height</label>
                         <input id="obstacle_height" type="number" step="any" min="0">
                         <select id="obstacle_height-units">
-                            <option value="0.3048">ft</option>
-                            <option value="1" selected>m</option>
+                            <option value="0.3048" class="imperial">ft</option>
+                            <option value="1" class="metric">m</option>
                         </select>
                     </div>
                 </div>

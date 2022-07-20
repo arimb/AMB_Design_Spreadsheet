@@ -1,5 +1,4 @@
 div.inputs {
-    display: flex;
     flex-direction: column;
     justify-items: flex-start;
 }
@@ -23,13 +22,11 @@ input[type=radio][name=driven]:checked {
 }
 
 div.driven-set {
-    display: flex;
     flex-direction: row;
     align-items: center;
 }
 
 div.fields {
-    display: flex;
     flex-direction: column;
 }
 
@@ -39,7 +36,6 @@ div.page-element#sketch {
 }
 
 div.controls {
-    display: flex;
     flex-direction: row;
     align-items: center;
 }

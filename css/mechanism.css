@@ -29,7 +29,6 @@ div.page-element#calculation {
 }
 
 div.inputs {
-    display: flex;
     flex-direction: column;
     align-items: flex-end;
     gap: 4px;
@@ -51,7 +50,6 @@ div.graph {
 }
 
 div.max-buttons {
-    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     font-size: large;
@@ -60,10 +58,6 @@ div.max-buttons {
 
 button.max {
     font-size: 0.8em;
-    padding: 5px;
-    border: 1px solid black;
-    border-radius: 0px;
-    box-shadow: none;
 }
 
 button.max:hover {
@@ -79,12 +73,10 @@ canvas#graph {
 }
 
 div.graph {
-    display: flex;
     flex-direction: column;
 }
 
 div.graph-limits {
-    display: flex;
     gap: 0.3em;
 }
 

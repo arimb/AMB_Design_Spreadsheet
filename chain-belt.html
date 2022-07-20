@@ -18,29 +18,35 @@
                 <img src="img/logo.png" class="logo" alt="logo">
             </a>
             <h1>Chain/Belt C-C Distance Calculator</h1>
+            <div style="flex: 1;"></div>
+            <div class="header-left">
+                <div class="units-buttons">
+                    <button class="header-button imperial" value='inch'>IMPERIAL</button>
+                    <button class="header-button metric" value='mm'>METRIC</button>
+                </div>
+                <button class="header-button copy-link">COPY<br>LINK</button>
+            </div>
         </header>
         <main>
-            <div style="flex-direction: column;">
-                <div class="page-element" id="units" style="justify-content: center;">
-                    <div>
-                        <label for="inch">inch</label>
-                        <input id="inch" name="units" type="radio" value='["in",25.4,"lbs",1,"lbs/ft",1]' checked>
-                    </div>
-                    <div>
-                        <label for="mm">mm</label>
-                        <input id="mm" name="units" type="radio" value='["mm",1,"N",0.2228,"kg/m",0.671969]'>
-                    </div>
+            <div id="units" style="display: none;">
+                <div>
+                    <label for="inch">inch</label>
+                    <input id="inch" name="units" type="radio" value='["in",25.4,"lbs",1,"lbs/ft",1]' checked>
                 </div>
-                <div class="page-element" id="type">
-                    <select id="type">
-                        <option>Custom</option>
-                    </select>
-                    <div class="field">
-                        <label for="pitch">Pitch Distance</label>
-                        <input id="pitch" type="number" step="any" min="0" disabled>
-                        &nbsp;
-                        <span class="dist_unit"></span>
-                    </div>
+                <div>
+                    <label for="mm">mm</label>
+                    <input id="mm" name="units" type="radio" value='["mm",1,"N",0.2228,"kg/m",0.671969]'>
+                </div>
+            </div>
+            <div class="page-element" id="type">
+                <select id="type">
+                    <option>Custom</option>
+                </select>
+                <div class="field">
+                    <label for="pitch">Pitch Distance</label>
+                    <input id="pitch" type="number" step="any" min="0" disabled>
+                    &nbsp;
+                    <span class="dist_unit"></span>
                 </div>
             </div>
             <div class="sprockets">

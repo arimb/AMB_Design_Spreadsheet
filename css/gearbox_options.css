@@ -5,7 +5,6 @@ div.page-element#options {
 }
 
 div.sources {
-    display: flex;
     flex-direction: row;
     gap: 1em;
 }
@@ -23,7 +22,6 @@ div.page-element#options span {
 }
 
 div.num_stages {
-    display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: flex-end;
@@ -31,7 +29,6 @@ div.num_stages {
 }
 
 div.num_stages div {
-    display: flex;
     flex-direction: row;
     gap: 0;
 }
@@ -46,7 +43,6 @@ div.page-element#clearance {
 }
 
 div.clearance-type {
-    display: flex;
     flex-direction: row;
     justify-content: flex-end;
     gap: 8px;
@@ -80,7 +76,6 @@ div[id^=dist] {
 }
 
 div.cc {
-    display: flex;
     flex-direction: column;
     gap: 0.3em;
     align-items: center;
@@ -123,14 +118,12 @@ summary > * {
 }
 
 div.stock {
-    display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     overflow-x: scroll;
 }
 
 div.gear-list {
-    display: flex;
     flex-direction: column;
     align-items: center;
     border-right: 1.5px solid black;

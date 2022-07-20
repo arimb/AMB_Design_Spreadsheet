@@ -10,8 +10,8 @@ $(document).ready(function(){
                 `<div class="cyl">
                     <input class="name" type="text" size="1">
                     <select class="units">
-                        <option value="1">inch</option>
-                        <option value="25.4">mm</option>
+                        <option value="1" class="imperial">inch</option>
+                        <option value="25.4" class="metric">mm</option>
                     </select>
                     <label>Bore Diam.</label>
                     <div class="field">

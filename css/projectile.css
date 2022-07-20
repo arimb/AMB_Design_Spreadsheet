@@ -1,5 +1,4 @@
 div.inputs {
-    display: flex;
     flex-direction: column;
     align-self: flex-start;
 }
@@ -9,7 +8,6 @@ div.page-element {
 }
 
 div.graph {
-    display: flex;
     align-items: stretch;
     width: 600px;
     max-width: 800px;
@@ -35,7 +33,6 @@ div.enable {
 }
 
 div.element-header {
-    display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: center;
@@ -68,7 +65,6 @@ input[type=radio][name=driven]:checked {
 }
 
 div.element-header div {
-    display: flex;
     flex-direction: column;
     position: absolute;
     right: 0;
@@ -77,7 +73,6 @@ div.element-header div {
 }
 
 details > div {
-    display: flex;
     flex-direction: column;
 }
 

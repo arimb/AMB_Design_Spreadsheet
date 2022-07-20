@@ -49,6 +49,9 @@ $(document).ready(function(){
     });
 
     // Switch units
+    $("button.imperial, button.metric").click(function(){
+        $("input#" + $(this).val()).prop("checked", true).change();
+    });
     $("input[type=radio][name=units]").change(function(){
         const tmp = JSON.parse($("input[type=radio][name=units]:checked").val());
         dist_decimals = tmp[0]=="in" ? 3 : 2;

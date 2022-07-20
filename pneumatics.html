@@ -18,6 +18,14 @@
                 <img src="img/logo.png" class="logo" alt="logo">
             </a>
             <h1>Pneumatics System Simulator</h1>
+            <div style="flex: 1;"></div>
+            <div class="header-left">
+                <div class="units-buttons">
+                    <button class="header-button imperial">IMPERIAL</button>
+                    <button class="header-button metric">METRIC</button>
+                </div>
+                <button class="header-button copy-link">COPY<br>LINK</button>
+            </div>
         </header>
         <main>
             <div class="page-element" id="cylinders">
@@ -31,8 +39,8 @@
                     <div class="cyl" id="0">
                         <input class="name" type="text" size="1" disabled>
                         <select class="units" disabled>
-                            <option value="1">inch</option>
-                            <option value="0.03937">mm</option>
+                            <option value="1" class="imperial">inch</option>
+                            <option value="0.03937" class="metric">mm</option>
                         </select>
                         <label>Bore Diam.</label>
                         <div class="field">
@@ -92,8 +100,8 @@
                             <div class="field">
                                 <input class="tank_vol" type="number" step="any" min="0" value="35">
                                 <select class="tank_vol-units">
-                                    <option value="1">in³</option>
-                                    <option value="0.0610237">ml</option>
+                                    <option value="1" class="imperial">in³</option>
+                                    <option value="0.0610237" class="metric">ml</option>
                                 </select>
                             </div>
                             <label>Quantity</label>
@@ -113,8 +121,8 @@
                             <div class="field">
                                 <input class="tank_vol" type="number" step="any" min="0">
                                 <select class="tank_vol-units">
-                                    <option value="1">in³</option>
-                                    <option value="0.0610237">ml</option>
+                                    <option value="1" class="imperial">in³</option>
+                                    <option value="0.0610237" class="metric">ml</option>
                                 </select>
                             </div>
                             <label>Quantity</label>
@@ -134,8 +142,8 @@
                             <div class="field">
                                 <input class="tank_vol" type="number" step="any" min="0">
                                 <select class="tank_vol-units">
-                                    <option value="1">in³</option>
-                                    <option value="0.0610237">ml</option>
+                                    <option value="1" class="imperial">in³</option>
+                                    <option value="0.0610237" class="metric">ml</option>
                                 </select>
                             </div>
                             <label>Quantity</label>
@@ -154,8 +162,8 @@
                         <label>Total Equiv. Volume</label>
                         <input id="tanks-total" type="number" step="any" size="10" disabled>
                         <select id="tanks-total-units">
-                            <option value="1">in³</option>
-                            <option value="0.0610237">ml</option>
+                            <option value="1" class="imperial">in³</option>
+                            <option value="0.0610237" class="metric">ml</option>
                         </select>
                         <label>&nbsp;@ 120 psig</label>
                     </div>

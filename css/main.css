@@ -10,6 +10,10 @@
     font-size: 0.9em;
 }
 
+div {
+    display: flex;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -65,11 +69,10 @@ button {
     align-items: center;
     justify-content: center;
     background-color: var(--med-light);
-    padding: 15px;
-    border-radius: 15px;
+    padding: 5px;
+    border: 1px solid black;
     margin: 8px;
     cursor: pointer;
-    box-shadow: 5px 5px 5px rgb(0,0,0,0.5);
 }
 
 button:hover {
@@ -84,6 +87,6 @@ footer {
     flex-shrink: 0;
 }
 
-input:where(type="number") {
+input[type=number] {
     size: 20;
 }

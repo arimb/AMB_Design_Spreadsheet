@@ -18,6 +18,14 @@
                 <img src="img/logo.png" class="logo" alt="logo">
             </a>
             <h1>Reduction Swap Calculator</h1>
+            <div style="flex: 1;"></div>
+            <div class="header-left">
+                <div class="units-buttons">
+                    <button class="header-button imperial">IMPERIAL</button>
+                    <button class="header-button metric">METRIC</button>
+                </div>
+                <button class="header-button copy-link">COPY<br>LINK</button>
+            </div>
         </header>
         <main>
             <div class="inputs">
@@ -54,8 +62,8 @@
                             <label for="gear_cc">C-C Dist.</label>
                             <input id="gear_cc" disabled>
                             <select id="gear_cc-units">
-                                <option value="1">inch</option>
-                                <option value="0.03937">mm</option>
+                                <option value="1" class="imperial">inch</option>
+                                <option value="0.03937" class="metric">mm</option>
                             </select>
                         </div>
                     </div>
@@ -76,16 +84,16 @@
                             <label for="belt_pitch">Belt/Chain Pitch</label>
                             <input id="belt_pitch">
                             <select id="belt_pitch-units">
-                                <option value="1">inch</option>
-                                <option value="0.03937">mm</option>
+                                <option value="1" class="imperial">inch</option>
+                                <option value="0.03937" class="metric">mm</option>
                             </select>
                         </div>
                         <div class="field">
                             <label for="belt_cc">C-C Dist.</label>
                             <input id="belt_cc" disabled>
                             <select id="belt_cc-units">
-                                <option value="1">inch</option>
-                                <option value="0.03937">mm</option>
+                                <option value="1" class="imperial">inch</option>
+                                <option value="0.03937" class="metric">mm</option>
                             </select>
                         </div>
                     </div>
@@ -94,8 +102,8 @@
                             <label for="custom_cc">C-C Dist.</label>
                             <input id="custom_cc" min="0">
                             <select id="custom_cc-units">
-                                <option value="1">inch</option>
-                                <option value="0.03937">mm</option>
+                                <option value="1" class="imperial">inch</option>
+                                <option value="0.03937" class="metric">mm</option>
                             </select>
                         </div>
                     </div>
@@ -120,8 +128,8 @@
                                 <label for="dist_dev">C-C Dist.</label>
                                 <input id="dist_dev" type="number" step="any" min="0" value="0.01">
                                 <select id="dist_dev-units">
-                                    <option value="1">inch</option>
-                                    <option value="0.03937">mm</option>
+                                    <option value="1" class="imperial">inch</option>
+                                    <option value="0.03937" class="metric">mm</option>
                                 </select>
                             </div>
                         </div>

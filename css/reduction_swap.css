@@ -3,9 +3,7 @@ main {
 }
 
 div.inputs {
-    display: flex;
     flex-direction: column;
-    /* align-items: center; */
 }
 
 div.page-element {
@@ -20,7 +18,6 @@ div.page-element#current {
 }
 
 div.current {
-    display: flex;
     flex-direction: row;
     gap: 0.7em;
     width: 100%;
@@ -28,7 +25,6 @@ div.current {
 }
 
 div.current div {
-    display: flex;
     flex-direction: row;
     gap: 0;
 }
@@ -38,7 +34,6 @@ div.current input[type=radio] {
 }
 
 div.input, div.deviations, div.ranges {
-    display: flex;
     flex-direction: column;
     gap: 0.3em;
     align-items: center;

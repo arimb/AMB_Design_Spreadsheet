@@ -34,7 +34,6 @@ div.page-element#sim-settings {
 }
 
 div.graphs {
-    display: flex;
     flex-direction: column;
     align-items: stretch;
     width: 70vw;

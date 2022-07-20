@@ -7,20 +7,11 @@ div.page-element#cylinders {
     align-items: flex-start;
 }
 
-/* button.add {
-    padding: 8px;
-    margin: -3px 10px 8px -3px;
-} */
-
 button.add {
     font-size: 1.2em;
     font-weight: bold;
     padding: 8px;
-    /* margin: -3px 10px 8px -3px; */
     margin: 0;
-    border: 1px solid black;
-    border-radius: 0px;
-    box-shadow: none;
 }
 button.add:hover:disabled {
     cursor: default;
@@ -28,7 +19,6 @@ button.add:hover:disabled {
 }
 
 div.cyl-list {
-    display: flex;
     flex-direction: row;
     justify-content: flex-start;
     overflow-x: scroll;
@@ -38,7 +28,6 @@ div.cyl-list {
 }
 
 div.cyl, div.tank {
-    display: flex;
     flex-direction: column;
     justify-content: flex-start;
     padding: 0 0.5em;
@@ -90,7 +79,6 @@ button.delete:hover:not(:disabled) {
 }
 
 div.col {
-    display: flex;
     flex-direction: column;
     align-items: center;
 }
@@ -104,18 +92,15 @@ div.page-element h2 {
 }
 
 div.tank-list {
-    display: flex;
     flex-direction: row;
     border-top: 2px solid black;
 }
 
 div.tank {
-    display: flex;
     flex-direction: column;
 }
 
 div.tanks-total {
-    display: flex;
     flex-direction: row;
     margin-top: 3px;
 }
