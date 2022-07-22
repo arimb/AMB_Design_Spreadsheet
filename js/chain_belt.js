@@ -24,7 +24,7 @@ $(document).ready(function(){
             $("input#pitch").prop("disabled", false);
             $("div#dimensions input").val("");
         }else{
-            const tmp = JSON.parse($("input[type=radio][name=units]:checked").val());
+            const tmp = JSON.parse($("select#pitch-units option:selected").val());
             pitch = dimensions[$("select#type").val()][0] / tmp[1];
             $("input#pitch").val(+(pitch.toFixed(dist_decimals)));
             $("input#width").val(+((dimensions[$("select#type").val()][1] / tmp[1]).toFixed(dist_decimals)));
@@ -49,11 +49,11 @@ $(document).ready(function(){
     });
 
     // Switch units
-    $("button.imperial, button.metric").click(function(){
-        $("input#" + $(this).val()).prop("checked", true).change();
-    });
-    $("input[type=radio][name=units]").change(function(){
-        const tmp = JSON.parse($("input[type=radio][name=units]:checked").val());
+    // $("button.imperial, button.metric").click(function(){
+    //     $("input#" + $(this).val()).prop("checked", true).change();
+    // });
+    $("select#pitch-units").change(function(){
+        const tmp = JSON.parse($("select#pitch-units option:selected").val());
         dist_decimals = tmp[0]=="in" ? 3 : 2;
         $("span.dist_unit").html(tmp[0]);
         $("span.force_unit").html(tmp[2]);
@@ -61,7 +61,7 @@ $(document).ready(function(){
         $("select#type").change();
         if ($("input#approx_dist").val()!="")   $("input#approx_dist").val(+(($("input#approx_dist").val() * 25.4**(tmp[0]=="in"?-1:1)).toFixed(dist_decimals)));
     });
-    $("input[type=radio][name=units]").change();
+    $("select#pitch-units").change();
     
     // Switch forward/backward calculation
     $("input[type=radio][name=driving]").change(function(){
