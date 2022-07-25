@@ -1,6 +1,10 @@
 var dist_decimals = 2;
+var units = {
+    "imperial": ["in",25.4,"lbs",1,"lbs/ft",1],
+    "metric": ["mm",1,"N",0.2228,"kg/m",0.671969]
+};
 
-var pitch, diam1, diam2;
+var dimensions, pitch, diam1, diam2;
 
 $(document).ready(function(){
 
@@ -14,17 +18,16 @@ $(document).ready(function(){
         }
         $("select#type").val(types[0]).change();
     };
-    request.open("GET", "ref/chain-belt.json");
+    request.open("GET", "ref/chain-belt.json", false);
     request.send();
 
     // Update belt/chain type
-    var dimensions;
     $("select#type").change(() => {
         if($("select#type").val() == "Custom"){
             $("input#pitch").prop("disabled", false);
             $("div#dimensions input").val("");
         }else{
-            const tmp = JSON.parse($("select#pitch-units option:selected").val());
+            const tmp = units[$("select#pitch-units option:selected").prop("class")];
             pitch = dimensions[$("select#type").val()][0] / tmp[1];
             $("input#pitch").val(+(pitch.toFixed(dist_decimals)));
             $("input#width").val(+((dimensions[$("select#type").val()][1] / tmp[1]).toFixed(dist_decimals)));
@@ -49,11 +52,8 @@ $(document).ready(function(){
     });
 
     // Switch units
-    // $("button.imperial, button.metric").click(function(){
-    //     $("input#" + $(this).val()).prop("checked", true).change();
-    // });
     $("select#pitch-units").change(function(){
-        const tmp = JSON.parse($("select#pitch-units option:selected").val());
+        const tmp = units[$("select#pitch-units option:selected").prop("class")];
         dist_decimals = tmp[0]=="in" ? 3 : 2;
         $("span.dist_unit").html(tmp[0]);
         $("span.force_unit").html(tmp[2]);

@@ -5,7 +5,7 @@ div.page-element#motor {
     padding-bottom: 1.5em;
 }
 
-div.page-element#load {
+div.page-element#load-el {
     align-items: flex-end;
     justify-content: space-around;
     padding-top: 2em;
