@@ -5,81 +5,81 @@ $(document).ready(function(){
     $("button.add").click(function(){
         $("div.cyl#0").hide();
         $("div.cyl-list").css("background-color", "inherit");
-        // if ($("div.cyl").length < 9) {
-            $("div.cyl-list").append(
-                `<div class="cyl">
-                    <input class="name" type="text" size="1">
-                    <select class="units">
-                        <option value="1" class="imperial">inch</option>
-                        <option value="25.4" class="metric">mm</option>
-                    </select>
-                    <label>Bore Diam.</label>
-                    <div class="field">
-                        <input class="bore dist" type="number" min="0">
-                        &nbsp;<span class="unit"></span>
-                    </div>
-                    <label>Rod Diam.</label>
-                    <div class="field">
-                        <input class="rod dist" type="number" min="0">
-                        &nbsp;<span class="unit"></span>
-                    </div>
-                    <label>Stroke Length</label>
-                    <div class="field">
-                        <input class="stroke dist" type="number" min="0">
-                        &nbsp;<span class="unit"></span>
-                    </div>
-                    <br>
-                    <label>Push Pressure</label>
-                    <div class="field">
-                        <input class="push_pressure" type="number" min="0" max="60" value="60">
-                        &nbsp;<span>psig</span>
-                    </div>
-                    <label>Pull Pressure</label>
-                    <div class="field">
-                        <input class="pull_pressure" type="number" min="0" max="60" value="60">
-                        &nbsp;<span>psig</span>
-                    </div>
-                    <br>
-                    <label>Time per Cycle</label>
-                    <div class="field">
-                        <input class="period" type="number" min="0">
-                        &nbsp;<span>sec</span>
-                    </div>
-                    <label>Start Time</label>
-                    <div class="field">
-                        <input class="start" type="number" min="0" max="150" value="0">
-                        &nbsp;<span>sec</span>
-                    </div>
-                    <label>End Time</label>
-                    <div class="field">
-                        <input class="end" type="number" min="0" max="150" value="150">
-                        &nbsp;<span>sec</span>
-                    </div>
-                    <button class="delete">DELETE</button>
-                </div>`
-            );
-            $("button.delete:not(#0)").click(function(){
-                $(this).parent().remove();
-                if($("div.cyl").length == 1) {
-                    $("div.cyl").show();
-                    $("div.cyl-list").css("background-color", "#b3bdb3");
-                }
-                // $("button.add").prop("disabled", false);
+        let i = +$("input#num-cyls").val();
+        $("input#num-cyls").val(i+1).change();
+        $("div.cyl-list").append(
+            `<div class="cyl">
+                <input class="name" type="text" size="1">
+                <select id="units${i}" class="units">
+                    <option value="1" class="imperial">inch</option>
+                    <option value="0.03937" class="metric">mm</option>
+                </select>
+                <label>Bore Diam.</label>
+                <div class="field">
+                    <input id="bore${i}" class="bore dist" type="number" min="0">
+                    &nbsp;<span class="unit"></span>
+                </div>
+                <label>Rod Diam.</label>
+                <div class="field">
+                    <input id="rod${i}" class="rod dist" type="number" min="0">
+                    &nbsp;<span class="unit"></span>
+                </div>
+                <label>Stroke Length</label>
+                <div class="field">
+                    <input id="stroke${i}" class="stroke dist" type="number" min="0">
+                    &nbsp;<span class="unit"></span>
+                </div>
+                <br>
+                <label>Push Pressure</label>
+                <div class="field">
+                    <input id="push_press${i}" class="push_pressure" type="number" min="0" max="60" value="60">
+                    &nbsp;<span>psig</span>
+                </div>
+                <label>Pull Pressure</label>
+                <div class="field">
+                    <input id="pull_press${i}" class="pull_pressure" type="number" min="0" max="60" value="60">
+                    &nbsp;<span>psig</span>
+                </div>
+                <br>
+                <label>Time per Cycle</label>
+                <div class="field">
+                    <input id="period${i}" class="period" type="number" min="0">
+                    &nbsp;<span>sec</span>
+                </div>
+                <label>Start Time</label>
+                <div class="field">
+                    <input id="start${i}" class="start" type="number" min="0" max="150" value="0">
+                    &nbsp;<span>sec</span>
+                </div>
+                <label>End Time</label>
+                <div class="field">
+                    <input id="end${i}" class="end" type="number" min="0" max="150" value="150">
+                    &nbsp;<span>sec</span>
+                </div>
+                <button class="delete">DELETE</button>
+            </div>`
+        );
+        
+        $("div.cyl:last button.delete").click(function(){
+            console.log("hit");
+            $(this).parent().remove();
+            $("input#num-cyls").val(+$("input#num-cyls").val() - 1).change();
+            if($("div.cyl").length == 1) {
+                $("div.cyl").show();
+                $("div.cyl-list").css("background-color", "#b3bdb3");
+            }
+        });
+        $("div.cyl:last select.units").change(function(){
+            $(this).parent().find("span.unit").text($(this).children(":selected").text());
+            $(this).parent().find("input.dist").each( (i, el) => {
+                if ($(el).val() != "") 
+                    $(el).val(+(($(el).val() * $(this).data("unit-factor") / $(this).val()).toFixed(3)));
             });
-            $("div.cyl:last select.units").change(function(){
-                $(this).parent().find("span.unit").text($(this).children(":selected").text());
-                $(this).parent().find("input.dist").each( (i, el) => {
-                    if ($(el).val() != "") 
-                        $(el).val(+(($(el).val() * $(this).data("unit-factor") / $(this).val()).toFixed(3)));
-                });
-                $(this).data("unit-factor", $(this).val());
-            });
-            $("div.cyl:last select.units").change();
-            $("div.cyl:last input, div.cyl:last select").change(simulate);
-            $("div.cyl:last button").click(simulate);
-        // }
-        // if ($("div.cyl").length >= 9)
-        //     $("button.add").prop("disabled", true);
+            $(this).data("unit-factor", $(this).val());
+        });
+        $("div.cyl:last select.units").change();
+        $("div.cyl:last input, div.cyl:last select").change(simulate);
+        $("div.cyl:last button").click(simulate);
     });
     $("input, select").change(simulate);
 
@@ -89,7 +89,7 @@ $(document).ready(function(){
             total_vol += $(this).find("input.tank_vol").val() * $(this).find("select.tank_vol-units").val() * $(this).find("input.tank_qty").val() * $(this).find("input.tank_press").val();
         });
         total_vol /= 120;
-        $("input#tanks-total").val(+((total_vol / $("select#tanks-total-units").val()).toFixed(2)));
+        $("input#tanks_total").val(+((total_vol / $("select#tanks_total-units").val()).toFixed(2)));
     }
 
     $("div#tanks").find("input:not(.name), select").change(update_tanks);
@@ -103,11 +103,10 @@ $(document).ready(function(){
     });
 
     simulate();
-
 });
 
 function simulate(){
-    const coeffs = JSON.parse($("select#compressor").val());
+    const coeffs = JSON.parse($("select#compressor option:selected").attr("data-consts"));
     const trigger = $("input#trigger_press").val();
     const cutoff = $("input#cutoff_press").val();
     var min_press = 0;
