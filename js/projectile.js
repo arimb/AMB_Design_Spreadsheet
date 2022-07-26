@@ -16,7 +16,7 @@ $(document).ready(function(){
             end_fcn = $("input#target_height-direction").prop("checked") ? `v[1]>=0 && x[1]>=${hf}` : `v[1]<=0 && x[1]<=${hf}`;
             output = simulate(h0, v0, theta0, end_fcn);
 
-            if (Math.abs(output[0][output[0].length-1][1] - hf) <= 0.01) {
+            if (Math.abs(output[0][output[0].length-1][1] - hf) <= 0.05) {
                 $("input#target_distance").val( +((output[0][output[0].length-1][0] / $("select#target_distance-units").val()).toFixed(3)) );
                 $("input#target_angle").val( +((Math.atan2(output[1][1], output[1][0]) * 180/Math.PI).toFixed(2)) );    
             } else {
@@ -49,8 +49,9 @@ $(document).ready(function(){
             v0 = Math.sqrt(9.8*d/Math.abs(Math.tan(theta0) - Math.tan(thetaf))) / Math.cos(theta0);
             end_fcn = `x[0] >= ${$("input#target_distance").val() * $("select#target_distance-units").val()}`;
             output = simulate(h0, v0, theta0, end_fcn);
+            console.log(output);
 
-            if (Math.abs(output[0].length==0 || output[0][output[0].length-1][0] - d) <= 0.01) {
+            if (output[0].length==0 || Math.abs(output[0][output[0].length-1][0] - d) <= 0.05) {
                 $("input#initial_vel").val( +((v0 / $("select#initial_vel-units").val()).toFixed(2)) );
                 $("input#initial_angle").val( +((theta0 * 180/Math.PI).toFixed(2)) );
             } else {
