@@ -1,4 +1,4 @@
-let wf, Ts, If, Is, radius, load
+let wf, Ts, If, Is, radius, load, motors;
 
 $(document).ready(function(){
     
@@ -29,7 +29,6 @@ $(document).ready(function(){
     });
 
     // Load motor properties
-    var motors;
     const request = new XMLHttpRequest();
     request.onload = function() {
         motors = JSON.parse(this.responseText);

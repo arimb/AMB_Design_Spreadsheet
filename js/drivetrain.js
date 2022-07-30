@@ -1,21 +1,6 @@
-let wf, Ts, If, Is, eff, G;
+let wf, Ts, If, Is, eff, G, motors;
 
 $(document).ready(function(){
-
-    var motors;
-    // Load motor properties
-    const request = new XMLHttpRequest();
-    request.onload = function() {
-        motors = JSON.parse(this.responseText);
-        const motor_names = Object.keys(motors);
-        for (let i = motor_names.length-1; i >= 0; i--) {
-            $("select#motor_name").prepend("<option>" + motor_names[i] + "</option>");
-        }
-        $("select#motor_name").val(motor_names[0]);
-        $("select#motor_name").change();
-    };
-    request.open("GET", "ref/motors.json", false);
-    request.send();
 
     // Set motor properties
     $("select#motor_name").change(function(){
@@ -33,6 +18,22 @@ $(document).ready(function(){
         }
         update_motor();
     });
+
+    // Load motor properties
+    const request = new XMLHttpRequest();
+    request.onload = function() {
+        motors = JSON.parse(this.responseText);
+        const motor_names = Object.keys(motors);
+        for (let i = motor_names.length-1; i >= 0; i--) {
+            $("select#motor_name").prepend("<option>" + motor_names[i] + "</option>");
+        }
+        $("select#motor_name").val(motor_names[0]);
+        $("select#motor_name").change();
+    };
+    request.open("GET", "ref/motors.json", false);
+    request.send();
+
+    
 
     // Update motor properties
     function update_motor(){
