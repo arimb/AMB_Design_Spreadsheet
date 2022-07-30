@@ -5,6 +5,11 @@ $(document).ready(function(){
     $("button.header-button.imperial").click(() => $("option.imperial").prop("selected", true).parent().change());
     $("button.header-button.metric").click(() => $("option.metric").prop("selected", true).parent().change());
 
+    $("button.copy-link").click(() => {
+        navigator.clipboard.writeText(window.location.href);
+        alert("Link copied to clipboard!");
+    })
+
     // window.onbeforeunload = function() {
     //     return "Refreshing or leaving this page will reset it. Are you sure you want to continue?";
     // }
