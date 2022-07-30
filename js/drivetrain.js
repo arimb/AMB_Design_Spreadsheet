@@ -91,14 +91,16 @@ $(document).ready(function(){
             I = connected ? (V-v*G/r*ke)/R : 0;
             Tmotor = (I-If)*km;
             T = Tmotor*G - Tloss*(v/vmax) - (stop ? Tloss/eff : 0);
+            console.log(I, Tmotor, T);
             // slip detection
             if (slip && Math.abs(T) < Tslip_k) slip = false;
             else if (!slip && Math.abs(T) > Tslip_s) slip = true;
             if (slip) {
-                T = Tslip_k;
+                T = Tslip_k * Math.sign(T);
                 Tmotor = T/(G*eff);
-                I = Tmotor/km + If;
+                I = (Math.abs(Tmotor/km) + If) * Math.sign(Tmotor);
             }
+            console.log(I, Tmotor, T, slip);
             // current limiting
             if (I > Imax) {
                 I = Imax;
@@ -131,8 +133,8 @@ $(document).ready(function(){
                 case "Predictive":
                     if (x > xmax - v**2/(2*9.8*mu_k)) {
                         stop = true;
-                        if (v < 0.1) break main;
                     }
+                    if (stop && v < 0.1) break main;
                     break;
             }
             
@@ -179,18 +181,24 @@ $(document).ready(function(){
                     // yaxisID: "right",
                     pointRadius: 0
                 },{
-                    data: data.map(function(value,index) { return Math.abs(value[2]) * $("select#distance-units").val(); }),
+                    data: data.map(function(value,index) { return value[6] ? value[2] * $("select#distance-units").val() : NaN; }),
+                    label: "Slip",
+                    borderColor: "black",
+                    fill: false,
+                    pointRadius: 0
+                },{
+                    data: data.map(function(value,index) { return value[2] * $("select#distance-units").val(); }),
                     label: "Acceleration",
                     borderColor: "red",
                     fill: false,
                     pointRadius: 0
                 },{
-                    data: data.map(function(value,index) { return Math.abs(value[3]) / $("input#num_motors").val(); }),
+                    data: data.map(function(value,index) { return value[3] / $("input#num_motors").val(); }),
                     label: "Current Per Motor",
                     borderColor: "orange",
                     fill: false,
                     pointRadius: 0,
-                    yaxisID: "y2"
+                    yAxisID: "y2"
                 },{
                     data: data.map(function(value,index) { return value[4]; }),
                     label: "System Voltage",
@@ -218,20 +226,22 @@ $(document).ready(function(){
                         }
                     },
                     y: {
+                        type: "linear",
                         display: true,
                         position: "left",
-                        title: {
-                            display: true,
-                            // text: "Position (ft), Acceleration (ft/s^2)"
-                        }
+                        // title: {
+                        //     display: true,
+                        //     // text: "Position (ft), Acceleration (ft/s^2)"
+                        // }
                     },
                     y2: {
+                        type: "linear",
                         display: true,
                         position: "right",
-                        title: {
-                            display: true,
-                            // text: "Speed (ft/s)"
-                        }
+                        // title: {
+                        //     display: true,
+                        //     // text: "Speed (ft/s)"
+                        // }
                     }
                 }
             }
