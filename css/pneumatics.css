@@ -100,12 +100,12 @@ div.tank {
     flex-direction: column;
 }
 
-div.tanks-total {
+div.tanks_total {
     flex-direction: row;
     margin-top: 3px;
 }
 
-input#tanks-total {
+input#tanks_total {
     width: 3.5em;
     margin-left: 6px;
 }

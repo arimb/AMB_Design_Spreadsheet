@@ -2,86 +2,108 @@ var total_vol;
 
 $(document).ready(function(){
 
+    function insert_cyl(i){
+        $("div.cyl-list").append(
+            `<div class="cyl" id="${i}">
+                <input class="name" type="text" size="1">
+                <select id="units${i}" class="units">
+                    <option value="1" class="imperial">inch</option>
+                    <option value="0.03937" class="metric">mm</option>
+                </select>
+                <label>Bore Diam.</label>
+                <div class="field">
+                    <input id="bore${i}" class="bore dist" type="number" min="0">
+                    &nbsp;<span class="unit"></span>
+                </div>
+                <label>Rod Diam.</label>
+                <div class="field">
+                    <input id="rod${i}" class="rod dist" type="number" min="0">
+                    &nbsp;<span class="unit"></span>
+                </div>
+                <label>Stroke Length</label>
+                <div class="field">
+                    <input id="stroke${i}" class="stroke dist" type="number" min="0">
+                    &nbsp;<span class="unit"></span>
+                </div>
+                <br>
+                <label>Push Pressure</label>
+                <div class="field">
+                    <input id="push_press${i}" class="push_pressure" type="number" min="0" max="60" value="60">
+                    &nbsp;<span>psig</span>
+                </div>
+                <label>Pull Pressure</label>
+                <div class="field">
+                    <input id="pull_press${i}" class="pull_pressure" type="number" min="0" max="60" value="60">
+                    &nbsp;<span>psig</span>
+                </div>
+                <br>
+                <label>Time per Cycle</label>
+                <div class="field">
+                    <input id="period${i}" class="period" type="number" min="0">
+                    &nbsp;<span>sec</span>
+                </div>
+                <label>Start Time</label>
+                <div class="field">
+                    <input id="start${i}" class="start" type="number" min="0" max="150" value="0">
+                    &nbsp;<span>sec</span>
+                </div>
+                <label>End Time</label>
+                <div class="field">
+                    <input id="end${i}" class="end" type="number" min="0" max="150" value="150">
+                    &nbsp;<span>sec</span>
+                </div>
+                <button class="delete">DELETE</button>
+            </div>`
+        );
+
+        $("div.cyl:last button.delete").click(function(){
+            let cyls = JSON.parse($("input#num-cyls").val());
+            cyls = cyls.filter(el => el != $(this).parent().attr("id"));
+            $("input#num-cyls").val(JSON.stringify(cyls)).change();
+            if($("div.cyl").length == 1) {
+                $("div.cyl").show();
+                $("div.cyl-list").css("background-color", "#b3bdb3");
+            }
+            $(this).parent().remove();
+        });
+        $("div.cyl:last select.units").change(function(){
+            $(this).parent().find("span.unit").text($(this).children(":selected").text());
+            $(this).parent().find("input.dist").each( (i, el) => {
+                if ($(el).val() != "") 
+                    $(el).val(+(($(el).val() * $(this).data("unit-factor") / $(this).val()).toFixed(3)));
+            });
+            $(this).data("unit-factor", $(this).val());
+        }).change();
+        $("div.cyl:last input, div.cyl:last select").change(simulate).change(url_query_set);
+        $("div.cyl:last button").click(simulate);
+    }
+
     $("button.add").click(function(){
         $("div.cyl#0").hide();
         $("div.cyl-list").css("background-color", "inherit");
-        // if ($("div.cyl").length < 9) {
-            $("div.cyl-list").append(
-                `<div class="cyl">
-                    <input class="name" type="text" size="1">
-                    <select class="units">
-                        <option value="1" class="imperial">inch</option>
-                        <option value="25.4" class="metric">mm</option>
-                    </select>
-                    <label>Bore Diam.</label>
-                    <div class="field">
-                        <input class="bore dist" type="number" min="0">
-                        &nbsp;<span class="unit"></span>
-                    </div>
-                    <label>Rod Diam.</label>
-                    <div class="field">
-                        <input class="rod dist" type="number" min="0">
-                        &nbsp;<span class="unit"></span>
-                    </div>
-                    <label>Stroke Length</label>
-                    <div class="field">
-                        <input class="stroke dist" type="number" min="0">
-                        &nbsp;<span class="unit"></span>
-                    </div>
-                    <br>
-                    <label>Push Pressure</label>
-                    <div class="field">
-                        <input class="push_pressure" type="number" min="0" max="60" value="60">
-                        &nbsp;<span>psig</span>
-                    </div>
-                    <label>Pull Pressure</label>
-                    <div class="field">
-                        <input class="pull_pressure" type="number" min="0" max="60" value="60">
-                        &nbsp;<span>psig</span>
-                    </div>
-                    <br>
-                    <label>Time per Cycle</label>
-                    <div class="field">
-                        <input class="period" type="number" min="0">
-                        &nbsp;<span>sec</span>
-                    </div>
-                    <label>Start Time</label>
-                    <div class="field">
-                        <input class="start" type="number" min="0" max="150" value="0">
-                        &nbsp;<span>sec</span>
-                    </div>
-                    <label>End Time</label>
-                    <div class="field">
-                        <input class="end" type="number" min="0" max="150" value="150">
-                        &nbsp;<span>sec</span>
-                    </div>
-                    <button class="delete">DELETE</button>
-                </div>`
-            );
-            $("button.delete:not(#0)").click(function(){
-                $(this).parent().remove();
-                if($("div.cyl").length == 1) {
-                    $("div.cyl").show();
-                    $("div.cyl-list").css("background-color", "#b3bdb3");
-                }
-                // $("button.add").prop("disabled", false);
-            });
-            $("div.cyl:last select.units").change(function(){
-                $(this).parent().find("span.unit").text($(this).children(":selected").text());
-                $(this).parent().find("input.dist").each( (i, el) => {
-                    if ($(el).val() != "") 
-                        $(el).val(+(($(el).val() * $(this).data("unit-factor") / $(this).val()).toFixed(3)));
-                });
-                $(this).data("unit-factor", $(this).val());
-            });
-            $("div.cyl:last select.units").change();
-            $("div.cyl:last input, div.cyl:last select").change(simulate);
-            $("div.cyl:last button").click(simulate);
-        // }
-        // if ($("div.cyl").length >= 9)
-        //     $("button.add").prop("disabled", true);
+        let cyls = JSON.parse($("input#num-cyls").val());
+        let i = Math.max.apply(null, cyls) + 1;
+        console.log(cyls);
+        console.log(i);
+        insert_cyl(i);
+        cyls.push(i);
+        $("input#num-cyls").val( JSON.stringify(cyls) ).change();
     });
     $("input, select").change(simulate);
+
+    $("input#num-cyls").change(function(){
+        let cyls = JSON.parse($("input#num-cyls").val());
+        if (cyls.length > 1) {
+            $("div.cyl#0").hide();
+            $("div.cyl-list").css("background-color", "inherit");
+        }
+        for (let j = 0; j < cyls.length; j++) {
+            const i = cyls[j];
+            if ($("div.cyl#" + i).length == 0) {
+                insert_cyl(i);
+            }
+        }
+    });
 
     function update_tanks(){
         total_vol = 0;
@@ -89,7 +111,7 @@ $(document).ready(function(){
             total_vol += $(this).find("input.tank_vol").val() * $(this).find("select.tank_vol-units").val() * $(this).find("input.tank_qty").val() * $(this).find("input.tank_press").val();
         });
         total_vol /= 120;
-        $("input#tanks-total").val(+((total_vol / $("select#tanks-total-units").val()).toFixed(2)));
+        $("input#tanks_total").val(+((total_vol / $("select#tanks_total-units").val()).toFixed(2)));
     }
 
     $("div#tanks").find("input:not(.name), select").change(update_tanks);
@@ -103,11 +125,10 @@ $(document).ready(function(){
     });
 
     simulate();
-
 });
 
 function simulate(){
-    const coeffs = JSON.parse($("select#compressor").val());
+    const coeffs = JSON.parse($("select#compressor option:selected").attr("data-consts"));
     const trigger = $("input#trigger_press").val();
     const cutoff = $("input#cutoff_press").val();
     var min_press = 0;

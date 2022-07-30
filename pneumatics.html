@@ -35,6 +35,7 @@
                     </h2>
                     <button class="add">ADD</button>
                 </div>
+                <input id="num-cyls" type="text" value="[0]" disabled hidden>
                 <div class="cyl-list">
                     <div class="cyl" id="0">
                         <input class="name" type="text" size="1" disabled>
@@ -84,7 +85,7 @@
                             <input class="end" type="number" step="any" min="0" max="150" value="150" disabled>
                             &nbsp;<span>sec</span>
                         </div>
-                        <button class="delete" id="0" disabled>DELETE</button>
+                        <button class="delete" id="btn-0" disabled>DELETE</button>
                     </div>
                 </div>
             </div>
@@ -95,84 +96,84 @@
                     </h2>
                     <div class="tank-list">
                         <div class="tank">
-                            <input class="name" type="text" size="1" value="Clippard">
+                            <input id="tank_name1" class="name" type="text" size="1" value="Clippard">
                             <label>Tank Volume</label>
                             <div class="field">
-                                <input class="tank_vol" type="number" step="any" min="0" value="35">
-                                <select class="tank_vol-units">
+                                <input id="tank_vol1" class="tank_vol" type="number" step="any" min="0" value="35">
+                                <select id="tank_vol1-units" class="tank_vol-units">
                                     <option value="1" class="imperial">in³</option>
                                     <option value="0.0610237" class="metric">ml</option>
                                 </select>
                             </div>
                             <label>Quantity</label>
                             <div class="field">
-                                <input class="tank_qty" type="number" step="any" min="0" value="1">
+                                <input id="tank_qty1" class="tank_qty" type="number" step="any" min="0" value="1">
                                 <span></span>
                             </div>
                             <label>Pressure</label>
                             <div class="field">
-                                <input class="tank_press" type="number" step="any" min="0" value="120">
+                                <input id="tank_press1" class="tank_press" type="number" step="any" min="0" value="120">
                                 <span>&nbsp;psig</span>
                             </div>
                         </div>
                         <div class="tank">
-                            <input class="name" type="text" size="1">
+                            <input id="tank_name2" class="name" type="text" size="1">
                             <label>Tank Volume</label>
                             <div class="field">
-                                <input class="tank_vol" type="number" step="any" min="0">
-                                <select class="tank_vol-units">
+                                <input id="tank_vol2" class="tank_vol" type="number" step="any" min="0">
+                                <select id="tank_vol2-units" class="tank_vol-units">
                                     <option value="1" class="imperial">in³</option>
                                     <option value="0.0610237" class="metric">ml</option>
                                 </select>
                             </div>
                             <label>Quantity</label>
                             <div class="field">
-                                <input class="tank_qty" type="number" step="any" min="0">
+                                <input id="tank_qty2" class="tank_qty" type="number" step="any" min="0">
                                 <span></span>
                             </div>
                             <label>Pressure</label>
                             <div class="field">
-                                <input class="tank_press" type="number" step="any" min="0" value="120">
+                                <input id="tank_press2" class="tank_press" type="number" step="any" min="0" value="120">
                                 <span>&nbsp;psig</span>
                             </div>
                         </div>
                         <div class="tank">
-                            <input class="name" type="text" size="1">
+                            <input id="tank_name3" class="name" type="text" size="1">
                             <label>Tank Volume</label>
                             <div class="field">
-                                <input class="tank_vol" type="number" step="any" min="0">
-                                <select class="tank_vol-units">
+                                <input id="tank_vol3" class="tank_vol" type="number" step="any" min="0">
+                                <select id="tank_vol3-units" class="tank_vol-units">
                                     <option value="1" class="imperial">in³</option>
                                     <option value="0.0610237" class="metric">ml</option>
                                 </select>
                             </div>
                             <label>Quantity</label>
                             <div class="field">
-                                <input class="tank_qty" type="number" step="any" min="0">
+                                <input id="tank_qty3" class="tank_qty" type="number" step="any" min="0">
                                 <span></span>
                             </div>
                             <label>Pressure</label>
                             <div class="field">
-                                <input class="tank_press" type="number" step="any" min="0" value="120">
+                                <input id="tank_press3" class="tank_press" type="number" step="any" min="0" value="120">
                                 <span>&nbsp;psig</span>
                             </div>
                         </div>
                     </div>
                     <div class="tanks-total">
                         <label>Total Equiv. Volume</label>
-                        <input id="tanks-total" type="number" step="any" size="10" disabled>
-                        <select id="tanks-total-units">
+                        <input id="tanks_total" type="number" step="any" size="10" disabled>
+                        <select id="tanks_total-units">
                             <option value="1" class="imperial">in³</option>
                             <option value="0.0610237" class="metric">ml</option>
                         </select>
-                        <label>&nbsp;@ 120 psig</label>
+                        <label>&nbsp;&commat; 120 psig</label>
                     </div>
                 </div>
-                <div class="page-element" id="compressor">
+                <div class="page-element" id="comp">
                     <select id="compressor">
-                        <option value="[0, 0, 0, 0]">No Compressor</option>
-                        <option value="[0.6123, -0.01186, 1.23e-4, -4.37e-7]">Viair 90C</option>
-                        <option value="[0.692, -0.003809, -3.916e-5, 3.865e-7]">1.1 Pump</option>
+                        <option data-consts="[0, 0, 0, 0]">No Compressor</option>
+                        <option data-consts="[0.6123, -0.01186, 1.23e-4, -4.37e-7]">Viair 90C</option>
+                        <option data-consts="[0.692, -0.003809, -3.916e-5, 3.865e-7]">1.1 Pump</option>
                     </select>
                     <label>Initial Pressure</label>
                     <div class="field">
@@ -197,7 +198,7 @@
         </main>
         <footer>
             <span>
-                Created by Ari Meles-Braverman &copy; 2022. For educational purposes only. Contact <a href="https://www.chiefdelphi.com/u/arimb/summary" style="text-decoration: underline;">@AriMB</a> on ChiefDelphi with questions or suggestions.
+                Created by Ari Meles-Braverman &copy; 2022. For educational purposes only. Contact <a href="https://www.chiefdelphi.com/u/arimb/summary" style="text-decoration: underline;">&commat;AriMB</a> on ChiefDelphi with questions or suggestions.
             </span>
         </footer>
     </body>

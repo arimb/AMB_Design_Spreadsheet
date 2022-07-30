@@ -11,10 +11,9 @@ $(document).ready(function(){
         for (let i = motor_names.length-1; i >= 0; i--) {
             $("select#motor_name").prepend("<option>" + motor_names[i] + "</option>");
         }
-        $("select#motor_name").val(motor_names[0]);
-        $("select#motor_name").change();
+        $("select#motor_name").val(motor_names[0]).change();
     };
-    request.open("GET", "ref/motors.json");
+    request.open("GET", "ref/motors.json", false);
     request.send();
     
     // Set motor properties

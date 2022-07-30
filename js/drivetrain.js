@@ -14,7 +14,7 @@ $(document).ready(function(){
         $("select#motor_name").val(motor_names[0]);
         $("select#motor_name").change();
     };
-    request.open("GET", "ref/motors.json");
+    request.open("GET", "ref/motors.json", false);
     request.send();
 
     // Set motor properties

@@ -28,7 +28,7 @@ $(document).ready(function(){
         $("select.material option:first-child").prop("selected", true);
         $("select.material").change();
     };
-    request.open("GET", "ref/materials.json");
+    request.open("GET", "ref/materials.json", false);
     request.send();
 
     // Custom material properties

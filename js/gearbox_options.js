@@ -2,7 +2,7 @@ var gears;
 var min_ratio, max_ratio;
 
 $(document).ready(function(){
-
+    
     $("div.sources input").change(function(){
         gears = {};
         $("div.sources input:checked").each((i,el) => {
@@ -42,8 +42,9 @@ $(document).ready(function(){
                             $("div.gear-list#" + geartype_name).append(`<span>${gear[0]} (${gear[1]})</span>`);
                     });
                 });
+                calc_gearbox();
             };
-            request.open("GET", `ref/gears-${el.id}.json`);
+            request.open("GET", `ref/gears-${el.id}.json`, false);
             request.send();
         })
             
@@ -52,13 +53,13 @@ $(document).ready(function(){
     $("input#vex").change();
 
     $("input[type=radio][name=num_stages]").change(function(){
-        switch ($("input[type=radio][name=num_stages]:checked").val()) {
-            case "1":
+        switch ($("input[type=radio][name=num_stages]:checked").prop("id")) {
+            case "1stage":
                 $("div.1stage").show();    
                 $(".2stage").hide();
                 $("img#diagram").attr("src", "img/gear_options_1stage.png");
                 break;
-            case "2":
+            case "2stage":
                 $("div.1stage").hide();
                 $(".2stage").show();
                 $("img#diagram").attr("src", "img/gear_options_2stage.png");
@@ -86,11 +87,11 @@ $(document).ready(function(){
     //Calculate Gearbox Options
     function calc_gearbox(){
         var gearboxes = [];
-        var two_stage = ($("input[type=radio][name=num_stages]:checked").val() == "2");
+        var two_stage = ($("input[type=radio][name=num_stages]:checked").prop("id") == "2stage");
         min_ratio = $("input#ratio").val()*(1-$("input#ratio_deviation").val()/100);
         max_ratio = $("input#ratio").val()*(1+$("input#ratio_deviation").val()/100);
 
-        var gear1options = gears[$("select#type1 option:selected").text()]["gears"];
+        var gear1options = gears[$("select#type1 option:selected").text()];//["gears"];
         gear1options = gear1options.filter(function(gear){
             if ($("input#min1").val() && gear[0] < $("input#min1").val()) return false;
             if ($("input#max1").val() && gear[0] > $("input#max1").val()) return false;
@@ -98,7 +99,7 @@ $(document).ready(function(){
             if ($("input#max1diam").val() && gear.last()/20+0.1 > $("input#max1diam").val()/$("select#max1diam-units").val()) return false;
             return true;
         });
-        var gear4options = gears[$("select#type4 option:selected").text()]["gears"];
+        var gear4options = gears[$("select#type4 option:selected").text()];//["gears"];
         gear4options = gear4options.filter(function(gear){
             if ($("input#min4").val() && gear[0] < $("input#min4").val()) return false;
             if ($("input#max4").val() && gear[0] > $("input#max4").val()) return false;
@@ -107,7 +108,7 @@ $(document).ready(function(){
             return true;
         });
         if (two_stage){
-            var gear2options = gears[$("select#type2 option:selected").text()]["gears"];
+            var gear2options = gears[$("select#type2 option:selected").text()];//["gears"];
             gear2options = gear2options.filter(function(gear){
                 if ($("input#min2").val() && gear[0] < $("input#min2").val()) return false;
                 if ($("input#max2").val() && gear[0] > $("input#max2").val()) return false;
@@ -115,7 +116,7 @@ $(document).ready(function(){
                 if ($("input#max2diam").val() && gear.last()/20+0.1 > $("input#max2diam").val()/$("select#max2diam-units").val()) return false;
                 return true;
             });
-            var gear3options = gears[$("select#type3 option:selected").text()]["gears"];
+            var gear3options = gears[$("select#type3 option:selected").text()];//["gears"];
             gear3options = gear3options.filter(function(gear){
                 if ($("input#min3").val() && gear[0] < $("input#min3").val()) return false;
                 if ($("input#max3").val() && gear[0] > $("input#max3").val()) return false;
@@ -178,7 +179,7 @@ $(document).ready(function(){
             });
         }
     }
-    $("input,select").change(calc_gearbox);
+    $("input:not([type=checkbox]), select").change(calc_gearbox);
 
 });
 
