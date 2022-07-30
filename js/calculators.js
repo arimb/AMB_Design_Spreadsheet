@@ -10,6 +10,8 @@ $(document).ready(function(){
         alert("Link copied to clipboard!");
     })
 
+    $("button.reset").click(() => window.location.href = window.location.href.split("?")[0]);
+
     // window.onbeforeunload = function() {
     //     return "Refreshing or leaving this page will reset it. Are you sure you want to continue?";
     // }

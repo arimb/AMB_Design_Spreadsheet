@@ -20,6 +20,11 @@ button.copy-link {
     padding: 8px;
 }
 
+button.reset {
+    padding-top: 0.7em;
+    padding-bottom: 0.7em;
+}
+
 div.body {
     flex-wrap: wrap;
     justify-content: center;

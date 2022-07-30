@@ -2,20 +2,6 @@ let wf, Ts, If, Is, radius, load
 
 $(document).ready(function(){
     
-    // Load motor properties
-    var motors;
-    const request = new XMLHttpRequest();
-    request.onload = function() {
-        motors = JSON.parse(this.responseText);
-        const motor_names = Object.keys(motors);
-        for (let i = motor_names.length-1; i >= 0; i--) {
-            $("select#motor_name").prepend("<option>" + motor_names[i] + "</option>");
-        }
-        $("select#motor_name").val(motor_names[0]).change();
-    };
-    request.open("GET", "ref/motors.json", false);
-    request.send();
-    
     // Set motor properties
     $("select#motor_name").change(() => {
         if($("select#motor_name").val() == "Custom"){
@@ -41,6 +27,20 @@ $(document).ready(function(){
         graph_lims();
         update_vals();
     });
+
+    // Load motor properties
+    var motors;
+    const request = new XMLHttpRequest();
+    request.onload = function() {
+        motors = JSON.parse(this.responseText);
+        const motor_names = Object.keys(motors);
+        for (let i = motor_names.length-1; i >= 0; i--) {
+            $("select#motor_name").prepend("<option>" + motor_names[i] + "</option>");
+        }
+        $("select#motor_name").val(motor_names[0]).change();
+    };
+    request.open("GET", "ref/motors.json", false);
+    request.send();
 
     // Update radius
     $("input#radius, select#radius-units").change(() => {
