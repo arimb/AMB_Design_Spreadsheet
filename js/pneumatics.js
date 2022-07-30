@@ -2,13 +2,9 @@ var total_vol;
 
 $(document).ready(function(){
 
-    $("button.add").click(function(){
-        $("div.cyl#0").hide();
-        $("div.cyl-list").css("background-color", "inherit");
-        let i = +$("input#num-cyls").val();
-        $("input#num-cyls").val(i+1).change();
+    function insert_cyl(i){
         $("div.cyl-list").append(
-            `<div class="cyl">
+            `<div class="cyl" id="${i}">
                 <input class="name" type="text" size="1">
                 <select id="units${i}" class="units">
                     <option value="1" class="imperial">inch</option>
@@ -59,15 +55,16 @@ $(document).ready(function(){
                 <button class="delete">DELETE</button>
             </div>`
         );
-        
+
         $("div.cyl:last button.delete").click(function(){
-            console.log("hit");
-            $(this).parent().remove();
-            $("input#num-cyls").val(+$("input#num-cyls").val() - 1).change();
+            let cyls = JSON.parse($("input#num-cyls").val());
+            cyls = cyls.filter(el => el != $(this).parent().attr("id"));
+            $("input#num-cyls").val(JSON.stringify(cyls)).change();
             if($("div.cyl").length == 1) {
                 $("div.cyl").show();
                 $("div.cyl-list").css("background-color", "#b3bdb3");
             }
+            $(this).parent().remove();
         });
         $("div.cyl:last select.units").change(function(){
             $(this).parent().find("span.unit").text($(this).children(":selected").text());
@@ -76,12 +73,37 @@ $(document).ready(function(){
                     $(el).val(+(($(el).val() * $(this).data("unit-factor") / $(this).val()).toFixed(3)));
             });
             $(this).data("unit-factor", $(this).val());
-        });
-        $("div.cyl:last select.units").change();
-        $("div.cyl:last input, div.cyl:last select").change(simulate);
+        }).change();
+        $("div.cyl:last input, div.cyl:last select").change(simulate).change(url_query_set);
         $("div.cyl:last button").click(simulate);
+    }
+
+    $("button.add").click(function(){
+        $("div.cyl#0").hide();
+        $("div.cyl-list").css("background-color", "inherit");
+        let cyls = JSON.parse($("input#num-cyls").val());
+        let i = Math.max.apply(null, cyls) + 1;
+        console.log(cyls);
+        console.log(i);
+        insert_cyl(i);
+        cyls.push(i);
+        $("input#num-cyls").val( JSON.stringify(cyls) ).change();
     });
     $("input, select").change(simulate);
+
+    $("input#num-cyls").change(function(){
+        let cyls = JSON.parse($("input#num-cyls").val());
+        if (cyls.length > 1) {
+            $("div.cyl#0").hide();
+            $("div.cyl-list").css("background-color", "inherit");
+        }
+        for (let j = 0; j < cyls.length; j++) {
+            const i = cyls[j];
+            if ($("div.cyl#" + i).length == 0) {
+                insert_cyl(i);
+            }
+        }
+    });
 
     function update_tanks(){
         total_vol = 0;

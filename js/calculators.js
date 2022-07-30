@@ -36,18 +36,21 @@ function url_query(){
             input.data("unit-factor", params.get(key));
         input.change();
     }
-    $("input, select").change(function(){
-        let type = $(this).prop("type");
-        if (type == "radio" || type == "checkbox") {
-            if ($(this).prop("checked")) {
-                params.set(this.id, "^");
-                if (type == "radio")
-                    $("input[name=" + this.name + "]:not(:checked)").each(function(){params.delete(this.id)});
-            } else if (type == "checkbox")
-                params.set(this.id, "$");
-        } else {
-            params.set(this.id, this.value);
-        }
-        window.history.replaceState({}, "", "?" + params.toString());
-    });
+    $("input, select").change(url_query_set);
+}
+
+function url_query_set(){
+    var params = new URLSearchParams(window.location.search);
+    let type = $(this).prop("type");
+    if (type == "radio" || type == "checkbox") {
+        if ($(this).prop("checked")) {
+            params.set(this.id, "^");
+            if (type == "radio")
+                $("input[name=" + this.name + "]:not(:checked)").each(function(){params.delete(this.id)});
+        } else if (type == "checkbox")
+            params.set(this.id, "$");
+    } else {
+        params.set(this.id, this.value);
+    }
+    window.history.replaceState({}, "", "?" + params.toString());
 }
