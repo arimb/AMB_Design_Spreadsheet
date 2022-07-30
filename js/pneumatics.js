@@ -70,9 +70,9 @@ $(document).ready(function(){
             $(this).parent().find("span.unit").text($(this).children(":selected").text());
             $(this).parent().find("input.dist").each( (i, el) => {
                 if ($(el).val() != "") 
-                    $(el).val(+(($(el).val() * $(this).data("unit-factor") / $(this).val()).toFixed(3)));
+                    $(el).val(+(($(el).val() * $(this).data("prev-val") / $(this).val()).toFixed(3)));
             });
-            $(this).data("unit-factor", $(this).val());
+            $(this).data("prev-val", $(this).val());
         }).change();
         $("div.cyl:last input, div.cyl:last select").change(simulate).change(url_query_set);
         $("div.cyl:last button").click(simulate);
@@ -83,8 +83,6 @@ $(document).ready(function(){
         $("div.cyl-list").css("background-color", "inherit");
         let cyls = JSON.parse($("input#num-cyls").val());
         let i = Math.max.apply(null, cyls) + 1;
-        console.log(cyls);
-        console.log(i);
         insert_cyl(i);
         cyls.push(i);
         $("input#num-cyls").val( JSON.stringify(cyls) ).change();
@@ -117,10 +115,10 @@ $(document).ready(function(){
     $("div#tanks").find("input:not(.name), select").change(update_tanks);
     update_tanks();
 
-    $("select.tank_vol-units").each((i, el) => $(el).data("unit-factor", $(el).val())).change(function(){
+    $("select.tank_vol-units").each((i, el) => $(el).data("prev-val", $(el).val())).change(function(){
         let input = $(this).siblings("input." + $(this).prop("class").split("-")[0]);
-        input.val(+((input.val() * $(this).data("unit-factor") / $(this).val()).toFixed(3)));
-        $(this).data("unit-factor", $(this).val());
+        input.val(+((input.val() * $(this).data("prev-val") / $(this).val()).toFixed(3)));
+        $(this).data("prev-val", $(this).val());
         update_tanks();
     });
 

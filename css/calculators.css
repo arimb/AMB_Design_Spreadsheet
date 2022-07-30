@@ -25,6 +25,19 @@ button.reset {
     padding-bottom: 0.7em;
 }
 
+div.unredo {
+    gap: 3px;
+}
+
+div.unredo button:disabled {
+    background-color: #5a6e5a;
+    cursor: default;
+}
+
+div.unredo img {
+    height: 2.2em;
+}
+
 div.body {
     flex-wrap: wrap;
     justify-content: center;
@@ -94,3 +107,4 @@ input[type=number] {
     border: 1px solid gray;
     padding: 2px;
 }
+
