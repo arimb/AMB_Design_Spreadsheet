@@ -24,8 +24,9 @@ canvas {
     background-color: white;
 }
 
-div.field {
-    width: 100%;
+div.field-list {
+    flex-direction: column;
+    gap: inherit;
 }
 
 div.enable {

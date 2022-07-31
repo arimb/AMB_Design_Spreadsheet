@@ -30,66 +30,66 @@
         </header>
         <main>
             <div class="inputs">
+                <div class="page-element">
+                    <select id="driving">
+                        <option value="1">Find Target Values by Target Distance</option>
+                        <option value="2">Find Target Values by Target Height</option>
+                        <option value="3">Find Initial Values</option>
+                    </select>
+                </div>
                 <div class="page-element" id="initial">
-                    <div class="element-header">
-                        <h3>Initial Values</h3>
-                        <div>
-                            <input id="initial-driven" type="radio" name="driven" checked>
+                    <h3>Initial Values</h3>
+                    <div class="field-list">
+                        <div class="field">
+                            <label for="initial_height">Height</label>
+                            <input id="initial_height" type="number" step="any" min="0">
+                            <select id="initial_height-units">
+                                <option value="0.3048" class="imperial">ft</option>
+                                <option value="1" class="metric">m</option>
+                            </select>
                         </div>
-                    </div>
-                    <div class="field">
-                        <label for="initial_height">Height</label>
-                        <input id="initial_height" type="number" step="any" min="0">
-                        <select id="initial_height-units">
-                            <option value="0.3048" class="imperial">ft</option>
-                            <option value="1" class="metric">m</option>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <label for="initial_vel">Velocity</label>
-                        <input id="initial_vel" class="initial-driven" type="number" step="any" min="0">
-                        <select id="initial_vel-units">
-                            <option value="0.3048" class="imperial">ft/s</option>
-                            <option value="1" class="metric">m/s</option>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <label for="initial_angle">Angle</label>
-                        <input id="initial_angle" class="initial-driven" type="number" step="any" min="0">
-                        <span>&nbsp;&deg;</span>
+                        <div class="field">
+                            <label for="initial_vel">Velocity</label>
+                            <input id="initial_vel" class="initial-driven" type="number" step="any" min="0">
+                            <select id="initial_vel-units">
+                                <option value="0.3048" class="imperial">ft/s</option>
+                                <option value="1" class="metric">m/s</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="initial_angle">Angle</label>
+                            <input id="initial_angle" class="initial-driven" type="number" step="any" min="0">
+                            <span>&nbsp;&deg;</span>
+                        </div>
                     </div>
                 </div>
                 <div class="page-element" id="target">
-                    <div class="element-header">
-                        <h3>Target Values</h3>
-                        <div>
-                            <input id="target-distance-driven" type="radio" name="driven">
-                            <input id="target-height-driven" type="radio" name="driven">
+                    <h3>Target Values</h3>
+                    <div class="field-list">
+                        <div class="field">
+                            <label for="target_distance">Distance</label>
+                            <input id="target_distance" class="target-distance-driven" type="number" step="any" min="0">
+                            <select id="target_distance-units">
+                                <option value="0.3048" class="imperial">ft</option>
+                                <option value="1" class="metric">m</option>
+                            </select>
                         </div>
-                    </div>
-                    <div class="field">
-                        <label for="target_distance">Distance</label>
-                        <input id="target_distance" class="target-distance-driven" type="number" step="any" min="0">
-                        <select id="target_distance-units">
-                            <option value="0.3048" class="imperial">ft</option>
-                            <option value="1" class="metric">m</option>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <label for="target_height">Height</label>
-                        <input id="target_height" class="target-height-driven" type="number" step="any" min="0">
-                        <select id="target_height-units">
-                            <option value="0.3048" class="imperial">ft</option>
-                            <option value="1" class="metric">m</option>
-                        </select>
-                        <input id="target_height-direction" type="checkbox" class="direction target-height-driven initial-driven" hidden>
-                        <img id="up_arrow" class="arrow target-height-driven initial-driven" src="img/arrow_up.svg">
-                        <img id="down_arrow" class="arrow target-height-driven initial-driven" src="img/arrow_down.svg">
-                    </div>
-                    <div class="field">
-                        <label for="target_angle">Angle</label>
-                        <input id="target_angle" class="target-height-driven target-distance-driven" type="number" step="any">
-                        <span>&nbsp;&deg;</span>
+                        <div class="field">
+                            <label for="target_height">Height</label>
+                            <input id="target_height" class="target-height-driven" type="number" step="any" min="0">
+                            <select id="target_height-units">
+                                <option value="0.3048" class="imperial">ft</option>
+                                <option value="1" class="metric">m</option>
+                            </select>
+                            <input id="target_height-direction" type="checkbox" class="direction target-height-driven initial-driven" hidden>
+                            <img id="up_arrow" class="arrow target-height-driven initial-driven" src="img/arrow_up.svg">
+                            <img id="down_arrow" class="arrow target-height-driven initial-driven" src="img/arrow_down.svg">
+                        </div>
+                        <div class="field">
+                            <label for="target_angle">Angle</label>
+                            <input id="target_angle" class="target-height-driven target-distance-driven" type="number" step="any">
+                            <span>&nbsp;&deg;</span>
+                        </div>
                     </div>
                 </div>
                 <div class="page-element initial-driven" id="drag">
@@ -98,35 +98,37 @@
                         <input id="drag-enable" type="checkbox">
                         <label for="drag-enable">Enable</label>
                     </div>
-                    <div class="field">
-                        <label for="drag_coeff">Drag Coefficient</label>
-                        <input id="drag_coeff" type="number" step="any" min="0">
-                        <span></span>
-                    </div>
-                    <div class="field">
-                        <label for="diameter">Ball Diameter</label>
-                        <input id="diameter" type="number" step="any" min="0">
-                        <select id="diameter-units">
-                            <option value="0.0254" class="imperial">in</option>
-                            <option value="0.001" class="metric">mm</option>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <label for="mass">Ball Mass</label>
-                        <input id="mass" type="number" step="any" min="0">
-                        <select id="mass-units">
-                            <option value="0.453592" class="imperial">lbs</option>
-                            <option value="1" class="metric">kg</option>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <label for="rotation">Avg. Spin</label>
-                        <input id="rotation" type="number" step="any" min="0">
-                        <select id="rotation-units">
-                            <option value="0.159155">rev/s</option>
-                            <option value="9.5493">rpm</option>
-                            <option value="1">rad/s</option>
-                        </select>
+                    <div class="field-list">
+                        <div class="field">
+                            <label for="drag_coeff">Drag Coefficient</label>
+                            <input id="drag_coeff" type="number" step="any" min="0">
+                            <span></span>
+                        </div>
+                        <div class="field">
+                            <label for="diameter">Ball Diameter</label>
+                            <input id="diameter" type="number" step="any" min="0">
+                            <select id="diameter-units">
+                                <option value="0.0254" class="imperial">in</option>
+                                <option value="0.001" class="metric">mm</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="mass">Ball Mass</label>
+                            <input id="mass" type="number" step="any" min="0">
+                            <select id="mass-units">
+                                <option value="0.453592" class="imperial">lbs</option>
+                                <option value="1" class="metric">kg</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="rotation">Avg. Spin</label>
+                            <input id="rotation" type="number" step="any" min="0">
+                            <select id="rotation-units">
+                                <option value="0.159155">rev/s</option>
+                                <option value="9.5493">rpm</option>
+                                <option value="1">rad/s</option>
+                            </select>
+                        </div>
                     </div>
                     <!-- <details class="drag-coeff">
                         <summary>Drag Coefficient Calculation</summary>
@@ -154,21 +156,23 @@
                         <input id="obstacle-enable" type="checkbox" checked>
                         <label for="obstacle-enable">Enable</label>
                     </div>
-                    <div class="field">
-                        <label for="obstacle_distance">Distance</label>
-                        <input id="obstacle_distance" type="number" step="any" min="0">
-                        <select id="obstacle_distance-units">
-                            <option value="0.3048" class="imperial">ft</option>
-                            <option value="1" class="metric">m</option>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <label for="obstacle_height">Height</label>
-                        <input id="obstacle_height" type="number" step="any" min="0">
-                        <select id="obstacle_height-units">
-                            <option value="0.3048" class="imperial">ft</option>
-                            <option value="1" class="metric">m</option>
-                        </select>
+                    <div class="field-list">
+                        <div class="field">
+                            <label for="obstacle_distance">Distance</label>
+                            <input id="obstacle_distance" type="number" step="any" min="0">
+                            <select id="obstacle_distance-units">
+                                <option value="0.3048" class="imperial">ft</option>
+                                <option value="1" class="metric">m</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="obstacle_height">Height</label>
+                            <input id="obstacle_height" type="number" step="any" min="0">
+                            <select id="obstacle_height-units">
+                                <option value="0.3048" class="imperial">ft</option>
+                                <option value="1" class="metric">m</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
