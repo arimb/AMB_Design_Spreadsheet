@@ -35,9 +35,12 @@ function update(){
             end_fcn = `x[0] >= ${$("input#target_distance").val() * $("select#target_distance-units").val()}`;
             output = simulate(h0, v0, theta0, end_fcn);
 
-            $("input#target_height").val( +((output[0][output[0].length-1][1] / $("select#target_height-units").val()).toFixed(3)) );
-            $("input#target_height-direction").prop("checked", output[1][1] >= 0);
-            $("input#target_angle").val( +((Math.atan2(output[1][1], output[1][0]) * 180/Math.PI).toFixed(2)) );
+            if (output[0].length > 0) {
+                $("input#target_height").val( +((output[0][output[0].length-1][1] / $("select#target_height-units").val()).toFixed(3)) );
+                // $("input#target_height-direction").prop("checked", output[1][1] >= 0);
+                $("input#target_angle").val( +((Math.atan2(output[1][1], output[1][0]) * 180/Math.PI).toFixed(2)) );
+            } else 
+            $("input#target_height, input#target_angle").val("");
             break;
         case "2":    // Find Target Values by Target Height
             $(".target-height-driven, .initial-driven").find("*").addBack().attr("disabled", false);
