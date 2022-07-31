@@ -80,3 +80,12 @@ a.show-link {
     text-decoration: underline;
     color: -webkit-link;
 }
+
+img.arrow {
+    height: 1em;
+    cursor: pointer;
+}
+
+img.arrow[disabled] {
+    display: none;
+}
