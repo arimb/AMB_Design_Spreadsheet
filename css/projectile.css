@@ -29,58 +29,20 @@ div.field-list {
     gap: inherit;
 }
 
-div.enable {
-    justify-content: center;
-}
-
-div.element-header {
-    flex-direction: row;
-    width: 100%;
-    justify-content: center;
-    position: relative;
-}
-
 h3 {
     margin: 0;
     align-self: center;
     justify-self: center;
 }
 
-input[type=radio][name=driven] {
-    width: 0;
-    border: 2px solid black;
-    padding: 0.6em;
-    /* margin: 3px; */
-    margin: 0;
-    background-color: var(--med-light);
-    -webkit-appearance: none;
-    
-}
-
-input[type=radio][name=driven]:hover {
-    background-color: var(--dark);
-}
-
-input[type=radio][name=driven]:checked {
-    background-color: var(--selected) !important;
-}
-
-div.element-header div {
-    flex-direction: column;
-    position: absolute;
-    right: 0;
-    /* flex: 1;
-    margin: calc(5px + 0.6em); */
-}
-
-details > div {
+/* details > div {
     flex-direction: column;
 }
 
 a.show-link {
     text-decoration: underline;
     color: -webkit-link;
-}
+} */
 
 img.arrow {
     height: 1em;
