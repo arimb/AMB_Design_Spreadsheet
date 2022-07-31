@@ -81,17 +81,20 @@ $(document).ready(function(){
         const Tloss = Ts * (1-eff);
         const vmax = wf/G*r;
 
+        console.clear();
         console.log(Vrest, Rtot, Imax, dVmax, m, r, mu_s, mu_k, xmax, tmax, dt, km, Tslip_s, Tslip_k, Tloss, vmax);
 
         var t=0, x=0, v=0, a, V=Vrest, Vnew, I, slip=false, T, Tmotor, F, stop=false, connected=true;
         var times = [], data = [];
         main: while (t < tmax) {
-            // initial torque calculation
-            // Tmotor = Ts*(1-v/r*G/wf)*(V/12);
+            // current calculation
             I = connected ? (V-v*G/r*ke)/R : 0;
+            I = Math.min(Math.abs(I), Imax) * Math.sign(I);
+
+            // torque calculation
             Tmotor = (I-If)*km;
-            T = Tmotor*G - Tloss*(v/vmax) - (stop ? Tloss/eff : 0);
-            console.log(I, Tmotor, T);
+            T = Tmotor*G*eff - Tloss*(v/vmax) - (stop ? Tloss/eff : 0);
+
             // slip detection
             if (slip && Math.abs(T) < Tslip_k) slip = false;
             else if (!slip && Math.abs(T) > Tslip_s) slip = true;
@@ -100,25 +103,20 @@ $(document).ready(function(){
                 Tmotor = T/(G*eff);
                 I = (Math.abs(Tmotor/km) + If) * Math.sign(Tmotor);
             }
-            console.log(I, Tmotor, T, slip);
-            // current limiting
-            if (I > Imax) {
-                I = Imax;
-                Tmotor = (I-If)*km;
-                T = Tmotor*G - Tloss*(v/vmax) - (stop ? Tloss/eff : 0);
-                if (slip && T < Tslip_k) slip = false;
-            }
+            
             // acceleration calculation
             F = T/r;
             a = F/m;
             v += a*dt;
             x += v*dt + 0.5*a*dt**2;
 
-            console.log(t, x, v, a, T, Tmotor, I, V, slip, stop, connected);
+            console.log(t, stop, x, v, a, V, connected, slip, T, Tmotor, I);
             times.push(t);
             data.push([x, v, a, I, V, T, slip]);
 
-            switch ($("select#stop-type").val()) {
+            let stop_type = $("select#stop-type").val();
+            let stop_method = $("select#stop-method").val();
+            switch (stop_type) {
                 case "No Stop":
                     if (x > xmax) {
                         break main;
@@ -131,7 +129,7 @@ $(document).ready(function(){
                     }
                     break;
                 case "Predictive":
-                    if (x > xmax - v**2/(2*9.8*mu_k)) {
+                    if (x > xmax - v**2/(2*(stop_method == "Coast" ? 2*Tloss/r/m : 9.8*mu_k))) {
                         stop = true;
                     }
                     if (stop && v < 0.1) break main;
@@ -141,7 +139,7 @@ $(document).ready(function(){
             if (!stop) {
                 Vnew = Vrest - Rtot*I;
             } else {
-                switch ($("select#stop-method").val()) {
+                switch (stop_method) {
                     case "Coast":
                         Vnew = 0;
                         connected = false;
@@ -168,26 +166,26 @@ $(document).ready(function(){
             data: {
                 labels: times.map(time => time.toFixed(3)),
                 datasets: [{
-                    data: data.map(function(value,index) { return value[0] * $("select#distance-units").val(); }),
+                    data: data.map(function(value,index) { return value[0] / $("select#distance-units").val(); }),
                     label: "Position",
                     borderColor: "blue",
                     fill: false,
                     pointRadius: 0
                 },{
-                    data: data.map(function(value,index) { return value[1] * $("select#distance-units").val(); }),
+                    data: data.map(function(value,index) { return value[1] / $("select#distance-units").val(); }),
                     label: "Velocity",
                     borderColor: "green",
                     fill: false,
                     // yaxisID: "right",
                     pointRadius: 0
                 },{
-                    data: data.map(function(value,index) { return value[6] ? value[2] * $("select#distance-units").val() : NaN; }),
+                    data: data.map(function(value,index) { return value[6] ? value[2] / $("select#distance-units").val() : NaN; }),
                     label: "Slip",
                     borderColor: "black",
                     fill: false,
                     pointRadius: 0
                 },{
-                    data: data.map(function(value,index) { return value[2] * $("select#distance-units").val(); }),
+                    data: data.map(function(value,index) { return value[2] / $("select#distance-units").val(); }),
                     label: "Acceleration",
                     borderColor: "red",
                     fill: false,
