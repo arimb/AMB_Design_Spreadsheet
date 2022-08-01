@@ -179,6 +179,7 @@ function update_graph(output){
     const data = output[1];
     $("canvas#simulation").remove();
     $("div.graphs").prepend('<canvas id="simulation"></canvas>');
+    let dist_unit = $("select#distance-units option:selected").text() == "meters" ? "m" : "ft";
     var graph = new Chart("simulation", {
         type: "line",
         data: {
@@ -244,19 +245,19 @@ function update_graph(output){
                     type: "linear",
                     display: true,
                     position: "left",
-                    // title: {
-                    //     display: true,
-                    //     // text: "Position (ft), Acceleration (ft/s^2)"
-                    // }
+                    title: {
+                        display: true,
+                        text: `Position (${dist_unit}), Velocity (${dist_unit}/s), Acceleration (${dist_unit}/s²), Voltage (V)`
+                    }
                 },
                 y2: {
                     type: "linear",
                     display: true,
                     position: "right",
-                    // title: {
-                    //     display: true,
-                    //     // text: "Speed (ft/s)"
-                    // }
+                    title: {
+                        display: true,
+                        text: "Current (A)"
+                    }
                 }
             }
         }
@@ -302,6 +303,14 @@ function update_ratios_graph(){
                     },
                     min: min,
                     max: max
+                },
+                y: {
+                    display: true,
+                    type: "linear",
+                    title: {
+                        display: true,
+                        text: "Time (s)",
+                    }
                 }
             },
             plugins: {
