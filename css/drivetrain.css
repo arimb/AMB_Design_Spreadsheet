@@ -39,6 +39,7 @@ div.graphs {
     width: 70vw;
     min-width: 700px;
     max-width: 100%;
+    gap: 5px;
 }
 
 canvas {
