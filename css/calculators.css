@@ -20,7 +20,7 @@ button.copy-link {
     padding: 8px;
 }
 
-button.reset {
+button.reset, button.docs {
     padding-top: 0.7em;
     padding-bottom: 0.7em;
 }

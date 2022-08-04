@@ -2,6 +2,10 @@ $(document).ready(function(){
 
     $("select[id$=-units]").each((i, el) => $(el).data("unit-factor", $(el).val())).change(update_units);
 
+    $("button.header-button.docs").click(function(){
+        window.open("docs/" + $(this).attr("data-link") + ".pdf", "_blank");
+    });
+
     $("button.header-button.imperial").click(() => $("option.imperial").prop("selected", true).parent().change());
     $("button.header-button.metric").click(() => $("option.metric").prop("selected", true).parent().change());
 
