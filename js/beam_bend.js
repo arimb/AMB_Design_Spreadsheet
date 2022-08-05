@@ -16,6 +16,18 @@ $(document).ready(function(){
             $(this).css("background-color", "var(--med-light)")
     });
 
+    // Custom material properties
+    $("select.material").change(function(){
+        if ($(this).val() == "Custom") {
+            $("input#" + this.id + "-E").prop("disabled", false);
+            $("input#" + this.id + "-G").prop("disabled", false);
+        } else {
+            let mods = JSON.parse(this.value);
+            $("input#" + this.id + "-E").prop("disabled", true).val(mods[0]);
+            $("input#" + this.id + "-G").prop("disabled", true).val(mods[1]);
+        }
+    });
+
     // Load material properties
     const request = new XMLHttpRequest();
     request.onload = function() {
@@ -30,18 +42,6 @@ $(document).ready(function(){
     };
     request.open("GET", "ref/materials.json", false);
     request.send();
-
-    // Custom material properties
-    $("select.material").change(function(){
-        if ($(this).val() == "Custom") {
-            $("input#" + this.id + "-E").prop("disabled", false);
-            $("input#" + this.id + "-G").prop("disabled", false);
-        } else {
-            let mods = JSON.parse(this.value);
-            $("input#" + this.id + "-E").prop("disabled", true).val(mods[0]);
-            $("input#" + this.id + "-G").prop("disabled", true).val(mods[1]);
-        }
-    });
 
     // Geometry calculations
     $("div.hex").find("input, select").change(function(){
