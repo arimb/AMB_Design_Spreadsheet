@@ -42,13 +42,12 @@ $(document).ready(function(){
                             $("div.gear-list#" + geartype_name).append(`<span>${gear[0]} (${gear[1]})</span>`);
                     });
                 });
-                calc_gearbox();
             };
             request.open("GET", `ref/gears-${el.id}.json`, false);
             request.send();
-        })
-            
+        });
         
+        update_gearbox();
     });
     $("input#vex").change();
 
@@ -86,6 +85,9 @@ $(document).ready(function(){
 
     //Calculate Gearbox Options
     function calc_gearbox(){
+        if (Object.keys(gears).length == 0)
+            return [];
+        
         var gearboxes = [];
         var two_stage = ($("input[type=radio][name=num_stages]:checked").prop("id") == "2stage");
         min_ratio = $("input#ratio").val()*(1-$("input#ratio_deviation").val()/100);
@@ -155,31 +157,55 @@ $(document).ready(function(){
             });
         });
         gearboxes.sort(function(a,b){return Math.abs(a[4]/$("input#ratio").val()-1) - Math.abs(b[4]/$("input#ratio").val()-1);});
-        console.log(gearboxes);
-        
-        $("table.gearbox-options tbody").empty();
-        if (two_stage) {
-            gearboxes.forEach(gearbox => {
-                $("table.gearbox-options tbody").append(
-                    `<tr>
-                        <td>${gearbox[0]} : ${gearbox[1]}</td>
-                        <td>${gearbox[2]} : ${gearbox[3]}</td>
-                        <td>${+(gearbox[4].toFixed(2))} : 1</td>
-                    </tr>`
-                )
-            });    
-        } else {
-            gearboxes.forEach(gearbox => {
-                $("table.gearbox-options tbody").append(
-                    `<tr>
-                        <td>${gearbox[0]} : ${gearbox[1]}</td>
-                        <td>${+(gearbox[2].toFixed(2))} : 1</td>
-                    </tr>`
-                )
-            });
-        }
+        return gearboxes;
     }
-    $("input:not([type=checkbox]), select").change(calc_gearbox);
+
+    function update_gearbox(){
+        var gearboxes = calc_gearbox();
+        var two_stage = ($("input[type=radio][name=num_stages]:checked").prop("id") == "2stage");
+        console.log(gearboxes);
+
+        $("table.gearbox-options tbody").empty();
+        $("div.warnings span").hide();
+        if (gearboxes.length > 0) {
+            $("table.gearbox-options").show();
+            $("div#gearbox-options").css("justify-content", "unset");
+            if (two_stage) {
+                gearboxes.forEach(gearbox => {
+                    $("table.gearbox-options tbody").append(
+                        `<tr>
+                            <td>${gearbox[0]} : ${gearbox[1]}</td>
+                            <td>${gearbox[2]} : ${gearbox[3]}</td>
+                            <td>${+(gearbox[4].toFixed(2))} : 1</td>
+                        </tr>`
+                    )
+                });    
+            } else {
+                gearboxes.forEach(gearbox => {
+                    $("table.gearbox-options tbody").append(
+                        `<tr>
+                            <td>${gearbox[0]} : ${gearbox[1]}</td>
+                            <td>${+(gearbox[2].toFixed(2))} : 1</td>
+                        </tr>`
+                    )
+                });
+            }
+        } else {
+            $("table.gearbox-options").hide();
+            $("div#gearbox-options").css("justify-content", "center");
+            if (!$("input#ratio").val())
+                $("span#no_ratio").show();
+            if (Object.keys(gears).length == 0)
+                $("span#no_sources").show();
+            else if ($("input#ratio").val())
+                $("span#no_gearboxes").show();
+        }
+        
+        
+    }
+    $("input:not([type=checkbox]), select").change(update_gearbox);
+
+
 
 });
 
