@@ -26,6 +26,8 @@ $(document).ready(function(){
         if($("select#type").val() == "Custom"){
             $("input#pitch").prop("disabled", false);
             $("div#dimensions input").val("");
+            $(".belt").hide();
+            $(".chain").show();
         }else{
             const tmp = units[$("select#pitch-units option:selected").prop("class")];
             pitch = dimensions[$("select#type").val()][0] / tmp[1];
@@ -34,8 +36,15 @@ $(document).ready(function(){
             $("input#thickness").val(+((dimensions[$("select#type").val()][2] / tmp[1]).toFixed(dist_decimals)));
             $("input#adder").val(+((dimensions[$("select#type").val()][3] / tmp[1]).toFixed(dist_decimals)));
             $("input#weight").val(+((dimensions[$("select#type").val()][4] / tmp[5]).toFixed(3)));
-            $("input#load_rating").val(+((dimensions[$("select#type").val()][5] / tmp[3]).toFixed(0)));
+            $("input#load_rating").val(+((dimensions[$("select#type").val()][6] / tmp[3]).toFixed(0)));
             $("input#pitch").prop("disabled", true);
+            if (dimensions[$("select#type").val()][5] == "b") {
+                $(".belt").show();
+                $(".chain").hide();
+            } else {
+                $(".belt").hide();
+                $(".chain").show();
+            }
         }
         $("input#teeth1, input#teeth2").change();
     });

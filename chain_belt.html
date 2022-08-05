@@ -43,7 +43,8 @@
             </div>
             <div class="sprockets">
                 <div class="page-element" id="sprocket1">
-                    <h3>Sprocket 1</h3>
+                    <h3 class="chain">Sprocket 1</h3>
+                    <h3 class="belt">Pulley 1</h3>
                     <div class="field">
                         <label for="teeth1">Tooth Count</label>
                         <input id="teeth1" type="number" min="0" step="1">
@@ -56,7 +57,8 @@
                     </div>
                 </div>
                 <div class="page-element" id="sprocket2">
-                    <h3>Sprocket 2</h3>
+                    <h3 class="chain">Sprocket 2</h3>
+                    <h3 class="belt">Pulley 2</h3>
                     <div class="field">
                         <label for="teeth2">Tooth Count</label>
                         <input id="teeth2" type="number" min="0" step="1">
@@ -107,7 +109,8 @@
             <div class="page-element" id="calculation">
                 <div class="driving">
                     <div>
-                        <label for="by_links">By # Links</label>
+                        <label for="by_links" class="chain">By # Links</label>
+                        <label for="by_links" class="belt">By # Teeth</label>
                         <input id="by_links" name="driving" type="radio">
                     </div>
                     <div>
@@ -139,7 +142,8 @@
                         <span></span>
                     </div>
                     <div class="field bylinks-in bydist-out">
-                        <label for="links">Number of Links</label>
+                        <label for="links" class="chain">Number of Links</label>
+                        <label for="links" class="belt">Number of Teeth</label>
                         <input id="links" type="number" step="any" disabled>
                         &nbsp;
                         <span></span>
@@ -151,7 +155,8 @@
                         <span class="dist_unit"></span>
                     </div>
                     <div class="field bylinks-out bydist-out">
-                        <label for="chain_length">Chain Length</label>
+                        <label for="chain_length" class="chain">Chain Length</label>
+                        <label for="chain_length" class="belt">Belt Length</label>
                         <input id="chain_length" type="number" step="any" disabled>
                         &nbsp;
                         <span class="dist_unit"></span>
