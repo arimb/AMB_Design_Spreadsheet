@@ -26,8 +26,14 @@ $(document).ready(function(){
 
 function update_units(){
     let input = $(this).siblings("input#" + $(this).prop("id").split("-")[0]);
-    if (input.val() != "")
-        input.val(+((input.val() * $(this).data("unit-factor") / $(this).val()).toFixed(3))).change();
+    if (input.val() != "") {
+        let old_val = input.val();
+        if (input.data("full-val") && +(+(input.data("full-val") || 0).toFixed(3)) == old_val)
+            old_val = input.data("full-val");
+        let new_val = old_val * $(this).data("unit-factor") / $(this).val();
+        input.val(+(new_val.toFixed(3))).change();
+        input.data("full-val", new_val)
+    }
     $(this).data("unit-factor", $(this).val());
 }
 
