@@ -36,7 +36,7 @@
                     <div class="current">
                         <div>
                             <label for="gears">Gears</label>
-                            <input id="gears" name="current" type="radio" checked>
+                            <input id="gears" name="current" type="radio">
                         </div>
                         <div>
                             <label for="belt">Belt/Chain</label>
@@ -44,7 +44,7 @@
                         </div>
                         <div>
                             <label for="custom">Custom</label>
-                            <input id="custom" name="current" type="radio">
+                            <input id="custom" name="current" type="radio" checked>
                         </div>
                     </div>
                     <div class="input gears">
@@ -109,33 +109,26 @@
                             </select>
                         </div>
                     </div>
+                    <div class="field">
+                        <label for="dist_dev">Max C-C Deviation</label>
+                        <input id="dist_dev" type="number" step="any" min="0" value="0.01">
+                        <select id="dist_dev-units">
+                            <option value="1" class="imperial">inch</option>
+                            <option value="0.03937" class="metric">mm</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="page-element" id="desired">
                     <h2>Desired Ratio</h2>
                     <div class="field">
-                        <input id="ratio" type="number" step="any" min="0" value="2">
+                        <input id="ratio" type="number" step="any" min="0">
                         <span>: 1</span>
                     </div>
-                    <details>
-                        <summary>
-                            <h4>Max. Deviations</h4>
-                        </summary>
-                        <div class="deviations">
-                            <div class="field">
-                                <label for="ratio_dev">Ratio</label>
-                                <input id="ratio_dev" type="number" step="any" min="0" value="5">
-                                <span>%</span>
-                            </div>
-                            <div class="field">
-                                <label for="dist_dev">C-C Dist.</label>
-                                <input id="dist_dev" type="number" step="any" min="0" value="0.01">
-                                <select id="dist_dev-units">
-                                    <option value="1" class="imperial">inch</option>
-                                    <option value="0.03937" class="metric">mm</option>
-                                </select>
-                            </div>
-                        </div>
-                    </details>
+                    <div class="field">
+                        <label for="ratio_dev">Max. Deviation</label>
+                        <input id="ratio_dev" type="number" step="any" min="0" value="5">
+                        <span>&nbsp;%</span>
+                    </div>
                     <details>
                         <summary>
                             <h4>Ranges to Check</h4>
@@ -184,7 +177,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Type</th>
+                            <th style="min-width: 5em;">Type</th>
                             <th>Gear 1</th>
                             <th>Gear 2</th>
                             <th style="min-width: 5em;">Ratio</th>
