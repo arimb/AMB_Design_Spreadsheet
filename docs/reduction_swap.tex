@@ -1,0 +1,49 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[intlimits]{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[export]{adjustbox}
+\usepackage{graphicx}
+\setlength{\parindent}{0pt}
+\usepackage[left=1in, right=1in, top=1in, bottom=1in]{geometry}
+\usepackage{float}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{bm}
+\usepackage{hyperref}
+\setcounter{tocdepth}{1}
+\usepackage[titletoc]{appendix}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=blue,
+	urlcolor=blue,
+}
+
+\begin{document}
+	
+	\Huge\textbf{Gearbox Options Selector}
+	\newline
+	\LARGE AMB Calculator
+	
+	\vspace{0.5cm}
+	\normalsize
+	
+	This calculator is designed to help in the case where the robot is already manufactured and the team realizes they need to change the reduction for a mechanism. It allows you to input the reduction you currently have, the ratio you want, and options for how to achieve that reduction, and it outputs all of the possible ways to get the desired ratio without changing the spacing of the original reduction.\\
+	
+	The original reduction can be input in the form of a gear pair, a belt or chain with two pulleys/sprockets, or a custom distance. To calculate the distance for a gear pair with gears $ n_1 $ and $ n_2 $ and diametrical pitch $ dp $, the formula is:
+	
+	\begin{equation}
+		d = \frac{n_1 + n_2}{2 dp}\ [\text{in}]
+	\end{equation}\\
+	
+	For a belt or chain, the algorithm is the same as the one shown in the \href{https://amb-calculator.netlify.app/docs/chain_belt.pdf}{Chain/Belt Calculator}.\\
+	
+	The user then chooses their desired ratio, the amount the solutions can deviate from that ratio, and the amount the solutions can deviate from the desired distance. Under "Ranges to Check", the user can select the maximum and minimum sizes of each of the types of reductions that they can use. Not all integer sizes in the range may be available for purchase, but at this time the algorithm cannot make that determination. The calculator runs a brute-force search through each of the reduction types to find gear, sprocket, and pulley pairs that produce an acceptable ratio with an acceptable center-to-center distance. It then outputs those options, as well as the resulting ratio, center distance, and belt/chain length if applicable, sorted by the minimum deviation from the desired distance. 
+	
+	
+\end{document}
