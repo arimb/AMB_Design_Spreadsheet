@@ -54,14 +54,12 @@ $(document).ready(function(){
     $("input[type=radio][name=num_stages]").change(function(){
         switch ($("input[type=radio][name=num_stages]:checked").prop("id")) {
             case "1stage":
-                $("div.1stage").show();    
+                $(".1stage").show();    
                 $(".2stage").hide();
-                $("img#diagram").attr("src", "img/gear_options_1stage.png");
                 break;
             case "2stage":
-                $("div.1stage").hide();
+                $(".1stage").hide();
                 $(".2stage").show();
-                $("img#diagram").attr("src", "img/gear_options_2stage.png");
                 break;
         }
     });
