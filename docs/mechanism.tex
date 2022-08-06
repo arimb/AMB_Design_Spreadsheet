@@ -33,6 +33,8 @@
 	\vspace{0.5cm}
 	\normalsize
 	
+	This calculator is used to find the properties of a mechanism given its gear ratio, or to find the proper gear ratio needed to give the mechanism certain properties. A mechanism is defined as a system powered by one or more motors with a constant gear ratio connecting the motor to a constant load. 
+	
 	\section{Motor Equations}
 	
 	In FRC we describe DC motors using four parameters. The free speed, $ \omega_f $, is the maximum speed the motor can spin when not mechanically connected to anything. The stall torque, $ T_s $, is the maximum torque the motor can produce when not allowed to rotate. The free current, $ I_f $, is the minimum current the motor will draw (which occurs when spinning at max speed), and the stall current, $ I_s $, is the maximum current the motor will draw (which occurs when it is not allowed to rotate). These four values are measured when the motor is given a certain voltage, called the specification voltage $ V_{spec} $. In FRC this is almost always 12V. \\
@@ -114,7 +116,7 @@
 	\end{equation}
 	\begin{equation} \label{Vs}
 		V_s = \frac{F r}{T_s n \eta G} \cdot V_{spec}
-	\end{equation}\\6
+	\end{equation}\\
 	
 	
 	\section{Gear Ratio Calculation}
