@@ -25,7 +25,7 @@ $(document).ready(function(){
 });
 
 function update_units(){
-    let input = $(this).siblings("input#" + $(this).prop("id").split("-")[0]);
+    let input = $(this).siblings("input#" + $(this).prop("id").split("-").slice(0, -1).join("-"));
     if (input.val() != "") {
         let old_val = input.val();
         if (input.data("full-val") && +(+(input.data("full-val") || 0).toFixed(3)) == old_val)

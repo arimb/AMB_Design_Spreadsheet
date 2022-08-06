@@ -63,6 +63,14 @@
                                 <input id="between-material-G" type="number" min="0" step="any">
                                 <span>&nbsp;GPa</span>
                             </div>
+                            <div class="field">
+                                <label>Density</label>
+                                <input id="between-material-density" type="number" min="0" step="any">
+                                <select id="between-material-density-units">
+                                    <option value="27.68" class="imperial">lb/in&sup3;</option>
+                                    <option value="1" class="metric">g/cm&sup3;</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="cross_section">
                             <div class="field">
@@ -117,6 +125,11 @@
                                 </select>
                             </div>
                             <div class="field custom">
+                                <label>Area</label>
+                                <input id="between-A" type="number" step="any" min="0">
+                                <span>&nbsp;mm&sup2;</span>
+                            </div>
+                            <div class="field custom">
                                 <label>Area MoI</label>
                                 <input id="between-I" type="number" step="any" min="0">
                                 <span>&nbsp;mm⁴</span>
@@ -129,7 +142,7 @@
                         </div>
                     </div>
                     <img class="diagram" src="img/beambend_between.png">
-                    <div class="forces">
+                    <div class="inputs">
                         <div class="field">
                             <label for="between-l">&ell;</label>
                             <input id="between-l" type="number" step="any" min="0">
@@ -157,6 +170,16 @@
                                 <option value="4.448" class="imperial">lbs</option>
                                 <option value="9.801">kg</option>
                                 <option value="1" class="metric">N</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="outputs">
+                        <div class="field">
+                            <label for="between-weight">Beam Weight</label>
+                            <input id="between-weight" type="number" step="any" min="0" disabled>
+                            <select id="between-weight-units">
+                                <option value="0.4545" class="imperial">lbs</option>
+                                <option value="1" class="metric">kg</option>
                             </select>
                         </div>
                         <div class="field">
@@ -189,6 +212,14 @@
                                 <label>Shear Modulus</label>
                                 <input id="cantilever-material-G" type="number" min="0" step="any">
                                 <span>&nbsp;GPa</span>
+                            </div>
+                            <div class="field">
+                                <label>Density</label>
+                                <input id="cantilever-material-density" type="number" min="0" step="any">
+                                <select id="cantilever-material-density-units">
+                                    <option value="27.68" class="imperial">lb/in&sup3;</option>
+                                    <option value="1" class="metric">g/cm&sup3;</option>
+                                </select>
                             </div>
                         </div>
                         <div class="cross_section">
@@ -244,6 +275,11 @@
                                 </select>
                             </div>
                             <div class="field custom">
+                                <label>Area</label>
+                                <input id="cantilever-A" type="number" step="any" min="0">
+                                <span>&nbsp;mm&sup2;</span>
+                            </div>
+                            <div class="field custom">
                                 <label>Area MoI</label>
                                 <input id="cantilever-I" type="number" step="any" min="0">
                                 <span>&nbsp;mm⁴</span>
@@ -256,7 +292,7 @@
                         </div>
                     </div>
                     <img class="diagram" src="img/beambend_cantilever.png">
-                    <div class="forces">
+                    <div class="inputs">
                         <div class="field">
                             <label for="cantilever-l">&ell;</label>
                             <input id="cantilever-l" type="number" step="any" min="0">
@@ -284,6 +320,16 @@
                                 <option value="4.448" class="imperial">lbs</option>
                                 <option value="9.801">kg</option>
                                 <option value="1" class="metric">N</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="outputs">
+                        <div class="field">
+                            <label for="cantilever-weight">Beam Weight</label>
+                            <input id="cantilever-weight" type="number" step="any" min="0" disabled>
+                            <select id="cantilever-weight-units">
+                                <option value="0.4545" class="imperial">lbs</option>
+                                <option value="1" class="metric">kg</option>
                             </select>
                         </div>
                         <div class="field">
@@ -316,6 +362,14 @@
                                 <label>Shear Modulus</label>
                                 <input id="twist-material-G" type="number" min="0" step="any">
                                 <span>&nbsp;GPa</span>
+                            </div>
+                            <div class="field">
+                                <label>Density</label>
+                                <input id="twist-material-density" type="number" min="0" step="any">
+                                <select id="twist-material-density-units">
+                                    <option value="27.68" class="imperial">lb/in&sup3;</option>
+                                    <option value="1" class="metric">g/cm&sup3;</option>
+                                </select>
                             </div>
                         </div>
                         <div class="cross_section">
@@ -371,6 +425,11 @@
                                 </select>
                             </div>
                             <div class="field custom">
+                                <label>Area</label>
+                                <input id="twist-A" type="number" step="any" min="0">
+                                <span>&nbsp;mm&sup2;</span>
+                            </div>
+                            <div class="field custom">
                                 <label>Area MoI</label>
                                 <input id="twist-I" type="number" step="any" min="0">
                                 <span>&nbsp;mm⁴</span>
@@ -383,7 +442,7 @@
                         </div>
                     </div>
                     <img class="diagram" src="img/beambend_twist.jpg">
-                    <div class="forces">
+                    <div class="inputs">
                         <div class="field">
                             <label for="twist-l">Length</label>
                             <input id="twist-l" type="number" step="any" min="0">
@@ -400,6 +459,14 @@
                             <select id="twist-T-units">
                                 <option value="0.113" class="imperial">in-lbs</option>
                                 <option value="1" class="metric">Nm</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="twist-weight">Beam Weight</label>
+                            <input id="twist-weight" type="number" step="any" min="0" disabled>
+                            <select id="twist-weight-units">
+                                <option value="0.4545" class="imperial">lbs</option>
+                                <option value="1" class="metric">kg</option>
                             </select>
                         </div>
                         <div class="field">

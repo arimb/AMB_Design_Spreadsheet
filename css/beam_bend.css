@@ -79,7 +79,8 @@ img.diagram {
     max-width: 600px;
 }
 
-div.forces {
+div.inputs, div.outputs {
     flex-direction: row;
     justify-content: space-evenly;
+    gap: inherit;
 }
