@@ -28,6 +28,10 @@ div.page-element#gear-ratio {
     align-items: center;
 }
 
+div.page-element#outputs {
+    align-items: center;
+}
+
 div.page-element#sim-settings {
     align-items: center;
     justify-content: space-evenly;

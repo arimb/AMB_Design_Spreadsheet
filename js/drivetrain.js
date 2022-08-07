@@ -1,4 +1,8 @@
 let wf, Ts, If, Is, eff, G, motors;
+let ratio_graph_data = [[],[],[],[]];
+let min = 3;
+let max = 20;
+    
 
 $(document).ready(function(){
 
@@ -33,8 +37,6 @@ $(document).ready(function(){
     request.open("GET", "ref/motors.json", false);
     request.send();
 
-    
-
     // Update motor properties
     function update_motor(){
         wf = $("input#motor_free_speed").val() * (Math.PI/30);
@@ -57,13 +59,18 @@ $(document).ready(function(){
     });
     $("div#gear-ratio input:first").change();
 
-    function update(){ update_graph(simulate(G)); }
+    function update(){ 
+        let output = simulate(G);
+        update_graph(output);
+        $("input#free_speed").val(+(output[2].toFixed(2)));
+        $("input#push_current").val(+(output[3].toFixed(1)));
+    }
 
     setTimeout(() => {
-        update();
-        update_ratios_graph();
         $("input, select").change(update);
-        $("input:not([id^=gear]), select").change(update_ratios_graph);
+        $("input:not([id^=gear]), select").change(update_all_ratios);
+        update();
+        update_all_ratios();
     }, 100);
     
 });
@@ -95,6 +102,9 @@ function simulate(ratio){
 
     const stop_type = $("select#stop-type").val();
     const stop_method = $("select#stop-method").val();
+
+    const free_speed = vmax / $("select#free_speed-units").val();
+    const push_current = (Tslip_k/ratio/(km*eff) + If) / $("input#num_motors").val();
 
     // console.clear();
     // console.log(Vrest, Rtot, Imax, dVmax, m, r, mu_s, mu_k, xmax, tmax, dt, km, Tslip_s, Tslip_k, Tloss, vmax);
@@ -171,7 +181,19 @@ function simulate(ratio){
         V = (Math.abs(Vnew-V)>dVmax ? V+dVmax*Math.sign(Vnew-V) : Vnew*filtering + V*(1-filtering));
         t += dt;
     }
-    return [times, data];
+    return [times, data, free_speed, push_current];
+}
+
+function update_all_ratios(){
+    ratio_graph_data = [[],[],[],[]];
+    for (let r = min; r <= max+1e-3; r*=Math.pow(max/min, 1/30)) {
+        ratio_graph_data[0].push(r);
+        let output = simulate(r);
+        ratio_graph_data[1].push(output[0][output[0].length-1]);
+        ratio_graph_data[2].push(output[2]);
+        ratio_graph_data[3].push(output[3]);
+    }
+    update_ratios_graph();
 }
     
 function update_graph(output){
@@ -262,30 +284,45 @@ function update_graph(output){
             }
         }
     });
+
+    update_ratios_graph();
 }
 
 function update_ratios_graph(){
-    let ratios = [];
-    let times = [];
-    let min = 3;
-    let max = 20;
-    for (let r = min; r < max; r*=Math.pow(max/min, 1/30)) {
-        ratios.push(r);
-        let t = simulate(r)[0];
-        times.push(t[t.length-1]);
-    }
-
     $("canvas#ratios").remove();
     $("div.graphs").append('<canvas id="ratios"></canvas>');
     var graph = new Chart("ratios", {
         type: "line",
         data: {
-            labels: ratios.map(x => +(x.toFixed(2))),
+            labels: ratio_graph_data[0].map(x => +(x.toFixed(2))),
             datasets: [{
-                data: times,
+                data: ratio_graph_data[1],
+                label: "Sprint Time",
                 borderColor: "black",
                 fill: false,
                 pointRadius: 2
+            },{
+                data: ratio_graph_data[2],
+                label: "Free Speed",
+                borderColor: "red",
+                fill: false,
+                pointRadius: 2,
+                yAxisID: "y2"
+            },{
+                data: ratio_graph_data[3],
+                label: "Push Current",
+                borderColor: "green",
+                fill: false,
+                pointRadius: 2,
+                yAxisID: "y3"
+            },{
+                data: [{x: (G ? G : 0), y: 0}, {x: (G ? G : 0), y: (G ? 1 : 0)}],
+                borderColor: "red",
+                borderDash: [5, 5],
+                fill: false,
+                pointRadius: 0,
+                yAxisID: "y4",
+                hiddenLegend: true
             }]
         },
         options: {
@@ -293,7 +330,7 @@ function update_ratios_graph(){
             scales: {
                 x: {
                     display: true,
-                    type: "logarithmic",
+                    type: "linear",
                     title: {
                         display: true,
                         text: "Gear Ratio (X:1)",
@@ -311,11 +348,41 @@ function update_ratios_graph(){
                         display: true,
                         text: "Time (s)",
                     }
+                },
+                y2: {
+                    display: true,
+                    type: "linear",
+                    title: {
+                        display: true,
+                        text: `Velocity (${$("select#free_speed-units option:selected").text()})`,
+                    },
+                    position: "right"
+                },
+                y3: {
+                    display: true,
+                    type: "linear",
+                    title: {
+                        display: true,
+                        text: "Current (A)",
+                    },
+                    position: "right"
+                },
+                y4: {
+                    display: false,
+                    type: "linear",
+                    title: {
+                        display: false
+                    },
+                    position: "right"
                 }
             },
             plugins: {
                 legend: {
-                    display: false
+                    labels: {
+                        filter: function(legend_item, data) {
+                            return legend_item["lineDash"].length == 0;
+                        }
+                    }
                 }
             }
         }
