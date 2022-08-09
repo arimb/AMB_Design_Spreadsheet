@@ -172,7 +172,7 @@
 	
 	\section*{Experimentally Determining Drag and Lift Coeffieicnts}
 	
-	For the lift coefficient, we can use experiments done by the University of Illinois. They defined a dimensionless quantity called the spin factor, $ s = \frac{r \cdot \omega}{v} $, based on the ball's rotational and linear velocities $ \omega $ and $ v $. They found that the lift coefficient is directly related to this parameter, following $ C_L = 1.6 s $ for $ s < 0.1 $ and $ C_L = 0.6 s + 0.1 $ for $ s > 0.1 $. By entering the rotational velocity, assumed to be constant throughout the trajectory, the simulation automatically calculates the lift coefficient according to the spin factor for each timestep.\\
+	For the lift coefficient, we can use experiments done at the University of Illinois. They defined a dimensionless quantity called the spin factor, $ s = \frac{r \cdot \omega}{v} $, based on the ball's rotational and linear velocities $ \omega $ and $ v $. They found that the lift coefficient is directly related to this parameter, following $ C_L = 1.6 s $ for $ s < 0.1 $ and $ C_L = 0.6 s + 0.1 $ for $ s > 0.1 $. By entering the rotational velocity, assumed to be constant throughout the trajectory, the simulation automatically calculates the lift coefficient according to the spin factor for each timestep.\\
 	
 	Determining the drag coefficient is more complicated. Earlier versions calculated the Reynolds number of the ball and used that to find the drag coefficient, but this method was not very accurate as typical values often fell in the transition range between laminar and turbulent flow. Instead, the recommended method now involves experimental testing by dropping the ball off a high surface of known height and measuring the time it takes to hit the ground.\\
 	
@@ -214,6 +214,9 @@
 	\end{equation}\\
 	
 	Where $ m $ is the ball's mass, $ r $ is its radius, and $ \rho $ is the density of air ($ 1.275\ \frac{\text{kg}}{\text{m}^3} $ at STP).
+	
+	
+	\blfootnote{The equations in this calculator are based in part by work done by the \href{http://baseball.physics.illinois.edu/ajpfeb08.pdf}{University of Illinois Department of Physics}}
 	
 	
 	
