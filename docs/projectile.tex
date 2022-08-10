@@ -61,8 +61,8 @@
 	\begin{equation}
 		F_L = \frac{1}{2} \rho \left| \bar{v} \right|^2 A_c C_L \left( \hat{\omega} \times \hat{v} \right)
 		= \frac{\pi}{2} \rho r^2 v^2 C_L \left( \hat{\omega} \times \hat{v} \right)
-	\end{equation}\\
-	
+	\end{equation}
+	\\
 	where $ \rho $ is the air density and $ g $ is the gravitational constant.\\
 	
 	We will define $ \theta_v $ as the angle of $ \hat{v} $ counter-clockwise relative to $ + \hat{x} $. So we can combine the $ x $ and $ y $ components of all the forces:
@@ -81,15 +81,16 @@
 			&= \frac{\pi}{2} \rho r^2 v^2 \left( C_L \cos \theta_v - C_D \sin \theta_v \right) - mg \\
 			&= \frac{\pi}{2} \rho r^2 v \left( C_L \cdot v_x - C_D \cdot v_y \right) - mg
 		\end{aligned}
-	\end{gather}\\
-	
+	\end{gather}
+	\\
 	Starting with $ \bar{x} = \bar{0} $ and $ \bar{v} = v_i \angle \theta_i $, we can calculate the acceleration components $ a_x $ and $ a_y $. We can then calculate the position and velocity of the ball at the next timestep as:
 	
 	\begin{equation}
 		\bar{v}_{i+1} = \bar{v}_i + \bar{a} \cdot dt \qquad\implies\qquad
 		\bar{x}_{i+1} = \bar{x}_{i} + \bar{v}_i \cdot dt + \tfrac{1}{2} \bar{a} \cdot dt^2		
-	\end{equation}\\
+	\end{equation}
 	
+	\newpage
 	The simulation end condition is determined by the mode. For "Find Target Values by Target Distance", the simulation ends when $ x_x \geq d $, the horizontal distance to the target. For "Find Target Values by Target Height", the simulation ends when $ x_y \geq h_{target} $ and $ v_y \leq 0 $ if the target height direction arrow is up, or $ x_y \leq h_{target} $ and $ v_y \leq 0 $ if the target direction arrow is down.\\
 	
 	If drag and Magnus forces are ignored, we can use traditional parabolic trajectory equations to find the object's final position and angle:
@@ -103,7 +104,7 @@
 	
 	\begin{equation}
 		\theta_{target} = \tan^{-1} \left( 2\ \frac{h_{target} - h_0}{d} - \tan \theta_0 \right)
-	\end{equation}\\
+	\end{equation}
 	
 	
 	\section*{Find Launch Values}
@@ -122,51 +123,52 @@
 	
 	\begin{equation} \label{th_target}
 		\theta_{target} = \tan^{-1} \left( \frac{v_{y, target}}{v_{x, target}} \right) = \tan^{-1} \left( \frac{v_0 \sin \theta_0 - g \cdot t}{v_0 \cos \theta_0} \right)
-	\end{equation}\\
-	
+	\end{equation}
+	\\
 	Solving (\ref{Dx}) for $ t $ and substituting into (\ref{Dy}) gives:
 	
 	\begin{equation}
 		\Delta y = \Delta x \cdot \tan \theta_0 - \frac{g \cdot \left( \Delta x \right)^2}{2 v_0^2 \cos^2 \theta_0}
-	\end{equation}\\
-	
+	\end{equation}
+	\\
 	And with $ \Delta x = d $ and $ \Delta y = h_{target} - h_0 $:
 	
 	\begin{equation} \label{hf}
 		h_{target} = h_0 + d \cdot \tan \theta_0 - \frac{g \cdot d^2}{2 v_0^2 \cos^2 \theta_0}
-	\end{equation}\\
-	
+	\end{equation}
+	\\
 	Substituting $ t $ from (\ref{Dx}) into (\ref{th_target}):
 	
 	\begin{equation}
 		\theta_{target} = \tan^{-1} \left( \frac{v_0 \sin \theta_0 - g \cdot \frac{\Delta x}{v_0 \cos \theta_0}}{v_0 \cos \theta_0} \right)
 		 = \tan^{-1} \left( \tan \theta_0 - \frac{g \cdot d}{v_0^2 \cos^2 \theta_0} \right)
-	\end{equation}\\
-	
+	\end{equation}
+	\\
 	Further substituting in (\ref{hf}) and simplifying gives:
 	
 	\begin{equation}
 		\theta_{target} = \tan^{-1} \left( 2 \frac{h_{target} - h_0}{d} - \tan \theta_0 \right)
-	\end{equation}\\
-	
+	\end{equation}
+	\\
 	Which can easily be solved for $ \theta_0 $:
 	
 	\begin{equation}
 		\theta_0 = \tan^{-1} \left( 2 \frac{h_{target} - h_0}{d} - \tan \theta_{target} \right)
-	\end{equation}\\
+	\end{equation}
 	
+	\newpage
 	We can then substitute in (\ref{hf}):
 	
 	\begin{equation}
 		\tan \theta_{target} - \tan \theta_0 = - \frac{g \cdot d}{v_0^2 \cos^2 \theta_0}
-	\end{equation}\\
-	
+	\end{equation}
+	\\
 	Which can be solved for $ v_0 $:
 	
 	\begin{equation}
 		v_0 = \sec \theta_0 \cdot \sqrt{\frac{g \cdot d}{\left| \tan \theta_{target} - \tan \theta_0 \right|}}
-	\end{equation}\\
-	
+	\end{equation}
+	\\
 	Thus we have the initial velocity $ v_0 $ and angle $ \theta_0 $. We can then run the simulator without drag or Magnus forces to track the projectile's trajectory.\\
 	
 	
@@ -180,26 +182,27 @@
 	
 	\begin{equation}
 		m a = m \frac{dv}{dt} = \sum F = F_D - F_g = \alpha m v^2 (t) - m g
-	\end{equation}\\
-	
+	\end{equation}
+	\\
 	This differential equation can be solved for $ v(t) $ with initial condition $ v(0) = 0 $:
 	
 	\begin{equation}
 		v(t) = -\sqrt{\frac{g}{\alpha}} \tanh \left( \sqrt{\alpha g} \cdot t \right)
-	\end{equation}\\
-	
+	\end{equation}
+	\\
 	This can then be integrated with initial condition $ x(0) = h $ to get the position equation:
 	
 	\begin{equation}
 		x(t) = h - \frac{1}{\alpha} \ln \left( \cosh \left( \sqrt{g \alpha} \cdot t \right) \right)
-	\end{equation}\\
-	
+	\end{equation}
+	\\
 	So solving for the time the ball hits the ground, $ x(t) = 0 $, gives:
 	
 	\begin{equation}
 		t = \frac{1}{\sqrt{g \alpha}} \cosh^{-1} \left( \exp \left( \alpha \cdot h \right) \right)
-	\end{equation}\\
+	\end{equation}
 	
+	\newpage
 	We would like to solve for $ \alpha $ in order to find $ C_D $, but unfortunately this is not possible to do analytically. Instead, we will use the following graph to find $ \alpha $ based on the drop height $ h $ (in meters) and the time the ball takes to hit the ground:
 	
 	\begin{figure}[H]
@@ -211,8 +214,8 @@
 	
 	\begin{equation}
 		C_D = \frac{2\alpha \cdot m}{\pi \rho \cdot r^2}
-	\end{equation}\\
-	
+	\end{equation}
+	\\
 	Where $ m $ is the ball's mass, $ r $ is its radius, and $ \rho $ is the density of air ($ 1.275\ \frac{\text{kg}}{\text{m}^3} $ at STP). Note that all of the units in the equation should match so that $ C_D $ is a dimensionless parameter.
 	
 	

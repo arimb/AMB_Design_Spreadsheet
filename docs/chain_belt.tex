@@ -50,8 +50,8 @@
 	
 	\begin{equation}
 		d_p = \frac{n \cdot p}{\pi}
-	\end{equation}\\
-	
+	\end{equation}
+	\\
 	Halving this value gives us the pitch radius for each sprocket, $ r_x = \frac{n_x p}{2\pi} $.\\
 	
 	Defining the total chain length as $ L $ and the number of links as $ \ell $, we know $ L = \ell \cdot p $. We can also find the total chain length geometrically using the sprocket radii and center-to-center distance $ D $.
@@ -65,8 +65,8 @@
 	
 	\begin{equation} \label{Lbase}
 		L = 2X + r_1 \cdot 2\beta + r_2 \cdot \left( 2\pi - 2\beta \right)
-	\end{equation}\\
-	
+	\end{equation}
+	\\
 	Using the Pythagorean theorem and trigonometry on the right triangle in the center of the diagram, we can see that:
 	
 	\begin{equation} \label{X}
@@ -75,8 +75,8 @@
 	
 	\begin{equation} \label{beta}
 		\beta = \cos^{-1} \left( \frac{r_2 - r_1}{D} \right) = \cos^{-1} \left( \frac{r_1 - r_2}{D} \right)
-	\end{equation}\\
-	
+	\end{equation}
+	\\
 	Substituting (\ref{X}) and (\ref{beta}) into (\ref{Lbase}) gives:
 	
 	\begin{gather} \label{L}
@@ -84,8 +84,8 @@
 		L &= 2 \sqrt{D^2 - (r_1 - r_2)^2} + r_1 \cdot 2 \cos^{-1} \left( \frac{r_1 - r_2}{D} \right) + r_2 \cdot \left( 2\pi - 2\cos^{-1} \left( \frac{r_1 - r_2}{D} \right) \right) \\
 		&= 2 \sqrt{D^2 - \left( r_1 - r_2 \right)^2} + 2 \left( r_1 - r_2 \right) \cos^{-1} \left( \frac{r_1 - r_2}{D} \right) + 2\pi r_2
 	\end{aligned}
-	\end{gather}\\
-	
+	\end{gather}
+	\\
 	Unfortunately, this equation cannot be solved analytically for $ D $. So instead, the calculator solves it numerically using the \href{https://en.wikipedia.org/wiki/Newton\%27s_method}{Newton-Raphson Method}. For the calculation based on number of links, our goal is $ L = \ell \cdot p $ and our initial guess is $ D = \frac{1}{2} L $, which would be the case if both sprockets had zero pitch diameter. For the approximate center-to-center distance calculation, our initial guess for $ D $ is the approximate distance. To get the target value, we plug in the approximate distance to (\ref{L}) and find the non-integer number of links that would produce. That number is then rounded to an even multiple in the direction specified to get $ \ell $, and the target is $ L = \ell \cdot p $. The numerical solver continues until a precision of at least $ 10^{-3} $ is reached.
 	
 	\blfootnote{The derivation of this algorithm is based on work done by Clem McKown of FRC team 1640.}

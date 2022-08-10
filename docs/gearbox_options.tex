@@ -41,20 +41,20 @@
 	
 	\begin{equation}
 		d_{xy} = \frac{n_x + n_y}{2 \cdot dp}\ \left[ \text{in} \right]
-	\end{equation}\\
-	
+	\end{equation}
+	\\
 	In order to calculate a gear's outer diameter, the following formula is used:
 	
 	\begin{equation}
 		OD_x = \frac{n_x + 2}{dp}\ \left[ \text{in} \right]
-	\end{equation}\\
-	
+	\end{equation}
+	\\
 	The clearance of an axle is the space between the outer diameter of one gear and the center-to-center distance of the opposite axle. Therefore, for gear $ x $ on the same axle as gear $ y $, which mates with gear $ z $, the formula is:
 	
 	\begin{equation}
 		\text{clearance}_{xyz} = d_{yz} - \tfrac{1}{2} OD_x
-	\end{equation}\\
-	
+	\end{equation}
+	\\
 	When "Axle Bore" is chosen for the clearance requirement, the any gearboxes with clearance less than the radius of the corresponding axle are ignored.\\
 	
 	The calculator works by running a brute-force search for all combinations of the possible gears. Only those within the allowable deviation of the desired ratio are output, in order of their deviation. If no allowable deviation is given, only exact matches are shown.
