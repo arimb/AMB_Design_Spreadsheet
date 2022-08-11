@@ -14,6 +14,17 @@ div {
     display: flex;
 }
 
+div.header-left {
+    flex-direction: row-reverse;
+    justify-self: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+
+button.header-button {
+    margin: 0;
+}
+
 body {
     display: flex;
     flex-direction: column;

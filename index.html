@@ -7,6 +7,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/index.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("button.header-button.docs").click(function(){
+                    window.open("docs/" + $(this).attr("data-link") + ".pdf", "_blank");
+                });
+            });
+        </script>
     </head>
     <body>
         <header>
@@ -14,6 +22,10 @@
                 <img src="img/logo.png" class="logo" alt="logo">
             </a>
             <h1>AMB Robotics Calculator</h1>
+            <div style="flex: 1;"></div>
+            <div class="header-left">
+                <button class="header-button docs" data-link="all_docs">ALL<br>DOCS</button>
+            </div>
         </header>
         <main>
             <a href="mechanism.html">
