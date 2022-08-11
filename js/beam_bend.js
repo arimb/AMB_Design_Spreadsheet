@@ -71,7 +71,7 @@ $(document).ready(function(){
             let thick = parent.find("input[id$=-thick]").val() * parent.find("select[id$=-thick-units]").val();
             parent.find("input[id$=-I]").val( +((Math.PI/8*Math.pow(od, 3)*thick).toFixed(0)) );
             parent.find("input[id$=-J]").val( +((Math.PI/4*Math.pow(od, 3)*thick).toFixed(0)) );
-            parent.find("input[id$=-A]").val( +((2*Math.PI*od*thick).toFixed(0)) );
+            parent.find("input[id$=-A]").val( +((Math.PI*od*thick).toFixed(0)) );
         }
     });
     $("div.rect").find("input, select").change(function(){
@@ -80,7 +80,13 @@ $(document).ready(function(){
             let b = parent.find("input[id$=-width]").val() * parent.find("select[id$=-width-units]").val();
             let a = parent.find("input[id$=-height]").val() * parent.find("select[id$=-height-units]").val();
             parent.find("input[id$=-I]").val( +((b*Math.pow(a, 3)/12).toFixed(0)) );
-            parent.find("input[id$=-J]").val( +((Math.pow(a,3)*b*(1/3-0.21*a/b*(1-Math.pow(a/b,4)/12))).toFixed(0)) );
+            // parent.find("input[id$=-J]").val( +((Math.pow(a,3)*b*(1/3-0.21*a/b*(1-Math.pow(a/b,4)/12))).toFixed(0)) );
+            if (b > a) {
+                let tmp = a;
+                a = b;
+                b = tmp;
+            }
+            parent.find("input[id$=-J]").val( +((a*Math.pow(b,3)/3 - 0.21*Math.pow(b,4) + 0.0175*Math.pow(b,8)/Math.pow(a,4)).toFixed(0)) );
             parent.find("input[id$=-A]").val( +((a*b).toFixed(0)) );
         }
     });

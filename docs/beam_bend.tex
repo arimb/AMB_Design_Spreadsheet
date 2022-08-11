@@ -1,0 +1,94 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[intlimits]{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[export]{adjustbox}
+\usepackage{graphicx}
+\setlength{\parindent}{0pt}
+\usepackage[left=1in, right=1in, top=1in, bottom=1in]{geometry}
+\usepackage{float}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{bm}
+\usepackage{hyperref}
+\setcounter{tocdepth}{1}
+\usepackage[titletoc]{appendix}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=blue,
+	urlcolor=blue,
+}
+
+\newcommand\blfootnote[1]{%
+	\begingroup
+	\renewcommand\thefootnote{}\footnote{#1}%
+	\addtocounter{footnote}{-1}%
+	\endgroup
+}
+
+\begin{document}
+	
+	\Huge\textbf{Beam Bend Calculator}
+	\newline
+	\LARGE AMB Calculator
+	
+	\vspace{0.5cm}
+	\normalsize
+	
+	This calculator is used to check the deflection or twist in a beam (extrusion of uniform cross-section). It can be helpful for determining whether a profile or axle will be strong enough to carry the desired load. Note that this is not a replacement for proper Finite Element Analysis simulation and does not return the material stress.
+	
+	\section*{Material \& Cross-Section}
+	
+	Materials are defined with three values: Young's Modulus $ E $, Shear Modulus $ G $, and density $ \rho $. You can choose one of the pre-defined materials or enter these values manually.\\
+	
+	Five types of cross-sections are defined: hex, round, round tube, rectangular, and rectangular tube. Each cross-section geometry has its own equations to find the corresponding Area $ A $, Area Moment of Inertia $ I $, and Torsional Constant $ J $. These can also be entered manually.\\
+	
+	For hex beams with distance $ a $ between the flat sides:
+	
+	\begin{equation}
+		A = \frac{3 \sqrt{3}}{8} a^2 \qquad\qquad
+		I = 0.0601 a^4 \qquad\qquad
+		J = 0.1154 a^4
+	\end{equation}
+	\\
+	For solid round beams with diameter $ D $:
+	
+	\begin{equation}
+		A = \frac{\pi}{4} D^2 \qquad\qquad
+		I = \frac{\pi}{64} D^4 \qquad\qquad
+		J = \frac{\pi}{32} D^4
+	\end{equation}
+	\\
+	For round tubes with outside diameter $ D $ and thickness $ t $:
+	
+	\begin{equation}
+		A = \pi D \cdot t \qquad\qquad
+		I = \frac{\pi}{8} D^3 t \qquad\qquad
+		J = \frac{\pi}{4} D^3 t
+	\end{equation}
+	\\
+	For solid rectangular beams with width (perpendicular to the applied force) $ w $ and height (parallel to the applied force) $ h $, and where $ a $ is the larger of $ w $ and $ h $ and $ b $ is the smaller:
+	
+	\begin{equation}
+		A = w \cdot h \qquad\qquad
+		I = \frac{1}{12} w h^3 \qquad\qquad
+		J \approx \frac{1}{3} a b^3 - 0.21 b^4 + 0.0175 \frac{b^8}{a^4}
+	\end{equation}
+	\\
+	For rectangular tubes with width $ w $, height $ h $, and thickness $ t $:
+	
+	\begin{equation}
+		A = 2t(a+b) \qquad\qquad
+		I = \frac{1}{3} w h^2 t \qquad\qquad
+		J = \frac{2t (w-2)^2 (h-t)^2}{w + h - t}
+	\end{equation}
+	\\
+	
+	
+	
+\end{document}
