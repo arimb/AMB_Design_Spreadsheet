@@ -87,7 +87,94 @@
 		I = \frac{1}{3} w h^2 t \qquad\qquad
 		J = \frac{2t (w-2)^2 (h-t)^2}{w + h - t}
 	\end{equation}
+	
+	
+	\section*{Deflection Equations}
+	
+	With the cross-sectional area and the beam's length $ l $, we can calculate its mass $ m $:
+	
+	\begin{equation}
+		m = \ell \cdot A_c \cdot \rho
+	\end{equation}
 	\\
+	Based on the beam's material, cross-section, and relevant dimension we can calculate the amount it will deflect under a given load. We will use the equations from Shigley's Mechanical Engineering textbook, Appendix A-9.\\
+	
+	\newpage
+	We will define a force on a beam supported on both sides.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\linewidth]{../img/docs_beambend_btwn}
+	\end{figure}
+	
+	With a force $ F $ applied perpendicularly at distance $ a $ from the left side of the beam and $ b $ from the right side, the deflection $ y $ at distance $ x $ from the left side is:
+	
+	\begin{gather}
+	\begin{aligned}
+		y\left( x \leq a \right) &= F \cdot \frac{b^2 x^2}{6 EI \cdot l^3} \left[ 3a l - x \left( 3a+b \right) \right] \\
+		y\left( x \geq a \right) &= F \cdot \frac{a^2 \left( l - x \right)^2}{6 EI \cdot l^3} \left[ 3b l - \left( l - x \right) \left( 3b+a \right) \right]
+	\end{aligned}
+	\end{gather}
+	\\
+	Substitute $ b = l - a $, where $ a \leq \frac{l}{2} \leq b $:
+	
+	\begin{gather}
+	\begin{aligned}
+		y\left( x \leq a \right) &= F \cdot \frac{x^2 \left( l - a \right)^2}{6 EI \cdot l^3} \left[ 3a l - x \left( l + 2a \right) \right] \\
+		y\left( x \geq a \right) &= F \cdot \frac{a^2 \left( l - x \right)^2}{6 EI \cdot l^3} \left[ 3x l - a \left( l + 2x \right) \right]
+	\end{aligned}
+	\end{gather}
+	\\
+	Taking the derivative of each and setting equal to zero, we find the local maxima of deflection:
+	
+	\begin{equation}
+		x_{x \leq a} = 0,\ \frac{2al}{2a+l}\ ; \qquad\qquad
+		x_{x \geq a} = \frac{l^2}{3l-2a},\ l
+	\end{equation}
+	\\
+	At $ x = 0 $ and $ x = l $ the deflection is fixed at zero, so they cannot be the points of maxima. We must test the other solutions to make sure that they fulfil their domain requirements:
+	
+	\begin{gather}
+	\begin{aligned}
+		\frac{2al}{2a+l} \leq a &\implies a \geq \frac{l}{2}\ , \\
+		\frac{l^2}{3l-2a} \geq a &\implies a \leq \frac{l}{2}\ \cup\ l \leq a \leq \frac{3}{2} l
+	\end{aligned}
+	\end{gather}
+	\\
+	The domain $ a \geq \frac{l}{2} $ for the first solution contradicts our definition of $ a \leq \frac{l}{2} \leq b $, therefore that solution is not valid. The second solution does not conflict, therefore it is valid and the maximum deflection occurs at $ x = \frac{l^2}{3l-2a} $. Plugging this into the corresponding deflection equation gives the maximum deflection for a beam supported on both sides:
+	
+	\begin{equation}
+		y_{max} = \frac{2F a^2 \left( l - a \right)^3}{3 EI \left( 2a-3l \right)^2}
+	\end{equation}
+	
+	\newpage
+	We will now define a force on a beam supported only on one side. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\linewidth]{../img/docs_beambend_cantilever}
+	\end{figure}
+
+	The beam is of length $ l $, fixed on the left side, with a force $ F $ applied perpendicularly at a distance of $ a $ away from the fixture. It is clear that the maximum deflection will occur at the right end of the beam. The magnitude of this deflection is represented by:
+	
+	\begin{equation}
+		y_{max} = \frac{F a^2}{6 EI} \left( 3l - a \right)
+	\end{equation}\\\\
+	
+	
+	Again we will define a beam of length $ l $ supported only on one side, but this time we apply a twisting torque $ T $ at the opposite end.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\linewidth]{../img/beambend_twist}
+	\end{figure}
+
+	This beam will deflect angularly along its axis. It is clear that the maximum angular deflection occurs at the end where the force is being applied. The magnitude of this deflection is:
+	
+	\begin{equation}
+		\theta_{max} = \frac{T l}{GJ}
+	\end{equation}\\
+	
 	
 	
 	
