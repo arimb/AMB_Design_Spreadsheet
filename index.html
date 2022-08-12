@@ -8,10 +8,19 @@
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/index.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/tipso.min.css">
+        <script src="js/tipso.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function(){
                 $("button.header-button.docs").click(function(){
                     window.open("docs/" + $(this).attr("data-link") + ".pdf", "_blank");
+                });
+                $("[data-tipso]").tipso({
+                    width: null,
+                    maxWidth: 300,
+                    background: "#405a3f",
+                    color: "#fff",
+                    delay: 500
                 });
             });
         </script>
@@ -29,55 +38,55 @@
         </header>
         <main>
             <a href="mechanism.html">
-                <button class="sheet">
+                <button class="sheet" data-tipso="This calculator finds the properties of a mechanism by its gear ratio, or finds the proper gear ratio needed to give the mechanism certain properties.">
                     <img src="img/motor.png" alt="Mechanism Ratios">
                     <h2>Mechanism Ratio</h2>
                 </button>
             </a>
             <a href="gearbox_options.html">
-                <button class="sheet">
+                <button class="sheet" data-tipso="This calculator allows the user to find sets of gears that produce the desired overall ratio, filtered by certain restrictions.">
                     <img src="img/find_gear.png" alt="Gearbox Options">
                     <h2>Gearbox Options</h2>
                 </button>
             </a>
             <a href="chain_belt.html">
-                <button class="sheet">
+                <button class="sheet" data-tipso="This calculator determines the proper center-to-center spacing between two sprockets or pulleys.">
                     <img src="img/chain.png" alt="Chain/Belt C-C Dist">
                     <h2>Chain/Belt C-C Dist</h2>
                 </button>
             </a>
             <a href="reduction_swap.html">
-                <button class="sheet">
+                <button class="sheet" data-tipso="This calculator is designed to help in the case where the robot is already manufactured and the team realizes they need to change the reduction for a mechanism.">
                     <img src="img/2gears.png" alt="Reduction Swap">
                     <h2>Reduction Swap</h2>
                 </button>
             </a>
             <a href="drivetrain.html">
-                <button class="sheet">
+                <button class="sheet" data-tipso="This simulator is used to find the proper gear ratio for a robot's drivetrain.">
                     <img src="img/drivetrain.png" alt="Drivetrain Simulator">
                     <h2>Drivetrain Simulator</h2>
                 </button>
             </a>
             <a href="projectile.html">
-                <button class="sheet">
+                <button class="sheet" data-tipso="This calculator is used to help plan the trajectory of an object launched by a shooter.">
                     <img src="img/catapult.png" alt="Projectile Trajectory">
                     <h2>Projectile Trajectory</h2>
                 </button>
             </a>
             <a href="pneumatics.html">
-                <button class="sheet">
+                <button class="sheet" data-tipso="This simulator is used to determine the air usage of your robot.">
                     <img src="img/compressor.png" alt="Pneumatics System">
                     <h2>Pneumatics System</h2>
                 </button>
             </a>
             <a href="beam_bend.html">
-                <button class="sheet">
+                <button class="sheet" data-tipso="This calculator is used to check the deflection or twist in a beam (extrusion of uniform cross-section).">
                     <img src="img/beam.png" alt="Beam Bending">
                     <h2>Beam Bending</h2>
                 </button>
             </a>
             <a href="lead_screw.html">
-                <button class="sheet">
+                <button class="sheet" data-tipso="This calculator is used to determine the properties of a lead screw.">
                     <img src="img/screw.png" alt="Lead Screw">
                     <h2>Lead Screw</h2>
                 </button>
