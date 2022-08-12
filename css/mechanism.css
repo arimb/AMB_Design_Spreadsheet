@@ -31,7 +31,7 @@ div.page-element#calculation {
 div.inputs {
     flex-direction: column;
     align-items: flex-end;
-    gap: 4px;
+    gap: 8px;
 }
 
 div.inputs span {
@@ -53,7 +53,7 @@ div.max-buttons {
     flex-direction: row;
     flex-wrap: wrap;
     font-size: large;
-    margin-top: 1em;
+    margin-top: 8px;
 }
 
 button.max {

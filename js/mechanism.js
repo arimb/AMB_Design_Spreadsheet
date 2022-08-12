@@ -183,7 +183,7 @@ $(document).ready(function(){
         var data = [];
         const min = parseFloat($("input#graph-min").val());
         const max = parseFloat($("input#graph-max").val());
-        for (let r = min; r < max; r*=Math.pow(max/min, 1/30)) {
+        for (let r = min; r < max+1e-3; r*=Math.pow(max/min, 1/30)) {
             ratios.push(r);
             data.push(calculate_vals(r));
         }

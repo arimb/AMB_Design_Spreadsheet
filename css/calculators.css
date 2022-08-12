@@ -83,3 +83,7 @@ input[type=number] {
     border: 1px solid gray;
     padding: 2px;
 }
+
+button[data-tipso] {
+    border-bottom: 1px solid black;
+}

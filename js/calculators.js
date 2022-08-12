@@ -16,6 +16,14 @@ $(document).ready(function(){
 
     $("button.reset").click(() => window.location.href = window.location.href.split("?")[0]);
 
+    $("[data-tipso]").tipso({
+        width: null,
+        maxWidth: 300,
+        background: "#405a3f",
+        color: "#fff",
+        speed: 200
+    });
+
     // window.onbeforeunload = function() {
     //     return "Refreshing or leaving this page will reset it. Are you sure you want to continue?";
     // }
