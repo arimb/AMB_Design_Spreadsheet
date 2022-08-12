@@ -193,13 +193,13 @@ $(document).ready(function(){
                 labels: ratios,
                 datasets: [{
                     data: data.map(function(value,index) { return value[0]*$("select#rot_speed-units").val()/6.283; }),
-                    label: "Free Rotational Speed",
+                    label: "Free Rot. Speed",
                     borderColor: "red",
                     fill: false,
                     pointRadius: 0
                 },{
                     data: data.map(function(value,index) { return value[3]*$("select#rot_speed_loaded-units").val()/6.283; }),
-                    label: "Loaded Rotational Speed",
+                    label: "Loaded Rot. Speed",
                     borderColor: "magenta",
                     fill: false,
                     pointRadius: 0
@@ -224,12 +224,12 @@ $(document).ready(function(){
                     pointRadius: 0
                 },
                 {
-                    data: [{x: (ratio ? ratio : 0), y: 0}, {x: (ratio ? ratio : 0), y: (ratio ? Math.max.apply(null, data.map(value => value[6])) : 0)}],
+                    data: [{x: (ratio ? ratio : 0), y: 0}, {x: (ratio ? ratio : 0), y: (ratio ? 1 : 0)}],
                     borderColor: "red",
                     borderDash: [5, 5],
                     fill: false,
                     pointRadius: 0,
-                    yAxisID: "right",
+                    yAxisID: "hidden",
                     hiddenLegend: true
                 }]
             },
@@ -267,6 +267,10 @@ $(document).ready(function(){
                             display: true,
                             text: "Voltage (V)"
                         }
+                    },
+                    hidden: {
+                        display: false,
+                        position: "right"
                     }
                 },
                 plugins: {
