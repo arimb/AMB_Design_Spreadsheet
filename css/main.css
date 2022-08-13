@@ -83,7 +83,7 @@ button {
     padding: 5px;
     border: 1px solid black;
     margin: 8px;
-    cursor: pointer;
+    cursor: pointer !important;
 }
 
 button:hover {

@@ -76,3 +76,7 @@ td, th {
     padding: 0.2em 0.4em;
     text-align: center;
 }
+
+th {
+    min-width: 4em;
+}

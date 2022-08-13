@@ -11,7 +11,7 @@ $(document).ready(function(){
     $("input[name=current], select[id$=_cc-units]").change(() => {
         let el = $(`div.${$("input[name=current]:checked").prop("id")} select[id$=_cc-units]`);
         unit = el.val();
-        $("th.unit").html(`C-C (${el.children("option:selected").text().substr(0,2)})`);
+        $(".unit").html(`C-C (${el.children("option:selected").text().substr(0,2)})`);
     });
 
     $("input#gears, div.gears input, div.gears select").change(function(){
