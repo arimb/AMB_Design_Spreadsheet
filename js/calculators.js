@@ -24,6 +24,8 @@ $(document).ready(function(){
         speed: 200
     });
 
+    $(".tipso-onload[data-tipso]").tipso("show").mouseover(function(){ $(this).tipso("hide").tipso("destroy"); });
+
     // window.onbeforeunload = function() {
     //     return "Refreshing or leaving this page will reset it. Are you sure you want to continue?";
     // }

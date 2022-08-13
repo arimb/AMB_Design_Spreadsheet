@@ -10,6 +10,8 @@
         <link rel="stylesheet" href="css/drivetrain.css">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/tipso.min.css">
+        <script src="js/tipso.min.js"></script>
         <script src="js/calculators.js"></script>
         <script src="js/drivetrain.js"></script>
     </head>
@@ -61,36 +63,36 @@
                     &nbsp;Amps
                 </div>
                 <div class="field">
-                    <label for="num_motors">Number of Motors</label>
+                    <label for="num_motors" data-tipso="Number of motors in the entire drivetrain (both sides of a tank drive, all modules of a swerve drive)">Number of Motors</label>
                     <input id="num_motors" type="number" min="1" step="1" value="4">
                 </div>
                 <div class="field">
-                    <label for="gearbox_efficiency">Gearbox Efficiency</label>
+                    <label for="gearbox_efficiency" data-tipso="Percent of mechanical power transfered from the motor to the mechanism output">Gearbox Efficiency</label>
                     <input id="gearbox_efficiency" type="number" step="any" min="0" max="100" value="80">
                     &nbsp;%
                 </div>
             </div>
             <div class="page-element" id="electrical">
                 <div class="field">
-                    <label for="rest_voltage">Resting Voltage</label>
+                    <label for="rest_voltage" data-tipso="Battery voltage when no current is being drawn">Resting Voltage</label>
                     <input id="rest_voltage" type="number" step="any" min="0" value="12.7">
                     &nbsp;
                     <span>Volts</span>
                 </div>
                 <div class="field">
-                    <label for="resistance">System Resistance</label>
+                    <label for="resistance" data-tipso="Total resistance of the battery and all wires between the battery and a single drivetrain motor">System Resistance</label>
                     <input id="resistance" type="number" step="any" min="0" value="25">
                     &nbsp;
                     <span>m&Omega;</span>
                 </div>
                 <div class="field">
-                    <label for="current_limit">Per Motor Current Limit</label>
+                    <label for="current_limit" data-tipso="Maximum supply-side current any single motor can draw. Leave blank to allow for infinite current draw">Per Motor Current Limit</label>
                     <input id="current_limit" type="number" step="any" min="0">
                     &nbsp;
                     <span>Amps</span>
                 </div>
                 <div class="field">
-                    <label for="voltage_ramp">Voltage Ramp</label>
+                    <label for="voltage_ramp" data-tipso="Maximum change in applied voltage over time. Leave blank to allow for instantaneous voltage changes">Voltage Ramp</label>
                     <input id="voltage_ramp" type="number" step="any" min="0">
                     &nbsp;
                     <span>V/s</span>
@@ -99,7 +101,7 @@
             <div class="break"></div>
             <div class="page-element" id="robot-specs">
                 <div class="field">
-                    <label for="weight">Robot Weight</label>
+                    <label for="weight" data-tipso="Total weight of the robot, including battery and bumpers">Robot Weight</label>
                     <input id="weight" type="number" step="any" min="0" value="154">
                     <select class="weight-units" id="weight-units">
                         <option value="0.453592" class="imperial">lbs</option>
@@ -107,7 +109,7 @@
                     </select>
                 </div>
                 <div class="field">
-                    <label for="driven_weight">Driven Weight</label>
+                    <label for="driven_weight" data-tipso="Percent of the robot weight that rests on driven wheels (usually 100% unless the robot has undriven wheels)">Driven Weight</label>
                     <input id="driven_weight" type="number" step="any" min="0" value="100">
                     <span>&nbsp;%</span>
                 </div>
@@ -120,31 +122,31 @@
                     </select>
                 </div>
                 <div class="field">
-                    <label for="static_cof">Static CoF</label>
+                    <label for="static_cof" data-tipso="Static coefficient of friction. Property of the wheel tread and floor surface">Static CoF</label>
                     <input id="static_cof" type="number" step="any" min="0" value="1.1">
                     <span></span>
                 </div>
                 <div class="field">
-                    <label for="dynamic_cof">Dynamic CoF</label>
+                    <label for="dynamic_cof" data-tipso="Dynamic coefficient of friction. Property of the wheel tread and floor surface">Dynamic CoF</label>
                     <input id="dynamic_cof" type="number" step="any" min="0" value="1.0">
                     <span></span>
                 </div>
             </div>
             <div class="page-element" id="gear-ratio">
-                <h3>Gear Ratio</h3>
-                <div class="field">
+                <h3 data-tipso="Enter the reduction ratios in the grivetrain system here">Gear Ratio</h3>
+                <div class="field tipso-onload" style="border-bottom: none;" data-tipso="Enter the drivetrain gear ratio">
                     <input id="gear1a" type="number" step="any" min="0">
-                    <span> : </span>
+                    <span>&nbsp;:&nbsp;</span>
                     <input id="gear1b" type="number" step="any" min="0">
                 </div>
                 <div class="field">
                     <input id="gear2a" type="number" step="any" min="0">
-                    <span> : </span>
+                    <span>&nbsp;:&nbsp;</span>
                     <input id="gear2b" type="number" step="any" min="0">
                 </div>
                 <div class="field">
                     <input id="gear3a" type="number" step="any" min="0">
-                    <span> : </span>
+                    <span>&nbsp;:&nbsp;</span>
                     <input id="gear3b" type="number" step="any" min="0">
                 </div>
                 <div class="field">
@@ -154,7 +156,7 @@
                 </div>
             </div>
             <div class="page-element" id="outputs">
-                <label for="free_speed">Free Speed</label>
+                <label for="free_speed" data-tipso="Theoretical maximum speed of the drivetrain given an infinite time to accelerate">Free Speed</label>
                 <div class="field">
                     <input id="free_speed" type="number" disabled>
                     <select id="free_speed-units">
@@ -163,7 +165,7 @@
                     </select>
                 </div>
                 <div style="height: 5px;"></div>
-                <label for="push_current">Slip Current</label>
+                <label for="push_current" data-tipso="Maximum current per motor when pushing against an immovable object">Slip Current</label>
                 <div class="field">
                     <input id="push_current" type="number" disabled>
                     <span>&nbsp;A</span>
@@ -171,15 +173,15 @@
             </div>
             <div class="page-element" id="sim-settings">
                 <div class="field">
-                    <label for="distance">Sprint Diatance</label>
-                    <input id="distance" type="number" step="any" min="0">
+                    <label for="distance" data-tipso="Distance to cover in the simulation">Sprint Diatance</label>
+                    <input id="distance" type="number" step="any" min="0" class="tipso-onload" data-tipso="Enter the desired sprint distance">
                     <select id="distance-units">
                         <option value="0.3048" class="imperial">feet</option>
                         <option value="1" class="metric" selected>meters</option>
                     </select>
                 </div>
                 <div class="field">
-                    <label for="stop-type">Stopping Type</label>
+                    <label for="stop-type" data-tipso="How the simulation should end when the sprint distance is reached. Predictive will attempt to end at the target at zero speed. Stop After will hit the target at full speed then come to a stop. No Stop ends the simulation when the target is hit at full speed.">Stopping Type</label>
                     <select id="stop-type">
                         <option>Predictive</option>
                         <option>Stop After</option>
@@ -187,7 +189,7 @@
                     </select>
                 </div>
                 <div class="field">
-                    <label for="stop-method">Stopping Method</label>
+                    <label for="stop-method" data-tipso="Method used to stop the robot. Coast and Brake are motor controller settings when output is set to zero. Reverse gives the motor full voltage opposite the direction of travel.">Stopping Method</label>
                     <select id="stop-method">
                         <option>Coast</option>
                         <option>Brake</option>
@@ -195,12 +197,12 @@
                     </select>
                 </div>
                 <div class="field">
-                    <label for="max_time">Max Sim. Time</label>
+                    <label for="max_time" data-tipso="Simulation ends after this time regardless of whether the target is hit">Max Sim. Time</label>
                     <input id="max_time" type="number" step="any" min="0" value="4">
                     <span>&nbsp;sec</span>
                 </div>
                 <div class="field">
-                    <label for="timestep">Sim. Timestep</label>
+                    <label for="timestep" data-tipso="Timestep for the discrete simulation. Smaller values are more accurate but will take longer to compute">Sim. Timestep</label>
                     <input id="timestep" type="number" step="any" min="0" value="1">
                     <span>&nbsp;ms</span>
                 </div>
