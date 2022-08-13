@@ -38,8 +38,9 @@ div.cyl:last-child, div.tank:last-child {
     border: none;
 }
 
-div.cyl label {
+div.cyl label, div.tank label, div#comp label {
     white-space: nowrap;
+    margin-right: auto;
 }
 
 input.name {
@@ -100,7 +101,7 @@ div.tank {
     flex-direction: column;
 }
 
-div.tanks_total {
+div.tanks-total {
     flex-direction: row;
     margin-top: 3px;
 }

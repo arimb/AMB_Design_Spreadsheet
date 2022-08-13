@@ -10,44 +10,44 @@ $(document).ready(function(){
                     <option value="1" class="imperial">inch</option>
                     <option value="0.03937" class="metric">mm</option>
                 </select>
-                <label>Bore Diam.</label>
+                <label data-tipso="Inside diameter of the cylinder body">Bore Diam.</label>
                 <div class="field">
                     <input id="bore${i}" class="bore dist" type="number" min="0">
                     &nbsp;<span class="unit"></span>
                 </div>
-                <label>Rod Diam.</label>
+                <label data-tipso="Diameter of the piston rod">Rod Diam.</label>
                 <div class="field">
                     <input id="rod${i}" class="rod dist" type="number" min="0">
                     &nbsp;<span class="unit"></span>
                 </div>
-                <label>Stroke Length</label>
+                <label data-tipso="Length of the piston stroke. Can be multiplied by the number of equivalent cylinders tied together">Stroke Length</label>
                 <div class="field">
                     <input id="stroke${i}" class="stroke dist" type="number" min="0">
                     &nbsp;<span class="unit"></span>
                 </div>
                 <br>
-                <label>Push Pressure</label>
+                <label data-tipso="Pressure used to extend the cylinder">Push Pressure</label>
                 <div class="field">
                     <input id="push_press${i}" class="push_pressure" type="number" min="0" max="60" value="60">
                     &nbsp;<span>psig</span>
                 </div>
-                <label>Pull Pressure</label>
+                <label data-tipso="Pressure used to retract the cylinder">Pull Pressure</label>
                 <div class="field">
                     <input id="pull_press${i}" class="pull_pressure" type="number" min="0" max="60" value="60">
                     &nbsp;<span>psig</span>
                 </div>
                 <br>
-                <label>Time per Cycle</label>
+                <label data-tipso="Average time from the start of one cylinder extension to the start of the next one. Time between extension and retraction does not matter here">Time per Cycle</label>
                 <div class="field">
                     <input id="period${i}" class="period" type="number" min="0">
                     &nbsp;<span>sec</span>
                 </div>
-                <label>Start Time</label>
+                <label data-tipso="Seconds from match start until the cylinder begins cycling">Start Time</label>
                 <div class="field">
                     <input id="start${i}" class="start" type="number" min="0" max="150" value="0">
                     &nbsp;<span>sec</span>
                 </div>
-                <label>End Time</label>
+                <label data-tipso="Seconds from match start until the cylinder ends cycling">End Time</label>
                 <div class="field">
                     <input id="end${i}" class="end" type="number" min="0" max="150" value="150">
                     &nbsp;<span>sec</span>
@@ -76,6 +76,14 @@ $(document).ready(function(){
         }).change();
         $("div.cyl:last input, div.cyl:last select").change(simulate).change(url_query_set);
         $("div.cyl:last button").click(simulate);
+
+        $("div.cyl:last [data-tipso]").tipso({
+            width: null,
+            maxWidth: 300,
+            background: "#405a3f",
+            color: "#fff",
+            speed: 200
+        });
     }
 
     $("button.add").click(function(){
