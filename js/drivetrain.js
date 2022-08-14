@@ -10,15 +10,15 @@ $(document).ready(function(){
     $("select#motor_name").change(function(){
         if($("select#motor_name").val() == "Custom"){
             $("input[id^=motor_]").prop("disabled", false);
-            $("select#motor_stall_torque-units").prop("disabled", false);
+            $("select#motor_stall_torque-u").prop("disabled", false);
         }else{
             $("input#motor_free_speed").val(motors[$("select#motor_name").val()][0]);
             $("input#motor_stall_torque").val(motors[$("select#motor_name").val()][1]);
-            $("select#motor_stall_torque-units").val($("select#motor_stall_torque-units").children()[0].value);
+            $("select#motor_stall_torque-u").val($("select#motor_stall_torque-u").children()[0].value);
             $("input#motor_free_current").val(motors[$("select#motor_name").val()][2]);
             $("input#motor_stall_current").val(motors[$("select#motor_name").val()][3]);
             $("input[id^=motor_]").prop("disabled", true);
-            $("select#motor_stall_torque-units").prop("disabled", true);
+            $("select#motor_stall_torque-u").prop("disabled", true);
         }
         update_motor();
     });
@@ -40,7 +40,7 @@ $(document).ready(function(){
     // Update motor properties
     function update_motor(){
         wf = $("input#motor_free_speed").val() * (Math.PI/30);
-        Ts = $("input#motor_stall_torque").val() * $("select#motor_stall_torque-units").val() * $("input#num_motors").val();
+        Ts = $("input#motor_stall_torque").val() * $("select#motor_stall_torque-u").val() * $("input#num_motors").val();
         eff = $("input#gearbox_efficiency").val() / 100;
         If = $("input#motor_free_current").val() * $("input#num_motors").val();
         Is = $("input#motor_stall_current").val() * $("input#num_motors").val();
@@ -77,7 +77,7 @@ $(document).ready(function(){
 
 function simulate(ratio){
     console.log(ratio);
-    const xmax = $("input#distance").val() * $("select#distance-units").val();
+    const xmax = $("input#distance").val() * $("select#distance-u").val();
     const tmax = $("input#max_time").val();
     const dt = $("input#timestep").val() / 1000;
     const filtering = 0.6;
@@ -87,8 +87,8 @@ function simulate(ratio){
     const Imax = $("input#current_limit").val() ? $("input#current_limit").val() * $("input#num_motors").val() : Infinity;
     const dVmax = ($("input#voltage_ramp").val() ? $("input#voltage_ramp").val() : 1200) * dt;
 
-    const m = $("input#weight").val() * $("select#weight-units").val();
-    const r = $("input#wheel_diam").val()/2 * $("select#wheel_diam-units").val();
+    const m = $("input#weight").val() * $("select#weight-u").val();
+    const r = $("input#wheel_diam").val()/2 * $("select#wheel_diam-u").val();
     const mu_s = $("input#static_cof").val() * ($("input#driven_weight").val() / 100);
     const mu_k = $("input#dynamic_cof").val() * ($("input#driven_weight").val() / 100);
 
@@ -103,7 +103,7 @@ function simulate(ratio){
     const stop_type = $("select#stop-type").val();
     const stop_method = $("select#stop-method").val();
 
-    const free_speed = vmax / $("select#free_speed-units").val();
+    const free_speed = vmax / $("select#free_speed-u").val();
     const push_current = (Tslip_k/ratio/(km*eff) + If) / $("input#num_motors").val();
 
     // console.clear();
@@ -201,31 +201,31 @@ function update_graph(output){
     const data = output[1];
     $("canvas#simulation").remove();
     $("div.graphs").prepend('<canvas id="simulation"></canvas>');
-    let dist_unit = $("select#distance-units option:selected").text() == "meters" ? "m" : "ft";
+    let dist_unit = $("select#distance-u option:selected").text() == "meters" ? "m" : "ft";
     var graph = new Chart("simulation", {
         type: "line",
         data: {
             labels: times.map(time => time.toFixed(3)),
             datasets: [{
-                data: data.map(function(value,index) { return value[0] / $("select#distance-units").val(); }),
+                data: data.map(function(value,index) { return value[0] / $("select#distance-u").val(); }),
                 label: "Position",
                 borderColor: "blue",
                 fill: false,
                 pointRadius: 0
             },{
-                data: data.map(function(value,index) { return value[1] / $("select#distance-units").val(); }),
+                data: data.map(function(value,index) { return value[1] / $("select#distance-u").val(); }),
                 label: "Velocity",
                 borderColor: "green",
                 fill: false,
                 pointRadius: 0
             },{
-                data: data.map(function(value,index) { return value[6] ? value[2] / $("select#distance-units").val() : NaN; }),
+                data: data.map(function(value,index) { return value[6] ? value[2] / $("select#distance-u").val() : NaN; }),
                 label: "Slip",
                 borderColor: "black",
                 fill: false,
                 pointRadius: 0
             },{
-                data: data.map(function(value,index) { return value[2] / $("select#distance-units").val(); }),
+                data: data.map(function(value,index) { return value[2] / $("select#distance-u").val(); }),
                 label: "Acceleration",
                 borderColor: "red",
                 fill: false,
@@ -354,7 +354,7 @@ function update_ratios_graph(){
                     type: "linear",
                     title: {
                         display: true,
-                        text: `Velocity (${$("select#free_speed-units option:selected").text()})`,
+                        text: `Velocity (${$("select#free_speed-u option:selected").text()})`,
                     },
                     position: "right"
                 },

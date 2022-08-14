@@ -38,7 +38,7 @@
                     <div class="field">
                         <label for="diameter" data-tipso="Outer diameter of the lead screw">Diameter</label>
                         <input id="diameter" type="number" step="any" min="0">
-                        <select id="diameter-units">
+                        <select id="diameter-u">
                             <option value="0.0254" class="imperial">in</option>
                             <option value="0.001" class="metric">mm</option>
                         </select>
@@ -100,7 +100,7 @@
                     <div class="field">
                         <label for="force" data-tipso="Linear force applied on the nut">Applied Force</label>
                         <input id="force" type="number" step="any" min="0">
-                        <select id="force-units">
+                        <select id="force-u">
                             <option value="4.448" class="imperial">lbs</option>
                             <option value="9.801">kg</option>
                             <option value="1" class="metric">N</option>
@@ -110,7 +110,7 @@
                     <div class="field">
                         <label for="raise_torque" data-tipso="Torque needed to apply to the screw in order to oppose the applied load">Raise Torque</label>
                         <input id="raise_torque" type="number" step="any" min="0">
-                        <select id="raise_torque-units">
+                        <select id="raise_torque-u">
                             <option value="0.113" class="imperial">in-lbs</option>
                             <option value="1" class="metric">Nm</option>
                         </select>
@@ -119,7 +119,7 @@
                     <div class="field">
                         <label for="lower_torque" data-tipso="If positive, the torque needed to apply to the screw to allow the screw to spin in thesame  direction as the applied force. If negative, the torque generated when the given force is applied on the nut, spinning the screw.">Lower Torque</label>
                         <input id="lower_torque" type="number" step="any" min="0">
-                        <select id="lower_torque-units">
+                        <select id="lower_torque-u">
                             <option value="0.113" class="imperial">in-lbs</option>
                             <option value="1" class="metric">Nm</option>
                         </select>
@@ -128,7 +128,7 @@
                     <div class="field">
                         <label for="raise_load" data-tipso="Force needed to apply at the equivalent radius to generate the raise torque">Equiv. Raise Load</label>
                         <input id="raise_load" type="number" step="any" min="0">
-                        <select id="raise_load-units">
+                        <select id="raise_load-u">
                             <option value="4.448" class="imperial">lbs</option>
                             <option value="9.801">kg</option>
                             <option value="1" class="metric">N</option>
@@ -138,7 +138,7 @@
                     <div class="field">
                         <label for="lower_load" data-tipso="Force needed to apply at the equivalent radius to generate the lower torque">Equiv. Lower Load</label>
                         <input id="lower_load" type="number" step="any" min="0">
-                        <select id="lower_load-units">
+                        <select id="lower_load-u">
                             <option value="4.448" class="imperial">lbs</option>
                             <option value="9.801">kg</option>
                             <option value="1" class="metric">N</option>
@@ -150,7 +150,7 @@
                     <div class="field">
                         <label for="lin_speed" data-tipso="Linear speed of the nut corresponding to the rotational speed below">Linear Speed</label>
                         <input id="lin_speed" type="number" step="any" min="0">
-                        <select id="lin_speed-units">
+                        <select id="lin_speed-u">
                             <option value="0.3048" class="imperial">feet/s</option>
                             <option value="1" class="metric">m/s</option>
                             <option value="0.0254">inch/s</option>
@@ -160,7 +160,7 @@
                     <div class="field">
                         <label for="rot_speed" data-tipso="Rotation speed of the screw that corresponds to the linear speed above">Rotational Speed</label>
                         <input id="rot_speed" type="number" step="any" min="0">
-                        <select id="rot_speed-units">
+                        <select id="rot_speed-u">
                             <option value="0.01667">rpm</option>
                             <option value="1">rev/s</option>
                             <option value="6.283">rad/s</option>

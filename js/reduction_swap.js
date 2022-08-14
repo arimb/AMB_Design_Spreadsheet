@@ -8,8 +8,8 @@ $(document).ready(function(){
     });
     $("input[name=current]").change();
 
-    $("input[name=current], select[id$=_cc-units]").change(() => {
-        let el = $(`div.${$("input[name=current]:checked").prop("id")} select[id$=_cc-units]`);
+    $("input[name=current], select[id$=_cc-u]").change(() => {
+        let el = $(`div.${$("input[name=current]:checked").prop("id")} select[id$=_cc-u]`);
         unit = el.val();
         $(".unit").html(`C-C (${el.children("option:selected").text().substr(0,2)})`);
     });
@@ -20,7 +20,7 @@ $(document).ready(function(){
         let dp = parseInt($("input#gear_dp").val());
         let D = (gear1+gear2)/(2*dp);
         if (!isNaN(D)) {
-            $("input#gear_cc").val(+((D / $("select#gear_cc-units").val()).toFixed(3)));
+            $("input#gear_cc").val(+((D / $("select#gear_cc-u").val()).toFixed(3)));
             if ($("input[name=current]:checked").prop("id") == "gears")
                 current_cc = D;
         } else
@@ -28,7 +28,7 @@ $(document).ready(function(){
     });
 
     $("input#belt, div.belt input, div.belt select").change(function(){
-        let pitch = $("input#belt_pitch").val() * $("select#belt_pitch-units").val();
+        let pitch = $("input#belt_pitch").val() * $("select#belt_pitch-u").val();
         let diam1 = $("input#pulley1").val() * pitch / Math.PI;
         let diam2 = $("input#pulley2").val() * pitch / Math.PI;
         let target = parseInt($("input#links").val());
@@ -46,7 +46,7 @@ $(document).ready(function(){
             current = (2*L + diam1*alpha + diam2*(Math.PI-alpha))/pitch;
         } while (Math.abs(target - current) > 0.001);
         if (!isNaN(D)) {
-            $("input#belt_cc").val(+((D / $("select#belt_cc-units").val()).toFixed(3)));
+            $("input#belt_cc").val(+((D / $("select#belt_cc-u").val()).toFixed(3)));
             if ($("input[name=current]:checked").prop("id") == "belt")
                 current_cc = D;
         } else
@@ -54,7 +54,7 @@ $(document).ready(function(){
     });
 
     $("input#custom, input#custom_cc").change(() => 
-        current_cc = $("input#custom_cc").val() * $("select#custom_cc-units").val()
+        current_cc = $("input#custom_cc").val() * $("select#custom_cc-u").val()
     );
 
     $("input, select").change(calculate);
@@ -62,7 +62,7 @@ $(document).ready(function(){
 });
 
 function calculate(){
-    let cc_dev = $("input#dist_dev").val() * $("select#dist_dev-units").val();
+    let cc_dev = $("input#dist_dev").val() * $("select#dist_dev-u").val();
     let min_cc = current_cc - cc_dev;
     let max_cc = current_cc + cc_dev;
     let min_ratio = $("input#ratio").val() * (1 - $("input#ratio_dev").val()/100);

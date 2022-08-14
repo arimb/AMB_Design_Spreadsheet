@@ -19,24 +19,24 @@ var friction = {
 
 $(document).ready(function(){
 
-    $("select#diameter-units").change(() => $("span.pitch").text($("select#diameter-units option:selected").text()));
+    $("select#diameter-u").change(() => $("span.pitch").text($("select#diameter-u option:selected").text()));
 
     $("div#params, div#material").find("input, select").change(function(){
-        let d = $("input#diameter").val() * $("select#diameter-units").val();
-        let p = $("input#pitch").val() * $("select#diameter-units").val();
+        let d = $("input#diameter").val() * $("select#diameter-u").val();
+        let p = $("input#pitch").val() * $("select#diameter-u").val();
         let dp = d - p/2;
         let n = $("input#starts").val();
         let a = $("input#angle").val() / 2 * Math.PI / 180;
         let mu = friction[$("select#nut-material").val()][$("select#screw-material").val()][$("input#lube").prop("checked") ? 1 : 0];
         if (d==0 || p==0 || n=="" || a==0) return;
         $("input#eff").val(+(( n*p/(Math.PI*dp) * (Math.PI*dp*Math.cos(a)-mu*n*p)/(Math.PI*mu*dp+n*p*Math.cos(a)) * 100 ).toFixed(1)));
-        $("input#equiv_radius").val(+(( n*p/(2*Math.PI) / $("select#diameter-units").val() ).toFixed(4)));
+        $("input#equiv_radius").val(+(( n*p/(2*Math.PI) / $("select#diameter-u").val() ).toFixed(4)));
         $("input#backdrive").val( (n*p*Math.cos(a) > Math.PI*mu*dp) ? "Yes" : "No" );
     });
 
     $("div#forces input[type=radio]").change(() => {
-        let d = $("input#diameter").val() * $("select#diameter-units").val();
-        let p = $("input#pitch").val() * $("select#diameter-units").val();
+        let d = $("input#diameter").val() * $("select#diameter-u").val();
+        let p = $("input#pitch").val() * $("select#diameter-u").val();
         let dp = d - p/2;
         let n = $("input#starts").val();
         let a = $("input#angle").val() / 2 * Math.PI / 180;
@@ -44,67 +44,67 @@ $(document).ready(function(){
         if (d==0 || p==0 || n=="" || a==0) return;
         switch ($("div#forces input[type=radio]:checked").prop("id")) {
             case "force-check": {
-                let F = $("input#force").val() * $("select#force-units").val();
+                let F = $("input#force").val() * $("select#force-u").val();
                 let Tr = F*dp/2 * (Math.PI*mu*dp + n*p*Math.cos(a))/(Math.PI*dp*Math.cos(a) - mu*n*p);
                 let Tl = F*dp/2 * (Math.PI*mu*dp - n*p*Math.cos(a))/(Math.PI*dp*Math.cos(a) + mu*n*p);
-                $("input#raise_torque").val(+(( Tr / $("select#raise_torque-units").val() ).toFixed(2)));
-                $("input#lower_torque").val(+(( Tl / $("select#lower_torque-units").val() ).toFixed(2)));
-                $("input#raise_load").val(+(( Tr * (2*Math.PI)/(n*p) / $("select#raise_load-units").val() ).toFixed(2)));
-                $("input#lower_load").val(+(( Tl * (2*Math.PI)/(n*p) / $("select#lower_load-units").val() ).toFixed(2)));
+                $("input#raise_torque").val(+(( Tr / $("select#raise_torque-u").val() ).toFixed(2)));
+                $("input#lower_torque").val(+(( Tl / $("select#lower_torque-u").val() ).toFixed(2)));
+                $("input#raise_load").val(+(( Tr * (2*Math.PI)/(n*p) / $("select#raise_load-u").val() ).toFixed(2)));
+                $("input#lower_load").val(+(( Tl * (2*Math.PI)/(n*p) / $("select#lower_load-u").val() ).toFixed(2)));
             } break;
             case "raise_torque-check": {
-                let Tr = $("input#raise_torque").val() * $("select#raise_torque-units").val();
+                let Tr = $("input#raise_torque").val() * $("select#raise_torque-u").val();
                 let F = Tr / (dp/2 * (Math.PI*mu*dp + n*p*Math.cos(a))/(Math.PI*dp*Math.cos(a) - mu*n*p));
                 let Tl = F*dp/2 * (Math.PI*mu*dp - n*p*Math.cos(a))/(Math.PI*dp*Math.cos(a) + mu*n*p);
-                $("input#force").val(+(( F / $("select#force-units").val() ).toFixed(2)));
-                $("input#lower_torque").val(+(( Tl / $("select#lower_torque-units").val() ).toFixed(2)));
-                $("input#raise_load").val(+(( Tr * (2*Math.PI)/(n*p) / $("select#raise_load-units").val() ).toFixed(2)));
-                $("input#lower_load").val(+(( Tl * (2*Math.PI)/(n*p) / $("select#lower_load-units").val() ).toFixed(2)));
+                $("input#force").val(+(( F / $("select#force-u").val() ).toFixed(2)));
+                $("input#lower_torque").val(+(( Tl / $("select#lower_torque-u").val() ).toFixed(2)));
+                $("input#raise_load").val(+(( Tr * (2*Math.PI)/(n*p) / $("select#raise_load-u").val() ).toFixed(2)));
+                $("input#lower_load").val(+(( Tl * (2*Math.PI)/(n*p) / $("select#lower_load-u").val() ).toFixed(2)));
             } break;
             case "lower_torque-check": {
-                let Tl = $("input#lower_torque").val() * $("select#lower_torque-units").val();
+                let Tl = $("input#lower_torque").val() * $("select#lower_torque-u").val();
                 let F = Tl / (dp/2 * (Math.PI*mu*dp - n*p*Math.cos(a))/(Math.PI*dp*Math.cos(a) + mu*n*p));
                 let Tr = F*dp/2 * (Math.PI*mu*dp + n*p*Math.cos(a))/(Math.PI*dp*Math.cos(a) - mu*n*p);
-                $("input#force").val(+(( F / $("select#force-units").val() ).toFixed(2)));
-                $("input#raise_torque").val(+(( Tr / $("select#raise_torque-units").val() ).toFixed(2)));
-                $("input#raise_load").val(+(( Tr * (2*Math.PI)/(n*p) / $("select#raise_load-units").val() ).toFixed(2)));
-                $("input#lower_load").val(+(( Tl * (2*Math.PI)/(n*p) / $("select#lower_load-units").val() ).toFixed(2)));
+                $("input#force").val(+(( F / $("select#force-u").val() ).toFixed(2)));
+                $("input#raise_torque").val(+(( Tr / $("select#raise_torque-u").val() ).toFixed(2)));
+                $("input#raise_load").val(+(( Tr * (2*Math.PI)/(n*p) / $("select#raise_load-u").val() ).toFixed(2)));
+                $("input#lower_load").val(+(( Tl * (2*Math.PI)/(n*p) / $("select#lower_load-u").val() ).toFixed(2)));
             } break;
             case "raise_load-check": {
-                let Fr = $("input#raise_load").val() * $("select#raise_load-units").val();
+                let Fr = $("input#raise_load").val() * $("select#raise_load-u").val();
                 let Tr = Fr * (n*p)/(2*Math.PI);
                 let F = Tr / (dp/2 * (Math.PI*mu*dp + n*p*Math.cos(a))/(Math.PI*dp*Math.cos(a) - mu*n*p));
                 let Tl = F*dp/2 * (Math.PI*mu*dp - n*p*Math.cos(a))/(Math.PI*dp*Math.cos(a) + mu*n*p);
-                $("input#force").val(+(( F / $("select#force-units").val() ).toFixed(2)));
-                $("input#raise_torque").val(+(( Tr / $("select#raise_torque-units").val() ).toFixed(2)));
-                $("input#lower_torque").val(+(( Tl / $("select#lower_torque-units").val() ).toFixed(2)));
-                $("input#lower_load").val(+(( Tl * (2*Math.PI)/(n*p) / $("select#lower_load-units").val() ).toFixed(2)));
+                $("input#force").val(+(( F / $("select#force-u").val() ).toFixed(2)));
+                $("input#raise_torque").val(+(( Tr / $("select#raise_torque-u").val() ).toFixed(2)));
+                $("input#lower_torque").val(+(( Tl / $("select#lower_torque-u").val() ).toFixed(2)));
+                $("input#lower_load").val(+(( Tl * (2*Math.PI)/(n*p) / $("select#lower_load-u").val() ).toFixed(2)));
             } break;
             case "lower_load-check": {
-                let Fl = $("input#lower_load").val() * $("select#lower_load-units").val();
+                let Fl = $("input#lower_load").val() * $("select#lower_load-u").val();
                 let Tl = Fl * (n*p)/(2*Math.PI);
                 let F = Tl / (dp/2 * (Math.PI*mu*dp - n*p*Math.cos(a))/(Math.PI*dp*Math.cos(a) + mu*n*p));
                 let Tr = F*dp/2 * (Math.PI*mu*dp + n*p*Math.cos(a))/(Math.PI*dp*Math.cos(a) - mu*n*p);
-                $("input#force").val(+(( F / $("select#force-units").val() ).toFixed(2)));
-                $("input#raise_torque").val(+(( Tr / $("select#raise_torque-units").val() ).toFixed(2)));
-                $("input#lower_torque").val(+(( Tl / $("select#lower_torque-units").val() ).toFixed(2)));
-                $("input#raise_load").val(+(( Tr * (2*Math.PI)/(n*p) / $("select#raise_load-units").val() ).toFixed(2)));
+                $("input#force").val(+(( F / $("select#force-u").val() ).toFixed(2)));
+                $("input#raise_torque").val(+(( Tr / $("select#raise_torque-u").val() ).toFixed(2)));
+                $("input#lower_torque").val(+(( Tl / $("select#lower_torque-u").val() ).toFixed(2)));
+                $("input#raise_load").val(+(( Tr * (2*Math.PI)/(n*p) / $("select#raise_load-u").val() ).toFixed(2)));
             } break;
         }
     });
 
     $("div#speeds input[type=radio]").change(() => {
-        let lead = ($("input#pitch").val() * $("select#diameter-units").val()) * $("input#starts").val();
+        let lead = ($("input#pitch").val() * $("select#diameter-u").val()) * $("input#starts").val();
         switch ($("div#speeds input[type=radio]:checked").prop("id")) {
             case "lin_speed-check": {
-                let v = $("input#lin_speed").val() * $("select#lin_speed-units").val();
+                let v = $("input#lin_speed").val() * $("select#lin_speed-u").val();
                 console.log(v);
-                $("input#rot_speed").val(+(( v / lead / $("select#rot_speed-units").val() ).toFixed(0)));
+                $("input#rot_speed").val(+(( v / lead / $("select#rot_speed-u").val() ).toFixed(0)));
             } break;
             case "rot_speed-check": {
-                let w = $("input#rot_speed").val() * $("select#rot_speed-units").val();
+                let w = $("input#rot_speed").val() * $("select#rot_speed-u").val();
                 console.log(w);
-                $("input#lin_speed").val(+(( w * lead / $("select#lin_speed-units").val() ).toFixed(2)));
+                $("input#lin_speed").val(+(( w * lead / $("select#lin_speed-u").val() ).toFixed(2)));
             } break;
         }
     });
@@ -119,10 +119,10 @@ $(document).ready(function(){
     });
 
     $("button.insert").click(() => {
-        window.open(`mechanism.html?gearbox_efficiency=${$("input#eff").val()}&radius-units=${$("select#diameter-units").val()}&radius=${$("input#equiv_radius").val()}`, "_blank");
+        window.open(`mechanism.html?gearbox_efficiency=${$("input#eff").val()}&radius-u=${$("select#diameter-u").val()}&radius=${$("input#equiv_radius").val()}`, "_blank");
     });
 
-    $("select#diameter-units").change(function(){
+    $("select#diameter-u").change(function(){
         let input = $("input#pitch");
         if (input.val() != "") {
             let old_val = input.val();
@@ -136,7 +136,7 @@ $(document).ready(function(){
             input.data("full-val", new_val)
         }
     });
-    let change_events = $._data($("select#diameter-units")[0], "events").change;
+    let change_events = $._data($("select#diameter-u")[0], "events").change;
     change_events.unshift(change_events.pop());
 
 });

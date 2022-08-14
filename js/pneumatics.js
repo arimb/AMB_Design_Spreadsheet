@@ -116,16 +116,16 @@ $(document).ready(function(){
     function update_tanks(){
         total_vol = 0;
         $("div#tanks").find("div.tank").each(function(){
-            total_vol += $(this).find("input.tank_vol").val() * $(this).find("select.tank_vol-units").val() * $(this).find("input.tank_qty").val() * $(this).find("input.tank_press").val();
+            total_vol += $(this).find("input.tank_vol").val() * $(this).find("select.tank_vol-u").val() * $(this).find("input.tank_qty").val() * $(this).find("input.tank_press").val();
         });
         total_vol /= 120;
-        $("input#tanks_total").val(+((total_vol / $("select#tanks_total-units").val()).toFixed(2)));
+        $("input#tanks_total").val(+((total_vol / $("select#tanks_total-u").val()).toFixed(2)));
     }
 
     $("div#tanks").find("input:not(.name), select").change(update_tanks);
     update_tanks();
 
-    $("select.tank_vol-units").each((i, el) => $(el).data("unit-factor", $(el).val())).change(function(){
+    $("select.tank_vol-u").each((i, el) => $(el).data("unit-factor", $(el).val())).change(function(){
         let input = $(this).siblings("input." + $(this).prop("class").split("-")[0]);
         input.val(+((input.val() * $(this).data("unit-factor") / $(this).val()).toFixed(3)));
         $(this).data("unit-factor", $(this).val());

@@ -29,7 +29,7 @@ $(document).ready(function(){
             $(".belt").hide();
             $(".chain").show();
         }else{
-            const tmp = units[$("select#pitch-units option:selected").prop("class")];
+            const tmp = units[$("select#pitch-u option:selected").prop("class")];
             pitch = dimensions[$("select#type").val()][0] / tmp[1];
             $("input#pitch").val(+(pitch.toFixed(dist_decimals)));
             $("input#width").val(+((dimensions[$("select#type").val()][1] / tmp[1]).toFixed(dist_decimals)));
@@ -61,8 +61,8 @@ $(document).ready(function(){
     });
 
     // Switch units
-    $("select#pitch-units").change(function(){
-        const tmp = units[$("select#pitch-units option:selected").prop("class")];
+    $("select#pitch-u").change(function(){
+        const tmp = units[$("select#pitch-u option:selected").prop("class")];
         dist_decimals = tmp[0]=="in" ? 3 : 2;
         $("span.dist_unit").html(tmp[0]);
         $("span.force_unit").html(tmp[2]);
@@ -70,7 +70,7 @@ $(document).ready(function(){
         $("select#type").change();
         if ($("input#approx_dist").val()!="")   $("input#approx_dist").val(+(($("input#approx_dist").val() * 25.4**(tmp[0]=="in"?-1:1)).toFixed(dist_decimals)));
     });
-    $("select#pitch-units").change();
+    $("select#pitch-u").change();
     
     // Switch forward/backward calculation
     $("input[type=radio][name=driving]").change(function(){

@@ -39,7 +39,7 @@ div.page-element h2 {
     margin: 0 auto;
 }
 
-select#motor_name {
+select#motor {
     flex: 0 1 auto;
     min-width: 20em;
     align-self: center;
@@ -75,7 +75,7 @@ input[type=radio] {
     margin-left: 3px;
 }
 
-div.page-element#motor {
+div.page-element#motor-el {
     max-width: 500px;
 }
 

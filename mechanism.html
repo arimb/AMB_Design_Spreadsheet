@@ -34,42 +34,42 @@
             </div>
         </header>
         <main>
-            <div class="page-element" id="motor">
-                <select id="motor_name">
+            <div class="page-element" id="motor-el">
+                <select id="motor">
                     <option>Custom</option>
                 </select>
                 <div class="break"></div>
                 <div class="field">
-                    <label for="motor_free_speed">Free Speed</label>
-                    <input id="motor_free_speed" class="motor-update motor-prop" type="number" step="any" min="0" disabled>
+                    <label for="mot_wf">Free Speed</label>
+                    <input id="mot_wf" class="motor-update motor-prop" type="number" step="any" min="0" disabled>
                     &nbsp;rpm
                 </div>
                 <div class="field">
-                    <label for="motor_stall_torque">Stall Torque</label>
-                    <input id="motor_stall_torque" class="motor-update motor-prop" type="number" step="any" min="0" disabled>
-                    <select id="motor_stall_torque-units" class="motor-update motor-prop">
+                    <label for="mot_ts">Stall Torque</label>
+                    <input id="mot_ts" class="motor-update motor-prop" type="number" step="any" min="0" disabled>
+                    <select id="mot_ts-u" class="motor-update motor-prop">
                         <option value="1">Nm</option>
                         <option value="0.00706">oz-in</option>
                         <option value="1.35582">ft-lbs</option>
                     </select>
                 </div>
                 <div class="field">
-                    <label for="motor_free_current">Free Current</label>
-                    <input id="motor_free_current" class="motor-update motor-prop" type="number" step="any" min="0" disabled>
+                    <label for="mot_if">Free Current</label>
+                    <input id="mot_if" class="motor-update motor-prop" type="number" step="any" min="0" disabled>
                     &nbsp;Amps
                 </div>
                 <div class="field">
-                    <label for="motor_stall_current">Stall Current</label>
-                    <input id="motor_stall_current" class="motor-update motor-prop" type="number" step="any" min="0" disabled>
+                    <label for="mot_is">Stall Current</label>
+                    <input id="mot_is" class="motor-update motor-prop" type="number" step="any" min="0" disabled>
                     &nbsp;Amps
                 </div>
                 <div class="field">
-                    <label for="num_motors">Number of Motors</label>
-                    <input id="num_motors" class="motor-update" type="number" min="1" step="1" value="1">
+                    <label for="mot_num">Number of Motors</label>
+                    <input id="mot_num" class="motor-update" type="number" min="1" step="1" value="1">
                 </div>
                 <div class="field">
-                    <label for="applied_voltage" data-tipso="Voltage at the motor leads">Provided Voltage</label>
-                    <input id="applied_voltage" class="motor-update" type="number" step="any" min="0" value="12">
+                    <label for="volt" data-tipso="Voltage at the motor leads">Provided Voltage</label>
+                    <input id="volt" class="motor-update" type="number" step="any" min="0" value="12">
                     &nbsp;Volts
                 </div>
             </div>
@@ -77,7 +77,7 @@
                 <div class="field">
                     <label for="radius" data-tipso="Distance from the axis of rotation to the point the load force is applied. Also the radius used to translate rotational to linear motion">Radius</label>
                     <input id="radius" type="number" step="any" min="0" value="1">
-                    <select id="radius-units">
+                    <select id="radius-u">
                         <option value="0.0254" class="imperial">inch</option>
                         <option value="0.001" class="metric">mm</option>
                         <option value="0.3048">foot</option>
@@ -87,39 +87,39 @@
                 <div class="field">
                     <label for="load" data-tipso="Steady-state force applied on the mechanism at the above radius">Load Force</label>
                     <input id="load" type="number" step="any" min="0" value="50">
-                    <select id="load-units">
+                    <select id="load-u">
                         <option value="4.448" class="imperial">lbs</option>
                         <option value="9.81">kg</option>
                         <option value="1" class="metric">N</option>
                     </select>
                 </div>
                 <div class="field">
-                    <label for="gearbox_efficiency" data-tipso="Percent of mechanical power transfered from the motor to the mechanism output">Efficiency</label>
-                    <input id="gearbox_efficiency" type="number" step="any" min="0" max="100" value="90">
+                    <label for="gbx_eff" data-tipso="Percent of mechanical power transfered from the motor to the mechanism output">Efficiency</label>
+                    <input id="gbx_eff" type="number" step="any" min="0" max="100" value="90">
                     <span>&nbsp;%</span>
                 </div>
             </div>
             <div class="page-element" id="ratio-tester">
                 <h4 data-tipso="Sandbox to test different reductions. Click on the total ratio to copy below.">Ratio Tester</h4>
                 <div class="field">
-                    <input class="gearA" id="gearA1" type="number" step="any" min="0">
+                    <input class="gearA" id="gA1" type="number" step="any" min="0">
                     <span>&nbsp;:&nbsp;</span>
-                    <input class="gearB" id="gearB1" type="number" step="any" min="0">
+                    <input class="gearB" id="gB1" type="number" step="any" min="0">
                 </div>
                 <div class="field">
-                    <input class="gearA" id="gearA2" type="number" step="any" min="0">
+                    <input class="gearA" id="gA2" type="number" step="any" min="0">
                     <span>&nbsp;:&nbsp;</span>
-                    <input class="gearB" id="gearB2" type="number" step="any" min="0">
+                    <input class="gearB" id="gB2" type="number" step="any" min="0">
                 </div>
                 <div class="field">
-                    <input class="gearA" id="gearA3" type="number" step="any" min="0">
+                    <input class="gearA" id="gA3" type="number" step="any" min="0">
                     <span>&nbsp;:&nbsp;</span>
-                    <input class="gearB" id="gearB3" type="number" step="any" min="0">
+                    <input class="gearB" id="gB3" type="number" step="any" min="0">
                 </div>
                 <div class="field">
-                    <input class="gearA" id="gearA4" type="number" step="any" min="0">
+                    <input class="gearA" id="gA4" type="number" step="any" min="0">
                     <span>&nbsp;:&nbsp;</span>
-                    <input class="gearB" id="gearB4" type="number" step="any" min="0">
+                    <input class="gearB" id="gB4" type="number" step="any" min="0">
                 </div>
                 <div class="field">
                     <label>Total: </label>
@@ -131,90 +131,90 @@
             <div class="page-element" id="calculation">
                 <div class="inputs">
                     <div class="field">
-                        <label for="gear_ratio" data-tipso="Reduction ratio between motor(s) and output">Gear Ratio</label>
-                        <input id="gear_ratio" type="number" step="any" min="0">
+                        <label for="rat" data-tipso="Reduction ratio between motor(s) and output">Gear Ratio</label>
+                        <input id="rat" type="number" step="any" min="0">
                         <span>&nbsp;: 1</span>
-                        <input id="gear_ratio_check" type="radio" name="driving" checked>
+                        <input id="rat-c" type="radio" name="driving" checked>
                     </div>
                     <div class="field">
-                        <label for="rot_speed" data-tipso="Maximum rotational output speed when no load is applied">Free Rotational Speed</label>
-                        <input id="rot_speed" type="number" step="any" min="0">
-                        <select id="rot_speed-units">
+                        <label for="rot_f" data-tipso="Maximum rotational output speed when no load is applied">Free Rotational Speed</label>
+                        <input id="rot_f" type="number" step="any" min="0">
+                        <select id="rot_f-u">
                             <option value="6.283">rev/s</option>
                             <option value="0.10472">rpm</option>
                             <option value="1">rad/s</option>
                         </select>
-                        <input id="rot_speed_check" type="radio" name="driving">
+                        <input id="rot_f-c" type="radio" name="driving">
                     </div>
                     <div class="field">
-                        <label for="rot_speed_loaded" data-tipso="Rotational output speed when the load is applied">Loaded Rotational Speed</label>
-                        <input id="rot_speed_loaded" type="number" step="any" min="0">
-                        <select id="rot_speed_loaded-units">
+                        <label for="rot_l" data-tipso="Rotational output speed when the load is applied">Loaded Rotational Speed</label>
+                        <input id="rot_l" type="number" step="any" min="0">
+                        <select id="rot_l-u">
                             <option value="6.283">rev/s</option>
                             <option value="0.10472">rpm</option>
                             <option value="1">rad/s</option>
                         </select>
-                        <input id="rot_speed_loaded_check" type="radio" name="driving">
+                        <input id="rot_l-c" type="radio" name="driving">
                     </div>
                     <div class="field">
-                        <label for="lin_speed" data-tipso="Maximum linear output speed of the load radius when no load is applied">Free Linear Speed</label>
-                        <input id="lin_speed" type="number" step="any" min="0">
-                        <select id="lin_speed-units">
+                        <label for="lin_f" data-tipso="Maximum linear output speed of the load radius when no load is applied">Free Linear Speed</label>
+                        <input id="lin_f" type="number" step="any" min="0">
+                        <select id="lin_f-u">
                             <option value="0.3048" class="imperial">feet/s</option>
                             <option value="1" class="metric">m/s</option>
                             <option value="0.0254">inch/s</option>
                         </select>
-                        <input id="lin_speed_check" type="radio" name="driving">
+                        <input id="lin_f-c" type="radio" name="driving">
                     </div>
                     <div class="field">
-                        <label for="lin_speed_loaded" data-tipso="Linear output speed of the load radius when the load is applied">Loaded Linear Speed</label>
-                        <input id="lin_speed_loaded" type="number" step="any" min="0">
-                        <select id="lin_speed_loaded-units">
+                        <label for="lin_l" data-tipso="Linear output speed of the load radius when the load is applied">Loaded Linear Speed</label>
+                        <input id="lin_l" type="number" step="any" min="0">
+                        <select id="lin_l-u">
                             <option value="0.3048" class="imperial">feet/s</option>
                             <option value="1" class="metric">m/s</option>
                             <option value="0.0254">inch/s</option>
                         </select>
-                        <input id="lin_speed_loaded_check" type="radio" name="driving">
+                        <input id="lin_l-c" type="radio" name="driving">
                     </div>
                     <div class="field">
                         <label for="current" data-tipso="Current drawn by each motor when load is applied">Current Per Motor</label>
                         <input id="current" type="number" step="any" min="0">
                         <span>&nbsp;Amps</span>
-                        <input id="current_check" type="radio" name="driving">
+                        <input id="current-c" type="radio" name="driving">
                     </div>
                     <div class="field">
-                        <label for="stall_load" data-tipso="Load force needed to apply at the given radius (instead of the load specified above) to stall the system">Stall Load</label>
-                        <input id="stall_load" type="number" step="any" min="0">
-                        <select id="stall_load-units">
+                        <label for="st_load" data-tipso="Load force needed to apply at the given radius (instead of the load specified above) to stall the system">Stall Load</label>
+                        <input id="st_load" type="number" step="any" min="0">
+                        <select id="st_load-u">
                             <option value="4.448" class="imperial">lbs</option>
                             <option value="9.81">kg</option>
                             <option value="1" class="metric">N</option>
                         </select>
-                        <input id="stall_load_check" type="radio" name="driving">
+                        <input id="st_load-c" type="radio" name="driving">
                     </div>
                     <div class="field">
-                        <label for="stall_voltage" data-tipso="Voltage to give the motor (instead of the voltage specified above) to stall the system with the specified load">Stall Voltage</label>
-                        <input id="stall_voltage" type="number" step="any" min="0">
+                        <label for="st_volt" data-tipso="Voltage to give the motor (instead of the voltage specified above) to stall the system with the specified load">Stall Voltage</label>
+                        <input id="st_volt" type="number" step="any" min="0">
                         <span>&nbsp;Volts</span>
-                        <input id="stall_voltage_check" type="radio" name="driving">
+                        <input id="st_volt-c" type="radio" name="driving">
                     </div>
                     <div class="field">
-                        <label for="efficiency" data-tipso="Efficiency of converting electrical energy at the motor input to mechanical energy at the motor output">Motor Efficiency</label>
-                        <input id="efficiency" type="number" step="any" readonly>
+                        <label for="eff" data-tipso="Efficiency of converting electrical energy at the motor input to mechanical energy at the motor output">Motor Efficiency</label>
+                        <input id="eff" type="number" step="any" readonly>
                         <span>&nbsp;%</span>
                     </div>
                     <div class="max-buttons">
                         <button class="max" id="max_power" data-tipso="Set the gear ratio so that the motor(s) are working at their maximum output power for the provided load">
                             <a></a>
-                            <input id="max_power_check" type="radio" name="driving">
+                            <input id="max_power-c" type="radio" name="driving">
                             MAX POWER
                         </button>
-                        <button class="max" id="max_efficiency" data-tipso="Set the gear ratio so that the motor(s) are working at their maximum efficiency for the provided load">
-                            <input id="max_efficiency_check" type="radio" name="driving">
+                        <button class="max" id="max_eff" data-tipso="Set the gear ratio so that the motor(s) are working at their maximum efficiency for the provided load">
+                            <input id="max_eff-c" type="radio" name="driving">
                             MAX EFFICIENCY
                         </button>
                         <button class="max" id="stall" data-tipso="Set the gear ratio so that the motor(s) are stalled for the provided load">
-                            <input id="stall_check" type="radio" name="driving">
+                            <input id="stall-c" type="radio" name="driving">
                             STALL
                         </button>
                     </div>
@@ -222,11 +222,11 @@
                 <div class="graph">
                     <canvas id="graph"></canvas>
                     <div class="graph-limits">
-                        <input id="graph-min" type="number" step="any">
-                        <label for="graph-min" data-tipso="Graph minimum ratio (default is the max power ratio)">min</label>
+                        <input id="gr-min" type="number" step="any">
+                        <label for="gr-min" data-tipso="Graph minimum ratio (default is the max power ratio)">min</label>
                         <div style="flex: 1;"></div>
-                        <label for="graph-max" data-tipso="Graph maximum ratio (default is the max efficiency ratio)">max</label>
-                        <input id="graph-max" type="number" step="any">
+                        <label for="gr-max" data-tipso="Graph maximum ratio (default is the max efficiency ratio)">max</label>
+                        <input id="gr-max" type="number" step="any">
                     </div>
                 </div>
             </div>

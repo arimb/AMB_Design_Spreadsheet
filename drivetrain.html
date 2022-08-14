@@ -47,7 +47,7 @@
                 <div class="field">
                     <label for="motor_stall_torque">Stall Torque</label>
                     <input id="motor_stall_torque" type="number" step="any" min="0" disabled>
-                    <select id="motor_stall_torque-units">
+                    <select id="motor_stall_torque-u">
                         <option value="1">Nm</option>
                         <option value="0.00706">oz-in</option>
                         <option value="1.35582">ft-lbs</option>
@@ -104,7 +104,7 @@
                 <div class="field">
                     <label for="weight" data-tipso="Total weight of the robot, including battery and bumpers">Robot Weight</label>
                     <input id="weight" type="number" step="any" min="0" value="154">
-                    <select class="weight-units" id="weight-units">
+                    <select class="weight-u" id="weight-u">
                         <option value="0.453592" class="imperial">lbs</option>
                         <option value="1" class="metric">kg</option>
                     </select>
@@ -117,7 +117,7 @@
                 <div class="field">
                     <label for="wheel_diam">Wheel Diameter</label>
                     <input id="wheel_diam" type="number" step="any" min="0" value="4">
-                    <select id="wheel_diam-units">
+                    <select id="wheel_diam-u">
                         <option value="0.0254" class="imperial">in</option>
                         <option value="0.001" class="metric">mm</option>
                     </select>
@@ -160,7 +160,7 @@
                 <label for="free_speed" data-tipso="Theoretical maximum speed of the drivetrain given an infinite time to accelerate">Free Speed</label>
                 <div class="field">
                     <input id="free_speed" type="number" disabled>
-                    <select id="free_speed-units">
+                    <select id="free_speed-u">
                         <option value="0.3048" class="imperial">ft/s</option>
                         <option value="1" class="metric">m/s</option>
                     </select>
@@ -176,7 +176,7 @@
                 <div class="field">
                     <label for="distance" data-tipso="Distance to cover in the simulation">Sprint Diatance</label>
                     <input id="distance" type="number" step="any" min="0" class="tipso-onload tipso-nounderline" data-tipso="Enter the desired sprint distance">
-                    <select id="distance-units">
+                    <select id="distance-u">
                         <option value="0.3048" class="imperial">feet</option>
                         <option value="1" class="metric" selected>meters</option>
                     </select>

@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-    $("select[id$=-units]").each((i, el) => $(el).data("unit-factor", $(el).val())).change(update_units);
+    $("select[id$=-u]").each((i, el) => $(el).data("unit-factor", $(el).val())).change(update_units);
 
     $("button.header-button.docs").click(function(){
         window.open("docs/" + $(this).attr("data-link") + ".pdf", "_blank");
@@ -59,7 +59,7 @@ function url_query(){
         else
             input.val(params.get(key));
         
-        if (key.endsWith("-units"))
+        if (key.endsWith("-u"))
             input.data("unit-factor", params.get(key));
         input.change();
     }
