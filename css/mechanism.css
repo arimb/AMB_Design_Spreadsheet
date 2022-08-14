@@ -94,3 +94,20 @@ input#total-ratio {
     background-color: lightgray;
     border: 1px solid gray;
 }
+
+div.page-element#examples {
+    max-width: none;
+}
+
+summary > * {
+    cursor: pointer;
+    display: inline;
+}
+
+/* div#examples h3 {
+    font-size: 1.5em;
+} */
+
+p {
+    margin-block: 0.3em;
+}
