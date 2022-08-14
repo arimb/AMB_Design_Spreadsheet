@@ -15,6 +15,7 @@
                 $("button.header-button.docs").click(function(){
                     window.open("docs/" + $(this).attr("data-link") + ".pdf", "_blank");
                 });
+                $("button.header-button.excel").click(() => { window.open("archive/AMB Design Spreadsheet v5_0.xlsm"); })
                 $("[data-tipso]").tipso({
                     width: null,
                     maxWidth: 300,
@@ -35,6 +36,7 @@
             <div style="flex: 1;"></div>
             <div class="header-left">
                 <button class="header-button docs" data-link="all_docs">ALL<br>DOCS</button>
+                <button class="header-button excel">EXCEL<br>ARCHIVE</button>
             </div>
         </header>
         <main>
