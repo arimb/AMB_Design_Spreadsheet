@@ -10,6 +10,8 @@
         <link rel="stylesheet" href="css/beam_bend.css">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/tipso.min.css">
+        <script src="js/tipso.min.js"></script>
         <script src="js/calculators.js"></script>
         <script src="js/beam_bend.js"></script>
     </head>
@@ -32,15 +34,15 @@
         </header>
         <main>
             <div class="tab-header">
-                <div class="tab" id="between">
+                <div class="tab tipso-nounderline" id="between" data-tipso="Beam fixed on both ends with a force applied perpendicularly along its length">
                     <h4>Between Fixtures</h4>
                     <input id="between-select" type="radio" name="tab">
                 </div>
-                <div class="tab" id="cantilever">
+                <div class="tab tipso-nounderline" id="cantilever" data-tipso="Beam fixed on one end with a force applied perpendicularly at the free end">
                     <h4>Cantilevered</h4>
                     <input id="cantilever-select" type="radio" name="tab">
                 </div>
-                <div class="tab" id="twist">
+                <div class="tab tipso-nounderline" id="twist" data-tipso="Beam fixed on one end with a twisting torque applied at the free end">
                     <h4>Shaft Twist</h4>
                     <input id="twist-select" type="radio" name="tab">
                 </div>
@@ -87,7 +89,7 @@
                                 </select>
                             </div>
                             <div class="field hex">
-                                <label>Hex Size</label>
+                                <label data-tipso="Distance between two parallel faces">Hex Size</label>
                                 <input id="between-hex_size" type="number" value="0.5" min="0" step="any">
                                 <select id="between-hex_size-units">
                                     <option value="25.4" class="imperial">in</option>
@@ -103,7 +105,7 @@
                                 </select>
                             </div>
                             <div class="field rect rect-tube">
-                                <label>Width</label>
+                                <label data-tipso="Dimension perpendicular to the force">Width</label>
                                 <input id="between-width" type="number" step="any" min="0">
                                 <select id="between-width-units">
                                     <option value="25.4" class="imperial">in</option>
@@ -111,7 +113,7 @@
                                 </select>
                             </div>
                             <div class="field rect rect-tube">
-                                <label>Height</label>
+                                <label data-tipso="Dimension parallel to the force">Height</label>
                                 <input id="between-height" type="number" step="any" min="0">
                                 <select id="between-height-units">
                                     <option value="25.4" class="imperial">in</option>
@@ -127,12 +129,12 @@
                                 </select>
                             </div>
                             <div class="field custom">
-                                <label>Area</label>
+                                <label data-tipso="Cross-sectional area">Area</label>
                                 <input id="between-A" type="number" step="any" min="0">
                                 <span>&nbsp;mm&sup2;</span>
                             </div>
                             <div class="field custom">
-                                <label>Area MoI</label>
+                                <label data-tipso="Area Moment of Inertia (aka 2nd Area Moment)">Area MoI</label>
                                 <input id="between-I" type="number" step="any" min="0">
                                 <span>&nbsp;mm⁴</span>
                             </div>
@@ -146,7 +148,7 @@
                     <img class="diagram" src="img/beambend_between.png">
                     <div class="inputs">
                         <div class="field">
-                            <label for="between-l">&ell;</label>
+                            <label for="between-l" data-tipso="Length of the beam, or the distance between the two fixtures">&ell;</label>
                             <input id="between-l" type="number" step="any" min="0">
                             <select id="between-l-units">
                                 <option value="0.0254" class="imperial">in</option>
@@ -156,7 +158,7 @@
                             </select>
                         </div>
                         <div class="field">
-                            <label for="between-a">a</label>
+                            <label for="between-a" data-tipso="Distance from one end of the beam to the point where the force is applied">a</label>
                             <input id="between-a" type="number" step="any" min="0">
                             <select id="between-a-units">
                                 <option value="0.0254" class="imperial">in</option>
@@ -166,7 +168,7 @@
                             </select>
                         </div>
                         <div class="field">
-                            <label for="between-F">F</label>
+                            <label for="between-F" data-tipso="Magnitude of the applied force">F</label>
                             <input id="between-F" type="number" step="any" min="0">
                             <select id="between-F-units">
                                 <option value="4.448" class="imperial">lbs</option>
@@ -177,7 +179,7 @@
                     </div>
                     <div class="outputs">
                         <div class="field">
-                            <label for="between-weight">Beam Weight</label>
+                            <label for="between-weight" data-tipso="Mass of a beam of the given material with the given length">Beam Weight</label>
                             <input id="between-weight" type="number" step="any" min="0" disabled>
                             <select id="between-weight-units">
                                 <option value="0.4545" class="imperial">lbs</option>
@@ -185,7 +187,7 @@
                             </select>
                         </div>
                         <div class="field">
-                            <label for="between-del">Max Displacement</label>
+                            <label for="between-del" data-tipso="Maximum deflection along the beam for the given load">Max Displacement</label>
                             <input id="between-del" type="number" step="any" min="0" disabled>
                             <select id="between-del-units">
                                 <option value="0.0254" class="imperial">in</option>
@@ -237,7 +239,7 @@
                                 </select>
                             </div>
                             <div class="field hex">
-                                <label>Hex Size</label>
+                                <label data-tipso="Distance between two parallel faces">Hex Size</label>
                                 <input id="cantilever-hex_size" type="number" value="0.5" min="0" step="any">
                                 <select id="cantilever-hex_size-units">
                                     <option value="25.4" class="imperial">in</option>
@@ -253,7 +255,7 @@
                                 </select>
                             </div>
                             <div class="field rect rect-tube">
-                                <label>Width</label>
+                                <label data-tipso="Dimension perpendicular to the force">Width</label>
                                 <input id="cantilever-width" type="number" step="any" min="0">
                                 <select id="cantilever-width-units">
                                     <option value="25.4" class="imperial">in</option>
@@ -261,7 +263,7 @@
                                 </select>
                             </div>
                             <div class="field rect rect-tube">
-                                <label>Height</label>
+                                <label data-tipso="Dimension parallel to the force">Height</label>
                                 <input id="cantilever-height" type="number" step="any" min="0">
                                 <select id="cantilever-height-units">
                                     <option value="25.4" class="imperial">in</option>
@@ -277,12 +279,12 @@
                                 </select>
                             </div>
                             <div class="field custom">
-                                <label>Area</label>
+                                <label data-tipso="Cross-sectional area">Area</label>
                                 <input id="cantilever-A" type="number" step="any" min="0">
                                 <span>&nbsp;mm&sup2;</span>
                             </div>
                             <div class="field custom">
-                                <label>Area MoI</label>
+                                <label data-tipso="Area Moment of Inertia (aka 2nd Area Moment)">Area MoI</label>
                                 <input id="cantilever-I" type="number" step="any" min="0">
                                 <span>&nbsp;mm⁴</span>
                             </div>
@@ -296,7 +298,7 @@
                     <img class="diagram" src="img/beambend_cantilever.png">
                     <div class="inputs">
                         <div class="field">
-                            <label for="cantilever-l">&ell;</label>
+                            <label for="cantilever-l" data-tipso="Length of the cantilevered beam after the fixture">&ell;</label>
                             <input id="cantilever-l" type="number" step="any" min="0">
                             <select id="cantilever-l-units">
                                 <option value="0.0254" class="imperial">in</option>
@@ -306,7 +308,7 @@
                             </select>
                         </div>
                         <div class="field">
-                            <label for="cantilever-a">a</label>
+                            <label for="cantilever-a" data-tipso="Distance from the fixed end of the beam to the point where the force is applied">a</label>
                             <input id="cantilever-a" type="number" step="any" min="0">
                             <select id="cantilever-a-units">
                                 <option value="0.0254" class="imperial">in</option>
@@ -316,7 +318,7 @@
                             </select>
                         </div>
                         <div class="field">
-                            <label for="cantilever-F">F</label>
+                            <label for="cantilever-F" data-tipso="Magnitude of the applied force">F</label>
                             <input id="cantilever-F" type="number" step="any" min="0">
                             <select id="cantilever-F-units">
                                 <option value="4.448" class="imperial">lbs</option>
@@ -327,7 +329,7 @@
                     </div>
                     <div class="outputs">
                         <div class="field">
-                            <label for="cantilever-weight">Beam Weight</label>
+                            <label for="cantilever-weight" data-tipso="Mass of a beam of the given material with the given length">Beam Weight</label>
                             <input id="cantilever-weight" type="number" step="any" min="0" disabled>
                             <select id="cantilever-weight-units">
                                 <option value="0.4545" class="imperial">lbs</option>
@@ -335,7 +337,7 @@
                             </select>
                         </div>
                         <div class="field">
-                            <label for="cantilever-del">Max Displacement</label>
+                            <label for="cantilever-del" data-tipso="Maximum deflection along the beam for the given load">Max Displacement</label>
                             <input id="cantilever-del" type="number" step="any" min="0" disabled>
                             <select id="cantilever-del-units">
                                 <option value="0.0254" class="imperial">in</option>
@@ -387,7 +389,7 @@
                                 </select>
                             </div>
                             <div class="field hex">
-                                <label>Hex Size</label>
+                                <label data-tipso="Distance between two parallel faces">Hex Size</label>
                                 <input id="twist-hex_size" type="number" value="0.5" min="0" step="any">
                                 <select id="twist-hex_size-units">
                                     <option value="25.4" class="imperial">in</option>
@@ -403,7 +405,7 @@
                                 </select>
                             </div>
                             <div class="field rect rect-tube">
-                                <label>Width</label>
+                                <label data-tipso="In this case interchangeable with the height">Width</label>
                                 <input id="twist-width" type="number" step="any" min="0">
                                 <select id="twist-width-units">
                                     <option value="25.4" class="imperial">in</option>
@@ -411,7 +413,7 @@
                                 </select>
                             </div>
                             <div class="field rect rect-tube">
-                                <label>Height</label>
+                                <label data-tipso="In this case interchangeable with the width">Height</label>
                                 <input id="twist-height" type="number" step="any" min="0">
                                 <select id="twist-height-units">
                                     <option value="25.4" class="imperial">in</option>
@@ -427,12 +429,12 @@
                                 </select>
                             </div>
                             <div class="field custom">
-                                <label>Area</label>
+                                <label data-tipso="Cross-sectional area">Area</label>
                                 <input id="twist-A" type="number" step="any" min="0">
                                 <span>&nbsp;mm&sup2;</span>
                             </div>
                             <div class="field custom">
-                                <label>Area MoI</label>
+                                <label data-tipso="Area Moment of Inertia (aka 2nd Area Moment)">Area MoI</label>
                                 <input id="twist-I" type="number" step="any" min="0">
                                 <span>&nbsp;mm⁴</span>
                             </div>
@@ -446,7 +448,7 @@
                     <img class="diagram" src="img/beambend_twist.jpg">
                     <div class="inputs">
                         <div class="field">
-                            <label for="twist-l">Length</label>
+                            <label for="twist-l" data-tipso="Length of the beam from the fixture to the point where the torque is applied">Length</label>
                             <input id="twist-l" type="number" step="any" min="0">
                             <select id="twist-l-units">
                                 <option value="0.0254" class="imperial">in</option>
@@ -456,7 +458,7 @@
                             </select>
                         </div>
                         <div class="field">
-                            <label for="twist-T">Torque</label>
+                            <label for="twist-T" data-tipso="Magnitude of the applied torque">Torque</label>
                             <input id="twist-T" type="number" step="any" min="0">
                             <select id="twist-T-units">
                                 <option value="0.113" class="imperial">in-lbs</option>
@@ -464,7 +466,7 @@
                             </select>
                         </div>
                         <div class="field">
-                            <label for="twist-weight">Beam Weight</label>
+                            <label for="twist-weight" data-tipso="Mass of a beam of the given material with the given length">Beam Weight</label>
                             <input id="twist-weight" type="number" step="any" min="0" disabled>
                             <select id="twist-weight-units">
                                 <option value="0.4545" class="imperial">lbs</option>
@@ -472,7 +474,7 @@
                             </select>
                         </div>
                         <div class="field">
-                            <label for="twist-del">Max Twist</label>
+                            <label for="twist-del" data-tipso="Maximum angular deflection along the beam for the given torque">Max Twist</label>
                             <input id="twist-del" type="number" step="any" min="0" disabled>
                             <span>&nbsp;&deg;</span>
                         </div>
