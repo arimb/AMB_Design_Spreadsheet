@@ -95,7 +95,6 @@ $(document).ready(function(){
 
     $("div#speeds input[type=radio]").change(() => {
         let lead = ($("input#pitch").val() * $("select#diameter-units").val()) * $("input#starts").val();
-        console.log(lead);
         switch ($("div#speeds input[type=radio]:checked").prop("id")) {
             case "lin_speed-check": {
                 let v = $("input#lin_speed").val() * $("select#lin_speed-units").val();
@@ -119,6 +118,25 @@ $(document).ready(function(){
         $("input[type=radio]:checked").siblings("input[type=number]").css("background-color", "var(--selected)");
     });
 
-    
+    $("button.insert").click(() => {
+        window.open(`http://amb-calculator.netlify.app/mechanism?gearbox_efficiency=${$("input#eff").val()}&radius-units=${$("select#diameter-units").val()}&radius=${$("input#equiv_radius").val()}&load-units=${$("select#force-units").val()}&load=${$("input#force").val()}`, "_blank");
+    });
+
+    $("select#diameter-units").change(function(){
+        let input = $("input#pitch");
+        if (input.val() != "") {
+            let old_val = input.val();
+            if (input.data("full-val") && +(+(input.data("full-val") || 0).toFixed(3)) == old_val)
+                old_val = input.data("full-val");
+            console.log(old_val);
+            let new_val = old_val * $(this).data("unit-factor") / $(this).val();
+            console.log($(this).data("unit-factor"));
+            console.log(new_val);
+            input.val(+(new_val.toFixed(3))).change();
+            input.data("full-val", new_val)
+        }
+    });
+    let change_events = $._data($("select#diameter-units")[0], "events").change;
+    change_events.unshift(change_events.pop());
 
 });
