@@ -56,20 +56,20 @@
                     <span>: 1</span>
                 </div>
                 <div class="field">
-                    <label for="ratio_deviation" data-tipso="Maximum allowable deviation from the desired ratio">Max. Deviation</label>
-                    <input id="ratio_deviation" type="number" step="any" min="0">
+                    <label for="rat_dev" data-tipso="Maximum allowable deviation from the desired ratio">Max. Deviation</label>
+                    <input id="rat_dev" type="number" step="any" min="0">
                     &nbsp;
                     <span>%</span>
                 </div>
                 <div class="num_stages">
                     <span data-tipso="Single or double stage gearbox">Num. Stages: </span>
                     <div>
-                        <label for="1stage">One</label>
-                        <input id="1stage" name="num_stages" type="radio">
+                        <label for="1st">One</label>
+                        <input id="1st" name="num_stages" type="radio">
                     </div>
                     <div>
-                        <label for="2stage">Two</label>
-                        <input id="2stage" name="num_stages" type="radio" checked>
+                        <label for="2st">Two</label>
+                        <input id="2st" name="num_stages" type="radio" checked>
                     </div>
                 </div>
             </div>
@@ -86,14 +86,14 @@
                     <input id="max1" type="number" step="any" min="0">
                 </div>
                 <div class="field">
-                    <input id="min1diam" type="number" step="any" min="0">
-                    <select id="min1diam-u">
+                    <input class="diam" id="min1d" type="number" step="any" min="0">
+                    <select id="min1d-u">
                         <option value="1" class="imperial">in</option>
                         <option value="0.03937" class="metric">mm</option>
                     </select>
                     &nbsp;&leq;&nbsp;<span data-tipso="Limit the outer diameter of the gear within a range">Diam.</span>&nbsp;&leq;&nbsp;
-                    <input id="max1diam" type="number" step="any" min="0">
-                    <select id="max1diam-u">
+                    <input class="diam" id="max1d" type="number" step="any" min="0">
+                    <select id="max1d-u">
                         <option value="1" class="imperial">in</option>
                         <option value="0.03937" class="metric">mm</option>
                     </select>
@@ -105,16 +105,16 @@
                 </h3>
                 <div class="cc">
                     <div class="field">
-                        <input id="min14dist" type="number" step="any" min="0">
-                        <select id="min14dist-u">
+                        <input class="dist" id="min14" type="number" step="any" min="0">
+                        <select id="min14-u">
                             <option value="1" class="imperial">in</option>
                             <option value="0.03937" class="metric">mm</option>
                         </select>
                     </div>
                     &leq;&nbsp;Dist. Btwn.&nbsp;&leq;
                     <div class="field">
-                        <input id="max14dist" type="number" step="any" min="0">
-                        <select id="max14dist-u">
+                        <input class="dist" id="max14" type="number" step="any" min="0">
+                        <select id="max14-u">
                             <option value="1" class="imperial">in</option>
                             <option value="0.03937" class="metric">mm</option>
                         </select>
@@ -127,16 +127,16 @@
                 </h3>
                 <div class="cc">
                     <div class="field">
-                        <input id="min12dist" type="number" step="any" min="0">
-                        <select id="min12dist-u">
+                        <input class="dist" id="min12" type="number" step="any" min="0">
+                        <select id="min12-u">
                             <option value="1" class="imperial">in</option>
                             <option value="0.03937" class="metric">mm</option>
                         </select>
                     </div>
                     &leq;&nbsp;Dist. Btwn.&nbsp;&leq;
                     <div class="field">
-                        <input id="max12dist" type="number" step="any" min="0">
-                        <select id="max12dist-u">
+                        <input class="dist" id="max12" type="number" step="any" min="0">
+                        <select id="max12-u">
                             <option value="1" class="imperial">in</option>
                             <option value="0.03937" class="metric">mm</option>
                         </select>
@@ -155,14 +155,14 @@
                     <input id="max2" type="number" step="any" min="0">
                 </div>
                 <div class="field">
-                    <input id="min2diam" type="number" step="any" min="0">
-                    <select id="min2diam-u">
+                    <input class="diam" id="min2d" type="number" step="any" min="0">
+                    <select id="min2d-u">
                         <option value="1" class="imperial">in</option>
                         <option value="0.03937" class="metric">mm</option>
                     </select>
                     &nbsp;&leq;&nbsp;<span data-tipso="Limit the outer diameter of the gear within a range">Diam.</span>&nbsp;&leq;&nbsp;
-                    <input id="max2diam" type="number" step="any" min="0">
-                    <select id="max2diam-u">
+                    <input class="diam" id="max2d" type="number" step="any" min="0">
+                    <select id="max2d-u">
                         <option value="1" class="imperial">in</option>
                         <option value="0.03937" class="metric">mm</option>
                     </select>
@@ -171,32 +171,32 @@
             <div class="break 2stage" id="break2"></div>
             <div class="page-element 2stage row2" id="clearance">
                 <div class="clearance-type">
-                    <label for="clearance1" data-tipso="Space between the center of the input axle and the small cluster gear. If the input shaft passes through the gearbox, the clearance muct be greater than its diameter.">Axle 1 Clearance</label>
-                    <select id="clearance1">
+                    <label for="clr1" data-tipso="Space between the center of the input axle and the small cluster gear. If the input shaft passes through the gearbox, the clearance muct be greater than its diameter.">Axle 1 Clearance</label>
+                    <select id="clr1">
                         <option>None</option>
                         <option>Axle Bore</option>
                         <option>Custom</option>
                     </select>
                 </div>
                 <div class="field" style="visibility: hidden;">
-                    <label for="clearance1custom">Diameter</label>
-                    <input id="clearance1custom" type="number" step="any" min="0">
-                    <select id="clearance1custom-u">
+                    <label for="clr1cstm">Diameter</label>
+                    <input id="clr1cstm" type="number" step="any" min="0">
+                    <select id="clr1cstm-u">
                         <option value="1" class="imperial">in</option>
                         <option value="0.03937" class="metric">mm</option>
                     </select>
                 </div>
                 <div class="clearance-type">
-                    <label for="clearance4" data-tipso="Space between the center of the output axle and the large cluster gear. If the output shaft passes through the gearbox, the clearance muct be greater than its diameter.">Axle 4 Clearance</label>
-                    <select id="clearance4">
+                    <label for="clr4" data-tipso="Space between the center of the output axle and the large cluster gear. If the output shaft passes through the gearbox, the clearance muct be greater than its diameter.">Axle 4 Clearance</label>
+                    <select id="clr4">
                         <option>None</option>
                         <option selected>Axle Bore</option>
                         <option>Custom</option>
                     </select>
                 </div>
                 <div class="field" style="visibility: hidden;">
-                    <input id="clearance4custom" type="number" step="any" min="0">
-                    <select id="clearance4custom-u">
+                    <input id="clr4cstm" type="number" step="any" min="0">
+                    <select id="clr4cstm-u">
                         <option value="1" class="imperial">in</option>
                         <option value="0.03937" class="metric">mm</option>
                     </select>
@@ -214,14 +214,14 @@
                     <input id="max3" type="number" step="any" min="0">
                 </div>
                 <div class="field">
-                    <input id="min3diam" type="number" step="any" min="0">
-                    <select id="min3diam-u">
+                    <input class="diam" id="min3d" type="number" step="any" min="0">
+                    <select id="min3d-u">
                         <option value="1" class="imperial">in</option>
                         <option value="0.03937" class="metric">mm</option>
                     </select>
                     &nbsp;&leq;&nbsp;<span data-tipso="Limit the outer diameter of the gear within a range">Diam.</span>&nbsp;&leq;&nbsp;
-                    <input id="max3diam" type="number" step="any" min="0">
-                    <select id="max3diam-u">
+                    <input class="diam" id="max3d" type="number" step="any" min="0">
+                    <select id="max3d-u">
                         <option value="1" class="imperial">in</option>
                         <option value="0.03937" class="metric">mm</option>
                     </select>
@@ -233,16 +233,16 @@
                 </h3>
                 <div class="cc">
                     <div class="field">
-                        <input id="min34dist" type="number" step="any" min="0">
-                        <select id="min34dist-u">
+                        <input class="dist" id="min34" type="number" step="any" min="0">
+                        <select id="min34-u">
                             <option value="1" class="imperial">in</option>
                             <option value="0.03937" class="metric">mm</option>
                         </select>
                     </div>
                     &leq;&nbsp;Dist. Btwn.&nbsp;&leq;
                     <div class="field">
-                        <input id="max34dist" type="number" step="any" min="0">
-                        <select id="max34dist-u">
+                        <input class="dist" id="max34" type="number" step="any" min="0">
+                        <select id="max34-u">
                             <option value="1" class="imperial">in</option>
                             <option value="0.03937" class="metric">mm</option>
                         </select>
@@ -258,14 +258,14 @@
                     <input id="max4" type="number" step="any" min="0">
                 </div>
                 <div class="field">
-                    <input id="min4diam" type="number" step="any" min="0">
-                    <select id="min4diam-u">
+                    <input class="diam" id="min4d" type="number" step="any" min="0">
+                    <select id="min4d-u">
                         <option value="1" class="imperial">in</option>
                         <option value="0.03937" class="metric">mm</option>
                     </select>
                     &nbsp;&leq;&nbsp;<span data-tipso="Limit the outer diameter of the gear within a range">Diam.</span>&nbsp;&leq;&nbsp;
-                    <input id="max4diam" type="number" step="any" min="0">
-                    <select id="max4diam-u">
+                    <input class="diam" id="max4d" type="number" step="any" min="0">
+                    <select id="max4d-u">
                         <option value="1" class="imperial">in</option>
                         <option value="0.03937" class="metric">mm</option>
                     </select>

@@ -63,7 +63,7 @@ div.gear-options {
     align-items: center;
 }
 
-div.field input[id$="diam"], div.field input[id$="dist"] {
+div.field input.diam, div.field input.dist {
     max-width: 3em;
 }
 
