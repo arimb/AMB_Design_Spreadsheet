@@ -119,7 +119,7 @@ $(document).ready(function(){
     });
 
     $("button.insert").click(() => {
-        window.open(`http://amb-calculator.netlify.app/mechanism?gearbox_efficiency=${$("input#eff").val()}&radius-units=${$("select#diameter-units").val()}&radius=${$("input#equiv_radius").val()}&load-units=${$("select#force-units").val()}&load=${$("input#force").val()}`, "_blank");
+        window.open(`http://amb-calculator.netlify.app/mechanism?gearbox_efficiency=${$("input#eff").val()}&radius-units=${$("select#diameter-units").val()}&radius=${$("input#equiv_radius").val()}`, "_blank");
     });
 
     $("select#diameter-units").change(function(){

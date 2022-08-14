@@ -35,7 +35,7 @@
             <div class="calculation">
                 <div class="page-element" id="params">
                     <div class="field">
-                        <label for="diameter">Diameter</label>
+                        <label for="diameter" data-tipso="Outer diameter of the lead screw">Diameter</label>
                         <input id="diameter" type="number" step="any" min="0">
                         <select id="diameter-units">
                             <option value="0.0254" class="imperial">in</option>
@@ -43,30 +43,30 @@
                         </select>
                     </div>
                     <div class="field">
-                        <label for="pitch">Pitch</label>
+                        <label for="pitch" data-tipso="Pitch of the lead screw, or the spacing between adjacent threads">Pitch</label>
                         <input id="pitch" type="number" step="any" min="0">
                         &nbsp;<span class="pitch">in</span>
                     </div>
                     <div class="field">
-                        <label for="starts"># of Starts</label>
+                        <label for="starts" data-tipso="Number of distinct threads on the lead screw, or the number of threads that can be seen from a cross-secition of the lead screw"># of Starts</label>
                         <input id="starts" type="number" step="any" min="0">
                     </div>
                     <div class="field">
-                        <label for="angle">Thread Angle</label>
+                        <label for="angle" data-tipso="Angle of the thread's trapezoidal profile. Typically 29&deg; for ACME threads, 30&deg; for trapezoidal screws, and 90&deg; for square threads">Thread Angle</label>
                         <input id="angle" type="number" step="any" min="0">
                         <span>&nbsp;&deg;</span>
                     </div>
                 </div>
                 <div class="page-element" id="material">
                     <div class="field">
-                        <label for="screw-material">Screw Material</label>
+                        <label for="screw-material" data-tipso="Material of the lead screw shaft">Screw Material</label>
                         <select id="screw-material">
                             <option>Steel</option>
                             <option>Bronze</option>
                         </select>
                     </div>
                     <div class="field">
-                        <label for="nut-material">Nut Material</label>
+                        <label for="nut-material" data-tipso="Material of the nut that rides along the lead screw">Nut Material</label>
                         <select id="nut-material">
                             <option>Steel</option>
                             <option>Bronze</option>
@@ -75,29 +75,29 @@
                         </select>
                     </div>
                     <div class="field">
-                        <label for="lube">Lubricated</label>
+                        <label for="lube" data-tipso="Are the screw and nut lubricated or running dry?">Lubricated</label>
                         <input id="lube" type="checkbox">
                     </div>
                 </div>
                 <div class="page-element" id="equiv">
                     <div class="field">
-                        <label for="eff">Efficiency</label>
+                        <label for="eff" data-tipso="Percent of mechanical power translated from rotational to linear motion">Efficiency</label>
                         <input id="eff" type="number" disabled>
                     </div>
                     <div class="field">
-                        <label for="equiv_radius">Equiv. Radius</label>
+                        <label for="equiv_radius" data-tipso="Radius of a wheel that translates between rotational and linear motion with the same lead">Equiv. Radius</label>
                         <input id="equiv_radius" type="number" disabled>
                         &nbsp;<span class="pitch">in</span>
                     </div>
                     <div class="field">
-                        <label for="backdrive">Backdrivable</label>
+                        <label for="backdrive" data-tipso="Can an applied force on the nut produce rotational motion without additional torque?">Backdrivable</label>
                         <input id="backdrive" type="text" disabled>
                     </div>
                     <button class="insert">INSERT IN MECHANISM CALC</button>
                 </div>
                 <div class="page-element" id="forces">
                     <div class="field">
-                        <label for="force">Applied Force</label>
+                        <label for="force" data-tipso="Linear force applied on the nut">Applied Force</label>
                         <input id="force" type="number" step="any" min="0">
                         <select id="force-units">
                             <option value="4.448" class="imperial">lbs</option>
@@ -107,7 +107,7 @@
                         <input id="force-check" type="radio" name="force">
                     </div>
                     <div class="field">
-                        <label for="raise_torque">Raise Torque</label>
+                        <label for="raise_torque" data-tipso="Torque needed to apply to the screw in order to oppose the applied load">Raise Torque</label>
                         <input id="raise_torque" type="number" step="any" min="0">
                         <select id="raise_torque-units">
                             <option value="0.113" class="imperial">in-lbs</option>
@@ -116,7 +116,7 @@
                         <input id="raise_torque-check" type="radio" name="force">
                     </div>
                     <div class="field">
-                        <label for="lower_torque">Lower Torque</label>
+                        <label for="lower_torque" data-tipso="If positive, the torque needed to apply to the screw to allow the screw to spin in thesame  direction as the applied force. If negative, the torque generated when the given force is applied on the nut, spinning the screw.">Lower Torque</label>
                         <input id="lower_torque" type="number" step="any" min="0">
                         <select id="lower_torque-units">
                             <option value="0.113" class="imperial">in-lbs</option>
@@ -125,7 +125,7 @@
                         <input id="lower_torque-check" type="radio" name="force">
                     </div>
                     <div class="field">
-                        <label for="raise_load">Equiv. Raise Load</label>
+                        <label for="raise_load" data-tipso="Force needed to apply at the equivalent radius to generate the raise torque">Equiv. Raise Load</label>
                         <input id="raise_load" type="number" step="any" min="0">
                         <select id="raise_load-units">
                             <option value="4.448" class="imperial">lbs</option>
@@ -135,7 +135,7 @@
                         <input id="raise_load-check" type="radio" name="force">
                     </div>
                     <div class="field">
-                        <label for="lower_load">Equiv. Lower Load</label>
+                        <label for="lower_load" data-tipso="Force needed to apply at the equivalent radius to generate the lower torque">Equiv. Lower Load</label>
                         <input id="lower_load" type="number" step="any" min="0">
                         <select id="lower_load-units">
                             <option value="4.448" class="imperial">lbs</option>
@@ -147,7 +147,7 @@
                 </div>
                 <div class="page-element" id="speeds">
                     <div class="field">
-                        <label for="lin_speed">Linear Speed</label>
+                        <label for="lin_speed" data-tipso="Linear speed of the nut corresponding to the rotational speed below">Linear Speed</label>
                         <input id="lin_speed" type="number" step="any" min="0">
                         <select id="lin_speed-units">
                             <option value="0.3048" class="imperial">feet/s</option>
@@ -157,7 +157,7 @@
                         <input id="lin_speed-check" type="radio" name="speed">
                     </div>
                     <div class="field">
-                        <label for="rot_speed">Rotational Speed</label>
+                        <label for="rot_speed" data-tipso="Rotation speed of the screw that corresponds to the linear speed above">Rotational Speed</label>
                         <input id="rot_speed" type="number" step="any" min="0">
                         <select id="rot_speed-units">
                             <option value="0.01667">rpm</option>
