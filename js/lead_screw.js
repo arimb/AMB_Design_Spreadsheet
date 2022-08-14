@@ -119,7 +119,7 @@ $(document).ready(function(){
     });
 
     $("button.insert").click(() => {
-        window.open(`mechanism.html?gearbox_efficiency=${$("input#eff").val()}&radius-u=${$("select#diameter-u").val()}&radius=${$("input#equiv_radius").val()}`, "_blank");
+        window.open(`mechanism.html?gbx_eff=${$("input#eff").val()}&radius-u=${$("select#diameter-u").val()}&radius=${$("input#equiv_radius").val()}`, "_blank");
     });
 
     $("select#diameter-u").change(function(){
