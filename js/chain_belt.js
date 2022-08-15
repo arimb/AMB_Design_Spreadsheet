@@ -76,7 +76,7 @@ $(document).ready(function(){
     $("input[type=radio][name=driving]").change(function(){
         $("div.geometry div.field").hide();
         switch( $("input[type=radio][name=driving]:checked").attr("id") ){
-            case "by_ls":
+            case "by_l":
                 $("div.bylinks-in, div.bylinks-out").show();
                 $("div.bylinks-in input").prop("disabled", false);
                 $("div.bylinks-out input").prop("disabled", true);
@@ -93,7 +93,7 @@ $(document).ready(function(){
     // Run calculation
     $("input, select").change(function(){
         switch( $("input[type=radio][name=driving]:checked").attr("id") ){
-            case "by_ls":
+            case "by_l":
                 var target = parseInt($("input#links").val());
                 var D = target*pitch/2;
                 var lastD, lastD2, alpha, L, current = NaN, last, dydx;

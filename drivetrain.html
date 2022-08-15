@@ -34,20 +34,20 @@
             </div>
         </header>
         <main>
-            <div class="page-element" id="motor">
-                <select id="motor_name">
+            <div class="page-element" id="motor-el">
+                <select id="motor">
                     <option>Custom</option>
                 </select>
                 <div class="break"></div>
                 <div class="field">
                     <label for="mot_wf">Free Speed</label>
-                    <input id="mot_wf" type="number" step="any" min="0" disabled>
+                    <input id="mot_wf" class="motor-prop" type="number" step="any" min="0" disabled>
                     &nbsp;rpm
                 </div>
                 <div class="field">
                     <label for="mot_ts">Stall Torque</label>
-                    <input id="mot_ts" type="number" step="any" min="0" disabled>
-                    <select id="mot_ts-u">
+                    <input id="mot_ts" class="motor-prop" type="number" step="any" min="0" disabled>
+                    <select id="mot_ts-u" class="motor-prop">
                         <option value="1">Nm</option>
                         <option value="0.00706">oz-in</option>
                         <option value="1.35582">ft-lbs</option>
@@ -55,12 +55,12 @@
                 </div>
                 <div class="field">
                     <label for="mot_if">Free Current</label>
-                    <input id="mot_if" type="number" step="any" min="0" disabled>
+                    <input id="mot_if" class="motor-prop" type="number" step="any" min="0" disabled>
                     &nbsp;Amps
                 </div>
                 <div class="field">
                     <label for="mot_is">Stall Current</label>
-                    <input id="mot_is" type="number" step="any" min="0" disabled>
+                    <input id="mot_is" class="motor-prop" type="number" step="any" min="0" disabled>
                     &nbsp;Amps
                 </div>
                 <div class="field">

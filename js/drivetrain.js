@@ -7,18 +7,16 @@ let max = 20;
 $(document).ready(function(){
 
     // Set motor properties
-    $("select#motor_name").change(function(){
-        if($("select#motor_name").val() == "Custom"){
-            $("input[id^=mot_]").prop("disabled", false);
-            $("select#mot_ts-u").prop("disabled", false);
+    $("select#motor").change(function(){
+        if($("select#motor").val() == "Custom"){
+            $(".motor-prop").prop("disabled", false);
         }else{
-            $("input#mot_wf").val(motors[$("select#motor_name").val()][0]);
-            $("input#mot_ts").val(motors[$("select#motor_name").val()][1]);
+            $("input#mot_wf").val(motors[$("select#motor").val()][0]);
+            $("input#mot_ts").val(motors[$("select#motor").val()][1]);
             $("select#mot_ts-u").val($("select#mot_ts-u").children()[0].value);
-            $("input#mot_if").val(motors[$("select#motor_name").val()][2]);
-            $("input#mot_is").val(motors[$("select#motor_name").val()][3]);
-            $("input[id^=mot_]").prop("disabled", true);
-            $("select#mot_ts-u").prop("disabled", true);
+            $("input#mot_if").val(motors[$("select#motor").val()][2]);
+            $("input#mot_is").val(motors[$("select#motor").val()][3]);
+            $(".motor-prop").prop("disabled", true);
         }
         update_motor();
     });
@@ -29,10 +27,10 @@ $(document).ready(function(){
         motors = JSON.parse(this.responseText);
         const motor_names = Object.keys(motors);
         for (let i = motor_names.length-1; i >= 0; i--) {
-            $("select#motor_name").prepend("<option>" + motor_names[i] + "</option>");
+            $("select#motor").prepend("<option>" + motor_names[i] + "</option>");
         }
-        $("select#motor_name").val(motor_names[0]);
-        $("select#motor_name").change();
+        $("select#motor").val(motor_names[0]);
+        $("select#motor").change();
     };
     request.open("GET", "ref/motors.json", false);
     request.send();

@@ -72,13 +72,13 @@ $(document).ready(function(){
     // Calculate outputs from ratio
     function calculate_vals(ratio){
         tmp = [
-            wf / ratio / $("select#rot_f-u").val(),     // rot_f
-            wf/ratio * radius / $("select#lin_f-u").val(),      // lin_f
-            Ts * ratio  / radius / $("select#st_load-u").val(),      // st_load
-            wf/ratio * (1 - (load*radius)/(Ts*ratio)) / $("select#rot_l-u").val(),      // rot_l
-            wf/ratio * (1 - (load*radius)/(Ts*ratio)) * radius / $("select#lin_l-u").val(),      // lin_l
+            wf / ratio / $("select#rot_f-u").val(),     // rot_speed
+            wf/ratio * radius / $("select#lin_f-u").val(),      // lin_speed
+            Ts * ratio  / radius / $("select#st_load-u").val(),      // stall_load
+            wf/ratio * (1 - (load*radius)/(Ts*ratio)) / $("select#rot_l-u").val(),      // rot_loaded_speed
+            wf/ratio * (1 - (load*radius)/(Ts*ratio)) * radius / $("select#lin_l-u").val(),      // lin_loaded_speed
             ((Is-If)/Ts * radius*load / ratio + If) / parseInt($("input#mot_num").val()),    // current
-            radius*load / ratio / Ts * $("input#volt").val()     // st_volt
+            radius*load / ratio / Ts * $("input#volt").val()     // stall_voltage
         ];
         tmp.push(tmp[4]*$("select#lin_l-u").val() * load / (tmp[5]*parseInt($("input#mot_num").val()) * $("input#volt").val()));     // efficiency
         return tmp;
@@ -91,32 +91,32 @@ $(document).ready(function(){
                 var ratio = parseFloat($("input#rat").val());
                 break;
             case "rot_f-c":
-                var rot_f = $("input#rot_f").val() * $("select#rot_f-u").val();
-                var ratio = wf / rot_f;
+                var rot_speed = $("input#rot_f").val() * $("select#rot_f-u").val();
+                var ratio = wf / rot_speed;
                 break;
             case "rot_l-c":
-                var rot_f = $("input#rot_l").val() * $("select#rot_l-u").val();
-                var ratio = wf/(2*rot_f) * (1 + Math.sqrt(1 - 4*(radius*load/Ts)*(rot_f/wf)));
+                var rot_speed = $("input#rot_l").val() * $("select#rot_l-u").val();
+                var ratio = wf/(2*rot_speed) * (1 + Math.sqrt(1 - 4*(radius*load/Ts)*(rot_speed/wf)));
                 break;
             case "lin_f-c":
-                var lin_f = $("input#lin_f").val() * $("select#lin_f-u").val();
-                var ratio = wf / lin_f * radius;
+                var lin_speed = $("input#lin_f").val() * $("select#lin_f-u").val();
+                var ratio = wf / lin_speed * radius;
                 break;
             case "lin_l-c":
-                var lin_f = $("input#lin_l").val() * $("select#lin_l-u").val();
-                var ratio = wf/(2*lin_f/radius) * (1 + Math.sqrt(1 - 4*(radius*load/Ts)*(lin_f/radius/wf)));
+                var lin_speed = $("input#lin_l").val() * $("select#lin_l-u").val();
+                var ratio = wf/(2*lin_speed/radius) * (1 + Math.sqrt(1 - 4*(radius*load/Ts)*(lin_speed/radius/wf)));
                 break;
             case "current-c":
                 var current = $("input#current").val();
                 var ratio = radius*load / (Ts/(Is-If)) / (parseInt($("input#mot_num").val()) * current - If);
                 break;
             case "st_load-c":
-                var st_load = $("input#st_load").val() * $("select#st_load-u").val();
-                var ratio = radius*st_load/Ts;
+                var stall_load = $("input#st_load").val() * $("select#st_load-u").val();
+                var ratio = radius*stall_load/Ts;
                 break;
             case "st_volt-c":
-                var st_volt = $("input#st_volt").val();
-                var ratio = radius*load/(Ts * st_volt / $("input#volt").val() );
+                var stall_volt = $("input#st_volt").val();
+                var ratio = radius*load/(Ts * stall_volt / $("input#volt").val() );
                 break;
             case "max_power-c":
                 var ratio = 2*load*radius/Ts;
