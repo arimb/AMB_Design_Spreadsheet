@@ -9,16 +9,16 @@ $(document).ready(function(){
     // Set motor properties
     $("select#motor_name").change(function(){
         if($("select#motor_name").val() == "Custom"){
-            $("input[id^=motor_]").prop("disabled", false);
-            $("select#motor_stall_torque-u").prop("disabled", false);
+            $("input[id^=mot_]").prop("disabled", false);
+            $("select#mot_ts-u").prop("disabled", false);
         }else{
-            $("input#motor_free_speed").val(motors[$("select#motor_name").val()][0]);
-            $("input#motor_stall_torque").val(motors[$("select#motor_name").val()][1]);
-            $("select#motor_stall_torque-u").val($("select#motor_stall_torque-u").children()[0].value);
-            $("input#motor_free_current").val(motors[$("select#motor_name").val()][2]);
-            $("input#motor_stall_current").val(motors[$("select#motor_name").val()][3]);
-            $("input[id^=motor_]").prop("disabled", true);
-            $("select#motor_stall_torque-u").prop("disabled", true);
+            $("input#mot_wf").val(motors[$("select#motor_name").val()][0]);
+            $("input#mot_ts").val(motors[$("select#motor_name").val()][1]);
+            $("select#mot_ts-u").val($("select#mot_ts-u").children()[0].value);
+            $("input#mot_if").val(motors[$("select#motor_name").val()][2]);
+            $("input#mot_is").val(motors[$("select#motor_name").val()][3]);
+            $("input[id^=mot_]").prop("disabled", true);
+            $("select#mot_ts-u").prop("disabled", true);
         }
         update_motor();
     });
@@ -39,22 +39,22 @@ $(document).ready(function(){
 
     // Update motor properties
     function update_motor(){
-        wf = $("input#motor_free_speed").val() * (Math.PI/30);
-        Ts = $("input#motor_stall_torque").val() * $("select#motor_stall_torque-u").val() * $("input#num_motors").val();
-        eff = $("input#gearbox_efficiency").val() / 100;
-        If = $("input#motor_free_current").val() * $("input#num_motors").val();
-        Is = $("input#motor_stall_current").val() * $("input#num_motors").val();
+        wf = $("input#mot_wf").val() * (Math.PI/30);
+        Ts = $("input#mot_ts").val() * $("select#mot_ts-u").val() * $("input#mot_num").val();
+        eff = $("input#eff").val() / 100;
+        If = $("input#mot_if").val() * $("input#mot_num").val();
+        Is = $("input#mot_is").val() * $("input#mot_num").val();
     }
     $("div#motor *").change(update_motor);
 
     // Update gear ratio
     $("div#gear-ratio input:not(disabled)").change(function(){
-        G = ($("input#gear1b").val() ? $("input#gear1b").val() : 1) /
-            ($("input#gear1a").val() ? $("input#gear1a").val() : 1) *
-            ($("input#gear2b").val() ? $("input#gear2b").val() : 1) /
-            ($("input#gear2a").val() ? $("input#gear2a").val() : 1) *
-            ($("input#gear3b").val() ? $("input#gear3b").val() : 1) /
-            ($("input#gear3a").val() ? $("input#gear3a").val() : 1);
+        G = ($("input#g1b").val() ? $("input#g1b").val() : 1) /
+            ($("input#g1a").val() ? $("input#g1a").val() : 1) *
+            ($("input#g2b").val() ? $("input#g2b").val() : 1) /
+            ($("input#g2a").val() ? $("input#g2a").val() : 1) *
+            ($("input#g3b").val() ? $("input#g3b").val() : 1) /
+            ($("input#g3a").val() ? $("input#g3a").val() : 1);
         $("input#total_ratio").val(+(G.toFixed(2)));
     });
     $("div#gear-ratio input:first").change();
@@ -68,7 +68,7 @@ $(document).ready(function(){
 
     setTimeout(() => {
         $("input, select").change(update);
-        $("input:not([id^=gear]), select").change(update_all_ratios);
+        $("input:not(.gear), select").change(update_all_ratios);
         update();
         update_all_ratios();
     }, 100);
@@ -77,20 +77,20 @@ $(document).ready(function(){
 
 function simulate(ratio){
     console.log(ratio);
-    const xmax = $("input#distance").val() * $("select#distance-u").val();
-    const tmax = $("input#max_time").val();
-    const dt = $("input#timestep").val() / 1000;
+    const xmax = $("input#dist").val() * $("select#dist-u").val();
+    const tmax = $("input#tmax").val();
+    const dt = $("input#dt").val() / 1000;
     const filtering = 0.6;
     
-    const Vrest = parseFloat($("input#rest_voltage").val());
+    const Vrest = parseFloat($("input#vrest").val());
     const Rtot = $("input#resistance").val() / 1000;
-    const Imax = $("input#current_limit").val() ? $("input#current_limit").val() * $("input#num_motors").val() : Infinity;
-    const dVmax = ($("input#voltage_ramp").val() ? $("input#voltage_ramp").val() : 1200) * dt;
+    const Imax = $("input#ilim").val() ? $("input#ilim").val() * $("input#mot_num").val() : Infinity;
+    const dVmax = ($("input#vramp").val() ? $("input#vramp").val() : 1200) * dt;
 
     const m = $("input#weight").val() * $("select#weight-u").val();
     const r = $("input#wheel_diam").val()/2 * $("select#wheel_diam-u").val();
-    const mu_s = $("input#static_cof").val() * ($("input#driven_weight").val() / 100);
-    const mu_k = $("input#dynamic_cof").val() * ($("input#driven_weight").val() / 100);
+    const mu_s = $("input#cofs").val() * ($("input#driven_weight").val() / 100);
+    const mu_k = $("input#cofk").val() * ($("input#driven_weight").val() / 100);
 
     const km = Ts/(Is-If);
     const ke = 12/wf;
@@ -104,7 +104,7 @@ function simulate(ratio){
     const stop_method = $("select#stop-method").val();
 
     const free_speed = vmax / $("select#free_speed-u").val();
-    const push_current = (Tslip_k/ratio/(km*eff) + If) / $("input#num_motors").val();
+    const push_current = (Tslip_k/ratio/(km*eff) + If) / $("input#mot_num").val();
 
     // console.clear();
     // console.log(Vrest, Rtot, Imax, dVmax, m, r, mu_s, mu_k, xmax, tmax, dt, km, Tslip_s, Tslip_k, Tloss, vmax);
@@ -201,37 +201,37 @@ function update_graph(output){
     const data = output[1];
     $("canvas#simulation").remove();
     $("div.graphs").prepend('<canvas id="simulation"></canvas>');
-    let dist_unit = $("select#distance-u option:selected").text() == "meters" ? "m" : "ft";
+    let dist_unit = $("select#dist-u option:selected").text() == "meters" ? "m" : "ft";
     var graph = new Chart("simulation", {
         type: "line",
         data: {
             labels: times.map(time => time.toFixed(3)),
             datasets: [{
-                data: data.map(function(value,index) { return value[0] / $("select#distance-u").val(); }),
+                data: data.map(function(value,index) { return value[0] / $("select#dist-u").val(); }),
                 label: "Position",
                 borderColor: "blue",
                 fill: false,
                 pointRadius: 0
             },{
-                data: data.map(function(value,index) { return value[1] / $("select#distance-u").val(); }),
+                data: data.map(function(value,index) { return value[1] / $("select#dist-u").val(); }),
                 label: "Velocity",
                 borderColor: "green",
                 fill: false,
                 pointRadius: 0
             },{
-                data: data.map(function(value,index) { return value[6] ? value[2] / $("select#distance-u").val() : NaN; }),
+                data: data.map(function(value,index) { return value[6] ? value[2] / $("select#dist-u").val() : NaN; }),
                 label: "Slip",
                 borderColor: "black",
                 fill: false,
                 pointRadius: 0
             },{
-                data: data.map(function(value,index) { return value[2] / $("select#distance-u").val(); }),
+                data: data.map(function(value,index) { return value[2] / $("select#dist-u").val(); }),
                 label: "Acceleration",
                 borderColor: "red",
                 fill: false,
                 pointRadius: 0
             },{
-                data: data.map(function(value,index) { return value[3] / $("input#num_motors").val(); }),
+                data: data.map(function(value,index) { return value[3] / $("input#mot_num").val(); }),
                 label: "Current Per Motor",
                 borderColor: "orange",
                 fill: false,
