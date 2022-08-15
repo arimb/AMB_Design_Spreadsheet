@@ -7,7 +7,7 @@ $(document).ready(function(){
         $("div.tab-content").hide();
         $(`div#${this.id}-content`).show().find("select.cross_section").change();
     });
-    $("div.tab#between").click();
+    $("div.tab#btwn").click();
     $("div.tab").hover(function(){
         if (!$(this).children("input").prop("checked"))
             $(this).css("background-color", "var(--dark)")
@@ -18,15 +18,16 @@ $(document).ready(function(){
 
     // Custom material properties
     $("select.material").change(function(){
+        let type = this.id.split("-")[0];
         if ($(this).val() == "Custom") {
-            $("input#" + this.id + "-E").prop("disabled", false);
-            $("input#" + this.id + "-G").prop("disabled", false);
-            $("input#" + this.id + "-density").prop("disabled", false);
+            $("input#" + type + "-E").prop("disabled", false);
+            $("input#" + type + "-G").prop("disabled", false);
+            $("input#" + type + "-dens").prop("disabled", false);
         } else {
             let mods = JSON.parse(this.value);
-            $("input#" + this.id + "-E").prop("disabled", true).val(mods[0]);
-            $("input#" + this.id + "-G").prop("disabled", true).val(mods[1]);
-            $("input#" + this.id + "-density").prop("disabled", true).val(+((mods[2] / $("select#" + this.id + "-density-u").val()).toFixed(3)));
+            $("input#" + type + "-E").prop("disabled", true).val(mods[0]);
+            $("input#" + type + "-G").prop("disabled", true).val(mods[1]);
+            $("input#" + type + "-dens").prop("disabled", true).val(+((mods[2] / $("select#" + type + "-dens-u").val()).toFixed(3)));
         }
     });
 
@@ -49,7 +50,7 @@ $(document).ready(function(){
     $("div.hex").find("input, select").change(function(){
         let parent = $(this).parents("div.cross_section");
         if(parent.find("select.cross_section").val() == "Hex") {
-            let hex_width = parent.find("input[id$=-hex_size]").val() * parent.find("select[id$=-hex_size-u]").val();
+            let hex_width = parent.find("input[id$=-hex]").val() * parent.find("select[id$=-hex-u]").val();
             parent.find("input[id$=-I]").val( +((0.0601*Math.pow(hex_width, 4)).toFixed(0)) );
             parent.find("input[id$=-J]").val( +((0.1154*Math.pow(hex_width, 4)).toFixed(0)) );
             parent.find("input[id$=-A]").val( +((3*Math.sqrt(3)/8*Math.pow(hex_width, 2)).toFixed(0)) );
@@ -131,39 +132,39 @@ $(document).ready(function(){
     $("select.cross_section").change();
 
     // Between fixtures
-    $("div#between-content").find("input, select").change(() => {
-        let l = parseFloat($("input#between-l").val() * $("select#between-l-u").val());
-        let a = parseFloat($("input#between-a").val() * $("select#between-a-u").val());
-        let F = parseFloat($("input#between-F").val() * $("select#between-F-u").val());
-        let E = parseFloat($("input#between-material-E").val() * 1e9);
-        let I = parseFloat($("input#between-I").val() * 1e-12);
-        let den = parseFloat($("input#between-material-density").val() * $("select#between-material-density-u").val() * 1000);
-        let A = parseFloat($("input#between-A").val() * 1e-6);
+    $("div#btwn-content").find("input, select").change(() => {
+        let l = parseFloat($("input#btwn-l").val() * $("select#btwn-l-u").val());
+        let a = parseFloat($("input#btwn-a").val() * $("select#btwn-a-u").val());
+        let F = parseFloat($("input#btwn-F").val() * $("select#btwn-F-u").val());
+        let E = parseFloat($("input#btwn-E").val() * 1e9);
+        let I = parseFloat($("input#btwn-I").val() * 1e-12);
+        let den = parseFloat($("input#btwn-dens").val() * $("select#btwn-dens-u").val() * 1000);
+        let A = parseFloat($("input#btwn-A").val() * 1e-6);
         if (2*a > l) a = l-a;
-        $("input#between-del").val( +(((2*F*a**2*(l-a)**3) / (3*E*I*(2*a-3*l)**2) / $("select#between-del-u").val()).toFixed(2)) );
-        $("input#between-weight").val( +((l*A*den / $("select#between-weight-u").val()).toFixed(2)) );
+        $("input#btwn-del").val( +(((2*F*a**2*(l-a)**3) / (3*E*I*(2*a-3*l)**2) / $("select#btwn-del-u").val()).toFixed(2)) );
+        $("input#btwn-weight").val( +((l*A*den / $("select#btwn-weight-u").val()).toFixed(2)) );
     });
 
     // Cantilevered load
-    $("div#cantilever-content").find("input, select").change(() => {
-        let l = parseFloat($("input#cantilever-l").val() * $("select#cantilever-l-u").val());
-        let a = parseFloat($("input#cantilever-a").val() * $("select#cantilever-a-u").val());
-        let F = parseFloat($("input#cantilever-F").val() * $("select#cantilever-F-u").val());
-        let E = parseFloat($("input#cantilever-material-E").val() * 1e9);
-        let I = parseFloat($("input#cantilever-I").val() * 1e-12);
-        let den = parseFloat($("input#cantilever-material-density").val() * $("select#cantilever-material-density-u").val() * 1000);
-        let A = parseFloat($("input#cantilever-A").val() * 1e-6);
-        $("input#cantilever-del").val( +(((F*a**2*(3*l-a)) / (6*E*I) / $("select#cantilever-del-u").val()).toFixed(2)) );
-        $("input#cantilever-weight").val( +((l*A*den / $("select#cantilever-weight-u").val()).toFixed(2)) );
+    $("div#cant-content").find("input, select").change(() => {
+        let l = parseFloat($("input#cant-l").val() * $("select#cant-l-u").val());
+        let a = parseFloat($("input#cant-a").val() * $("select#cant-a-u").val());
+        let F = parseFloat($("input#cant-F").val() * $("select#cant-F-u").val());
+        let E = parseFloat($("input#cant-E").val() * 1e9);
+        let I = parseFloat($("input#cant-I").val() * 1e-12);
+        let den = parseFloat($("input#cant-dens").val() * $("select#cant-dens-u").val() * 1000);
+        let A = parseFloat($("input#cant-A").val() * 1e-6);
+        $("input#cant-del").val( +(((F*a**2*(3*l-a)) / (6*E*I) / $("select#cant-del-u").val()).toFixed(2)) );
+        $("input#cant-weight").val( +((l*A*den / $("select#cant-weight-u").val()).toFixed(2)) );
     });
 
     // Twist load
     $("div#twist-content").find("input, select").change(() => {
         let l = parseFloat($("input#twist-l").val() * $("select#twist-l-u").val());
         let T = parseFloat($("input#twist-T").val() * $("select#twist-T-u").val());
-        let G = parseFloat($("input#twist-material-G").val() * 1e9);
+        let G = parseFloat($("input#twist-G").val() * 1e9);
         let J = parseFloat($("input#twist-J").val() * 1e-12);
-        let den = parseFloat($("input#twist-material-density").val() * $("select#twist-material-density-u").val() * 1000);
+        let den = parseFloat($("input#twist-dens").val() * $("select#twist-dens-u").val() * 1000);
         let A = parseFloat($("input#twist-A").val() * 1e-6);
         $("input#twist-del").val( +((T*l/(G*J) * 180/Math.PI).toFixed(2)) );
         $("input#twist-weight").val( +((l*A*den / $("select#twist-weight-u").val()).toFixed(2)) );
