@@ -24,20 +24,20 @@ $(document).ready(function(){
     // Update belt/chain type
     $("select#type").change(() => {
         if($("select#type").val() == "Custom"){
-            $("input#pitch").prop("disabled", false);
+            $("input#p").prop("disabled", false);
             $("div#dimensions input").val("");
             $(".belt").hide();
             $(".chain").show();
         }else{
-            const tmp = units[$("select#pitch-u option:selected").prop("class")];
+            const tmp = units[$("select#p-u option:selected").prop("class")];
             pitch = dimensions[$("select#type").val()][0] / tmp[1];
-            $("input#pitch").val(+(pitch.toFixed(dist_decimals)));
+            $("input#p").val(+(pitch.toFixed(dist_decimals)));
             $("input#width").val(+((dimensions[$("select#type").val()][1] / tmp[1]).toFixed(dist_decimals)));
             $("input#thickness").val(+((dimensions[$("select#type").val()][2] / tmp[1]).toFixed(dist_decimals)));
             $("input#adder").val(+((dimensions[$("select#type").val()][3] / tmp[1]).toFixed(dist_decimals)));
             $("input#weight").val(+((dimensions[$("select#type").val()][4] / tmp[5]).toFixed(3)));
             $("input#load_rating").val(+((dimensions[$("select#type").val()][6] / tmp[3]).toFixed(0)));
-            $("input#pitch").prop("disabled", true);
+            $("input#p").prop("disabled", true);
             if (dimensions[$("select#type").val()][5] == "b") {
                 $(".belt").show();
                 $(".chain").hide();
@@ -46,46 +46,46 @@ $(document).ready(function(){
                 $(".chain").show();
             }
         }
-        $("input#teeth1, input#teeth2").change();
+        $("input#t1, input#t2").change();
     });
-    $("input#pitch").change(() => pitch = $("input#pitch").val() );
+    $("input#p").change(() => pitch = $("input#p").val() );
 
     // Update pitch diameters
-    $("input#teeth1").change(function(){
-        diam1 = $("input#teeth1").val() * pitch / Math.PI;
+    $("input#t1").change(function(){
+        diam1 = $("input#t1").val() * pitch / Math.PI;
         $("input#diam1").val(+(diam1.toFixed(dist_decimals)));
     });
-    $("input#teeth2").change(function(){
-        diam2 = $("input#teeth2").val() * pitch / Math.PI;
+    $("input#t2").change(function(){
+        diam2 = $("input#t2").val() * pitch / Math.PI;
         $("input#diam2").val(+(diam2.toFixed(dist_decimals)));
     });
 
     // Switch units
-    $("select#pitch-u").change(function(){
-        const tmp = units[$("select#pitch-u option:selected").prop("class")];
+    $("select#p-u").change(function(){
+        const tmp = units[$("select#p-u option:selected").prop("class")];
         dist_decimals = tmp[0]=="in" ? 3 : 2;
         $("span.dist_unit").html(tmp[0]);
         $("span.force_unit").html(tmp[2]);
         $("span.weight_unit").html(tmp[4])
         $("select#type").change();
-        if ($("input#approx_dist").val()!="")   $("input#approx_dist").val(+(($("input#approx_dist").val() * 25.4**(tmp[0]=="in"?-1:1)).toFixed(dist_decimals)));
+        if ($("input#approx").val()!="")   $("input#approx").val(+(($("input#approx").val() * 25.4**(tmp[0]=="in"?-1:1)).toFixed(dist_decimals)));
     });
-    $("select#pitch-u").change();
+    $("select#p-u").change();
     
     // Switch forward/backward calculation
     $("input[type=radio][name=driving]").change(function(){
         $("div.geometry div.field").hide();
         switch( $("input[type=radio][name=driving]:checked").attr("id") ){
-            case "by_links":
+            case "by_ls":
                 $("div.bylinks-in, div.bylinks-out").show();
                 $("div.bylinks-in input").prop("disabled", false);
                 $("div.bylinks-out input").prop("disabled", true);
                 break;
-            case "by_dist":
+            case "by_d":
                 $("div.bydist-in, div.bydist-out").show();
                 $("div.bydist-in input").prop("disabled", false);
                 $("div.bydist-out input").prop("disabled", true);
-                $("input#approx_dist").val($("input#dist").val());
+                $("input#approx").val($("input#dist").val());
                 break;
         }
     });
@@ -93,7 +93,7 @@ $(document).ready(function(){
     // Run calculation
     $("input, select").change(function(){
         switch( $("input[type=radio][name=driving]:checked").attr("id") ){
-            case "by_links":
+            case "by_ls":
                 var target = parseInt($("input#links").val());
                 var D = target*pitch/2;
                 var lastD, lastD2, alpha, L, current = NaN, last, dydx;
@@ -109,9 +109,9 @@ $(document).ready(function(){
                     current = (2*L + diam1*alpha + diam2*(Math.PI-alpha))/pitch;
                 } while (Math.abs(target - current) > 0.001);
                 break;
-            case "by_dist":
-                var D = parseFloat($("input#approx_dist").val());
-                var mod = parseInt($("input#round_to").val()=="" ? 1 : $("input#round_to").val());
+            case "by_d":
+                var D = parseFloat($("input#approx").val());
+                var mod = parseInt($("input#mod").val()=="" ? 1 : $("input#mod").val());
                 var lastD = NaN, lastD2, alpha, L, current, last, target = NaN, dydx;
                 do {
                     alpha = Math.acos((diam2 - diam1) / (2*D));

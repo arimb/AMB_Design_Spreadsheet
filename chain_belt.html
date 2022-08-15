@@ -38,9 +38,9 @@
                     <option>Custom</option>
                 </select>
                 <div class="field">
-                    <label for="pitch" data-tipso="Length of one link of chain, or the distance between two belt teeth">Pitch Distance</label>
-                    <input id="pitch" type="number" step="any" min="0" disabled>
-                    <select id="pitch-u">
+                    <label for="p" data-tipso="Length of one link of chain, or the distance between two belt teeth">Pitch Distance</label>
+                    <input id="p" type="number" step="any" min="0" disabled>
+                    <select id="p-u">
                         <option class="imperial">in</option>
                         <option class="metric">mm</option>
                     </select>
@@ -51,8 +51,8 @@
                     <h3 class="chain">Sprocket 1</h3>
                     <h3 class="belt">Pulley 1</h3>
                     <div class="field">
-                        <label for="teeth1">Tooth Count</label>
-                        <input id="teeth1" type="number" min="0" step="1">
+                        <label for="t1">Tooth Count</label>
+                        <input id="t1" type="number" min="0" step="1">
                     </div>
                     <div class="field">
                         <label for="diam1" data-tipso="Diameter of the pulley/sprocket along the belt/chain centerline">Diameter</label>
@@ -65,8 +65,8 @@
                     <h3 class="chain">Sprocket 2</h3>
                     <h3 class="belt">Pulley 2</h3>
                     <div class="field">
-                        <label for="teeth2">Tooth Count</label>
-                        <input id="teeth2" type="number" min="0" step="1">
+                        <label for="t2">Tooth Count</label>
+                        <input id="t2" type="number" min="0" step="1">
                     </div>
                     <div class="field">
                         <label for="diam2" data-tipso="Diameter of the pulley/sprocket along the belt/chain centerline">Diameter</label>
@@ -114,19 +114,19 @@
             <div class="page-element" id="calculation">
                 <div class="driving">
                     <div>
-                        <label for="by_links" class="chain" data-tipso="Find the center-to-center distance to use for a certain number of chain links">By # Links</label>
-                        <label for="by_links" class="belt" data-tipso="Find the center-to-center distance to use for a certain size belt">By # Teeth</label>
-                        <input id="by_links" name="driving" type="radio">
+                        <label for="by_ls" class="chain" data-tipso="Find the center-to-center distance to use for a certain number of chain links">By # Links</label>
+                        <label for="by_ls" class="belt" data-tipso="Find the center-to-center distance to use for a certain size belt">By # Teeth</label>
+                        <input id="by_ls" name="driving" type="radio">
                     </div>
                     <div>
-                        <label for="by_dist" data-tipso="Find the closest C-C distance that gives an even number of chain links or belt teeth">By Approx. C-C</label>
-                        <input id="by_dist" name="driving" type="radio" checked>
+                        <label for="by_d" data-tipso="Find the closest C-C distance that gives an even number of chain links or belt teeth">By Approx. C-C</label>
+                        <input id="by_d" name="driving" type="radio" checked>
                     </div>
                 </div>
                 <div class="geometry">
                     <div class="field bydist-in">
-                        <label for="approx_dist" data-tipso="Desired center-to-center distance">Approx. Distance</label>
-                        <input id="approx_dist" type="number" step="any">
+                        <label for="approx" data-tipso="Desired center-to-center distance">Approx. Distance</label>
+                        <input id="approx" type="number" step="any">
                         &nbsp;
                         <span class="dist_unit"></span>
                     </div>
@@ -141,8 +141,8 @@
                         <span></span>
                     </div>
                     <div class="field bydist-in">
-                        <label for="round_to" data-tipso="Force the chain/belt to have an even multiple of this number of links/teeth. Standard for chain is 2">Round To</label>
-                        <input id="round_to" type="number" step="any" min="0" placeholder="1">
+                        <label for="mod" data-tipso="Force the chain/belt to have an even multiple of this number of links/teeth. Standard for chain is 2">Round To</label>
+                        <input id="mod" type="number" step="any" min="0" placeholder="1">
                         &nbsp;
                         <span></span>
                     </div>
