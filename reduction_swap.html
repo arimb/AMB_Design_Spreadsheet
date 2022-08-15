@@ -38,8 +38,8 @@
                     <h2 data-tipso="The existing reduction whose center-to-center distance you want to match">Current Config</h2>
                     <div class="current">
                         <div>
-                            <label for="custom" data-tipso="Define the current config by the center-to-center distance">C-C Dist.</label>
-                            <input id="custom" name="current" type="radio" checked>
+                            <label for="dist" data-tipso="Define the current config by the center-to-center distance">C-C Dist.</label>
+                            <input id="dist" name="current" type="radio" checked>
                         </div>
                         <div>
                             <label for="gears" data-tipso="Calculate the center-to-center distance of the current config based on the distance needed for a certain gear reduction">Gears</label>
@@ -52,21 +52,21 @@
                     </div>
                     <div class="input gears">
                         <div class="field">
-                            <label for="gear1">Gear 1</label>
-                            <input id="gear1" type="number" step="any" min="0">
+                            <label for="g1">Gear 1</label>
+                            <input id="g1" type="number" step="any" min="0">
                         </div>
                         <div class="field">
-                            <label for="gear2">Gear 2</label>
-                            <input id="gear2" type="number" step="any" min="0">
+                            <label for="g2">Gear 2</label>
+                            <input id="g2" type="number" step="any" min="0">
                         </div>
                         <div class="field">
-                            <label for="gear_dp">Gear DP</label>
-                            <input id="gear_dp" min="0" value="20">
+                            <label for="g_dp">Gear DP</label>
+                            <input id="g_dp" min="0" value="20">
                         </div>
                         <div class="field">
-                            <label for="gear_cc" data-tipso="Center-to-center distance to match">C-C Dist.</label>
-                            <input id="gear_cc" disabled>
-                            <select id="gear_cc-u">
+                            <label for="g_cc" data-tipso="Center-to-center distance to match">C-C Dist.</label>
+                            <input id="g_cc" disabled>
+                            <select id="g_cc-u">
                                 <option value="1" class="imperial">inch</option>
                                 <option value="0.03937" class="metric">mm</option>
                             </select>
@@ -74,21 +74,21 @@
                     </div>
                     <div class="input belt">
                         <div class="field">
-                            <label for="pulley1">Pulley/Sprocket 1</label>
-                            <input id="pulley1" type="number" step="any" min="0">
+                            <label for="p1">Pulley/Sprocket 1</label>
+                            <input id="p1" type="number" step="any" min="0">
                         </div>
                         <div class="field">
-                            <label for="pulley2">Pulley/Sprocket 2</label>
-                            <input id="pulley2" type="number" step="any" min="0">
+                            <label for="p2">Pulley/Sprocket 2</label>
+                            <input id="p2" type="number" step="any" min="0">
                         </div>
                         <div class="field">
                             <label for="links"># of Teeth/Links</label>
                             <input id="links" min="0">
                         </div>
                         <div class="field">
-                            <label for="belt_pitch">Belt/Chain Pitch</label>
-                            <input id="belt_pitch">
-                            <select id="belt_pitch-u">
+                            <label for="pitch">Belt/Chain Pitch</label>
+                            <input id="pitch">
+                            <select id="pitch-u">
                                 <option value="1" class="imperial">inch</option>
                                 <option value="0.03937" class="metric">mm</option>
                             </select>
@@ -102,11 +102,11 @@
                             </select>
                         </div>
                     </div>
-                    <div class="input custom">
+                    <div class="input dist">
                         <div class="field">
-                            <label for="custom_cc" data-tipso="Center-to-center distance to match">C-C Dist.</label>
-                            <input id="custom_cc" min="0">
-                            <select id="custom_cc-u">
+                            <label for="dist_cc" data-tipso="Center-to-center distance to match">C-C Dist.</label>
+                            <input id="dist_cc" min="0">
+                            <select id="dist_cc-u">
                                 <option value="1" class="imperial">inch</option>
                                 <option value="0.03937" class="metric">mm</option>
                             </select>
@@ -138,38 +138,38 @@
                         </summary>
                         <div class="ranges">
                             <div class="field">
-                                <input id="gear_enable" type="checkbox" checked>
-                                <input id="gear_min" type="number" min="0" value="14">
-                                <label for="gear_enable">&leq; 20dp Gears &leq;</label>
-                                <input id="gear_max" type="number" min="0" value="84">
+                                <input id="g_enable" type="checkbox" checked>
+                                <input id="g_min" type="number" min="0" value="14">
+                                <label for="g_enable">&leq; 20dp Gears &leq;</label>
+                                <input id="g_max" type="number" min="0" value="84">
                                 <div class="ph"></div>
                             </div>
                             <div class="field">
-                                <input id="pulley3_enable" type="checkbox" checked>
-                                <input id="pulley3_min" type="number" min="0" value="18">
-                                <label for="pulley3_enable">&leq; 3mm Pulleys &leq;</label>
-                                <input id="pulley3_max" type="number" min="0" value="60">
+                                <input id="p3_enable" type="checkbox" checked>
+                                <input id="p3_min" type="number" min="0" value="18">
+                                <label for="p3_enable">&leq; 3mm Pulleys &leq;</label>
+                                <input id="p3_max" type="number" min="0" value="60">
                                 <div class="ph"></div>
                             </div>
                             <div class="field">
-                                <input id="pulley5_enable" type="checkbox" checked>
-                                <input id="pulley5_min" type="number" min="0" value="18">
-                                <label for="pulley5_enable">&leq; 5mm Pulleys &leq;</label>
-                                <input id="pulley5_max" type="number" min="0" value="60">
+                                <input id="p5_enable" type="checkbox" checked>
+                                <input id="p5_min" type="number" min="0" value="18">
+                                <label for="p5_enable">&leq; 5mm Pulleys &leq;</label>
+                                <input id="p5_max" type="number" min="0" value="60">
                                 <div class="ph"></div>
                             </div>
                             <div class="field">
-                                <input id="sprocket25_enable" type="checkbox" checked>
-                                <input id="sprocket25_min" type="number" min="0" value="16">
-                                <label for="sprocket25_enable">&leq; #25 Sprockets &leq;</label>
-                                <input id="sprocket25_max" type="number" min="0" value="72">
+                                <input id="s25_enable" type="checkbox" checked>
+                                <input id="s25_min" type="number" min="0" value="16">
+                                <label for="s25_enable">&leq; #25 Sprockets &leq;</label>
+                                <input id="s25_max" type="number" min="0" value="72">
                                 <div class="ph"></div>
                             </div>
                             <div class="field">
-                                <input id="sprocket35_enable" type="checkbox" checked>
-                                <input id="sprocket35_min" type="number" min="0" value="12">
-                                <label for="sprocket35_enable">&leq; #35 Sprockets &leq;</label>
-                                <input id="sprocket35_max" type="number" min="0" value="60">
+                                <input id="s35_enable" type="checkbox" checked>
+                                <input id="s35_min" type="number" min="0" value="12">
+                                <label for="s35_enable">&leq; #35 Sprockets &leq;</label>
+                                <input id="s35_max" type="number" min="0" value="60">
                                 <div class="ph"></div>
                             </div>
                         </div>

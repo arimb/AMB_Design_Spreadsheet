@@ -15,12 +15,12 @@ $(document).ready(function(){
     });
 
     $("input#gears, div.gears input, div.gears select").change(function(){
-        let gear1 = parseInt($("input#gear1").val());
-        let gear2 = parseInt($("input#gear2").val());
-        let dp = parseInt($("input#gear_dp").val());
+        let gear1 = parseInt($("input#g1").val());
+        let gear2 = parseInt($("input#g2").val());
+        let dp = parseInt($("input#g_dp").val());
         let D = (gear1+gear2)/(2*dp);
         if (!isNaN(D)) {
-            $("input#gear_cc").val(+((D / $("select#gear_cc-u").val()).toFixed(3)));
+            $("input#g_cc").val(+((D / $("select#g_cc-u").val()).toFixed(3)));
             if ($("input[name=current]:checked").prop("id") == "gears")
                 current_cc = D;
         } else
@@ -28,9 +28,9 @@ $(document).ready(function(){
     });
 
     $("input#belt, div.belt input, div.belt select").change(function(){
-        let pitch = $("input#belt_pitch").val() * $("select#belt_pitch-u").val();
-        let diam1 = $("input#pulley1").val() * pitch / Math.PI;
-        let diam2 = $("input#pulley2").val() * pitch / Math.PI;
+        let pitch = $("input#pitch").val() * $("select#pitch-u").val();
+        let diam1 = $("input#p1").val() * pitch / Math.PI;
+        let diam2 = $("input#p2").val() * pitch / Math.PI;
         let target = parseInt($("input#links").val());
         let D = target*pitch/2;
         let lastD, lastD2, alpha, L, current = NaN, last, dydx;
@@ -53,8 +53,8 @@ $(document).ready(function(){
             current_cc = 0;
     });
 
-    $("input#custom, input#custom_cc").change(() => 
-        current_cc = $("input#custom_cc").val() * $("select#custom_cc-u").val()
+    $("input#dist, input#dist_cc").change(() => 
+        current_cc = $("input#dist_cc").val() * $("select#dist_cc-u").val()
     );
 
     $("input, select").change(calculate);
@@ -70,10 +70,10 @@ function calculate(){
 
     let options = [];
     // gears
-    if ($("input#gear_enable").prop("checked")) {
-        for (let A = parseInt($("input#gear_min").val()); A <= Math.min(parseInt($("input#gear_max").val()), current_cc*40); A++) {
-            let minB = Math.max(Math.ceil(A * min_ratio), parseInt($("input#gear_min").val()));
-            let maxB = Math.min(Math.floor(A * max_ratio), parseInt($("input#gear_max").val()));
+    if ($("input#g_enable").prop("checked")) {
+        for (let A = parseInt($("input#g_min").val()); A <= Math.min(parseInt($("input#g_max").val()), current_cc*40); A++) {
+            let minB = Math.max(Math.ceil(A * min_ratio), parseInt($("input#g_min").val()));
+            let maxB = Math.min(Math.floor(A * max_ratio), parseInt($("input#g_max").val()));
             for (let B = minB; B <= maxB; B++) {
                 let cc = (A+B)/40;
                 if (cc >= min_cc && cc <= max_cc)
@@ -82,10 +82,10 @@ function calculate(){
         }
     }
     // 3mm belt
-    if ($("input#pulley3_enable").prop("checked")) {
-        for (let A = parseInt($("input#pulley3_min").val()); A <= Math.min(parseInt($("input#pulley3_max").val()), current_cc*Math.PI/(3/25.4)); A++) {
-            let minB = Math.max(Math.ceil(A * min_ratio), parseInt($("input#pulley3_min").val()));
-            let maxB = Math.min(Math.floor(A * max_ratio), parseInt($("input#pulley3_max").val()));
+    if ($("input#p3_enable").prop("checked")) {
+        for (let A = parseInt($("input#p3_min").val()); A <= Math.min(parseInt($("input#p3_max").val()), current_cc*Math.PI/(3/25.4)); A++) {
+            let minB = Math.max(Math.ceil(A * min_ratio), parseInt($("input#p3_min").val()));
+            let maxB = Math.min(Math.floor(A * max_ratio), parseInt($("input#p3_max").val()));
             for (let B = minB; B <= maxB; B++) {
                 let out = belt_cc(3/25.4, A, B, current_cc);
                 if (out[0] >= min_cc && out[0] <= max_cc)
@@ -94,10 +94,10 @@ function calculate(){
         }
     }
     // 5mm belt
-    if ($("input#pulley5_enable").prop("checked")) {
-        for (let A = parseInt($("input#pulley5_min").val()); A <= Math.min(parseInt($("input#pulley5_max").val()), current_cc*Math.PI/(5/25.4)); A++) {
-            let minB = Math.max(Math.ceil(A * min_ratio), parseInt($("input#pulley5_min").val()));
-            let maxB = Math.min(Math.floor(A * max_ratio), parseInt($("input#pulley5_max").val()));
+    if ($("input#p5_enable").prop("checked")) {
+        for (let A = parseInt($("input#p5_min").val()); A <= Math.min(parseInt($("input#p5_max").val()), current_cc*Math.PI/(5/25.4)); A++) {
+            let minB = Math.max(Math.ceil(A * min_ratio), parseInt($("input#p5_min").val()));
+            let maxB = Math.min(Math.floor(A * max_ratio), parseInt($("input#p5_max").val()));
             for (let B = minB; B <= maxB; B++) {
                 let out = belt_cc(5/25.4, A, B, current_cc);
                 if (out[0] >= min_cc && out[0] <= max_cc)
@@ -106,10 +106,10 @@ function calculate(){
         }
     }
     // #25 chain
-    if ($("input#sprocket25_enable").prop("checked")) {
-        for (let A = parseInt($("input#sprocket25_min").val()); A <= Math.min(parseInt($("input#sprocket25_max").val()), current_cc*Math.PI/0.25); A++) {
-            let minB = Math.max(Math.ceil(A * min_ratio), parseInt($("input#sprocket25_min").val()));
-            let maxB = Math.min(Math.floor(A * max_ratio), parseInt($("input#sprocket25_max").val()));
+    if ($("input#s25_enable").prop("checked")) {
+        for (let A = parseInt($("input#s25_min").val()); A <= Math.min(parseInt($("input#s25_max").val()), current_cc*Math.PI/0.25); A++) {
+            let minB = Math.max(Math.ceil(A * min_ratio), parseInt($("input#s25_min").val()));
+            let maxB = Math.min(Math.floor(A * max_ratio), parseInt($("input#s25_max").val()));
             for (let B = minB; B <= maxB; B++) {
                 let out = belt_cc(0.25, A, B, current_cc);
                 if (out[0] >= min_cc && out[0] <= max_cc)
@@ -118,10 +118,10 @@ function calculate(){
         }
     }
     // #35 chain
-    if ($("input#sprocket35_enable").prop("checked")) {
-        for (let A = parseInt($("input#sprocket35_min").val()); A <= Math.min(parseInt($("input#sprocket35_max").val()), current_cc*Math.PI/0.375); A++) {
-            let minB = Math.max(Math.ceil(A * min_ratio), parseInt($("input#sprocket35_min").val()));
-            let maxB = Math.min(Math.floor(A * max_ratio), parseInt($("input#sprocket35_max").val()));
+    if ($("input#s35_enable").prop("checked")) {
+        for (let A = parseInt($("input#s35_min").val()); A <= Math.min(parseInt($("input#s35_max").val()), current_cc*Math.PI/0.375); A++) {
+            let minB = Math.max(Math.ceil(A * min_ratio), parseInt($("input#s35_min").val()));
+            let maxB = Math.min(Math.floor(A * max_ratio), parseInt($("input#s35_max").val()));
             for (let B = minB; B <= maxB; B++) {
                 let out = belt_cc(0.375, A, B, current_cc);
                 if (out[0] >= min_cc && out[0] <= max_cc)
@@ -131,6 +131,7 @@ function calculate(){
     }
 
     options = options.sort((a, b) => Math.abs(a[4]-current_cc) - Math.abs(b[4]-current_cc));
+    console.log(options);
 
     $("tbody").html("");
     options.forEach(el => 
