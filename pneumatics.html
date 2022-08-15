@@ -67,12 +67,12 @@
                         <br>
                         <label data-tipso="Pressure used to extend the cylinder">Push Pressure</label>
                         <div class="field">
-                            <input class="push_pressure" type="number" step="any" min="0" max="60" value="60" disabled>
+                            <input class="ppush" type="number" step="any" min="0" max="60" value="60" disabled>
                             &nbsp;<span>psig</span>
                         </div>
                         <label data-tipso="Pressure used to retract the cylinder">Pull Pressure</label>
                         <div class="field">
-                            <input class="pull_pressure" type="number" step="any" min="0" max="60" value="60" disabled>
+                            <input class="ppull" type="number" step="any" min="0" max="60" value="60" disabled>
                             &nbsp;<span>psig</span>
                         </div>
                         <br>
@@ -105,20 +105,20 @@
                             <input id="tank_name1" class="name" type="text" size="1" value="Clippard">
                             <label>Tank Volume</label>
                             <div class="field">
-                                <input id="tank_vol1" class="tank_vol" type="number" step="any" min="0" value="35">
-                                <select id="tank_vol1-u" class="tank_vol-u">
+                                <input id="tvol1" class="tank_vol" type="number" step="any" min="0" value="35">
+                                <select id="tvol1-u" class="tank_vol-u">
                                     <option value="1" class="imperial">in³</option>
                                     <option value="0.0610237" class="metric">ml</option>
                                 </select>
                             </div>
                             <label>Quantity</label>
                             <div class="field">
-                                <input id="tank_qty1" class="tank_qty" type="number" step="any" min="0" value="1">
+                                <input id="tqty1" class="tank_qty" type="number" step="any" min="0" value="1">
                                 <span></span>
                             </div>
                             <label data-tipso="Maximum pressure stored in the tank. Generally 120psi for high pressure tanks and 60psi for low pressure">Pressure</label>
                             <div class="field">
-                                <input id="tank_press1" class="tank_press" type="number" step="any" min="0" value="120">
+                                <input id="tpres1" class="tank_press" type="number" step="any" min="0" value="120">
                                 <span>&nbsp;psig</span>
                             </div>
                         </div>
@@ -126,20 +126,20 @@
                             <input id="tank_name2" class="name" type="text" size="1">
                             <label>Tank Volume</label>
                             <div class="field">
-                                <input id="tank_vol2" class="tank_vol" type="number" step="any" min="0">
-                                <select id="tank_vol2-u" class="tank_vol-u">
+                                <input id="tvol2" class="tank_vol" type="number" step="any" min="0">
+                                <select id="tvol2-u" class="tank_vol-u">
                                     <option value="1" class="imperial">in³</option>
                                     <option value="0.0610237" class="metric">ml</option>
                                 </select>
                             </div>
                             <label>Quantity</label>
                             <div class="field">
-                                <input id="tank_qty2" class="tank_qty" type="number" step="any" min="0">
+                                <input id="tqty2" class="tank_qty" type="number" step="any" min="0">
                                 <span></span>
                             </div>
                             <label data-tipso="Maximum pressure stored in the tank. Generally 120psi for high pressure tanks and 60psi for low pressure">Pressure</label>
                             <div class="field">
-                                <input id="tank_press2" class="tank_press" type="number" step="any" min="0" value="120">
+                                <input id="tpres2" class="tank_press" type="number" step="any" min="0" value="120">
                                 <span>&nbsp;psig</span>
                             </div>
                         </div>
@@ -147,20 +147,20 @@
                             <input id="tank_name3" class="name" type="text" size="1">
                             <label>Tank Volume</label>
                             <div class="field">
-                                <input id="tank_vol3" class="tank_vol" type="number" step="any" min="0">
-                                <select id="tank_vol3-u" class="tank_vol-u">
+                                <input id="tvol3" class="tank_vol" type="number" step="any" min="0">
+                                <select id="tvol3-u" class="tank_vol-u">
                                     <option value="1" class="imperial">in³</option>
                                     <option value="0.0610237" class="metric">ml</option>
                                 </select>
                             </div>
                             <label>Quantity</label>
                             <div class="field">
-                                <input id="tank_qty3" class="tank_qty" type="number" step="any" min="0">
+                                <input id="tqty3" class="tank_qty" type="number" step="any" min="0">
                                 <span></span>
                             </div>
                             <label data-tipso="Maximum pressure stored in the tank. Generally 120psi for high pressure tanks and 60psi for low pressure">Pressure</label>
                             <div class="field">
-                                <input id="tank_press3" class="tank_press" type="number" step="any" min="0" value="120">
+                                <input id="tpres3" class="tank_press" type="number" step="any" min="0" value="120">
                                 <span>&nbsp;psig</span>
                             </div>
                         </div>
@@ -183,17 +183,17 @@
                     </select>
                     <label data-tipso="Pressure in the system at the start of the match">Initial Pressure</label>
                     <div class="field">
-                        <input id="initial_press" type="number" step="any" min="0" value="120">
+                        <input id="p0" type="number" step="any" min="0" value="120">
                         <span>&nbsp;psig</span>
                     </div>
                     <label data-tipso="Pressure at which the compressor starts running">Compressor Trigger</label>
                     <div class="field">
-                        <input id="trigger_press" type="number" step="any" min="0" value="95">
+                        <input id="ptrig" type="number" step="any" min="0" value="95">
                         <span>&nbsp;psig</span>
                     </div>
                     <label data-tipso="Pressure at which the compressor stops running">Compressor Cutoff</label>
                     <div class="field">
-                        <input id="cutoff_press" type="number" step="any" min="0" value="120">
+                        <input id="pcut" type="number" step="any" min="0" value="120">
                         <span>&nbsp;psig</span>
                     </div>
                 </div>

@@ -28,12 +28,12 @@ $(document).ready(function(){
                 <br>
                 <label data-tipso="Pressure used to extend the cylinder">Push Pressure</label>
                 <div class="field">
-                    <input id="push_press${i}" class="push_pressure" type="number" min="0" max="60" value="60">
+                    <input id="ppush${i}" class="ppush" type="number" min="0" max="60" value="60">
                     &nbsp;<span>psig</span>
                 </div>
                 <label data-tipso="Pressure used to retract the cylinder">Pull Pressure</label>
                 <div class="field">
-                    <input id="pull_press${i}" class="pull_pressure" type="number" min="0" max="60" value="60">
+                    <input id="ppull${i}" class="ppull" type="number" min="0" max="60" value="60">
                     &nbsp;<span>psig</span>
                 </div>
                 <br>
@@ -137,15 +137,15 @@ $(document).ready(function(){
 
 function simulate(){
     const coeffs = JSON.parse($("select#compressor option:selected").attr("data-consts"));
-    const trigger = $("input#trigger_press").val();
-    const cutoff = $("input#cutoff_press").val();
+    const trigger = $("input#ptrig").val();
+    const cutoff = $("input#pcut").val();
     var min_press = 0;
     const cyls = $("div.cyl:not(#0)").map((i,cyl) => {
         const bore = $(cyl).find("input.bore").val() * $(cyl).find("select.units").val();
         const rod = $(cyl).find("input.rod").val() * $(cyl).find("select.units").val();
         const stroke = $(cyl).find("input.stroke").val() * $(cyl).find("select.units").val();
-        const push_pressure = $(cyl).find("input.push_pressure").val();
-        const pull_pressure = $(cyl).find("input.pull_pressure").val();
+        const push_pressure = $(cyl).find("input.ppush").val();
+        const pull_pressure = $(cyl).find("input.ppull").val();
         min_press = Math.max(min_press, push_pressure, pull_pressure);
 
         const period = $(cyl).find("input.period").val();
@@ -157,7 +157,7 @@ function simulate(){
         };
     }).get();
     const dt = 1;
-    var P = parseFloat($("input#initial_press").val());
+    var P = parseFloat($("input#p0").val());
     var comp_state = true;
     
     var data = [];
