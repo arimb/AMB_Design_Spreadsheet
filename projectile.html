@@ -36,7 +36,7 @@
         <main>
             <div class="inputs">
                 <div class="page-element">
-                    <select id="driving" class="tipso-nounderline" data-tipso="Choose which mode to use (which variables to solve for)">
+                    <select id="mode" class="tipso-nounderline" data-tipso="Choose which mode to use (which variables to solve for)">
                         <option value="1">Find Target Values by Target Distance</option>
                         <option value="2">Find Target Values by Target Height</option>
                         <option value="3">Find Launch Values</option>
@@ -46,24 +46,24 @@
                     <h3>Launch Values</h3>
                     <div class="field-list">
                         <div class="field">
-                            <label for="initial_height" data-tipso="Object's vertical height off the ground at time of launch">Height</label>
-                            <input id="initial_height" type="number" step="any" min="0">
-                            <select id="initial_height-u">
+                            <label for="h0" data-tipso="Object's vertical height off the ground at time of launch">Height</label>
+                            <input id="h0" type="number" step="any" min="0">
+                            <select id="h0-u">
                                 <option value="0.3048" class="imperial">ft</option>
                                 <option value="1" class="metric">m</option>
                             </select>
                         </div>
                         <div class="field">
-                            <label for="initial_vel" data-tipso="Object's speed at time of launch">Velocity</label>
-                            <input id="initial_vel" class="initial-driven" type="number" step="any" min="0">
-                            <select id="initial_vel-u">
+                            <label for="v0" data-tipso="Object's speed at time of launch">Velocity</label>
+                            <input id="v0" class="initial-driven" type="number" step="any" min="0">
+                            <select id="v0-u">
                                 <option value="0.3048" class="imperial">ft/s</option>
                                 <option value="1" class="metric">m/s</option>
                             </select>
                         </div>
                         <div class="field">
-                            <label for="initial_angle" data-tipso="Object's angle of travel at time of launch (measured counter-clockwise from the right)">Angle</label>
-                            <input id="initial_angle" class="initial-driven" type="number" step="any" min="0">
+                            <label for="th0" data-tipso="Object's angle of travel at time of launch (measured counter-clockwise from the right)">Angle</label>
+                            <input id="th0" class="initial-driven" type="number" step="any" min="0">
                             <span>&nbsp;&deg;</span>
                         </div>
                     </div>
@@ -72,27 +72,27 @@
                     <h3>Target Values</h3>
                     <div class="field-list">
                         <div class="field">
-                            <label for="target_distance" data-tipso="Horizontal distance between the launch point and the target">Distance</label>
-                            <input id="target_distance" class="target-distance-driven" type="number" step="any" min="0">
-                            <select id="target_distance-u">
+                            <label for="dist" data-tipso="Horizontal distance between the launch point and the target">Distance</label>
+                            <input id="dist" class="target-distance-driven" type="number" step="any" min="0">
+                            <select id="dist-u">
                                 <option value="0.3048" class="imperial">ft</option>
                                 <option value="1" class="metric">m</option>
                             </select>
                         </div>
                         <div class="field">
-                            <label for="target_height" data-tipso="Vertical height of the target off the ground">Height</label>
-                            <input id="target_height" class="target-height-driven" type="number" step="any" min="0">
-                            <select id="target_height-u">
+                            <label for="hf" data-tipso="Vertical height of the target off the ground">Height</label>
+                            <input id="hf" class="target-height-driven" type="number" step="any" min="0">
+                            <select id="hf-u">
                                 <option value="0.3048" class="imperial">ft</option>
                                 <option value="1" class="metric">m</option>
                             </select>
-                            <input id="target_height-direction" type="checkbox" class="direction target-height-driven initial-driven" hidden>
+                            <input id="hf-dir" type="checkbox" class="direction target-height-driven initial-driven" hidden>
                             <img id="up_arrow" class="arrow target-height-driven initial-driven tipso-nounderline" src="img/arrow_up.svg" data-tipso="Direction the object is travelling when the target is reached">
                             <img id="down_arrow" class="arrow target-height-driven initial-driven tipso-nounderline" src="img/arrow_down.svg" data-tipso="Direction the object is travelling when the target is reached">
                         </div>
                         <div class="field">
-                            <label for="target_angle" data-tipso="Object's angle of travel when hitting the target (measured counter-clockwise from the right)">Angle</label>
-                            <input id="target_angle" class="target-height-driven target-distance-driven" type="number" step="any">
+                            <label for="thf" data-tipso="Object's angle of travel when hitting the target (measured counter-clockwise from the right)">Angle</label>
+                            <input id="thf" class="target-height-driven target-distance-driven" type="number" step="any">
                             <span>&nbsp;&deg;</span>
                         </div>
                     </div>
@@ -100,19 +100,19 @@
                 <div class="page-element initial-driven" id="drag">
                     <h3 data-tipso="Forces from air friction. Only valid for spherical objects. Only available when finding target values">Drag &amp; Magnus</h3>
                     <div class="field enable">
-                        <input id="drag-enable" type="checkbox">
-                        <label for="drag-enable">Enable</label>
+                        <input id="drag-e" type="checkbox">
+                        <label for="drag-e">Enable</label>
                     </div>
                     <div class="field-list">
                         <div class="field">
-                            <label for="drag_coeff" data-tipso="For help determining, read the docs">Drag Coefficient</label>
-                            <input id="drag_coeff" type="number" step="any" min="0">
+                            <label for="cd" data-tipso="For help determining, read the docs">Drag Coefficient</label>
+                            <input id="cd" type="number" step="any" min="0">
                             <span></span>
                         </div>
                         <div class="field">
-                            <label for="diameter">Ball Diameter</label>
-                            <input id="diameter" type="number" step="any" min="0">
-                            <select id="diameter-u">
+                            <label for="diam">Ball Diameter</label>
+                            <input id="diam" type="number" step="any" min="0">
+                            <select id="diam-u">
                                 <option value="0.0254" class="imperial">in</option>
                                 <option value="0.001" class="metric">mm</option>
                             </select>
@@ -158,22 +158,22 @@
                 <div class="page-element">
                     <h3 data-tipso="Option to show an obstacle (e.g. a defensive robot) on the diagram to ensure the object's trajectory clears the obstacle">Obstacle</h3>
                     <div class="field enable">
-                        <input id="obstacle-enable" type="checkbox" checked>
-                        <label for="obstacle-enable">Enable</label>
+                        <input id="obs-e" type="checkbox" checked>
+                        <label for="obs-e">Enable</label>
                     </div>
                     <div class="field-list">
                         <div class="field">
-                            <label for="obstacle_distance" data-tipso="Obstacle's horizontal distance from the shooter's release point">Distance</label>
-                            <input id="obstacle_distance" type="number" step="any" min="0">
-                            <select id="obstacle_distance-u">
+                            <label for="obs_dist" data-tipso="Obstacle's horizontal distance from the shooter's release point">Distance</label>
+                            <input id="obs_dist" type="number" step="any" min="0">
+                            <select id="obs_dist-u">
                                 <option value="0.3048" class="imperial">ft</option>
                                 <option value="1" class="metric">m</option>
                             </select>
                         </div>
                         <div class="field">
-                            <label for="obstacle_height" data-tipso="Object's vertical height off the ground">Height</label>
-                            <input id="obstacle_height" type="number" step="any" min="0">
-                            <select id="obstacle_height-u">
+                            <label for="obs_h" data-tipso="Obstacle's vertical height off the ground">Height</label>
+                            <input id="obs_h" type="number" step="any" min="0">
+                            <select id="obs_h-u">
                                 <option value="0.3048" class="imperial">ft</option>
                                 <option value="1" class="metric">m</option>
                             </select>
