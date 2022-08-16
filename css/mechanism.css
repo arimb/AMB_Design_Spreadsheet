@@ -1,0 +1,113 @@
+div.page-element#motor-el {
+    flex-direction: row;
+    align-content: space-around;
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+}
+
+div.page-element#load-el {
+    align-items: flex-end;
+    justify-content: space-around;
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
+div.page-element#load span {
+    min-width: calc(4.5em - 3px);
+    box-sizing: border-box;
+}
+
+div.page-element#load select {
+    min-width: 4.5em;
+    box-sizing: border-box;
+}
+
+div.page-element#calculation {
+    flex-direction: row;
+    max-width: 100%;
+    align-items: center;
+}
+
+div.inputs {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+div.inputs span {
+    min-width: calc(4.5em - 3px);
+    box-sizing: content-box;
+}
+
+div.inputs select {
+    min-width: 4.5em;
+    box-sizing: content-box;
+}
+
+div.graph {
+    width: 50vw;
+    max-width: 700px;
+}
+
+div.max-buttons {
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-size: large;
+    margin-top: 8px;
+}
+
+button.max {
+    font-size: 0.8em;
+}
+
+button.max:hover {
+    background-color: var(--dark);
+}
+
+input[type=radio] {
+    display: none;
+}
+
+canvas#graph {
+    background-color: white;
+}
+
+div.graph {
+    flex-direction: column;
+}
+
+div.graph-limits {
+    gap: 0.3em;
+}
+
+div.graph-limits input {
+    width: 3em;
+}
+
+h4 {
+    margin: -3px 1em 0 1em;
+    text-align: center;
+}
+
+input#total-ratio {
+    cursor: pointer;
+    background-color: lightgray;
+    border: 1px solid gray;
+}
+
+div.page-element#examples {
+    max-width: none;
+}
+
+summary > * {
+    cursor: pointer;
+    display: inline;
+}
+
+/* div#examples h3 {
+    font-size: 1.5em;
+} */
+
+p {
+    margin-block: 0.3em;
+}

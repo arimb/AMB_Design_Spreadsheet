@@ -1,32 +1,108 @@
-<html>
-  <head>
-    <script> 
-        var downloadTimeout = setTimeout(function () {
-            window.location = document.getElementById('downloadLink').href;
-        }, 2000);
-    </script>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135433990-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-135433990-1');
-    </script>
-  </head>
-  <body>
-    <h1>AMB Design Spreadsheet</h1>
-    <h2>The most recent version is v5.0</h2>
-    <p>
-      The spreadsheet should start downloading in a few seconds. If downloading doesn't start automatically
-      <a id="downloadLink" href="AMB Design Spreadsheet v5_0.xlsm">click here to download it</a>.<br>
-      <br>
-      A document describing the equations used in this sheet can be downloaded <a href="Equations/AMB_Equations.pdf" download>here</a>. <br>
-      <br>
-      If you have any questions about how to use the spreadsheet or suggestions for improvements, please send me a PM on ChiefDelphi @AriMB or send an email to arimb1999 (at) gmail (dot) com. You can also find a discussion about the current version on ChiefDelphi <a href="https://www.chiefdelphi.com/t/amb-design-spreadsheet-v5/383857?u=arimb">here</a>.
-    </p>
-    
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>AMB Robotics Calculator</title>
+        <link rel="icon" href="img/logo.png">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/index.css">
+        <script src="js/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/tipso.min.css">
+        <script src="js/tipso.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("button.header-button.docs").click(function(){
+                    window.open("docs/" + $(this).attr("data-link") + ".pdf", "_blank");
+                });
+                $("button.header-button.excel").click(() => { window.open("archive/"); })
+                $("[data-tipso]").tipso({
+                    width: null,
+                    maxWidth: 300,
+                    background: "#405a3f",
+                    color: "#fff",
+                    delay: 500
+                });
+            });
+        </script>
+        <script async src="//static.getclicky.com/101376880.js"></script>
+    </head>
+    <body>
+        <header>
+            <a href="/">
+                <img src="img/logo.png" class="logo" alt="logo">
+            </a>
+            <h1>AMB Robotics Calculator</h1>
+            <div style="flex: 1;"></div>
+            <div class="header-left">
+                <button class="header-button docs" data-link="all_docs">ALL<br>DOCS</button>
+                <button class="header-button excel">EXCEL<br>ARCHIVE</button>
+            </div>
+        </header>
+        <main>
+            <a href="mechanism.html">
+                <button class="sheet" data-tipso="This calculator finds the properties of a mechanism by its gear ratio, or finds the proper gear ratio needed to give the mechanism certain properties.">
+                    <img src="img/motor.png" alt="Mechanism Ratios">
+                    <h2>Mechanism Ratio</h2>
+                </button>
+            </a>
+            <a href="gearbox_options.html">
+                <button class="sheet" data-tipso="This calculator allows the user to find sets of gears that produce the desired overall ratio, filtered by certain restrictions.">
+                    <img src="img/find_gear.png" alt="Gearbox Options">
+                    <h2>Gearbox Options</h2>
+                </button>
+            </a>
+            <a href="chain_belt.html">
+                <button class="sheet" data-tipso="This calculator determines the proper center-to-center spacing between two sprockets or pulleys.">
+                    <img src="img/chain.png" alt="Chain/Belt C-C Dist">
+                    <h2>Chain/Belt C-C Dist</h2>
+                </button>
+            </a>
+            <a href="reduction_swap.html">
+                <button class="sheet" data-tipso="This calculator is designed to help in the case where the robot is already manufactured and the team realizes they need to change the reduction for a mechanism.">
+                    <img src="img/2gears.png" alt="Reduction Swap">
+                    <h2>Reduction Swap</h2>
+                </button>
+            </a>
+            <a href="drivetrain.html">
+                <button class="sheet" data-tipso="This simulator is used to find the proper gear ratio for a robot's drivetrain.">
+                    <img src="img/drivetrain.png" alt="Drivetrain Simulator">
+                    <h2>Drivetrain Simulator</h2>
+                </button>
+            </a>
+            <a href="projectile.html">
+                <button class="sheet" data-tipso="This calculator is used to help plan the trajectory of an object launched by a shooter.">
+                    <img src="img/catapult.png" alt="Projectile Trajectory">
+                    <h2>Projectile Trajectory</h2>
+                </button>
+            </a>
+            <a href="pneumatics.html">
+                <button class="sheet" data-tipso="This simulator is used to determine the air usage of your robot.">
+                    <img src="img/compressor.png" alt="Pneumatics System">
+                    <h2>Pneumatics System</h2>
+                </button>
+            </a>
+            <a href="beam_bend.html">
+                <button class="sheet" data-tipso="This calculator is used to check the deflection or twist in a beam (extrusion of uniform cross-section).">
+                    <img src="img/beam.png" alt="Beam Bending">
+                    <h2>Beam Bending</h2>
+                </button>
+            </a>
+            <a href="lead_screw.html">
+                <button class="sheet" data-tipso="This calculator is used to determine the properties of a lead screw.">
+                    <img src="img/screw.png" alt="Lead Screw">
+                    <h2>Lead Screw</h2>
+                </button>
+            </a>
+        </main>
+        <footer>
+            <a href="https://firstupdatesnow.com/" class="fun-logo">
+                <img src="img/fun_logo.jpg">
+            </a>
+            <span>
+                Created by Ari Meles-Braverman &copy; 2022. For educational purposes only. Contact <a href="https://www.chiefdelphi.com/u/arimb/summary" style="text-decoration: underline;">&commat;AriMB</a> on ChiefDelphi with questions or suggestions.
+            </span>
+            <div></div>
+        </footer>
+    </body>
 </html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Chain/Belt C-C Distance Calculator - AMB Robotics Calculator</title>
+        <link rel="icon" href="img/logo.png">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/calculators.css">
+        <link rel="stylesheet" href="css/chain_belt.css">
+        <script src="js/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/tipso.min.css">
+        <script src="js/tipso.min.js"></script>
+        <script src="js/calculators.js"></script>
+        <script src="js/chain_belt.js"></script>
+        <script async src="//static.getclicky.com/101376880.js"></script>
+    </head>
+    <body>
+        <header>
+            <a href="/">
+                <img src="img/logo.png" class="logo" alt="logo">
+            </a>
+            <h1>Chain/Belt C-C Distance Calculator</h1>
+            <div style="flex: 1;"></div>
+            <div class="header-left">
+                <button class="header-button docs" data-link="chain_belt">DOCS</button>
+                <div class="units-buttons">
+                    <button class="header-button imperial" value="inch">IMPERIAL</button>
+                    <button class="header-button metric" value="mm">METRIC</button>
+                </div>
+                <button class="header-button copy-link">COPY<br>LINK</button>
+                <button class="header-button reset">RESET</button>
+            </div>
+        </header>
+        <main>
+            <div class="page-element" id="type-el">
+                <select id="type">
+                    <option>Custom</option>
+                </select>
+                <div class="field">
+                    <label for="p" data-tipso="Length of one link of chain, or the distance between two belt teeth">Pitch Distance</label>
+                    <input id="p" type="number" step="any" min="0" disabled>
+                    <select id="p-u">
+                        <option class="imperial">in</option>
+                        <option class="metric">mm</option>
+                    </select>
+                </div>
+            </div>
+            <div class="sprockets">
+                <div class="page-element" id="sprocket1">
+                    <h3 class="chain">Sprocket 1</h3>
+                    <h3 class="belt">Pulley 1</h3>
+                    <div class="field">
+                        <label for="t1">Tooth Count</label>
+                        <input id="t1" type="number" min="0" step="1">
+                    </div>
+                    <div class="field">
+                        <label for="diam1" data-tipso="Diameter of the pulley/sprocket along the belt/chain centerline">Diameter</label>
+                        <input id="diam1" type="number" step="any" disabled>
+                        &nbsp;
+                        <span class="dist_unit"></span>
+                    </div>
+                </div>
+                <div class="page-element" id="sprocket2">
+                    <h3 class="chain">Sprocket 2</h3>
+                    <h3 class="belt">Pulley 2</h3>
+                    <div class="field">
+                        <label for="t2">Tooth Count</label>
+                        <input id="t2" type="number" min="0" step="1">
+                    </div>
+                    <div class="field">
+                        <label for="diam2" data-tipso="Diameter of the pulley/sprocket along the belt/chain centerline">Diameter</label>
+                        <input id="diam2" type="number" step="any" disabled>
+                        &nbsp;
+                        <span class="dist_unit"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="break"></div>
+            <div class="page-element" id="dimensions">
+                <h3 style="align-self: center;" data-tipso="Typical dimensions and properties of standard belts & chains. Provided for reference only.">Useful Dimensions</h3>
+                <div class="field">
+                    <label for="width" data-tipso="Note: some belts may have multiple widths available">Width</label>
+                    <input id="width" type="number" step="any" disabled>
+                    &nbsp;
+                    <span class="dist_unit"></span>
+                </div>
+                <div class="field">
+                    <label for="thickness" data-tipso="Approximate thickness of belt/chain">Thickness</label>
+                    <input id="thickness" type="number" step="any" disabled>
+                    &nbsp;
+                    <span class="dist_unit"></span>
+                </div>
+                <div class="field">
+                    <label for="adder" data-tipso="Distance to add/subtract to the C-C distance for a better fit accounting for machining tolerances and wear-in. This will likely vary based on supplier, application, team standards, etc.">C-C Adder</label>
+                    <input id="adder" type="number" step="any" disabled>
+                    &nbsp;
+                    <span class="dist_unit"></span>
+                </div>
+                <div class="field">
+                    <label for="weight" data-tipso="Chain/belt weight per unit length">Weight</label>
+                    <input id="weight" type="number" step="any" disabled>
+                    &nbsp;
+                    <span class="weight_unit"></span>
+                </div>
+                <div class="field">
+                    <label for="load_rating" data-tipso="Provided for chains using data from VexPro. May vary by supplier and application">Load Rating</label>
+                    <input id="load_rating" type="number" step="any" disabled>
+                    &nbsp;
+                    <span class="force_unit"></span>
+                </div>
+            </div>
+            <div class="page-element" id="calculation">
+                <div class="driving">
+                    <div>
+                        <label for="by_l" class="chain" data-tipso="Find the center-to-center distance to use for a certain number of chain links">By # Links</label>
+                        <label for="by_l" class="belt" data-tipso="Find the center-to-center distance to use for a certain size belt">By # Teeth</label>
+                        <input id="by_l" name="driving" type="radio">
+                    </div>
+                    <div>
+                        <label for="by_d" data-tipso="Find the closest C-C distance that gives an even number of chain links or belt teeth">By Approx. C-C</label>
+                        <input id="by_d" name="driving" type="radio" checked>
+                    </div>
+                </div>
+                <div class="geometry">
+                    <div class="field bydist-in">
+                        <label for="approx" data-tipso="Desired center-to-center distance">Approx. Distance</label>
+                        <input id="approx" type="number" step="any">
+                        &nbsp;
+                        <span class="dist_unit"></span>
+                    </div>
+                    <div class="field bydist-in">
+                        <label for="round" data-tipso="Force rounding up (larger C-C), down (smaller C-C), or round to nearest acceptable value">Round Direction</label>
+                        <select id="round">
+                            <option>Nearest</option>
+                            <option>Up</option>
+                            <option>Down</option>
+                        </select>
+                        &nbsp;
+                        <span></span>
+                    </div>
+                    <div class="field bydist-in">
+                        <label for="mod" data-tipso="Force the chain/belt to have an even multiple of this number of links/teeth. Standard for chain is 2">Round To</label>
+                        <input id="mod" type="number" step="any" min="0" placeholder="1">
+                        &nbsp;
+                        <span></span>
+                    </div>
+                    <div class="field bylinks-in bydist-out">
+                        <label for="links" class="chain" data-tipso="How many links of chain are needed">Number of Links</label>
+                        <label for="links" class="belt" data-tipso="What size belt is needed">Number of Teeth</label>
+                        <input id="links" type="number" step="any" disabled>
+                        &nbsp;
+                        <span></span>
+                    </div>
+                    <div class="field bylinks-out bydist-out">
+                        <label for="dist" data-tipso="Exact center-to-center distance for the chain/belt size above">C-C Distance</label>
+                        <input id="dist" type="number" step="any" disabled>
+                        &nbsp;
+                        <span class="dist_unit"></span>
+                    </div>
+                    <div class="field bylinks-out bydist-out">
+                        <label for="chain_length" class="chain" data-tipso="Total length of the chain loop">Chain Length</label>
+                        <label for="chain_length" class="belt" data-tipso="Total length of the belt">Belt Length</label>
+                        <input id="chain_length" type="number" step="any" disabled>
+                        &nbsp;
+                        <span class="dist_unit"></span>
+                    </div>
+                    <div class="field bylinks-out bydist-out">
+                        <label for="clearance" data-tipso="Minimum distance between the sprocket/pulley diameters. This value should always be positive">Clearance</label>
+                        <input id="clearance" type="number" step="any" disabled>
+                        &nbsp;
+                        <span class="dist_unit"></span>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <a href="https://firstupdatesnow.com/" class="fun-logo">
+                <img src="img/fun_logo.jpg">
+            </a>
+            <span>
+                Created by Ari Meles-Braverman &copy; 2022. For educational purposes only. Contact <a href="https://www.chiefdelphi.com/u/arimb/summary" style="text-decoration: underline;">&commat;AriMB</a> on ChiefDelphi with questions or suggestions.
+            </span>
+            <div></div>
+        </footer>
+    </body>
+</html>

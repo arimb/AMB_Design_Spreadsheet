@@ -1,0 +1,127 @@
+main {
+    align-items: flex-start;
+}
+
+div.page-element#cylinders {
+    width: 100%;
+    align-items: flex-start;
+}
+
+button.add {
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 8px;
+    margin: 0;
+}
+button.add:hover:disabled {
+    cursor: default;
+    background-color: var(--med-light);
+}
+
+div.cyl-list {
+    flex-direction: row;
+    justify-content: flex-start;
+    overflow-x: scroll;
+    width: 100%;
+    border-top: 2px solid black;
+    background-color: #b3bdb3;
+}
+
+div.cyl, div.tank {
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0 0.5em;
+    border-right: 1px solid black;
+}
+
+div.cyl:last-child, div.tank:last-child {
+    border: none;
+}
+
+div.cyl label, div.tank label, div#comp label {
+    white-space: nowrap;
+    margin-right: auto;
+}
+
+input.name {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+    margin-bottom: 5px;
+    font-size: medium;
+    margin-top: 5px;
+}
+
+div.field {
+    justify-content: flex-end;
+}
+
+select.units {
+    align-self: flex-end;
+}
+
+button.delete {
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 4px 8px;
+    margin: 8px;
+    align-self: center;
+    background-color: gray;
+    border: 1px solid black;
+    border-radius: 0px;
+    box-shadow: none;
+    cursor: default;
+}
+
+button.delete:hover:not(:disabled) {
+    cursor: pointer;
+    background-color: dimgray;
+}
+
+div.col {
+    flex-direction: column;
+    align-items: center;
+}
+
+div.page-element#tanks {
+    align-items: flex-start;
+}
+
+div.page-element h2 {
+    margin: 0 auto 0 0;
+}
+
+div.tank-list {
+    flex-direction: row;
+    border-top: 2px solid black;
+}
+
+div.tank {
+    flex-direction: column;
+}
+
+div.tanks-total {
+    flex-direction: row;
+    margin-top: 3px;
+}
+
+input#tanks_total {
+    width: 3.5em;
+    margin-left: 6px;
+}
+
+select#compressor {
+    font-size: 1em;
+    margin-bottom: 0.5em;
+}
+
+div.page-element.graph {
+    width: 70vw;
+    min-width: 700px;
+    max-width: 100%;
+}
+
+canvas#graph {
+    background-color: white;
+}

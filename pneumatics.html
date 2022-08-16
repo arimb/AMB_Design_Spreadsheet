@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Pneumatics System Simulator - AMB Robotics Calculator</title>
+        <link rel="icon" href="img/logo.png">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/calculators.css">
+        <link rel="stylesheet" href="css/pneumatics.css">
+        <script src="js/chart.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/tipso.min.css">
+        <script src="js/tipso.min.js"></script>
+        <script src="js/calculators.js"></script>
+        <script src="js/pneumatics.js"></script>
+        <script async src="//static.getclicky.com/101376880.js"></script>
+    </head>
+    <body>
+        <header>
+            <a href="/">
+                <img src="img/logo.png" class="logo" alt="logo">
+            </a>
+            <h1>Pneumatics System Simulator</h1>
+            <div style="flex: 1;"></div>
+            <div class="header-left">
+                <button class="header-button docs" data-link="pneumatics">DOCS</button>
+                <div class="units-buttons">
+                    <button class="header-button imperial">IMPERIAL</button>
+                    <button class="header-button metric">METRIC</button>
+                </div>
+                <button class="header-button copy-link">COPY<br>LINK</button>
+                <button class="header-button reset">RESET</button>
+            </div>
+        </header>
+        <main>
+            <div class="page-element" id="cylinders">
+                <div style="display: flex; flex-direction: row; align-items: center;">
+                    <h2 style="margin-right: 0.7em;" data-tipso="List of all the cylinders on the robot. Also known as pistons or actuators. Identical cylinders tied together can be represented equivalently by a single cylinder of double length">
+                        Cylinders
+                    </h2>
+                    <button class="add">ADD</button>
+                </div>
+                <input id="num-cyls" type="text" value="[0]" disabled hidden>
+                <div class="cyl-list">
+                    <div class="cyl" id="0">
+                        <input class="name" type="text" size="1" disabled>
+                        <select class="units" disabled>
+                            <option value="1" class="imperial">inch</option>
+                            <option value="0.03937" class="metric">mm</option>
+                        </select>
+                        <label data-tipso="Inside diameter of the cylinder body">Bore Diam.</label>
+                        <div class="field">
+                            <input class="bore dist" type="number" step="any" min="0" disabled>
+                            &nbsp;<span class="unit">inch</span>
+                        </div>
+                        <label data-tipso="Diameter of the piston rod">Rod Diam.</label>
+                        <div class="field">
+                            <input class="rod dist" type="number" step="any" min="0" disabled>
+                            &nbsp;<span class="unit">inch</span>
+                        </div>
+                        <label data-tipso="Length of the piston stroke. Can be multiplied by the number of equivalent cylinders tied together">Stroke Length</label>
+                        <div class="field">
+                            <input class="stroke dist" type="number" step="any" min="0" disabled>
+                            &nbsp;<span class="unit">inch</span>
+                        </div>
+                        <br>
+                        <label data-tipso="Pressure used to extend the cylinder">Push Pressure</label>
+                        <div class="field">
+                            <input class="ppush" type="number" step="any" min="0" max="60" value="60" disabled>
+                            &nbsp;<span>psig</span>
+                        </div>
+                        <label data-tipso="Pressure used to retract the cylinder">Pull Pressure</label>
+                        <div class="field">
+                            <input class="ppull" type="number" step="any" min="0" max="60" value="60" disabled>
+                            &nbsp;<span>psig</span>
+                        </div>
+                        <br>
+                        <label data-tipso="Average time from the start of one cylinder extension to the start of the next one. Time between extension and retraction does not matter here">Time per Cycle</label>
+                        <div class="field">
+                            <input class="period" type="number" step="any" min="0" disabled>
+                            &nbsp;<span>sec</span>
+                        </div>
+                        <label data-tipso="Seconds from match start until the cylinder begins cycling">Start Time</label>
+                        <div class="field">
+                            <input class="start" type="number" step="any" min="0" max="150" value="0" disabled>
+                            &nbsp;<span>sec</span>
+                        </div>
+                        <label data-tipso="Seconds from match start until the cylinder ends cycling">End Time</label>
+                        <div class="field">
+                            <input class="end" type="number" step="any" min="0" max="150" value="150" disabled>
+                            &nbsp;<span>sec</span>
+                        </div>
+                        <button class="delete" id="btn-0" disabled>DELETE</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="page-element" id="tanks">
+                    <h2 data-tipso="Air storage on the robot, both in the high and low pressure systems">
+                        Tanks
+                    </h2>
+                    <div class="tank-list">
+                        <div class="tank">
+                            <input id="tank_name1" class="name" type="text" size="1" value="Clippard">
+                            <label>Tank Volume</label>
+                            <div class="field">
+                                <input id="tvol1" class="tank_vol" type="number" step="any" min="0" value="35">
+                                <select id="tvol1-u" class="tank_vol-u">
+                                    <option value="1" class="imperial">in³</option>
+                                    <option value="0.0610237" class="metric">ml</option>
+                                </select>
+                            </div>
+                            <label>Quantity</label>
+                            <div class="field">
+                                <input id="tqty1" class="tank_qty" type="number" step="any" min="0" value="1">
+                                <span></span>
+                            </div>
+                            <label data-tipso="Maximum pressure stored in the tank. Generally 120psi for high pressure tanks and 60psi for low pressure">Pressure</label>
+                            <div class="field">
+                                <input id="tpres1" class="tank_press" type="number" step="any" min="0" value="120">
+                                <span>&nbsp;psig</span>
+                            </div>
+                        </div>
+                        <div class="tank">
+                            <input id="tank_name2" class="name" type="text" size="1">
+                            <label>Tank Volume</label>
+                            <div class="field">
+                                <input id="tvol2" class="tank_vol" type="number" step="any" min="0">
+                                <select id="tvol2-u" class="tank_vol-u">
+                                    <option value="1" class="imperial">in³</option>
+                                    <option value="0.0610237" class="metric">ml</option>
+                                </select>
+                            </div>
+                            <label>Quantity</label>
+                            <div class="field">
+                                <input id="tqty2" class="tank_qty" type="number" step="any" min="0">
+                                <span></span>
+                            </div>
+                            <label data-tipso="Maximum pressure stored in the tank. Generally 120psi for high pressure tanks and 60psi for low pressure">Pressure</label>
+                            <div class="field">
+                                <input id="tpres2" class="tank_press" type="number" step="any" min="0" value="120">
+                                <span>&nbsp;psig</span>
+                            </div>
+                        </div>
+                        <div class="tank">
+                            <input id="tank_name3" class="name" type="text" size="1">
+                            <label>Tank Volume</label>
+                            <div class="field">
+                                <input id="tvol3" class="tank_vol" type="number" step="any" min="0">
+                                <select id="tvol3-u" class="tank_vol-u">
+                                    <option value="1" class="imperial">in³</option>
+                                    <option value="0.0610237" class="metric">ml</option>
+                                </select>
+                            </div>
+                            <label>Quantity</label>
+                            <div class="field">
+                                <input id="tqty3" class="tank_qty" type="number" step="any" min="0">
+                                <span></span>
+                            </div>
+                            <label data-tipso="Maximum pressure stored in the tank. Generally 120psi for high pressure tanks and 60psi for low pressure">Pressure</label>
+                            <div class="field">
+                                <input id="tpres3" class="tank_press" type="number" step="any" min="0" value="120">
+                                <span>&nbsp;psig</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tanks-total">
+                        <label data-tipso="Total storage volume, adjusted as if all tanks were at 120psi">Total Equiv. Volume</label>
+                        <input id="tanks_total" type="number" step="any" size="10" disabled>
+                        <select id="tanks_total-u">
+                            <option value="1" class="imperial">in³</option>
+                            <option value="0.0610237" class="metric">ml</option>
+                        </select>
+                        <label>&nbsp;&commat; 120 psig</label>
+                    </div>
+                </div>
+                <div class="page-element" id="comp">
+                    <select id="compressor" class="tipso-nounderline" data-tipso="Choose the type of compressor in the system">
+                        <option data-consts="[0, 0, 0, 0]">No Compressor</option>
+                        <option data-consts="[0.6123, -0.01186, 1.23e-4, -4.37e-7]">Viair 90C</option>
+                        <option data-consts="[0.692, -0.003809, -3.916e-5, 3.865e-7]">1.1 Pump</option>
+                    </select>
+                    <label data-tipso="Pressure in the system at the start of the match">Initial Pressure</label>
+                    <div class="field">
+                        <input id="p0" type="number" step="any" min="0" value="120">
+                        <span>&nbsp;psig</span>
+                    </div>
+                    <label data-tipso="Pressure at which the compressor starts running">Compressor Trigger</label>
+                    <div class="field">
+                        <input id="ptrig" type="number" step="any" min="0" value="95">
+                        <span>&nbsp;psig</span>
+                    </div>
+                    <label data-tipso="Pressure at which the compressor stops running">Compressor Cutoff</label>
+                    <div class="field">
+                        <input id="pcut" type="number" step="any" min="0" value="120">
+                        <span>&nbsp;psig</span>
+                    </div>
+                </div>
+            </div>
+            <div class="page-element graph">
+                <canvas id="graph"></canvas>
+            </div>
+        </main>
+        <footer>
+            <a href="https://firstupdatesnow.com/" class="fun-logo">
+                <img src="img/fun_logo.jpg">
+            </a>
+            <span>
+                Created by Ari Meles-Braverman &copy; 2022. For educational purposes only. Contact <a href="https://www.chiefdelphi.com/u/arimb/summary" style="text-decoration: underline;">&commat;AriMB</a> on ChiefDelphi with questions or suggestions.
+            </span>
+            <div></div>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,86 @@
+main {
+    flex-direction: column;
+    align-content: center;
+    justify-content: flex-start;
+    margin-top: 1em;
+}
+
+div.page-element {
+    max-width: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+div.tab-header {
+    width: 80%;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+div.tab {
+    align-items: center;
+    height: 45px;
+    min-width: 12em;
+    cursor: pointer;
+    border: 1px solid black;
+    border-bottom: 0;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    background-color: var(--med-dark);
+}
+
+h4 {
+    margin: 5px 0 5px 8px;
+}
+
+div.tab input {
+    display: none;
+}
+
+div.tab-body {
+    background-color: var(--light);
+    border: 1px solid black;
+    padding: 1em;
+    justify-content: center;
+}
+
+div.tab-content {
+    flex-direction: column;
+    gap: 1em;
+}
+
+div.options {
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+div.material, div.cross_section {
+    flex-direction: column;
+    gap: 2px;
+}
+
+div.material {
+    align-items: center;
+    min-width: 225px;
+}
+
+select.material {
+    font-size: 1em;
+}
+
+div.cross_section {
+    align-items: flex-end;
+    min-height: 90px;
+}
+
+img.diagram {
+    align-self: center;
+    border: 2px solid black;
+    max-width: 600px;
+}
+
+div.inputs, div.outputs {
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: inherit;
+}

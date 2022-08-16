@@ -1,0 +1,52 @@
+div.page-element#motor-el {
+    flex-direction: row;
+}
+
+div.page-element#electrical {
+    align-items: flex-end;
+}
+
+div.page-element#electrical span {
+    min-width: 3em;
+}
+
+div.page-element#robot-specs {
+    align-items: flex-end;
+}
+
+div.page-element#robot-specs span {
+    min-width: calc(3.5em - 3px);
+    box-sizing: border-box;
+}
+
+div.page-element#robot-specs select {
+    min-width: 3.5em;
+    box-sizing: border-box;
+}
+
+div.page-element#gear-ratio {
+    align-items: center;
+}
+
+div.page-element#outputs {
+    align-items: center;
+}
+
+div.page-element#sim-settings {
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+div.graphs {
+    flex-direction: column;
+    align-items: stretch;
+    width: 70vw;
+    min-width: 700px;
+    max-width: 100%;
+    gap: 5px;
+}
+
+canvas {
+    background-color: white;
+    border: 2px solid black;
+}

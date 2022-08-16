@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Beam Bending Calculator - AMB Robotics Calculator</title>
+        <link rel="icon" href="img/logo.png">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/calculators.css">
+        <link rel="stylesheet" href="css/beam_bend.css">
+        <script src="js/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/tipso.min.css">
+        <script src="js/tipso.min.js"></script>
+        <script src="js/calculators.js"></script>
+        <script src="js/beam_bend.js"></script>
+        <script async src="//static.getclicky.com/101376880.js"></script>
+    </head>
+    <body>
+        <header>
+            <a href="/">
+                <img src="img/logo.png" class="logo" alt="logo">
+            </a>
+            <h1>Beam Bending Calculator</h1>
+            <div style="flex: 1;"></div>
+            <div class="header-left">
+                <button class="header-button docs" data-link="beam_bend">DOCS</button>
+                <div class="units-buttons">
+                    <button class="header-button imperial">IMPERIAL</button>
+                    <button class="header-button metric">METRIC</button>
+                </div>
+                <button class="header-button copy-link">COPY<br>LINK</button>
+                <button class="header-button reset">RESET</button>
+            </div>
+        </header>
+        <main>
+            <div class="tab-header">
+                <div class="tab tipso-nounderline" id="btwn" data-tipso="Beam fixed on both ends with a force applied perpendicularly along its length">
+                    <h4>Between Fixtures</h4>
+                    <input id="btwn-select" type="radio" name="tab">
+                </div>
+                <div class="tab tipso-nounderline" id="cant" data-tipso="Beam fixed on one end with a force applied perpendicularly at the free end">
+                    <h4>Cantilevered</h4>
+                    <input id="cant-select" type="radio" name="tab">
+                </div>
+                <div class="tab tipso-nounderline" id="twist" data-tipso="Beam fixed on one end with a twisting torque applied at the free end">
+                    <h4>Shaft Twist</h4>
+                    <input id="twist-select" type="radio" name="tab">
+                </div>
+            </div>
+            <div class="tab-body">
+                <div class="tab-content" id="btwn-content">
+                    <div class="options">
+                        <div class="material">
+                            <div class="field">
+                                <label>Material:</label>
+                                <select id="btwn-mat" class="material">
+                                    <option>Custom</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label>Young's Modulus</label>
+                                <input id="btwn-E" type="number" min="0" step="any">
+                                <span>&nbsp;GPa</span>
+                            </div>
+                            <div class="field">
+                                <label>Shear Modulus</label>
+                                <input id="btwn-G" type="number" min="0" step="any">
+                                <span>&nbsp;GPa</span>
+                            </div>
+                            <div class="field">
+                                <label>Density</label>
+                                <input id="btwn-dens" type="number" min="0" step="any">
+                                <select id="btwn-dens-u">
+                                    <option value="27.68" class="imperial">lb/in&sup3;</option>
+                                    <option value="1" class="metric">g/cm&sup3;</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="cross_section">
+                            <div class="field">
+                                <label>Cross-Section:</label>
+                                <select id="btwn-sect" class="cross_section">
+                                    <option>Hex</option>
+                                    <option>Round</option>
+                                    <option>Round Tube</option>
+                                    <option>Rectangle</option>
+                                    <option>Rectangular Tube</option>
+                                    <option>Custom</option>
+                                </select>
+                            </div>
+                            <div class="field hex">
+                                <label data-tipso="Distance between two parallel faces">Hex Size</label>
+                                <input id="btwn-hex" type="number" value="0.5" min="0" step="any">
+                                <select id="btwn-hex-u">
+                                    <option value="25.4" class="imperial">in</option>
+                                    <option value="1" class="metric">mm</option>
+                                </select>
+                            </div>
+                            <div class="field round round-tube">
+                                <label>Outer Diameter</label>
+                                <input id="btwn-od" type="number" min="0" step="any">
+                                <select id="btwn-od-u">
+                                    <option value="25.4" class="imperial">in</option>
+                                    <option value="1" class="metric">mm</option>
+                                </select>
+                            </div>
+                            <div class="field rect rect-tube">
+                                <label data-tipso="Dimension perpendicular to the force">Width</label>
+                                <input id="btwn-width" type="number" step="any" min="0">
+                                <select id="btwn-width-u">
+                                    <option value="25.4" class="imperial">in</option>
+                                    <option value="1" class="metric">mm</option>
+                                </select>
+                            </div>
+                            <div class="field rect rect-tube">
+                                <label data-tipso="Dimension parallel to the force">Height</label>
+                                <input id="btwn-height" type="number" step="any" min="0">
+                                <select id="btwn-height-u">
+                                    <option value="25.4" class="imperial">in</option>
+                                    <option value="1" class="metric">mm</option>
+                                </select>
+                            </div>
+                            <div class="field round-tube rect-tube">
+                                <label>Wall Thickness</label>
+                                <input id="btwn-thick" type="number" step="any" min="0">
+                                <select id="btwn-thick-u">
+                                    <option value="25.4" class="imperial">in</option>
+                                    <option value="1" class="metric">mm</option>
+                                </select>
+                            </div>
+                            <div class="field custom">
+                                <label data-tipso="Cross-sectional area">Area</label>
+                                <input id="btwn-A" type="number" step="any" min="0">
+                                <span>&nbsp;mm&sup2;</span>
+                            </div>
+                            <div class="field custom">
+                                <label data-tipso="Area Moment of Inertia (aka 2nd Area Moment)">Area MoI</label>
+                                <input id="btwn-I" type="number" step="any" min="0">
+                                <span>&nbsp;mm⁴</span>
+                            </div>
+                            <div class="field custom">
+                                <label>Torsional Constant</label>
+                                <input id="btwn-J" type="number" step="any" min="0">
+                                <span>&nbsp;mm⁴</span>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="diagram" src="img/beambend_between.png">
+                    <div class="inputs">
+                        <div class="field">
+                            <label for="btwn-l" data-tipso="Length of the beam, or the distance between the two fixtures">&ell;</label>
+                            <input id="btwn-l" type="number" step="any" min="0">
+                            <select id="btwn-l-u">
+                                <option value="0.0254" class="imperial">in</option>
+                                <option value="0.001" class="metric">mm</option>
+                                <option value="0.3048">ft</option>
+                                <option value="1">m</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="btwn-a" data-tipso="Distance from one end of the beam to the point where the force is applied">a</label>
+                            <input id="btwn-a" type="number" step="any" min="0">
+                            <select id="btwn-a-u">
+                                <option value="0.0254" class="imperial">in</option>
+                                <option value="0.001" class="metric">mm</option>
+                                <option value="0.3048">ft</option>
+                                <option value="1">m</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="btwn-F" data-tipso="Magnitude of the applied force">F</label>
+                            <input id="btwn-F" type="number" step="any" min="0">
+                            <select id="btwn-F-u">
+                                <option value="4.448" class="imperial">lbs</option>
+                                <option value="9.801">kg</option>
+                                <option value="1" class="metric">N</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="outputs">
+                        <div class="field">
+                            <label for="btwn-weight" data-tipso="Mass of a beam of the given material with the given length">Beam Weight</label>
+                            <input id="btwn-weight" type="number" step="any" min="0" disabled>
+                            <select id="btwn-weight-u">
+                                <option value="0.4545" class="imperial">lbs</option>
+                                <option value="1" class="metric">kg</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="btwn-del" data-tipso="Maximum deflection along the beam for the given load">Max Displacement</label>
+                            <input id="btwn-del" type="number" step="any" min="0" disabled>
+                            <select id="btwn-del-u">
+                                <option value="0.0254" class="imperial">in</option>
+                                <option value="0.001" class="metric">mm</option>
+                                <option value="0.3048">ft</option>
+                                <option value="1">m</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content" id="cant-content">
+                    <div class="options">
+                        <div class="material">
+                            <div class="field">
+                                <label>Material:</label>
+                                <select id="cant-mat" class="material">
+                                    <option>Custom</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label>Young's Modulus</label>
+                                <input id="cant-E" type="number" min="0" step="any">
+                                <span>&nbsp;GPa</span>
+                            </div>
+                            <div class="field">
+                                <label>Shear Modulus</label>
+                                <input id="cant-G" type="number" min="0" step="any">
+                                <span>&nbsp;GPa</span>
+                            </div>
+                            <div class="field">
+                                <label>Density</label>
+                                <input id="cant-dens" type="number" min="0" step="any">
+                                <select id="cant-dens-u">
+                                    <option value="27.68" class="imperial">lb/in&sup3;</option>
+                                    <option value="1" class="metric">g/cm&sup3;</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="cross_section">
+                            <div class="field">
+                                <label>Cross-Section:</label>
+                                <select id="cant-sect" class="cross_section">
+                                    <option>Hex</option>
+                                    <option>Round</option>
+                                    <option>Round Tube</option>
+                                    <option>Rectangle</option>
+                                    <option>Rectangular Tube</option>
+                                    <option>Custom</option>
+                                </select>
+                            </div>
+                            <div class="field hex">
+                                <label data-tipso="Distance between two parallel faces">Hex Size</label>
+                                <input id="cant-hex" type="number" value="0.5" min="0" step="any">
+                                <select id="cant-hex-u">
+                                    <option value="25.4" class="imperial">in</option>
+                                    <option value="1" class="metric">mm</option>
+                                </select>
+                            </div>
+                            <div class="field round round-tube">
+                                <label>Outer Diameter</label>
+                                <input id="cant-od" type="number" min="0" step="any">
+                                <select id="cant-od-u">
+                                    <option value="25.4" class="imperial">in</option>
+                                    <option value="1" class="metric">mm</option>
+                                </select>
+                            </div>
+                            <div class="field rect rect-tube">
+                                <label data-tipso="Dimension perpendicular to the force">Width</label>
+                                <input id="cant-width" type="number" step="any" min="0">
+                                <select id="cant-width-u">
+                                    <option value="25.4" class="imperial">in</option>
+                                    <option value="1" class="metric">mm</option>
+                                </select>
+                            </div>
+                            <div class="field rect rect-tube">
+                                <label data-tipso="Dimension parallel to the force">Height</label>
+                                <input id="cant-height" type="number" step="any" min="0">
+                                <select id="cant-height-u">
+                                    <option value="25.4" class="imperial">in</option>
+                                    <option value="1" class="metric">mm</option>
+                                </select>
+                            </div>
+                            <div class="field round-tube rect-tube">
+                                <label>Wall Thickness</label>
+                                <input id="cant-thick" type="number" step="any" min="0">
+                                <select id="cant-thick-u">
+                                    <option value="25.4" class="imperial">in</option>
+                                    <option value="1" class="metric">mm</option>
+                                </select>
+                            </div>
+                            <div class="field custom">
+                                <label data-tipso="Cross-sectional area">Area</label>
+                                <input id="cant-A" type="number" step="any" min="0">
+                                <span>&nbsp;mm&sup2;</span>
+                            </div>
+                            <div class="field custom">
+                                <label data-tipso="Area Moment of Inertia (aka 2nd Area Moment)">Area MoI</label>
+                                <input id="cant-I" type="number" step="any" min="0">
+                                <span>&nbsp;mm⁴</span>
+                            </div>
+                            <div class="field custom">
+                                <label>Torsional Constant</label>
+                                <input id="cant-J" type="number" step="any" min="0">
+                                <span>&nbsp;mm⁴</span>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="diagram" src="img/beambend_cantilever.png">
+                    <div class="inputs">
+                        <div class="field">
+                            <label for="cant-l" data-tipso="Length of the cantilevered beam after the fixture">&ell;</label>
+                            <input id="cant-l" type="number" step="any" min="0">
+                            <select id="cant-l-u">
+                                <option value="0.0254" class="imperial">in</option>
+                                <option value="0.001" class="metric">mm</option>
+                                <option value="0.3048">ft</option>
+                                <option value="1">m</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="cant-a" data-tipso="Distance from the fixed end of the beam to the point where the force is applied">a</label>
+                            <input id="cant-a" type="number" step="any" min="0">
+                            <select id="cant-a-u">
+                                <option value="0.0254" class="imperial">in</option>
+                                <option value="0.001" class="metric">mm</option>
+                                <option value="0.3048">ft</option>
+                                <option value="1">m</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="cant-F" data-tipso="Magnitude of the applied force">F</label>
+                            <input id="cant-F" type="number" step="any" min="0">
+                            <select id="cant-F-u">
+                                <option value="4.448" class="imperial">lbs</option>
+                                <option value="9.801">kg</option>
+                                <option value="1" class="metric">N</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="outputs">
+                        <div class="field">
+                            <label for="cant-weight" data-tipso="Mass of a beam of the given material with the given length">Beam Weight</label>
+                            <input id="cant-weight" type="number" step="any" min="0" disabled>
+                            <select id="cant-weight-u">
+                                <option value="0.4545" class="imperial">lbs</option>
+                                <option value="1" class="metric">kg</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="cant-del" data-tipso="Maximum deflection along the beam for the given load">Max Displacement</label>
+                            <input id="cant-del" type="number" step="any" min="0" disabled>
+                            <select id="cant-del-u">
+                                <option value="0.0254" class="imperial">in</option>
+                                <option value="0.001" class="metric">mm</option>
+                                <option value="0.3048">ft</option>
+                                <option value="1">m</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content" id="twist-content">
+                    <div class="options">
+                        <div class="material">
+                            <div class="field">
+                                <label>Material:</label>
+                                <select id="twist-mat" class="material">
+                                    <option>Custom</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label>Young's Modulus</label>
+                                <input id="twist-E" type="number" min="0" step="any">
+                                <span>&nbsp;GPa</span>
+                            </div>
+                            <div class="field">
+                                <label>Shear Modulus</label>
+                                <input id="twist-G" type="number" min="0" step="any">
+                                <span>&nbsp;GPa</span>
+                            </div>
+                            <div class="field">
+                                <label>Density</label>
+                                <input id="twist-dens" type="number" min="0" step="any">
+                                <select id="twist-dens-u">
+                                    <option value="27.68" class="imperial">lb/in&sup3;</option>
+                                    <option value="1" class="metric">g/cm&sup3;</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="cross_section">
+                            <div class="field">
+                                <label>Cross-Section:</label>
+                                <select id="twist-sect" class="cross_section">
+                                    <option>Hex</option>
+                                    <option>Round</option>
+                                    <option>Round Tube</option>
+                                    <option>Rectangle</option>
+                                    <option>Rectangular Tube</option>
+                                    <option>Custom</option>
+                                </select>
+                            </div>
+                            <div class="field hex">
+                                <label data-tipso="Distance between two parallel faces">Hex Size</label>
+                                <input id="twist-hex" type="number" value="0.5" min="0" step="any">
+                                <select id="twist-hex-u">
+                                    <option value="25.4" class="imperial">in</option>
+                                    <option value="1" class="metric">mm</option>
+                                </select>
+                            </div>
+                            <div class="field round round-tube">
+                                <label>Outer Diameter</label>
+                                <input id="twist-od" type="number" min="0" step="any">
+                                <select id="twist-od-u">
+                                    <option value="25.4" class="imperial">in</option>
+                                    <option value="1" class="metric">mm</option>
+                                </select>
+                            </div>
+                            <div class="field rect rect-tube">
+                                <label data-tipso="In this case interchangeable with the height">Width</label>
+                                <input id="twist-width" type="number" step="any" min="0">
+                                <select id="twist-width-u">
+                                    <option value="25.4" class="imperial">in</option>
+                                    <option value="1" class="metric">mm</option>
+                                </select>
+                            </div>
+                            <div class="field rect rect-tube">
+                                <label data-tipso="In this case interchangeable with the width">Height</label>
+                                <input id="twist-height" type="number" step="any" min="0">
+                                <select id="twist-height-u">
+                                    <option value="25.4" class="imperial">in</option>
+                                    <option value="1" class="metric">mm</option>
+                                </select>
+                            </div>
+                            <div class="field round-tube rect-tube">
+                                <label>Wall Thickness</label>
+                                <input id="twist-thick" type="number" step="any" min="0">
+                                <select id="twist-thick-u">
+                                    <option value="25.4" class="imperial">in</option>
+                                    <option value="1" class="metric">mm</option>
+                                </select>
+                            </div>
+                            <div class="field custom">
+                                <label data-tipso="Cross-sectional area">Area</label>
+                                <input id="twist-A" type="number" step="any" min="0">
+                                <span>&nbsp;mm&sup2;</span>
+                            </div>
+                            <div class="field custom">
+                                <label data-tipso="Area Moment of Inertia (aka 2nd Area Moment)">Area MoI</label>
+                                <input id="twist-I" type="number" step="any" min="0">
+                                <span>&nbsp;mm⁴</span>
+                            </div>
+                            <div class="field custom">
+                                <label>Torsional Constant</label>
+                                <input id="twist-J" type="number" step="any" min="0">
+                                <span>&nbsp;mm⁴</span>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="diagram" src="img/beambend_twist.jpg">
+                    <div class="inputs">
+                        <div class="field">
+                            <label for="twist-l" data-tipso="Length of the beam from the fixture to the point where the torque is applied">Length</label>
+                            <input id="twist-l" type="number" step="any" min="0">
+                            <select id="twist-l-u">
+                                <option value="0.0254" class="imperial">in</option>
+                                <option value="0.001" class="metric">mm</option>
+                                <option value="0.3048">ft</option>
+                                <option value="1">m</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="twist-T" data-tipso="Magnitude of the applied torque">Torque</label>
+                            <input id="twist-T" type="number" step="any" min="0">
+                            <select id="twist-T-u">
+                                <option value="0.113" class="imperial">in-lbs</option>
+                                <option value="1" class="metric">Nm</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="twist-weight" data-tipso="Mass of a beam of the given material with the given length">Beam Weight</label>
+                            <input id="twist-weight" type="number" step="any" min="0" disabled>
+                            <select id="twist-weight-u">
+                                <option value="0.4545" class="imperial">lbs</option>
+                                <option value="1" class="metric">kg</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="twist-del" data-tipso="Maximum angular deflection along the beam for the given torque">Max Twist</label>
+                            <input id="twist-del" type="number" step="any" min="0" disabled>
+                            <span>&nbsp;&deg;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <a href="https://firstupdatesnow.com/" class="fun-logo">
+                <img src="img/fun_logo.jpg">
+            </a>
+            <span>
+                Created by Ari Meles-Braverman &copy; 2022. For educational purposes only. Contact <a href="https://www.chiefdelphi.com/u/arimb/summary" style="text-decoration: underline;">&commat;AriMB</a> on ChiefDelphi with questions or suggestions.
+            </span>
+            <div></div>
+        </footer>
+    </body>
+</html>

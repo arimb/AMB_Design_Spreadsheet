@@ -1,0 +1,83 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[intlimits]{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[export]{adjustbox}
+\usepackage{graphicx}
+\setlength{\parindent}{0pt}
+\usepackage[left=1in, right=1in, top=1in, bottom=1in]{geometry}
+\usepackage{float}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{bm}
+\usepackage{hyperref}
+\setcounter{tocdepth}{1}
+\usepackage[titletoc]{appendix}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=blue,
+	urlcolor=blue,
+}
+
+\newcommand\blfootnote[1]{%
+	\begingroup
+	\renewcommand\thefootnote{}\footnote{#1}%
+	\addtocounter{footnote}{-1}%
+	\endgroup
+}
+
+\begin{document}
+	
+	\Huge\textbf{Pneumatics System Simulator}
+	\newline
+	\LARGE AMB Calculator
+	
+	\vspace{0.5cm}
+	\normalsize
+	
+	This simulator is used to determine the air usage of your robot based on the number and size of its cylinders and how often they fire. It can be helpful for determining how many air tanks are needed to maintain pressure throughout the match and the effects of using a compressor during the match versus only between matches.\\
+	
+	The simulation is run discretely in time with timesteps of one second. We know the energy of the system $ E $ at any time can be represented by the pressure of the system $ P $ times its volume $ V $, $ E = P \cdot V $. We can find the energy of the system at any timestep by adding the total work done on the system during that time to the energy at the previous step. That work comes in the form of positive work done by the compressor and negative work done by the cylinders:
+	
+	\begin{equation}
+		E_{n+1} = E_n + W_{tot} \implies 
+		\left( P V \right)_{n+1} = \left( P V \right)_n + W_{comp} - \sum W_{cyl}
+	\end{equation}
+	\\
+	Since the volume of the system remains constant, we can divide by $ V $ to get:
+	
+	\begin{equation}
+		P_{n+1} = P_n + \frac{W_{comp} - \sum W_{cyl}}{V}
+	\end{equation}
+	\\
+	According to the laws of thermodynamics, the work done by compression/expansion of a gas at constant pressure can be represented by $ W = P \cdot \Delta V $. In each actuation of the cylinder gas is allowed to expand twice, once when it extends and once when it retracts. So for each actuation, the work lost by a cylinder with cross-sectional area $ A_c $ and length $ L $ is:
+	
+	\begin{equation}
+		W_{cyl} = \left( P \cdot A_c L \right)_{push} + \left( P \cdot A_c L \right)_{pull}
+	\end{equation}
+	\\
+	$ L $ is constant between the extend and retract stroke, so it can be factored out. For the extend stroke, $ A_c = \frac{\pi}{4} D^2 $ for a piston of diameter $ D $. For the retract stroke, $ A_c = \frac{\pi}{4} \left( D^2 - d^2 \right) $ with bore diameter $ d $. So the work used in each actuation cycle is:
+	
+	\begin{equation}
+		W_{cyl} = \frac{\pi}{4} L \left[ D^2 P_{push} + \left( D^2 - d^2 \right) P_{pull} \right] 
+	\end{equation}
+	\\
+	We will define a variable $ m $ to represent the number of actuations of a given cylinder in a given timestep. $ m $ is necessarily zero if the timestep is before the cylinder's start time or after its end time. If the time per cycle (period) of the cylinder $ T $ is more than one (i.e. less than one actuation cycle per second), $ m = 1 $ if the remainder of the time elapsed since the cylinder's start divided by the cylinder period is less than the timestep size, otherwise zero. This way one cycle's work is lost for every cycle period. If the time per cycle is less than one (i.e. more than one actuation per cycle), $ m = \frac{1}{T} $.\\
+	
+	Similar to the cylinders, we can represent the work done by the compressor as:
+	
+	\begin{equation}
+		W_{comp} = \Delta V \cdot P = \dot{V}(P) \cdot dt \cdot 1 \text{ atm}
+	\end{equation}
+	\\
+	Where $ \dot{V}(P) $ is the compressor's volumetric flow rate as a function of the system pressure, measured at atmospheric pressure (hence multiplying by 1 atm). We can approximate this function using a cubic interpolation of the data provided by \url{andymark.com}. The work from the compressor is added to the system when the system pressure starts below the compressor trigger and until it hits the compressor threshold. \\
+	
+	In order to ensure the robot will not run out of air during the match, we want to make sure that the pressure never falls below the highest regulated pressure used by any of the cylinders.
+	
+	
+\end{document}

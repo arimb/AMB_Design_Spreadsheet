@@ -1,0 +1,151 @@
+div.page-element#options {
+    align-items: flex-end;
+    justify-content: space-evenly;
+    width: 253px;
+}
+
+div.sources {
+    flex-direction: row;
+    gap: 1em;
+}
+
+div.sources > label {
+    margin-right: -0.5em;
+}
+
+div.page-element#options input {
+    text-align: right;
+}
+
+div.page-element#options span {
+    min-width: 1.5em;
+}
+
+div.num_stages {
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-end;
+    gap: 0.7em;
+}
+
+div.num_stages div {
+    flex-direction: row;
+    gap: 0;
+}
+
+div.break#break1 {
+    display: none;
+}
+
+div.page-element#clearance {
+    width: 253px;
+    justify-content: space-around;
+}
+
+div.clearance-type {
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+div#clearance div.field {
+    justify-content: flex-end;
+}
+
+@media only screen and (max-width: 1114px) {
+    div.break#break1 {
+        display: flex;
+    }
+}
+
+
+div.gear-options {
+    align-items: center;
+}
+
+div.field input.diam, div.field input.dist {
+    max-width: 3em;
+}
+
+div.page-element#dist14 {
+    align-items: center;
+}
+
+div[id^=dist] {
+    align-items: center;
+}
+
+div.cc {
+    flex-direction: column;
+    gap: 0.3em;
+    align-items: center;
+}
+
+div.cc div {
+    align-content: center;
+}
+
+img {
+    margin: 10px;
+    align-self: flex-start;
+}
+
+div.page-element#gearbox-options {
+    align-items: center;
+    justify-content: flex-start;
+}
+
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    background-color: whitesmoke;
+}
+
+td, th {
+    border: 1px solid black;
+    padding: 0.2em 0.4em;
+    text-align: center;
+}
+
+div.stock-main {
+    margin: 2em 4em;
+    width: 100%;
+}
+
+summary > * {
+    cursor: pointer;
+    display: inline;
+}
+
+div.stock {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+}
+
+div.gear-list {
+    flex-direction: column;
+    align-items: center;
+    border-right: 1.5px solid black;
+    flex-shrink: 0;
+}
+
+div.gear-list:first-child {
+    border-left: 1.5px solid black;
+}
+
+div.gear-list h4 {
+    margin: 0.5em 1em;
+}
+
+div.warnings {
+    flex-direction: column;
+    gap: 10px;
+    justify-self: center;
+}
+
+span.warn {
+    color: rgb(205, 0, 0);
+    text-align: center;
+    font-weight: bold;
+}

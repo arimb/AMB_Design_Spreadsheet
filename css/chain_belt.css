@@ -1,0 +1,65 @@
+div.page-element {
+    align-items: center;
+    justify-content: space-evenly;
+    row-gap: 0.4em;
+}
+
+div.sprockets {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+div#units {
+    flex-direction: row;
+}
+
+select {
+    padding: 1px;
+}
+
+select#type {
+    width: 10em;
+}
+
+div.field input {
+    max-width: 5em;
+}
+
+div.field span {
+    min-width: 2em;
+}
+
+div#dimensions {
+    align-items: flex-end;
+    align-self: flex-start;
+}
+
+div#dimensions span {
+    min-width: 3em;
+}
+
+div#calculation {
+    min-height: 160px;
+}
+
+div.driving {
+    flex-direction: row;
+    gap: 2em;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+}
+
+div.driving input {
+    margin-left: 3px;
+}
+
+div.geometry {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.4em;
+}
+
+div.geometry span {
+    width: 2em;
+}

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Lead Screw Calculator - AMB Robotics Calculator</title>
+        <link rel="icon" href="img/logo.png">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/calculators.css">
+        <link rel="stylesheet" href="css/lead_screw.css">
+        <script src="js/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/tipso.min.css">
+        <script src="js/tipso.min.js"></script>
+        <script src="js/calculators.js"></script>
+        <script src="js/lead_screw.js"></script>
+        <script async src="//static.getclicky.com/101376880.js"></script>
+    </head>
+    <body>
+        <header>
+            <a href="/">
+                <img src="img/logo.png" class="logo" alt="logo">
+            </a>
+            <h1>Lead Screw Calculator</h1>
+            <div style="flex: 1;"></div>
+            <div class="header-left">
+                <button class="header-button docs" data-link="lead_screw">DOCS</button>
+                <div class="units-buttons">
+                    <button class="header-button imperial">IMPERIAL</button>
+                    <button class="header-button metric">METRIC</button>
+                </div>
+                <button class="header-button copy-link">COPY<br>LINK</button>
+                <button class="header-button reset">RESET</button>
+            </div>
+        </header>
+        <main>
+            <div class="calculation">
+                <div class="page-element" id="params">
+                    <div class="field">
+                        <label for="od" data-tipso="Outer diameter of the lead screw">Diameter</label>
+                        <input id="od" type="number" step="any" min="0">
+                        <select id="od-u">
+                            <option value="0.0254" class="imperial">in</option>
+                            <option value="0.001" class="metric">mm</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="pitch" data-tipso="Pitch of the lead screw, or the spacing between adjacent threads">Pitch</label>
+                        <input id="pitch" type="number" step="any" min="0">
+                        &nbsp;<span class="pitch">in</span>
+                    </div>
+                    <div class="field">
+                        <label for="starts" data-tipso="Number of distinct threads on the lead screw, or the number of threads that can be seen from a cross-secition of the lead screw"># of Starts</label>
+                        <input id="starts" type="number" step="any" min="0">
+                    </div>
+                    <div class="field">
+                        <label for="angle" data-tipso="Angle of the thread's trapezoidal profile. Typically 29&deg; for ACME threads, 30&deg; for trapezoidal screws, and 90&deg; for square threads">Thread Angle</label>
+                        <input id="angle" type="number" step="any" min="0">
+                        <span>&nbsp;&deg;</span>
+                    </div>
+                </div>
+                <div class="page-element" id="material">
+                    <div class="field">
+                        <label for="screw-mat" data-tipso="Material of the lead screw shaft">Screw Material</label>
+                        <select id="screw-mat">
+                            <option>Steel</option>
+                            <option>Bronze</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="nut-mat" data-tipso="Material of the nut that rides along the lead screw">Nut Material</label>
+                        <select id="nut-mat">
+                            <option>Steel</option>
+                            <option>Bronze</option>
+                            <option>Brass</option>
+                            <option>Cast Iron</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="lube" data-tipso="Are the screw and nut lubricated or running dry?">Lubricated</label>
+                        <input id="lube" type="checkbox">
+                    </div>
+                </div>
+                <div class="page-element" id="equiv">
+                    <div class="field">
+                        <label for="eff" data-tipso="Percent of mechanical power translated from rotational to linear motion">Efficiency</label>
+                        <input id="eff" type="number" disabled>
+                    </div>
+                    <div class="field">
+                        <label for="equiv_radius" data-tipso="Radius of a wheel that translates between rotational and linear motion with the same lead">Equiv. Radius</label>
+                        <input id="equiv_radius" type="number" disabled>
+                        &nbsp;<span class="pitch">in</span>
+                    </div>
+                    <div class="field">
+                        <label for="backdrive" data-tipso="Can an applied force on the nut produce rotational motion without additional torque?">Backdrivable</label>
+                        <input id="backdrive" type="text" disabled>
+                    </div>
+                    <button class="insert">INSERT IN MECHANISM CALC</button>
+                </div>
+                <div class="page-element" id="forces">
+                    <div class="field">
+                        <label for="force" data-tipso="Linear force applied on the nut">Applied Force</label>
+                        <input id="force" type="number" step="any" min="0">
+                        <select id="force-u">
+                            <option value="4.448" class="imperial">lbs</option>
+                            <option value="9.801">kg</option>
+                            <option value="1" class="metric">N</option>
+                        </select>
+                        <input id="force-c" type="radio" name="force">
+                    </div>
+                    <div class="field">
+                        <label for="traise" data-tipso="Torque needed to apply to the screw in order to oppose the applied load">Raise Torque</label>
+                        <input id="traise" type="number" step="any" min="0">
+                        <select id="traise-u">
+                            <option value="0.113" class="imperial">in-lbs</option>
+                            <option value="1" class="metric">Nm</option>
+                        </select>
+                        <input id="traise-c" type="radio" name="force">
+                    </div>
+                    <div class="field">
+                        <label for="tlower" data-tipso="If positive, the torque needed to apply to the screw to allow the screw to spin in thesame  direction as the applied force. If negative, the torque generated when the given force is applied on the nut, spinning the screw.">Lower Torque</label>
+                        <input id="tlower" type="number" step="any" min="0">
+                        <select id="tlower-u">
+                            <option value="0.113" class="imperial">in-lbs</option>
+                            <option value="1" class="metric">Nm</option>
+                        </select>
+                        <input id="tlower-c" type="radio" name="force">
+                    </div>
+                    <div class="field">
+                        <label for="lraise" data-tipso="Force needed to apply at the equivalent radius to generate the raise torque">Equiv. Raise Load</label>
+                        <input id="lraise" type="number" step="any" min="0">
+                        <select id="lraise-u">
+                            <option value="4.448" class="imperial">lbs</option>
+                            <option value="9.801">kg</option>
+                            <option value="1" class="metric">N</option>
+                        </select>
+                        <input id="lraise-c" type="radio" name="force">
+                    </div>
+                    <div class="field">
+                        <label for="llower" data-tipso="Force needed to apply at the equivalent radius to generate the lower torque">Equiv. Lower Load</label>
+                        <input id="llower" type="number" step="any" min="0">
+                        <select id="llower-u">
+                            <option value="4.448" class="imperial">lbs</option>
+                            <option value="9.801">kg</option>
+                            <option value="1" class="metric">N</option>
+                        </select>
+                        <input id="llower-c" type="radio" name="force">
+                    </div>
+                </div>
+                <div class="page-element" id="speeds">
+                    <div class="field">
+                        <label for="lin" data-tipso="Linear speed of the nut corresponding to the rotational speed below">Linear Speed</label>
+                        <input id="lin" type="number" step="any" min="0">
+                        <select id="lin-u">
+                            <option value="0.3048" class="imperial">feet/s</option>
+                            <option value="1" class="metric">m/s</option>
+                            <option value="0.0254">inch/s</option>
+                        </select>
+                        <input id="lin-c" type="radio" name="speed">
+                    </div>
+                    <div class="field">
+                        <label for="rot" data-tipso="Rotation speed of the screw that corresponds to the linear speed above">Rotational Speed</label>
+                        <input id="rot" type="number" step="any" min="0">
+                        <select id="rot-u">
+                            <option value="0.01667">rpm</option>
+                            <option value="1">rev/s</option>
+                            <option value="6.283">rad/s</option>
+                        </select>
+                        <input id="rot-c" type="radio" name="speed">
+                    </div>
+                </div>
+            </div>
+            <div class="page-element" id="img">
+                <img src="img/lead_screw.jpg" height="auto">
+            </div>
+        </main>
+        <footer>
+            <a href="https://firstupdatesnow.com/" class="fun-logo">
+                <img src="img/fun_logo.jpg">
+            </a>
+            <span>
+                Created by Ari Meles-Braverman &copy; 2022. For educational purposes only. Contact <a href="https://www.chiefdelphi.com/u/arimb/summary" style="text-decoration: underline;">&commat;AriMB</a> on ChiefDelphi with questions or suggestions.
+            </span>
+            <div></div>
+        </footer>
+    </body>
+</html>

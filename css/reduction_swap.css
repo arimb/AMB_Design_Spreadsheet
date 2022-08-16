@@ -1,0 +1,82 @@
+main {
+    align-items: flex-start;
+}
+
+div.inputs {
+    flex-direction: column;
+}
+
+div.page-element {
+    align-items: center;
+    gap: 0.7em;
+}
+
+div.page-element#current {
+    min-height: 220px;
+    justify-content: flex-start;
+}
+
+div.current {
+    flex-direction: row;
+    gap: 0.7em;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+div.current div {
+    flex-direction: row;
+    gap: 0;
+}
+
+div.current input[type=radio] {
+    margin-bottom: 3px;
+}
+
+div.input, div.deviations, div.ranges {
+    flex-direction: column;
+    gap: 0.3em;
+    align-items: center;
+}
+
+summary {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+h4 {
+    margin: auto 0;
+    display: inline;
+}
+
+div.ranges {
+    gap: 0;
+}
+
+div.ranges div.field {
+    width: 100%;
+    justify-content: space-between;
+}
+
+div.ranges input[type=checkbox] {
+    justify-self: flex-start;
+}
+
+div.ph {
+    width: 0;
+}
+
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    background-color: whitesmoke;
+}
+
+td, th {
+    border: 1px solid black;
+    padding: 0.2em 0.4em;
+    text-align: center;
+}
+
+th {
+    min-width: 4em;
+}

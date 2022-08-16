@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Gearbox Options Selector - AMB Robotics Calculator</title>
+        <link rel="icon" href="img/logo.png">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/calculators.css">
+        <link rel="stylesheet" href="css/gearbox_options.css">
+        <script src="js/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/tipso.min.css">
+        <script src="js/tipso.min.js"></script>
+        <script src="js/calculators.js"></script>
+        <script src="js/gearbox_options.js"></script>
+        <script async src="//static.getclicky.com/101376880.js"></script>
+    </head>
+    <body>
+        <header>
+            <a href="/">
+                <img src="img/logo.png" class="logo" alt="logo">
+            </a>
+            <h1>Gearbox Options Selector</h1>
+            <div style="flex: 1;"></div>
+            <div class="header-left">
+                <button class="header-button docs" data-link="gearbox_options">DOCS</button>
+                <div class="units-buttons">
+                    <button class="header-button imperial">IMPERIAL</button>
+                    <button class="header-button metric">METRIC</button>
+                </div>
+                <button class="header-button copy-link">COPY<br>LINK</button>
+                <button class="header-button reset">RESET</button>
+            </div>
+        </header>
+        <main>
+            <div class="page-element" id="options">
+                <div class="sources">
+                    <label data-tipso="Choose which suppliers' gear inventory will be checked">Sources:</label>
+                    <div>
+                        <input id="vex" type="checkbox" checked>
+                        <label for="vex">Vex</label>
+                    </div>
+                    <div>
+                        <input id="am" type="checkbox" checked>
+                        <label for="am">AM</label>
+                    </div>
+                    <div>
+                        <input id="rev" type="checkbox" checked>
+                        <label for="rev">REV</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="ratio" data-tipso="Desired gearbox ratio">Total Ratio</label>
+                    <input id="ratio" type="number" step="any" min="0">
+                    &nbsp;
+                    <span>: 1</span>
+                </div>
+                <div class="field">
+                    <label for="rat_dev" data-tipso="Maximum allowable deviation from the desired ratio">Max. Deviation</label>
+                    <input id="rat_dev" type="number" step="any" min="0">
+                    &nbsp;
+                    <span>%</span>
+                </div>
+                <div class="num_stages">
+                    <span data-tipso="Single or double stage gearbox">Num. Stages: </span>
+                    <div>
+                        <label for="1st">One</label>
+                        <input id="1st" name="num_stages" type="radio">
+                    </div>
+                    <div>
+                        <label for="2st">Two</label>
+                        <input id="2st" name="num_stages" type="radio" checked>
+                    </div>
+                </div>
+            </div>
+            <div class="break" id="break1"></div>
+            <div class="page-element gear-options" id="gear1">
+                <h3 data-tipso="Typically the motor pinion gear">Input Gear</h3>
+                <div class="field">
+                    <label for="type1">Type:</label>
+                    <select class="gear-type" id="type1"></select>
+                </div>
+                <div class="field">
+                    <input id="min1" type="number" step="any" min="0">
+                    &nbsp;&leq;&nbsp;<span data-tipso="Limit the number of teeth the gear can have within a range">Teeth</span>&nbsp;&leq;&nbsp;
+                    <input id="max1" type="number" step="any" min="0">
+                </div>
+                <div class="field">
+                    <input class="diam" id="min1d" type="number" step="any" min="0">
+                    <select id="min1d-u">
+                        <option value="1" class="imperial">in</option>
+                        <option value="0.03937" class="metric">mm</option>
+                    </select>
+                    &nbsp;&leq;&nbsp;<span data-tipso="Limit the outer diameter of the gear within a range">Diam.</span>&nbsp;&leq;&nbsp;
+                    <input class="diam" id="max1d" type="number" step="any" min="0">
+                    <select id="max1d-u">
+                        <option value="1" class="imperial">in</option>
+                        <option value="0.03937" class="metric">mm</option>
+                    </select>
+                </div>
+            </div>
+            <div class="page-element 1stage" id="dist14">
+                <h3 data-tipso="Limit the center-to-center distance between the input and output gears to a range">
+                    &#5130; C-C &#5125;
+                </h3>
+                <div class="cc">
+                    <div class="field">
+                        <input class="dist" id="min14" type="number" step="any" min="0">
+                        <select id="min14-u">
+                            <option value="1" class="imperial">in</option>
+                            <option value="0.03937" class="metric">mm</option>
+                        </select>
+                    </div>
+                    &leq;&nbsp;Dist. Btwn.&nbsp;&leq;
+                    <div class="field">
+                        <input class="dist" id="max14" type="number" step="any" min="0">
+                        <select id="max14-u">
+                            <option value="1" class="imperial">in</option>
+                            <option value="0.03937" class="metric">mm</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="page-element 2stage" id="dist12">
+                <h3 data-tipso="Limit the center-to-center distance between the input and large cluster gears to a range">
+                    &#5130; C-C &#5125;
+                </h3>
+                <div class="cc">
+                    <div class="field">
+                        <input class="dist" id="min12" type="number" step="any" min="0">
+                        <select id="min12-u">
+                            <option value="1" class="imperial">in</option>
+                            <option value="0.03937" class="metric">mm</option>
+                        </select>
+                    </div>
+                    &leq;&nbsp;Dist. Btwn.&nbsp;&leq;
+                    <div class="field">
+                        <input class="dist" id="max12" type="number" step="any" min="0">
+                        <select id="max12-u">
+                            <option value="1" class="imperial">in</option>
+                            <option value="0.03937" class="metric">mm</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="page-element gear-options 2stage" id="gear2">
+                <h3 data-tipso="First gear on the cluster shaft, mates with the input gear">Large Cluster Gear</h3>
+                <div class="field">
+                    <label for="type2">Type:</label>
+                    <select class="gear-type" id="type2"></select>
+                </div>
+                <div class="field">
+                    <input id="min2" type="number" step="any" min="0">
+                    &nbsp;&leq;&nbsp;<span data-tipso="Limit the number of teeth the gear can have within a range">Teeth</span>&nbsp;&leq;&nbsp;
+                    <input id="max2" type="number" step="any" min="0">
+                </div>
+                <div class="field">
+                    <input class="diam" id="min2d" type="number" step="any" min="0">
+                    <select id="min2d-u">
+                        <option value="1" class="imperial">in</option>
+                        <option value="0.03937" class="metric">mm</option>
+                    </select>
+                    &nbsp;&leq;&nbsp;<span data-tipso="Limit the outer diameter of the gear within a range">Diam.</span>&nbsp;&leq;&nbsp;
+                    <input class="diam" id="max2d" type="number" step="any" min="0">
+                    <select id="max2d-u">
+                        <option value="1" class="imperial">in</option>
+                        <option value="0.03937" class="metric">mm</option>
+                    </select>
+                </div>
+            </div>
+            <div class="break 2stage" id="break2"></div>
+            <div class="page-element 2stage row2" id="clearance">
+                <div class="clearance-type">
+                    <label for="clr1" data-tipso="Space between the center of the input axle and the small cluster gear. If the input shaft passes through the gearbox, the clearance muct be greater than its diameter.">Axle 1 Clearance</label>
+                    <select id="clr1">
+                        <option>None</option>
+                        <option>Axle Bore</option>
+                        <option>Custom</option>
+                    </select>
+                </div>
+                <div class="field" style="visibility: hidden;">
+                    <label for="clr1cstm">Diameter</label>
+                    <input id="clr1cstm" type="number" step="any" min="0">
+                    <select id="clr1cstm-u">
+                        <option value="1" class="imperial">in</option>
+                        <option value="0.03937" class="metric">mm</option>
+                    </select>
+                </div>
+                <div class="clearance-type">
+                    <label for="clr4" data-tipso="Space between the center of the output axle and the large cluster gear. If the output shaft passes through the gearbox, the clearance muct be greater than its diameter.">Axle 4 Clearance</label>
+                    <select id="clr4">
+                        <option>None</option>
+                        <option selected>Axle Bore</option>
+                        <option>Custom</option>
+                    </select>
+                </div>
+                <div class="field" style="visibility: hidden;">
+                    <input id="clr4cstm" type="number" step="any" min="0">
+                    <select id="clr4cstm-u">
+                        <option value="1" class="imperial">in</option>
+                        <option value="0.03937" class="metric">mm</option>
+                    </select>
+                </div>
+            </div>
+            <div class="page-element gear-options 2stage row2" id="gear3">
+                <h3 data-tipso="Second gear on the cluster shaft, mates with the output gear">Small Cluster Gear</h3>
+                <div class="field">
+                    <label for="type3">Type:</label>
+                    <select class="gear-type" id="type3"></select>
+                </div>
+                <div class="field">
+                    <input id="min3" type="number" step="any" min="0">
+                    &nbsp;&leq;&nbsp;<span data-tipso="Limit the number of teeth the gear can have within a range">Teeth</span>&nbsp;&leq;&nbsp;
+                    <input id="max3" type="number" step="any" min="0">
+                </div>
+                <div class="field">
+                    <input class="diam" id="min3d" type="number" step="any" min="0">
+                    <select id="min3d-u">
+                        <option value="1" class="imperial">in</option>
+                        <option value="0.03937" class="metric">mm</option>
+                    </select>
+                    &nbsp;&leq;&nbsp;<span data-tipso="Limit the outer diameter of the gear within a range">Diam.</span>&nbsp;&leq;&nbsp;
+                    <input class="diam" id="max3d" type="number" step="any" min="0">
+                    <select id="max3d-u">
+                        <option value="1" class="imperial">in</option>
+                        <option value="0.03937" class="metric">mm</option>
+                    </select>
+                </div>
+            </div>
+            <div class="page-element 2stage row2" id="dist34">
+                <h3 data-tipso="Limit the center-to-center distance between the small cluster and output gears to a range">
+                    &#5130; C-C &#5125;
+                </h3>
+                <div class="cc">
+                    <div class="field">
+                        <input class="dist" id="min34" type="number" step="any" min="0">
+                        <select id="min34-u">
+                            <option value="1" class="imperial">in</option>
+                            <option value="0.03937" class="metric">mm</option>
+                        </select>
+                    </div>
+                    &leq;&nbsp;Dist. Btwn.&nbsp;&leq;
+                    <div class="field">
+                        <input class="dist" id="max34" type="number" step="any" min="0">
+                        <select id="max34-u">
+                            <option value="1" class="imperial">in</option>
+                            <option value="0.03937" class="metric">mm</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="page-element gear-options row2" id="gear4">
+                <h3 data-tipso="The last gear in the gearbox, on the output shaft">Output Gear</h3>
+                <select class="gear-type" id="type4"></select>
+                <div class="field">
+                    <input id="min4" type="number" step="any" min="0">
+                    &nbsp;&leq;&nbsp;<span data-tipso="Limit the number of teeth the gear can have within a range">Teeth</span>&nbsp;&leq;&nbsp;
+                    <input id="max4" type="number" step="any" min="0">
+                </div>
+                <div class="field">
+                    <input class="diam" id="min4d" type="number" step="any" min="0">
+                    <select id="min4d-u">
+                        <option value="1" class="imperial">in</option>
+                        <option value="0.03937" class="metric">mm</option>
+                    </select>
+                    &nbsp;&leq;&nbsp;<span data-tipso="Limit the outer diameter of the gear within a range">Diam.</span>&nbsp;&leq;&nbsp;
+                    <input class="diam" id="max4d" type="number" step="any" min="0">
+                    <select id="max4d-u">
+                        <option value="1" class="imperial">in</option>
+                        <option value="0.03937" class="metric">mm</option>
+                    </select>
+                </div>
+            </div>
+            <div class="break"></div>
+            <img class="diagram 1stage" src="img/gear_options_1stage.png">
+            <img class="diagram 2stage" src="img/gear_options_2stage.png">
+            <div class="page-element" id="gearbox-options">
+                <table class="gearbox-options">
+                    <thead>
+                        <tr>
+                            <th data-tipso="Input Gear : Large Cluster Gear"> Gear Pair 1 </th>
+                            <th class="2stage" data-tipso="Small Cluster Gear : Output Gear"> Gear Pair 2 </th>
+                            <th> Total Ratio </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+                <div class="warnings">
+                    <span class="warn" id="no_ratio">PLEASE ENTER THE DESIRED<br>GEAR RATIO</span>
+                    <span class="warn" id="no_sources">PLEASE SELECT AT LEAST<br>ONE GEAR SOURCE</span>
+                    <span class="warn" id="no_gearboxes">THERE ARE NO GEARBOXES THAT<br>MEET THE CRITERIA SELECTED</span>
+                </div>
+            </div>
+            <div class="stock-main">
+                <details>
+                    <summary>
+                        <h3 data-tipso="List of gears available from the selected sources">
+                            Gear Options
+                        </h3>
+                    </summary>
+                    <div class="stock">
+                        
+                    </div>
+                </details>
+            </div>
+        </main>
+        <footer>
+            <a href="https://firstupdatesnow.com/" class="fun-logo">
+                <img src="img/fun_logo.jpg">
+            </a>
+            <span>
+                Created by Ari Meles-Braverman &copy; 2022. For educational purposes only. Contact <a href="https://www.chiefdelphi.com/u/arimb/summary" style="text-decoration: underline;">&commat;AriMB</a> on ChiefDelphi with questions or suggestions.
+            </span>
+            <div></div>
+        </footer>
+    </body>
+</html>

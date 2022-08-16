@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Reduction Swap Selector - AMB Robotics Calculator</title>
+        <link rel="icon" href="img/logo.png">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/calculators.css">
+        <link rel="stylesheet" href="css/reduction_swap.css">
+        <script src="js/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/tipso.min.css">
+        <script src="js/tipso.min.js"></script>
+        <script src="js/calculators.js"></script>
+        <script src="js/reduction_swap.js"></script>
+        <script async src="//static.getclicky.com/101376880.js"></script>
+    </head>
+    <body>
+        <header>
+            <a href="/">
+                <img src="img/logo.png" class="logo" alt="logo">
+            </a>
+            <h1>Reduction Swap Selector</h1>
+            <div style="flex: 1;"></div>
+            <div class="header-left">
+                <button class="header-button docs" data-link="reduction_swap">DOCS</button>
+                <div class="units-buttons">
+                    <button class="header-button imperial">IMPERIAL</button>
+                    <button class="header-button metric">METRIC</button>
+                </div>
+                <button class="header-button copy-link">COPY<br>LINK</button>
+                <button class="header-button reset">RESET</button>
+            </div>
+        </header>
+        <main>
+            <div class="inputs">
+                <div class="page-element" id="current">
+                    <h2 data-tipso="The existing reduction whose center-to-center distance you want to match">Current Config</h2>
+                    <div class="current">
+                        <div>
+                            <label for="dist" data-tipso="Define the current config by the center-to-center distance">C-C Dist.</label>
+                            <input id="dist" name="current" type="radio" checked>
+                        </div>
+                        <div>
+                            <label for="gears" data-tipso="Calculate the center-to-center distance of the current config based on the distance needed for a certain gear reduction">Gears</label>
+                            <input id="gears" name="current" type="radio">
+                        </div>
+                        <div>
+                            <label for="belt" data-tipso="Calculate the center-to-center distance of the current config based on the distance needed for a certain belt or chain reduction">Belt/Chain</label>
+                            <input id="belt" name="current" type="radio">
+                        </div>
+                    </div>
+                    <div class="input gears">
+                        <div class="field">
+                            <label for="g1">Gear 1</label>
+                            <input id="g1" type="number" step="any" min="0">
+                        </div>
+                        <div class="field">
+                            <label for="g2">Gear 2</label>
+                            <input id="g2" type="number" step="any" min="0">
+                        </div>
+                        <div class="field">
+                            <label for="g_dp">Gear DP</label>
+                            <input id="g_dp" min="0" value="20">
+                        </div>
+                        <div class="field">
+                            <label for="g_cc" data-tipso="Center-to-center distance to match">C-C Dist.</label>
+                            <input id="g_cc" disabled>
+                            <select id="g_cc-u">
+                                <option value="1" class="imperial">inch</option>
+                                <option value="0.03937" class="metric">mm</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input belt">
+                        <div class="field">
+                            <label for="p1">Pulley/Sprocket 1</label>
+                            <input id="p1" type="number" step="any" min="0">
+                        </div>
+                        <div class="field">
+                            <label for="p2">Pulley/Sprocket 2</label>
+                            <input id="p2" type="number" step="any" min="0">
+                        </div>
+                        <div class="field">
+                            <label for="links"># of Teeth/Links</label>
+                            <input id="links" min="0">
+                        </div>
+                        <div class="field">
+                            <label for="pitch">Belt/Chain Pitch</label>
+                            <input id="pitch">
+                            <select id="pitch-u">
+                                <option value="1" class="imperial">inch</option>
+                                <option value="0.03937" class="metric">mm</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="belt_cc" data-tipso="Center-to-center distance to match">C-C Dist.</label>
+                            <input id="belt_cc" disabled>
+                            <select id="belt_cc-u">
+                                <option value="1" class="imperial">inch</option>
+                                <option value="0.03937" class="metric">mm</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input dist">
+                        <div class="field">
+                            <label for="dist_cc" data-tipso="Center-to-center distance to match">C-C Dist.</label>
+                            <input id="dist_cc" min="0">
+                            <select id="dist_cc-u">
+                                <option value="1" class="imperial">inch</option>
+                                <option value="0.03937" class="metric">mm</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="dist_dev" data-tipso="Amount the new reduction is allowed to deviate from the current center-to-center distance">Max C-C Deviation</label>
+                        <input id="dist_dev" type="number" step="any" min="0" value="0.01">
+                        <select id="dist_dev-u">
+                            <option value="1" class="imperial">inch</option>
+                            <option value="0.03937" class="metric">mm</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="page-element" id="desired">
+                    <h2 data-tipso="The new ratio you want to use in place of the current reduction defined above">Desired Ratio</h2>
+                    <div class="field">
+                        <input id="ratio" type="number" step="any" min="0">
+                        <span>&nbsp;: 1</span>
+                    </div>
+                    <div class="field">
+                        <label for="ratio_dev" data-tipso="Amount the new reduction is allowed to deviate from the desired ratio">Max. Deviation</label>
+                        <input id="ratio_dev" type="number" step="any" min="0" value="5">
+                        <span>&nbsp;%</span>
+                    </div>
+                    <details>
+                        <summary>
+                            <h4 data-tipso="Allow the calculator to return reductions using items in the following categories, with number of teeth in the sepcified range">Ranges to Check</h4>
+                        </summary>
+                        <div class="ranges">
+                            <div class="field">
+                                <input id="g_enable" type="checkbox" checked>
+                                <input id="g_min" type="number" min="0" value="14">
+                                <label for="g_enable">&leq; 20dp Gears &leq;</label>
+                                <input id="g_max" type="number" min="0" value="84">
+                                <div class="ph"></div>
+                            </div>
+                            <div class="field">
+                                <input id="p3_enable" type="checkbox" checked>
+                                <input id="p3_min" type="number" min="0" value="18">
+                                <label for="p3_enable">&leq; 3mm Pulleys &leq;</label>
+                                <input id="p3_max" type="number" min="0" value="60">
+                                <div class="ph"></div>
+                            </div>
+                            <div class="field">
+                                <input id="p5_enable" type="checkbox" checked>
+                                <input id="p5_min" type="number" min="0" value="18">
+                                <label for="p5_enable">&leq; 5mm Pulleys &leq;</label>
+                                <input id="p5_max" type="number" min="0" value="60">
+                                <div class="ph"></div>
+                            </div>
+                            <div class="field">
+                                <input id="s25_enable" type="checkbox" checked>
+                                <input id="s25_min" type="number" min="0" value="16">
+                                <label for="s25_enable">&leq; #25 Sprockets &leq;</label>
+                                <input id="s25_max" type="number" min="0" value="72">
+                                <div class="ph"></div>
+                            </div>
+                            <div class="field">
+                                <input id="s35_enable" type="checkbox" checked>
+                                <input id="s35_min" type="number" min="0" value="12">
+                                <label for="s35_enable">&leq; #35 Sprockets &leq;</label>
+                                <input id="s35_max" type="number" min="0" value="60">
+                                <div class="ph"></div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+            <div class="page-element" id="results">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="min-width: 5em;">Type</th>
+                            <th><span data-tipso="Gear, sprocket, or pulley at the input to the reduction">Input</span></th>
+                            <th><span data-tipso="Gear, sprocket, or pulley at the output to the reduction">Output</span></th>
+                            <th style="min-width: 5em;">Ratio</th>
+                            <th><span class="unit" data-tipso="Exact center-to-center distance needed for the new reduction (sorted by magnitude of deviation)">C-C (in)</span></th>
+                            <th><span data-tipso="Number of links needed for a chain reduction, or length needed for a belt reduction"># Links</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="6">No options found</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <footer>
+            <a href="https://firstupdatesnow.com/" class="fun-logo">
+                <img src="img/fun_logo.jpg">
+            </a>
+            <span>
+                Created by Ari Meles-Braverman &copy; 2022. For educational purposes only. Contact <a href="https://www.chiefdelphi.com/u/arimb/summary" style="text-decoration: underline;">&commat;AriMB</a> on ChiefDelphi with questions or suggestions.
+            </span>
+            <div></div>
+        </footer>
+    </body>
+</html>

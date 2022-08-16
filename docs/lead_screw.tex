@@ -1,0 +1,106 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[intlimits]{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[export]{adjustbox}
+\usepackage{graphicx}
+\setlength{\parindent}{0pt}
+\usepackage[left=1in, right=1in, top=1in, bottom=1in]{geometry}
+\usepackage{float}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{bm}
+\usepackage{hyperref}
+\setcounter{tocdepth}{1}
+\usepackage[titletoc]{appendix}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=blue,
+	urlcolor=blue,
+}
+
+\newcommand\blfootnote[1]{%
+	\begingroup
+	\renewcommand\thefootnote{}\footnote{#1}%
+	\addtocounter{footnote}{-1}%
+	\endgroup
+}
+
+\begin{document}
+	
+	\Huge\textbf{Lead Screw Calculator}
+	\newline
+	\LARGE AMB Calculator
+	
+	\vspace{0.5cm}
+	\normalsize
+	
+	This calculator is used to determine the properties of a lead screw based on its dimensions and materials, and to use it to convert between rotational and linear motion and force. The calculator also provides equivalent parameters that can be plugged into the Mechanism Calculator in order to use a lead screw as the final stage of a mechanism.\\
+	
+	The basic transformation between rotational speed $ \omega $ and linear speed $ v $ for a lead screw with $ n $ starts and pitch $ p $ is given by:
+	
+	\begin{equation}
+		v = np \cdot \omega
+	\end{equation}
+	\\
+	This value $ np $ is called the "lead", and is the amount the screw advances linearly for every full rotation.\\
+	
+	Because of inefficiencies in power transfer however, the torque : force ratio is not equal to the inverse of the lead as you might expect for a 100\% efficient system. For a lead screw with outside diameter $ d $, we will define the "mean diameter" of the lead screw $ d_m $ to be $ d_m = d - \frac{1}{2} p $. The lead screw has a pitch angle of $ \alpha $ and a coefficient of friction between the screw and nut of $ \mu $. Then the torque needed to oppose an applied force (e.g. to raise a mass) is given by the following equation:
+	
+	\begin{equation}
+		T_R = F \cdot \frac{d_m}{2} \left( \frac{\pi \mu d_m + n p \cos (\alpha)}{\pi d_m \cos (\alpha) - \mu n p} \right)
+	\end{equation}
+	\\
+	Depending on the dimensions and materials of the lead screw, it may take a negative torque input in order to allow an applied force to spin the screw. This property is called being "backdrivable". The lead screw is backdrivable if the torque provided by an applied load is negative. If it is zero or positive, the lead screw is said to be non-backdrivable. For example, a mass is attached to a lead screw at height and released. If the lead screw begins to spin and the mass falls, the lead screw is backdrivable. If the mass stays in place and requires a negative torque input to lower it, the lead screw is not backdrivable.
+	
+	\begin{equation}
+		T_L = F \cdot \frac{d_m}{2} \left( \frac{\pi \mu d_m - n p \cos (\alpha)}{\pi d_m \cos (\alpha) + \mu n p} \right)
+	\end{equation}
+	\\
+	The efficiency of the lead screw $ \eta $ is the ratio between the raise torque that would be required if there were no friction to the raise torque required with friction. This is equal to:
+	
+	\begin{equation}
+		\eta = \frac{T_R |_{\mu=0}}{T_R} = \frac{np}{\pi d_m} \cdot \frac{\pi d_m \cos (\alpha) - \mu n p}{\pi \mu d_m + n p \cos (\alpha)}
+	\end{equation}
+	\\
+	
+	\section*{Equivalent Radius and Load}
+	
+	In order to use a lead screw as the output in a mechanism for the Mechanism Calculator, we will define an equivalent radius and load so that the rotational output is translated correctly to linear movement. To find the equivalent radius $ r_{eq} $, we equate the rotational to linear velocity transformation for both a wheel and a lead screw:
+
+	\begin{equation}
+		2\pi r \cdot \omega = v = np \cdot \omega
+	\end{equation}
+	\\
+	We can then solve for $ r = r_{eq} $ to find the radius that will provide the same rotational to linear motion transformation as the given lead screw:
+	
+	\begin{equation}
+		r_{eq} = \frac{np}{2\pi}
+	\end{equation}
+	
+	\newpage
+	We calculated the raise and lower torques for the lead screw, but the Mechanism calculator takes a linear force $ L $ at the radius given. Since $ T = F \cdot r $, we can say:
+	
+	\begin{gather}
+	\begin{aligned}
+		L_R &= \frac{T_R}{r_{eq}} = F \cdot \frac{\pi d_m}{np} \left( \frac{\pi \mu d_m + n p \cos (\alpha)}{\pi d_m \cos (\alpha) - \mu n p} \right) \\
+		L_L &= \frac{T_L}{r_{eq}} = F \cdot \frac{\pi d_m}{np} \left( \frac{\pi \mu d_m - n p \cos (\alpha)}{\pi d_m \cos (\alpha) + \mu n p} \right)
+	\end{aligned}
+	\end{gather}
+	\\
+	If using the Mechanism Calculator with a lead screw, make sure to adjust for the large inefficiency it adds to the system by multiplying the existing efficiency by the lead screw efficiency calculated above.
+	
+	
+	\blfootnote{Equations used in this calculator are based on Shigley's Mechanical Engineering Design textbook.}
+	
+	
+	
+	
+
+
+\end{document}

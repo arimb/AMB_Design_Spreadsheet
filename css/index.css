@@ -1,0 +1,21 @@
+div.body {
+    align-content: center;
+}
+
+button.sheet {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-width: 3px;
+    min-width: 340px;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 5px 5px 5px rgb(0,0,0,0.5);
+}
+
+button.sheet img {
+    max-width: 10em;
+    width: auto;
+    height: auto;
+    margin-right: 1em;
+}

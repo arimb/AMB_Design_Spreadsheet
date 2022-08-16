@@ -1,0 +1,125 @@
+:root {
+    --white: #EEECE8;
+    --light: #a0bca0;
+    --med-light: #608F60;
+    --med-dark: #588157;
+    --dark: #405a3f;
+    --selected: #E9EA6A; 
+    background-color: var(--white);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 0.9em;
+}
+
+div {
+    display: flex;
+}
+
+div.header-left {
+    flex-direction: row-reverse;
+    justify-self: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+
+button.header-button {
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+    overflow-y: overlay;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+header {
+    display: flex;
+    background-color: var(--med-dark);
+    width: 100vw;
+    padding: 0.5em 2.5em;
+    box-shadow: 0 4px 4px gray;
+    margin-bottom: 6px;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 1em;
+    align-self: center;
+    box-sizing: border-box;
+}
+
+header img.logo {
+    max-width: 4em;
+    max-height: 4em;
+    width: auto;
+    height: auto;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex: 1;
+    align-content: flex-start;
+    justify-content: center;
+    gap: 0 1em;
+}
+
+div.break {
+    width: 100vw;
+}
+
+button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--med-light);
+    padding: 5px;
+    border: 1px solid black;
+    margin: 8px;
+    cursor: pointer !important;
+}
+
+button:hover {
+    background-color: var(--dark);
+}
+
+footer {
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100vw;
+    margin-top: 5px;
+    flex-shrink: 0;
+}
+
+footer a.fun-logo {
+    margin-right: auto;
+    /* margin-left: 5px; */
+}
+
+footer img {
+    height: 40px;
+    margin-bottom: -3px;
+}
+
+footer div {
+    width: 40px;
+    margin-left: auto;
+}
+
+input[type=number] {
+    size: 20;
+}
+
+button[data-tipso] {
+    border-bottom: 1px solid black;
+}
