@@ -279,6 +279,15 @@ function update_graph(output){
                         text: "Current (A)"
                     }
                 }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        font: {
+                            size: 10
+                        }
+                    }
+                }
             }
         }
     });
@@ -379,6 +388,9 @@ function update_ratios_graph(){
                     labels: {
                         filter: function(legend_item, data) {
                             return legend_item["lineDash"].length == 0;
+                        },
+                        font: {
+                            size: 10
                         }
                     }
                 }
