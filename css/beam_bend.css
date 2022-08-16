@@ -1,8 +1,9 @@
 main {
     flex-direction: column;
-    align-content: center;
+    align-content: stretch;
     justify-content: flex-start;
-    margin-top: 1em;
+    margin: 1em auto 0 auto;
+    width: min(80%, 100vw);
 }
 
 div.page-element {
@@ -12,7 +13,7 @@ div.page-element {
 }
 
 div.tab-header {
-    width: 80%;
+    
     flex-direction: row;
     justify-content: flex-start;
 }
