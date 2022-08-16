@@ -32,6 +32,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     min-height: 100vh;
+    overflow-y: overlay;
 }
 
 a {
@@ -91,11 +92,28 @@ button:hover {
 }
 
 footer {
+    align-self: center;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
+    width: 100vw;
     margin-top: 5px;
     flex-shrink: 0;
+}
+
+footer a.fun-logo {
+    margin-right: auto;
+    /* margin-left: 5px; */
+}
+
+footer img {
+    height: 40px;
+    margin-bottom: -3px;
+}
+
+footer div {
+    width: 40px;
+    margin-left: auto;
 }
 
 input[type=number] {
