@@ -118,7 +118,7 @@ select#compressor {
 
 div.page-element.graph {
     width: 70vw;
-    min-width: 700px;
+    min-width: min(700px, 100vw);
     max-width: 100%;
 }
 
