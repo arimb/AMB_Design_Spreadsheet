@@ -21,6 +21,12 @@ div.header-left {
     gap: 10px;
 }
 
+@media only screen and (max-width: 600px) {
+    div.header-left {
+        display: none;
+    }
+}
+
 button.header-button {
     margin: 0;
 }
