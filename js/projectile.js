@@ -36,7 +36,7 @@ function update(){
             end_fcn = `x[0] >= ${$("input#dist").val() * $("select#dist-u").val()}`;
             output = simulate(h0, v0, theta0, end_fcn);
 
-            if (output[0].length > 0 || Math.abs(output[0][output[0].length-1][0] - $("input#dist").val() * $("select#dist-u").val()) > 0.1) {
+            if (output[0].length > 0 && Math.abs(output[0][output[0].length-1][0] - $("input#dist").val() * $("select#dist-u").val()) > 0.1) {
                 $("input#hf").val( +((output[0][output[0].length-1][1] / $("select#hf-u").val()).toFixed(3)) );
                 // $("input#hf-dir").prop("checked", output[1][1] >= 0);
                 $("input#thf").val( +((Math.atan2(output[1][1], output[1][0]) * 180/Math.PI).toFixed(2)) );
