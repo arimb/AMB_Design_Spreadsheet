@@ -80,3 +80,9 @@ td, th {
 th {
     min-width: 4em;
 }
+
+@media only screen and (max-width: 600px) {
+    th {
+        min-width: unset !important;
+    }
+}

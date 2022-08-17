@@ -41,7 +41,7 @@ div.graphs {
     flex-direction: column;
     align-items: stretch;
     width: 70vw;
-    min-width: 700px;
+    min-width: min(700px, 100vw);
     max-width: 100%;
     gap: 5px;
 }

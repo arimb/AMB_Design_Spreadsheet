@@ -149,3 +149,9 @@ span.warn {
     text-align: center;
     font-weight: bold;
 }
+
+@media only screen and (max-width: 600px) {
+    img.diagram {
+        display: none !important;
+    }
+}

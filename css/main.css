@@ -122,6 +122,10 @@ footer div {
     margin-left: auto;
 }
 
+footer span {
+    margin: auto 1em;
+}
+
 input[type=number] {
     size: 20;
 }
