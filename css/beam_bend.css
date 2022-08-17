@@ -1,10 +1,16 @@
 main {
     flex-direction: column;
     align-content: stretch;
+    /* align-content: center; */
     justify-content: flex-start;
-    margin: 1em auto 0 auto;
+    /* margin: 1em auto 0 auto; */
     width: min(80%, 100vw);
+    /* width: 80%; */
 }
+
+/* body {
+    margin: 0;
+} */
 
 div.page-element {
     max-width: none;
@@ -32,6 +38,7 @@ div.tab {
 
 h4 {
     margin: 5px 0 5px 8px;
+    word-wrap: normal;
 }
 
 div.tab input {
@@ -77,7 +84,7 @@ div.cross_section {
 img.diagram {
     align-self: center;
     border: 2px solid black;
-    max-width: 600px;
+    max-width: min(600px, 100%);
 }
 
 div.inputs, div.outputs {
