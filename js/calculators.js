@@ -26,6 +26,15 @@ $(document).ready(function(){
 
     $(".tipso-onload[data-tipso]").tipso("show").mouseover(function(){ $(this).tipso("hide").tipso("destroy"); });
 
+    $("input.title").change(function(){
+        if ($(this).val().match(/[^A-Za-zÀ-ȕ0-9 ]/)) {
+            alert("The title cannot contain special characters.");
+            $(this).val($(this).data("prev-val"));
+        } else {
+            $(this).data("prev-val", $(this).val());
+        }
+    });
+
     // window.onbeforeunload = function() {
     //     return "Refreshing or leaving this page will reset it. Are you sure you want to continue?";
     // }
@@ -49,8 +58,9 @@ function update_units(){
 
 function url_query(){
     var params = new URLSearchParams(window.location.search);
+    $("input.title").val(params.get(""));
     for (key of params.keys()) {
-        if (!params.get(key)) continue;
+        if (!key || !params.get(key)) continue;
         let input = $("#" + key);
         if (params.get(key) == "^")
             input.prop("checked", true);
@@ -64,6 +74,7 @@ function url_query(){
         input.change();
     }
     $("input, select").change(url_query_set);
+    $("input.title").change();
 }
 
 function url_query_set(){
