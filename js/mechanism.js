@@ -205,7 +205,7 @@ $(document).ready(function(){
                     pointRadius: 0
                 },{
                     data: data.map(function(value,index) { return value[5]; }),
-                    label: "Current Per Motor",
+                    label: "Current",
                     borderColor: "orange",
                     fill: false,
                     pointRadius: 0
@@ -280,7 +280,11 @@ $(document).ready(function(){
                         labels: {
                             filter: function(legend_item, data) {
                                 return legend_item["lineDash"].length == 0;
-                            }
+                            },
+                            font: {
+                                size: 11
+                            },
+                            color: "black"
                         }
                     }
                 }
