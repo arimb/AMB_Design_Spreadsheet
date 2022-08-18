@@ -135,7 +135,7 @@ function simulate(ratio){
 
         // console.log(t, stop, x, v, a, V, connected, slip, T, Tmotor, I);
 
-        if (stop_method == "Coast" && stop) I = 0;
+        if (stop_method != "Reverse" && stop) I = 0;
         times.push(t);
         data.push([x, v, a, I, V, T, slip]);
 
@@ -221,13 +221,15 @@ function update_graph(output){
                 label: "Slip",
                 borderColor: "black",
                 fill: false,
-                pointRadius: 0
+                pointRadius: 0,
+                yAxisID: "y3"
             },{
                 data: data.map(function(value,index) { return value[2] / $("select#dist-u").val(); }),
                 label: "Acceleration",
                 borderColor: "red",
                 fill: false,
-                pointRadius: 0
+                pointRadius: 0,
+                yAxisID: "y3"
             },{
                 data: data.map(function(value,index) { return value[3] / $("input#mot_num").val(); }),
                 label: "Current Per Motor",
@@ -267,7 +269,16 @@ function update_graph(output){
                     position: "left",
                     title: {
                         display: true,
-                        text: `Position (${dist_unit}), Velocity (${dist_unit}/s), Acceleration (${dist_unit}/s²), Voltage (V)`
+                        text: `Position (${dist_unit}), Velocity (${dist_unit}/s), Voltage (V)`
+                    }
+                },
+                y3: {
+                    type: "linear",
+                    display: true,
+                    position: "right",
+                    title: {
+                        display: true,
+                        text: `Acceleration (${dist_unit}/s²)`
                     }
                 },
                 y2: {
