@@ -142,7 +142,7 @@ $(document).ready(function(){
                                 $("input#clr1cstm").val()/$("select#clr1cstm-u").val() : $("select#type1").val())) return;
                             if ($("select#clr4").val() != "None" && (gear3.last()+gear4.last()-(gear2.last()+2))/40 < ($("select#clr4").val() == "Custom" ? 
                                 $("input#clr4cstm").val()/$("select#clr4cstm-u").val() : $("select#type4").val())) return;
-                            gearboxes.push([gear1[0], gear2[0], gear3[0], gear4[0], ratio]);
+                            gearboxes.push([gear1, gear2, gear3, gear4, ratio]);
                         });
                     });
                 } else {
@@ -150,11 +150,14 @@ $(document).ready(function(){
                     if (ratio < min_ratio || ratio > max_ratio) return;
                     if ($("input#min14").val() && (gear1.last()+gear4.last())/40 < $("input#min14").val()/$("select#min14-u").val()) return;
                     if ($("input#max14").val() && (gear1.last()+gear4.last())/40 > $("input#max14").val()/$("select#min14-u").val()) return;
-                    gearboxes.push([gear1[0], gear4[0], ratio]);
+                    gearboxes.push([gear1, gear4, ratio]);
                 } 
             });
         });
-        gearboxes.sort(function(a,b){return Math.abs(a[4]/$("input#ratio").val()-1) - Math.abs(b[4]/$("input#ratio").val()-1);});
+        if (two_stage)
+            gearboxes.sort(function(a,b){return Math.abs(a[4]/$("input#ratio").val()-1) - Math.abs(b[4]/$("input#ratio").val()-1);});
+        else
+            gearboxes.sort(function(a,b){return Math.abs(a[2]/$("input#ratio").val()-1) - Math.abs(b[2]/$("input#ratio").val()-1);});
         return gearboxes;
     }
 
@@ -172,8 +175,8 @@ $(document).ready(function(){
                 gearboxes.forEach(gearbox => {
                     $("table.gearbox-options tbody").append(
                         `<tr>
-                            <td>${gearbox[0]} : ${gearbox[1]}</td>
-                            <td>${gearbox[2]} : ${gearbox[3]}</td>
+                            <td>${formatGear(gearbox[0])} : ${formatGear(gearbox[1])}</td>
+                            <td>${formatGear(gearbox[2])} : ${formatGear(gearbox[3])}</td>
                             <td>${+(gearbox[4].toFixed(2))} : 1</td>
                         </tr>`
                     )
@@ -182,7 +185,7 @@ $(document).ready(function(){
                 gearboxes.forEach(gearbox => {
                     $("table.gearbox-options tbody").append(
                         `<tr>
-                            <td>${gearbox[0]} : ${gearbox[1]}</td>
+                            <td>${formatGear(gearbox[0])} : ${formatGear(gearbox[1])}</td>
                             <td>${+(gearbox[2].toFixed(2))} : 1</td>
                         </tr>`
                     )
@@ -212,3 +215,10 @@ if (!Array.prototype.last){
         return this[this.length - 1];
     };
 };
+
+function formatGear(gear){
+    if (gear.length == 1)
+        return gear[0];
+    else
+        return gear[0] + "(" + gear[1] + ")";
+}
