@@ -154,10 +154,7 @@ $(document).ready(function(){
                 } 
             });
         });
-        if (two_stage)
-            gearboxes.sort(function(a,b){return Math.abs(a[4]/$("input#ratio").val()-1) - Math.abs(b[4]/$("input#ratio").val()-1);});
-        else
-            gearboxes.sort(function(a,b){return Math.abs(a[2]/$("input#ratio").val()-1) - Math.abs(b[2]/$("input#ratio").val()-1);});
+        gearboxes.sort(function(a,b){return Math.abs(a.last()/$("input#ratio").val()-1) - Math.abs(b.last()/$("input#ratio").val()-1) || (gearboxSize(a) - gearboxSize(b));});
         return gearboxes;
     }
 
@@ -221,4 +218,13 @@ function formatGear(gear){
         return gear[0];
     else
         return gear[0] + "(" + gear[1] + ")";
+}
+
+function gearboxSize(gearbox){
+    if (gearbox.length == 5){
+        return gearbox[0].last()**2 + gearbox[1].last()**2 + gearbox[2].last()**2 + gearbox[3].last()**2;
+    } else {
+        return gearbox[0].last()**2 + gearbox[1].last()**2;
+    }
+    
 }
