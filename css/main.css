@@ -33,6 +33,10 @@ input.title {
     width: 20em;
 }
 
+input.title:focus {
+    outline: none;
+}
+
 div.header-left {
     flex-direction: row-reverse;
     justify-self: flex-end;
