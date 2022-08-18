@@ -201,7 +201,12 @@ $(document).ready(function(){
         
         
     }
-    $("input:not([type=checkbox]), select").change(update_gearbox);
+    
+    setTimeout(() => {
+        $("input:not([type=checkbox]), select").change(update_gearbox);
+        update_gearbox();
+    }, 100);
+    
 
 
 
