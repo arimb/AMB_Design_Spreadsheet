@@ -58,7 +58,6 @@ function update(){
             end_fcn = $("input#hf-dir").prop("checked") ? `v[1]>=0 && x[1]>=${hf}` : `v[1]<=0 && x[1]<=${hf}`;
             output = simulate(h0, v0, theta0, end_fcn);
 
-            console.log(output);
             if (Math.abs(output[0][output[0].length-1][1] - hf) <= 0.05) {
                 $("input#dist").val( +((output[0][output[0].length-1][0] / $("select#dist-u").val()).toFixed(3)) );
                 $("input#thf").val( +((Math.atan2(output[1][1], output[1][0]) * 180/Math.PI).toFixed(2)) );    
