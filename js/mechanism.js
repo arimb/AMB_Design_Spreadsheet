@@ -129,17 +129,25 @@ $(document).ready(function(){
                 break;
         }
         
-        var vals = calculate_vals(ratio);
-        $("input#rat").val( +(ratio.toFixed(2)) );
-        $("input#rot_f").val( +(vals[0].toFixed(2)) );
-        $("input#lin_f").val( +(vals[1].toFixed(2)) );
-        $("input#st_load").val( +(vals[2].toFixed(2)) );
-        $("input#rot_l").val( +(vals[3].toFixed(2)) );
-        $("input#lin_l").val( +(vals[4].toFixed(2)) );
-        $("input#current").val( +(vals[5].toFixed(2)) );
-        $("input#st_volt").val( +(vals[6].toFixed(2)) );
-        $("input#eff").val( +((vals[7]*100).toFixed(1)) );
-        draw_graph(+(ratio.toFixed(2)));
+        if (!isNaN(ratio)) {
+            var vals = calculate_vals(ratio);
+            $("input#rat").val( +(ratio.toFixed(2)) );
+            $("input#rot_f").val( +(vals[0].toFixed(2)) );
+            $("input#lin_f").val( +(vals[1].toFixed(2)) );
+            $("input#st_load").val( +(vals[2].toFixed(2)) );
+            $("input#rot_l").val( +(vals[3].toFixed(2)) );
+            $("input#lin_l").val( +(vals[4].toFixed(2)) );
+            $("input#current").val( +(vals[5].toFixed(2)) );
+            $("input#st_volt").val( +(vals[6].toFixed(2)) );
+            $("input#eff").val( +((vals[7]*100).toFixed(1)) );
+            draw_graph(+(ratio.toFixed(2)));
+        } else {
+            let id = $("input[type=radio][name=driving]:checked").attr("id").split("-")[0];
+            $("input#" + id).css('background-color', "#bd2d2d");
+            $("div.inputs input:not(#" + id + ")").val("");
+            draw_graph(0);
+        }
+        
     }
     $("div.field select").change(update_vals);
 
@@ -208,20 +216,22 @@ $(document).ready(function(){
                     label: "Current",
                     borderColor: "orange",
                     fill: false,
-                    pointRadius: 0
+                    pointRadius: 0,
+                    yAxisID: "y3"
                 },{
                     data: data.map(function(value,index) { return value[6]; }),
                     label: "Stall Voltage",
                     borderColor: "green",
                     fill: false,
-                    yAxisID: "right",
+                    yAxisID: "y2",
                     pointRadius: 0
                 },{
                     data: data.map(function(value,index) { return 100*value[7]; }),
                     label: "Efficiency",
                     borderColor: "blue",
                     fill: false,
-                    pointRadius: 0
+                    pointRadius: 0,
+                    yAxisID: "y3"
                 },
                 {
                     data: [{x: (ratio ? ratio : 0), y: 0}, {x: (ratio ? ratio : 0), y: (ratio ? 1 : 0)}],
@@ -252,15 +262,23 @@ $(document).ready(function(){
                         min: min,
                         max: max
                     },
-                    left: {
+                    y: {
                         display: true,
                         position: "left",
                         title: {
                             display: true,
-                            text: "Speed (rev/s), Current (A), Efficiency (%)"
+                            text: "Speed (rev/s)"
                         }
                     },
-                    right: {
+                    y3: {
+                        display: true,
+                        position: "right",
+                        title: {
+                            display: true,
+                            text: "Current (A), Efficiency (%)"
+                        }
+                    },
+                    y2: {
                         display: true,
                         position: "right",
                         title: {
