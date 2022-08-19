@@ -14,6 +14,30 @@ div {
     display: flex;
 }
 
+div.header-title {
+    flex-direction: column;
+    gap: 2px;
+    align-items: flex-start;
+}
+
+h1 {
+    margin: 0;
+    font-size: 1.8em;
+}
+
+input.title {
+    background-color: transparent;
+    color: black;
+    border: none;
+    border-bottom: 1px solid black;
+    width: 20em;
+    border-radius: 0;
+}
+
+input.title:focus {
+    outline: none;
+}
+
 div.header-left {
     flex-direction: row-reverse;
     justify-self: flex-end;
