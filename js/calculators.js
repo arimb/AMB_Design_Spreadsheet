@@ -31,6 +31,12 @@ $(document).ready(function(){
             alert("The title cannot contain special characters.");
             $(this).val($(this).data("prev-val"));
         } else {
+            let title = document.title.split(" - ").slice(-2).join(" - ");
+            if ($(this).val() == "") {
+                document.title = title;
+            } else {
+                document.title = $(this).val() + " - " + title;
+            }
             $(this).data("prev-val", $(this).val());
         }
     });
