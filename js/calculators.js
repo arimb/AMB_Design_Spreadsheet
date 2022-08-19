@@ -6,8 +6,8 @@ $(document).ready(function(){
         window.open("docs/" + $(this).attr("data-link") + ".pdf", "_blank");
     });
 
-    $("button.header-button.imperial").click(() => $("option.imperial").prop("selected", true).parent().change());
-    $("button.header-button.metric").click(() => $("option.metric").prop("selected", true).parent().change());
+    $("button.header-button.imperial").click(() => $("option.imperial").each((i,el) => $(el).prop("selected", true).parent().change()));
+    $("button.header-button.metric").click(() => $("option.metric").each((i,el) => $(el).prop("selected", true).parent().change()));
 
     $("button.copy-link").click(() => {
         navigator.clipboard.writeText(window.location.href);
