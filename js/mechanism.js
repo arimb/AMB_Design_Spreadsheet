@@ -88,6 +88,8 @@ $(document).ready(function(){
     function update_vals(){
         switch( $("input[type=radio][name=driving]:checked").attr("id") ) {
             case "rat-c":
+                if ($("input#rat").val() == "")
+                    return;
                 var ratio = parseFloat($("input#rat").val());
                 break;
             case "rot_f-c":
@@ -96,6 +98,10 @@ $(document).ready(function(){
                 break;
             case "rot_l-c":
                 var rot_speed = $("input#rot_l").val() * $("select#rot_l-u").val();
+                if (rot_speed == 0) {
+                    var ratio = NaN;
+                    break;
+                }
                 var ratio = wf/(2*rot_speed) * (1 + Math.sqrt(1 - 4*(radius*load/Ts)*(rot_speed/wf)));
                 break;
             case "lin_f-c":
@@ -104,6 +110,10 @@ $(document).ready(function(){
                 break;
             case "lin_l-c":
                 var lin_speed = $("input#lin_l").val() * $("select#lin_l-u").val();
+                if (lin_speed == 0) {
+                    var ratio = NaN;
+                    break;
+                }
                 var ratio = wf/(2*lin_speed/radius) * (1 + Math.sqrt(1 - 4*(radius*load/Ts)*(lin_speed/radius/wf)));
                 break;
             case "current-c":
@@ -153,6 +163,17 @@ $(document).ready(function(){
 
     $("div.inputs input[type=number]").change(function(){
         $(this).siblings("input[type=radio]").prop("checked", true).change();
+        if ($(this).val() == "") {
+            $("div.inputs input").not(this).val("");
+            draw_graph(0);
+            return
+        }
+        if ($(this).val() <= 0) {
+            $(this).css('background-color', "#bd2d2d");
+            $("div.inputs input").not(this).val("");
+            draw_graph(0);
+            return;
+        }
         update_vals();
     });
 
