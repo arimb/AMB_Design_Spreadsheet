@@ -36,13 +36,14 @@ function update(){
             end_fcn = `x[0] >= ${$("input#dist").val() * $("select#dist-u").val()}`;
             output = simulate(h0, v0, theta0, end_fcn);
 
-            if (output[0].length > 0 && Math.abs(output[0][output[0].length-1][0] - $("input#dist").val() * $("select#dist-u").val()) < 0.1) {
+            if (output[0].length > 1 && Math.abs(output[0][output[0].length-1][0] - $("input#dist").val() * $("select#dist-u").val()) < 0.1) {
                 $("input#hf").val( +((output[0][output[0].length-1][1] / $("select#hf-u").val()).toFixed(3)) );
                 // $("input#hf-dir").prop("checked", output[1][1] >= 0);
                 $("input#thf").val( +((Math.atan2(output[1][1], output[1][0]) * 180/Math.PI).toFixed(2)) );
             } else {
                 $("input#hf, input#thf").val("");
-                $("input#dist").css("background-color", "#bd2d2d");
+                if (output[0].length > 1)
+                    $("input#dist").css("background-color", "#bd2d2d");
             }
             break;
         case "2":    // Find Target Values by Target Height
@@ -62,7 +63,8 @@ function update(){
                 $("input#thf").val( +((Math.atan2(output[1][1], output[1][0]) * 180/Math.PI).toFixed(2)) );    
             } else {
                 $("input#dist, input#thf").val("");
-                $("input#hf").css("background-color", "#bd2d2d");
+                if (output[0].length > 1)
+                    $("input#hf").css("background-color", "#bd2d2d");
             }
             break;
         case "3":   // Find Initial Values
