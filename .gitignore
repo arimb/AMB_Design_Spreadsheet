@@ -4,3 +4,5 @@
 *.out
 *.synctex.gz
 *.db
+node_modules
+out
