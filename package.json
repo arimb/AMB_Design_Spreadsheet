@@ -2,14 +2,24 @@
   "name": "amb-calc",
   "version": "1.0.0",
   "description": "AMB Robotics Calculator",
-  "main": "index.js",
+  "main": "main.js",
   "directories": {
     "doc": "docs"
   },
   "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.65",
+    "@electron-forge/maker-deb": "^6.0.0-beta.65",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.65",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.65",
+    "@electron-forge/maker-zip": "^6.0.0-beta.65",
+    "electron": "20.0.3",
     "parcel": "^2.7.0"
   },
-  "scripts": {},
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/arimb/AMB_Design_Spreadsheet.git"
@@ -19,5 +29,36 @@
   "bugs": {
     "url": "https://github.com/arimb/AMB_Design_Spreadsheet/issues"
   },
-  "homepage": "https://github.com/arimb/AMB_Design_Spreadsheet#readme"
+  "homepage": "https://github.com/arimb/AMB_Design_Spreadsheet#readme",
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
+    "electron.js": "^0.0.1"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "amb_calc"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  }
 }
