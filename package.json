@@ -25,7 +25,7 @@
     "type": "git",
     "url": "git+https://github.com/arimb/AMB_Design_Spreadsheet.git"
   },
-  "author": "Ari Meles-Braverman",
+  "author": "AMB Robotics Calculator",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/arimb/AMB_Design_Spreadsheet/issues"
@@ -47,7 +47,8 @@
             "name": "amb-calc",
             "icon": "./img/logo.ico",
             "installerIcon": "./img/logo.ico",
-            "installerHeaderIcon": "./img/logo.ico"
+            "installerHeaderIcon": "./img/logo.ico",
+            "setupIcon": "./img/logo.ico"
           }
         },
         {
