@@ -15,7 +15,12 @@
                 $("button.header-button.docs").click(function(){
                     window.open("docs/" + $(this).attr("data-link") + ".pdf", "_blank");
                 });
-                $("button.header-button.excel").click(() => { window.open("archive/index.html"); })
+                $("button.header-button.excel").click(() => { window.open("archive/index.html"); });
+                $("button.header-button.app").click(() => { window.location.href = "amb-calc-installer.exe" });
+                let userAgent = navigator.userAgent.toLowerCase();
+                if (userAgent.indexOf(' electron/') == -1) {
+                    $("button.header-button.app").show();
+                }
                 $("[data-tipso]").tipso({
                     width: null,
                     maxWidth: 300,
@@ -36,6 +41,7 @@
             <div class="header-left">
                 <button class="header-button docs" data-link="all_docs">ALL<br>DOCS</button>
                 <button class="header-button excel">EXCEL<br>ARCHIVE</button>
+                <button class="header-button app">OFFLINE<br>DOWNLOAD</button>
             </div>
         </header>
         <main>

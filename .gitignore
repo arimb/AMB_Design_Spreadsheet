@@ -6,3 +6,5 @@
 *.db
 node_modules
 out
+# Local Netlify folder
+.netlify
