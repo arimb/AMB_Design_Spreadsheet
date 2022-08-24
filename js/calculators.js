@@ -10,8 +10,17 @@ $(document).ready(function(){
     $("button.header-button.metric").click(() => $("option.metric").each((i,el) => $(el).prop("selected", true).parent().change()));
 
     $("button.copy-link").click(() => {
-        navigator.clipboard.writeText(window.location.href);
-        alert("Link copied to clipboard!");
+        let link = window.location.href;
+        if (!link.includes("ambcalc"))
+            link = "https://ambcalc.com/" + link.split("/").pop();
+        navigator.clipboard.writeText(link);
+        
+        console.log("start");
+        $("html, button.copy-link").addClass("wait");
+        setTimeout(() => {
+            $("html, button.copy-link").removeClass("wait");
+            console.log("end");
+        }, 1000);
     })
 
     $("button.reset").click(() => window.location.href = window.location.href.split("?")[0]);
