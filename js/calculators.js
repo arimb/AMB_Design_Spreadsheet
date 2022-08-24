@@ -15,11 +15,9 @@ $(document).ready(function(){
             link = "https://ambcalc.com/" + link.split("/").pop().replace(".html", "");
         navigator.clipboard.writeText(link);
         
-        console.log("start");
         $("html, button.copy-link").addClass("wait");
         setTimeout(() => {
             $("html, button.copy-link").removeClass("wait");
-            console.log("end");
         }, 1000);
     })
 
@@ -52,7 +50,7 @@ $(document).ready(function(){
 
     let userAgent = navigator.userAgent.toLowerCase();
     if (userAgent.indexOf(' electron/') > -1) {
-        $("a.fun-logo").click(e => e.preventDefault());
+        $("a.fun-logo, a.contact").click(e => e.preventDefault());
     }
 
     // window.onbeforeunload = function() {

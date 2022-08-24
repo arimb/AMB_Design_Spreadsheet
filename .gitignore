@@ -5,6 +5,7 @@
 *.synctex.gz
 *.db
 node_modules
-out
+out/*
+!out/make
 # Local Netlify folder
 .netlify

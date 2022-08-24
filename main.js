@@ -14,8 +14,14 @@ const createWindow = url => {
     console.log(url);
     if (url) {
       let link = url.split("/").pop().split("?");
-      console.log(link[0].replace(".html", "") + ".html?" + link[1]);
-      win.loadFile(link[0].replace(".html", "") + ".html");
+      let queries = {};
+      for (let query of link[1].split("&")) {
+        let tmp = query.split("=");
+        queries[tmp[0]] = tmp[1];
+      }
+      win.loadFile(link[0].replace(".html", "") + ".html", {
+        query: queries
+      });
     }
   } else {
     win.loadFile('index.html');
@@ -43,7 +49,7 @@ const createWindow = url => {
                 type: "url"
               }
             })
-            .then(url => createWindow(url));
+            .then(url => {if (url) createWindow(url);});
           }
         },
         {role: "close"}
