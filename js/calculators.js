@@ -86,6 +86,7 @@ function url_query(){
 function url_query_set(){
     var params = new URLSearchParams(window.location.search);
     let type = $(this).prop("type");
+    params.delete(this.id);
     if (type == "radio" || type == "checkbox") {
         if ($(this).prop("checked")) {
             params.set(this.id, "^");
