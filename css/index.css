@@ -2,7 +2,7 @@ div.body {
     align-content: center;
 }
 
-button.header-button.app {
+button.header-button.web-only {
     display: none;
 }
 

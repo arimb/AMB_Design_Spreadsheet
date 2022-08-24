@@ -41,6 +41,11 @@ $(document).ready(function(){
         }
     });
 
+    let userAgent = navigator.userAgent.toLowerCase();
+    if (userAgent.indexOf(' electron/') > -1) {
+        $("a.fun-logo").click(e => e.preventDefault());
+    }
+
     // window.onbeforeunload = function() {
     //     return "Refreshing or leaving this page will reset it. Are you sure you want to continue?";
     // }

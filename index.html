@@ -19,7 +19,9 @@
                 $("button.header-button.app").click(() => { window.location.href = "amb-calc-installer.exe" });
                 let userAgent = navigator.userAgent.toLowerCase();
                 if (userAgent.indexOf(' electron/') == -1) {
-                    $("button.header-button.app").show();
+                    $("button.header-button.web-only").show();
+                } else {
+                    $("a.fun-logo").click(e => e.preventDefault());
                 }
                 $("[data-tipso]").tipso({
                     width: null,
@@ -40,8 +42,8 @@
             <div style="flex: 1;"></div>
             <div class="header-left">
                 <button class="header-button docs" data-link="all_docs">ALL<br>DOCS</button>
-                <button class="header-button excel">EXCEL<br>ARCHIVE</button>
-                <button class="header-button app">OFFLINE<br>DOWNLOAD</button>
+                <button class="header-button excel web-only">EXCEL<br>ARCHIVE</button>
+                <button class="header-button app web-only">OFFLINE<br>DOWNLOAD</button>
             </div>
         </header>
         <main>
