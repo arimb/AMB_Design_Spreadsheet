@@ -12,7 +12,7 @@ $(document).ready(function(){
     $("button.copy-link").click(() => {
         let link = window.location.href;
         if (!link.includes("ambcalc"))
-            link = "https://ambcalc.com/" + link.split("/").pop();
+            link = "https://ambcalc.com/" + link.split("/").pop().replace(".html", "");
         navigator.clipboard.writeText(link);
         
         console.log("start");

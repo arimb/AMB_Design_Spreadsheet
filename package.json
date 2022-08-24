@@ -31,6 +31,7 @@
   },
   "homepage": "https://github.com/arimb/AMB_Design_Spreadsheet#readme",
   "dependencies": {
+    "electron-prompt": "^1.7.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron.js": "^0.0.1"
   },

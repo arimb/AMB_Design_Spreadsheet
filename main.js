@@ -1,26 +1,113 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu, shell } = require('electron');
+const prompt = require('electron-prompt');
 
 if (handleSquirrelEvent()) {
   return;
 }
 
-const createWindow = () => {
+const createWindow = url => {
   const win = new BrowserWindow({
     show: false
   });
 
-  win.loadFile('index.html');
-  // win.setIcon(require("path").join(__dirname, "img/logo.png"));
+  if (url) {
+    console.log(url);
+    if (url) {
+      let link = url.split("/").pop().split("?");
+      console.log(link[0].replace(".html", "") + ".html?" + link[1]);
+      win.loadFile(link[0].replace(".html", "") + ".html");
+    }
+  } else {
+    win.loadFile('index.html');
+  }
+  
   win.maximize();
+
+  const menu = [
+    {
+      label: 'File',
+      submenu: [
+        {
+          label: "New",
+          accelerator: "CmdOrCtrl+N",
+          click: () => createWindow(null)
+        },
+        {
+          label: "Open",
+          accelerator: "CmdOrCtrl+O",
+          click: async () => {
+            prompt({
+              title: "Open",
+              label: "Enter the calculator URL:",
+              inputAttrs: {
+                type: "url"
+              }
+            })
+            .then(url => createWindow(url));
+          }
+        },
+        {role: "close"}
+      ]
+    },
+    {
+      label: 'Edit',
+      submenu: [
+        {role: "cut"},
+        {role: "copy"},
+        {role: "paste"},
+        {role: "delete", accelerator: "Delete"},
+        {role: "selectAll"}
+      ]
+    },
+    {
+      label: 'View',
+      submenu: [
+        { role: 'reload' },
+        { role: 'toggleDevTools' },
+        { type: 'separator' },
+        { role: 'resetZoom' },
+        { role: 'zoomIn' },
+        { role: 'zoomOut' },
+        { type: 'separator' },
+        { role: 'minimize' },
+        { role: 'togglefullscreen' }
+      ]
+    },
+    {
+      role: 'help',
+      submenu: [
+        {
+          label: "Go to Website",
+          click: async () => {
+            await shell.openExternal("https://ambcalc.com/");
+          }
+        },
+        {
+          label: 'Help Thread',
+          click: async () => {
+            await shell.openExternal('https://www.chiefdelphi.com/t/amb-robotics-calculator/414209?u=arimb');
+          }
+        },
+        {
+          label: 'Contact the Developer',
+          click: async () => {
+            await shell.openExternal('mailto:arimb1999@gmail.com');
+          }
+        }
+      ]
+    }
+  ];
+  Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
+
   win.show();
 };
 
 app.whenReady().then(() => {
-  createWindow();
+  createWindow(null);
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
+      createWindow(null);
     }
   });
 });
