@@ -10,6 +10,10 @@
     font-size: 0.9em;
 }
 
+html.wait {
+    cursor: progress !important;
+}
+
 div {
     display: flex;
 }
@@ -114,7 +118,7 @@ button {
     padding: 5px;
     border: 1px solid black;
     margin: 8px;
-    cursor: pointer !important;
+    cursor: pointer;
 }
 
 button:hover {

@@ -15,7 +15,14 @@
                 $("button.header-button.docs").click(function(){
                     window.open("docs/" + $(this).attr("data-link") + ".pdf", "_blank");
                 });
-                $("button.header-button.excel").click(() => { window.open("archive/"); })
+                $("button.header-button.excel").click(() => { window.open("archive/index.html"); });
+                $("button.header-button.app").click(() => { window.location.href = "out/make/squirrel.windows/x64/AMB Robotics Calculator-1.0.0 Setup.exe" });
+                let userAgent = navigator.userAgent.toLowerCase();
+                if (userAgent.indexOf(' electron/') == -1) {
+                    $("button.header-button.web-only").show();
+                } else {
+                    $("a.fun-logo, a.contact").click(e => e.preventDefault());
+                }
                 $("[data-tipso]").tipso({
                     width: null,
                     maxWidth: 300,
@@ -28,14 +35,15 @@
     </head>
     <body>
         <header>
-            <a href="/">
+            <a href="index.html">
                 <img src="img/logo.png" class="logo" alt="logo">
             </a>
             <h1>AMB Robotics Calculator</h1>
             <div style="flex: 1;"></div>
             <div class="header-left">
                 <button class="header-button docs" data-link="all_docs">ALL<br>DOCS</button>
-                <button class="header-button excel">EXCEL<br>ARCHIVE</button>
+                <button class="header-button excel web-only">EXCEL<br>ARCHIVE</button>
+                <button class="header-button app web-only">OFFLINE<br>INSTALLER</button>
             </div>
         </header>
         <main>
@@ -99,7 +107,7 @@
                 <img src="img/fun_logo.jpg">
             </a>
             <span>
-                Created by Ari Meles-Braverman &copy; 2022. For educational purposes only. Contact <a href="https://www.chiefdelphi.com/u/arimb/summary" style="text-decoration: underline;">&commat;AriMB</a> on ChiefDelphi with questions or suggestions.
+                Created by Ari Meles-Braverman &copy; 2022. For educational purposes only. Contact <a class="contact" href="https://www.chiefdelphi.com/u/arimb/summary" style="text-decoration: underline;">&commat;AriMB</a> on ChiefDelphi with questions or suggestions.
             </span>
             <div></div>
         </footer>

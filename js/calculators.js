@@ -10,8 +10,15 @@ $(document).ready(function(){
     $("button.header-button.metric").click(() => $("option.metric").each((i,el) => $(el).prop("selected", true).parent().change()));
 
     $("button.copy-link").click(() => {
-        navigator.clipboard.writeText(window.location.href);
-        alert("Link copied to clipboard!");
+        let link = window.location.href;
+        if (!link.includes("ambcalc"))
+            link = "https://ambcalc.com/" + link.split("/").pop().replace(".html", "");
+        navigator.clipboard.writeText(link);
+        
+        $("html, button.copy-link").addClass("wait");
+        setTimeout(() => {
+            $("html, button.copy-link").removeClass("wait");
+        }, 1000);
     })
 
     $("button.reset").click(() => window.location.href = window.location.href.split("?")[0]);
@@ -40,6 +47,11 @@ $(document).ready(function(){
             $(this).data("prev-val", $(this).val());
         }
     });
+
+    let userAgent = navigator.userAgent.toLowerCase();
+    if (userAgent.indexOf(' electron/') > -1) {
+        $("a.fun-logo, a.contact").click(e => e.preventDefault());
+    }
 
     // window.onbeforeunload = function() {
     //     return "Refreshing or leaving this page will reset it. Are you sure you want to continue?";

@@ -2,6 +2,10 @@ div.body {
     align-content: center;
 }
 
+button.header-button.web-only {
+    display: none;
+}
+
 button.sheet {
     display: flex;
     align-items: center;

@@ -5,6 +5,8 @@
 *.synctex.gz
 *.db
 node_modules
-out
-# Local Netlify folder
+out/*
+!out/make
+out/make/squirrel.windows/x64/*
+!out/make/squirrel.windows/x64/*.exe
 .netlify

@@ -1,0 +1,78 @@
+{
+  "name": "amb-calc",
+  "productName": "AMB Robotics Calculator",
+  "version": "1.0.0",
+  "description": "AMB Robotics Calculator for FIRST Robotics",
+  "main": "main.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.65",
+    "@electron-forge/maker-deb": "^6.0.0-beta.65",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.65",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.65",
+    "@electron-forge/maker-zip": "^6.0.0-beta.65",
+    "electron": "20.0.3"
+  },
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arimb/AMB_Design_Spreadsheet.git"
+  },
+  "author": "AMB Robotics Calculator",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/arimb/AMB_Design_Spreadsheet/issues"
+  },
+  "homepage": "https://github.com/arimb/AMB_Design_Spreadsheet#readme",
+  "dependencies": {
+    "electron-prompt": "^1.7.0",
+    "electron-squirrel-startup": "^1.0.0",
+    "electron.js": "^0.0.1"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "icon": "./img/logo.ico"
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "amb-calc",
+            "icon": "./img/logo.ico",
+            "installerIcon": "./img/logo.ico",
+            "installerHeaderIcon": "./img/logo.ico",
+            "setupIcon": "./img/logo.ico"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  },
+  "build": {
+    "win": {
+      "target": "nsis",
+      "icon": "./img/logo.ico",
+      "signAndEditExecutable": true
+    }
+  }
+}
