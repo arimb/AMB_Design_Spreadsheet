@@ -133,8 +133,10 @@ $(document).ready(function(){
                                 break;
                         }
                     }
-                    if (Number.isNaN(lastD2)) { D = D + pitch/10*Math.sign(target-current); }
-                    else { dydx = (current-last)/(lastD-lastD2); D = D - (current-target)/dydx; }
+                    if (Math.abs(target - current) > 0.001) {
+                        if (Number.isNaN(lastD2)) { D = D + pitch/10*Math.sign(target-current); }
+                        else { dydx = (current-last)/(lastD-lastD2); D = D - (current-target)/dydx; }
+                    }
     
                 } while (Math.abs(target - current) > 0.001);
                 $("input#links").val(target);
