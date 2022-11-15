@@ -43,7 +43,7 @@ $(document).ready(function(){
         If = $("input#mot_if").val() * $("input#mot_num").val();
         Is = $("input#mot_is").val() * $("input#mot_num").val();
     }
-    $("div#motor *").change(update_motor);
+    $("div#motor-el *").change(update_motor);
 
     // Update gear ratio
     $("div#gear-ratio input:not(disabled)").change(function(){
