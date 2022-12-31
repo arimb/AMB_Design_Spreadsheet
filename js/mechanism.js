@@ -88,8 +88,10 @@ $(document).ready(function(){
     function update_vals(){
         switch( $("input[type=radio][name=driving]:checked").attr("id") ) {
             case "rat-c":
-                if ($("input#rat").val() == "")
+                if ($("input#rat").val() == "") {
+                    draw_graph(0);
                     return;
+                }
                 var ratio = parseFloat($("input#rat").val());
                 break;
             case "rot_f-c":
