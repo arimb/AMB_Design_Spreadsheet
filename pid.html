@@ -71,19 +71,16 @@
                         <input id="mot_num" class="motor-update" type="number" min="1" step="1" value="1">
                     </div>
                     <div class="field">
-                        <label for="volt" data-tipso="Voltage at the motor leads">Provided Voltage</label>
-                        <input id="volt" class="motor-update" type="number" step="any" min="0" value="12">
-                        &nbsp;Volts
-                    </div>
-                    <div class="field">
-                        <label for="ticks" data-tipso="Number of encoder ticks in one rotation of the motor shaft<br>(Note: Falcon 500 has 2048 tpr,<br>NEO & NEO 550 have 42 tpr)">Ticks per Rotation</label>
-                        <input id="ticks" type="number" min="1" step="1">
+                        <label for="ilim" data-tipso="Maximum supply-side current any single motor can draw. Leave blank to allow for infinite current draw">Current Limit</label>
+                        <input id="ilim" type="number" step="any" min="0">
+                        &nbsp;
+                        <span>Amps</span>
                     </div>
                 </div>
                 <div class="page-element" id="radios">
                     <div class="pid-type">
                         <div>
-                            <label for="type_pos" data-tipso="Closed-loop control on the mechanism's position (e.g. arm, elevator)">Position</label>
+                            <label for="type_pos" data-tipso="Closed-loop control on the mechanism's position (e.g. elevator)">Position</label>
                             <input id="type_pos" name="pid-type" type="radio" checked>
                         </div>
                         <div>
@@ -107,6 +104,87 @@
                         <label for="rat" data-tipso="Total gear ratio between the motor and mechanism output">Gear Ratio</label>
                         <input id="rat" type="number" step="any" min="0">
                         <span>&nbsp;: 1</span>
+                    </div>
+                    <div class="field lin">
+                        <label for="radius" data-tipso="Radius used to translate rotational to linear motion">Radius</label>
+                        <input id="radius" type="number" step="any" min="0">
+                        <select id="radius-u">
+                            <option value="0.0254" class="imperial">inch</option>
+                            <option value="0.001" class="metric">mm</option>
+                            <option value="0.3048">foot</option>
+                            <option value="1">meter</option>
+                        </select>
+                    </div>
+                    <div class="field lin">
+                        <label for="load_cnst_lin" data-tipso="Force always applied to the system not dependant on mechanism position or velocity">Constant Load</label>
+                        <input id="load_cnst_lin" type="number" step="any" min="0">
+                        <select id="load_cnst_lin-u">
+                            <option value="4.448" class="imperial">lbs</option>
+                            <option value="9.81">kg</option>
+                            <option value="1" class="metric">N</option>
+                        </select>
+                    </div>
+                    <div class="field lin">
+                        <label for="load_visc_lin" data-tipso="Force applied to the system proportional to the mechanism velocity">Viscous Load</label>
+                        <input id="load_visc_lin" type="number" step="any" min="0">
+                        <select id="load_visc_lin-u">
+                            <option value="1.355" class="imperial">lbs/(ft/s)</option>
+                            <option value="9.81">kg/(m/s)</option>
+                            <option value="1" class="metric">N/(m/s)</option>
+                        </select>
+                    </div>
+                    <div class="field rot">
+                        <label for="load_cnst_rot" data-tipso="Torque always applied to the system not dependant on mechanism position or velocity">Constant Load</label>
+                        <input id="load_cnst_rot" type="number" step="any" min="0">
+                        <select id="load_cnst_rot-u">
+                            <option value="1.35582" class="imperial">ft-lbs</option>
+                            <option value="1" class="metric">Nm</option>
+                            <option value="0.00706">oz-in</option>
+                        </select>
+                    </div>
+                    <div class="field rot">
+                        <label for="load_cos" data-tipso="Torque applied to the system proportional to the cosine of the mechanism angle">Cosine Load</label>
+                        <input id="load_cos" type="number" step="any" min="0">
+                        <select id="load_cos-u">
+                            <option value="1.35582" class="imperial">ft-lbs</option>
+                            <option value="1" class="metric">Nm</option>
+                            <option value="0.00706">oz-in</option>
+                        </select>
+                    </div>
+                    <div class="field rot">
+                        <label for="load_visc_rot" data-tipso="Torque applied to the system proportional to the mechanism velocity">Viscous Load</label>
+                        <input id="load_visc_rot" type="number" step="any" min="0">
+                        <select id="load_visc_rot-u">
+                            <option value="1.35582" class="imperial">ft-lbs/rpm</option>
+                            <option value="1" class="metric">Nm/rpm</option>
+                            <option value="0.00706">oz-in/rpm</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="page-element" id="constants">
+                    <div class="field">
+                        <label for="pv_units" data-tipso="Process variable units per rotation of the motor shaft. Must account for ratio between motor and encoder if one exists. (Note: 2048 for Falcon 500 internal encoder, 1 for NEO & NEO 550 unless modified by setting the conversion factor)">PV Units</label>
+                        <input id="pv_units" type="number" min="0">
+                    </div>
+                    <div class="field">
+                        <label for="full_scale" data-tipso="Value representing a full 12V output.<br>(Note: 1023 for CTRE devices,<br>1 for SPARK MAX)">Full Scale</label>
+                        <input id="full_scale" type="number" min="0">
+                    </div>
+                    <div class="field">
+                        <label for="kp" data-tipso="Proportional coefficient">kP</label>
+                        <input id="kp" type="number" min="0">
+                    </div>
+                    <div class="field">
+                        <label for="ki" data-tipso="Integral coefficient">kI</label>
+                        <input id="ki" type="number" min="0">
+                    </div>
+                    <div class="field">
+                        <label for="kd" data-tipso="Derivative coefficient">kD</label>
+                        <input id="kd" type="number" min="0">
+                    </div>
+                    <div class="field">
+                        <label for="kf" data-tipso="Feed-forward coefficient">kF</label>
+                        <input id="kf" type="number" min="0">
                     </div>
                 </div>
             </div>

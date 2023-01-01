@@ -1,4 +1,4 @@
-let wf, Ts, If, Is, radius, load, motors;
+let wf, Ts, If, Is, motors;
 
 $(document).ready(function(){
 
@@ -40,6 +40,11 @@ $(document).ready(function(){
     };
     request.open("GET", "ref/motors.json", false);
     request.send();
+
+    $("input[name=lin-rot]").change(() => {
+        $(".lin, .rot").hide();
+        $("." + $("input[name=lin-rot]:checked").prop("id")).show();
+    }).change();
 
 });
 
