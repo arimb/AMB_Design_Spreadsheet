@@ -18,7 +18,7 @@ $(document).ready(function(){
     });
 
     // Update motor properties
-    $(".motor-prop, input#mot_num, input#volt").change(() => {
+    $(".motor-prop, input#mot_num, input#volt, input#gbx_eff").change(() => {
         wf = $("input#mot_wf").val() * (Math.PI/30) * ($("input#volt").val()/12);
         Ts = $("input#mot_ts").val() * $("select#mot_ts-u").val() * ($("input#volt").val()/12) * ($("input#gbx_eff").val()/100) * parseInt($("input#mot_num").val());
         If = $("input#mot_if").val() * ($("input#volt").val()/12) * parseInt($("input#mot_num").val());
