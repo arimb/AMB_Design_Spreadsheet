@@ -1,4 +1,5 @@
 var motors;
+const colors = ["#0072BD", "#D95319", "#EDB120", "#7E2F8E", "#77AC30", "#4DBEEE"];
 
 $(document).ready(function(){
 
@@ -37,7 +38,7 @@ $(document).ready(function(){
                     <input id="mot_volt${i}" class="mot_volt" type="number" step="any" min="0" value="12">
                     &nbsp;Volts
                 </div>
-                <label data-tipso="Motor-side current limit">Max Current</label>
+                <label data-tipso="Motor-side current limit (per motor)">Max Current</label>
                 <div class="field">
                     <input id="mot_maxi${i}" class="mot_maxi" type="number" step="any" min="0">
                     &nbsp;Amps
@@ -151,11 +152,112 @@ $(document).ready(function(){
     request.open("GET", "ref/motors.json", false);
     request.send();
 
-
     url_query();
-    
 });
 
 function graph() {
+    let motor_vals = $("div.motor:not(#0)").map(function(){
+        return {
+            wf: parseFloat($(this).find("input.mot_wf").val()),
+            Ts: parseFloat($(this).find("input.mot_ts").val()) * parseFloat($(this).find("select.mot_ts-u").val()),
+            If: parseFloat($(this).find("input.mot_if").val()),
+            Is: parseFloat($(this).find("input.mot_is").val()),
+            volt: parseFloat($(this).find("input.mot_volt").val()),
+            max_i: parseFloat($(this).find("input.mot_maxi").val()),
+            n: parseFloat($(this).find("input.mot_num").val()),
+            ratio: parseFloat($(this).find("input.mot_rat").val())
+        };
+    });
 
+    if (motor_vals.length == 0) return;
+
+    for (let i = 0; i < motor_vals.length; i++) {
+        let el = motor_vals[i];
+        motor_vals[i].maxT = el.Ts * ((el.max_i ? el.max_i : el.Is) - el.If) / (el.Is - el.If) * el.n * el.ratio * (el.volt/12);
+    }
+    let max_torque = Math.max(...motor_vals.map((i, el) => el.maxT).get());
+    
+    let torques = new Array(301);
+    let speeds = [...Array(301)].map(_=>Array(motor_vals.length));
+    let currents = [...Array(301)].map(_=>Array(motor_vals.length));
+    let powers = [...Array(301)].map(_=>Array(motor_vals.length));
+    let effs = [...Array(301)].map(_=>Array(motor_vals.length));
+
+    for (let i = 0; i < torques.length; i++) {
+        torques[i] = max_torque * (i/300);
+        for (let j = 0; j < motor_vals.length; j++) {
+            let mv = motor_vals[j];
+            if (torques[i] < mv.maxT) {
+                speeds[i][j] = mv.wf * (1 - torques[i] / (mv.Ts*mv.n*mv.ratio*(mv.volt/12))) / mv.ratio * (mv.volt/12);
+                currents[i][j] = mv.n * (mv.If + (mv.Is - mv.If) * torques[i] / (mv.Ts*mv.n*mv.ratio*(mv.volt/12)));
+                powers[i][j] = speeds[i][j] * torques[i] * (Math.PI / 30);
+                effs[i][j] = powers[i][j] / (mv.volt * currents[i][j]) * 100;
+            } else {
+                speeds[i][j] = NaN;
+                currents[i][j] = NaN;
+                powers[i][j] = NaN;
+                effs[i][j] = NaN;
+            }
+        }
+    }
+
+    $("canvas").remove();
+    $("div#graphs").append(
+        `<canvas id="speed-graph"></canvas>
+        <canvas id="current-graph"></canvas>
+        <canvas id="power-graph"></canvas>
+        <canvas id="eff-graph"></canvas>`
+    );
+
+    console.log(currents, effs);
+
+    drawChart("speed-graph", "Speed (rpm)", torques, speeds);
+    drawChart("current-graph", "Total Current (A)", torques, currents);
+    drawChart("power-graph", "Power (W)", torques, powers);
+    drawChart("eff-graph", "Efficiency (%)", torques, effs);
+
+}
+
+function drawChart(id, ylabel, torques, plot_vals) {
+    var graph = new Chart(id, {
+        type: "line",
+        data: {
+            labels: torques.map(el => el.toFixed(2)),
+            datasets: plot_vals[0].map(function(_,i) { return {
+                    data: plot_vals.map(el => el[i]), 
+                    label: i+1, 
+                    borderColor: colors[i%6], 
+                    backgroundColor: colors[i%6]
+                };})
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    display: true,
+                    position: "bottom",
+                    title: {
+                        display: true,
+                        text: "Torque (Nm)"
+                    },
+                    beginAtZero: true
+                },
+                y: {
+                    display: true,
+                    position: "left",
+                    title: {
+                        display: true,
+                        text: ylabel
+                    },
+                    beginAtZero: true,
+                    min: 0
+                }
+            },
+            elements: {
+                point: {
+                    radius: 0
+                }
+            }
+        }
+    });
 }
