@@ -1,4 +1,4 @@
-var motors;
+var motors, motor_vals;
 const colors = ["#0072BD", "#D95319", "#EDB120", "#7E2F8E", "#77AC30", "#4DBEEE"];
 
 $(document).ready(function(){
@@ -175,8 +175,9 @@ function insert_motor(i){
 }
 
 function graph() {
-    let motor_vals = $("div.motor:not(#0)").map(function(){
+    motor_vals = $("div.motor:not(#0)").map(function(){
         return {
+            name: $(this).find("select.motor-type").val(),
             wf: parseFloat($(this).find("input.mot_wf").val()),
             Ts: parseFloat($(this).find("input.mot_ts").val()) * parseFloat($(this).find("select.mot_ts-u").val()),
             If: parseFloat($(this).find("input.mot_if").val()),
@@ -242,7 +243,7 @@ function drawChart(id, ylabel, torques, plot_vals) {
             labels: torques.map(el => el.toFixed(2)),
             datasets: plot_vals[0].map(function(_,i) { return {
                     data: plot_vals.map(el => el[i]), 
-                    label: i+1, 
+                    label: (i+1) + " (" + motor_vals[i].name + ")", 
                     borderColor: colors[i%6], 
                     backgroundColor: colors[i%6]
                 };})
