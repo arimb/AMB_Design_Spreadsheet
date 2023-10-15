@@ -217,14 +217,14 @@ function graph() {
         <canvas id="eff-graph"></canvas>`
     );
 
-    drawChart("speed-graph", "Speed (rpm)", torques, speeds);
-    drawChart("current-graph", "Total Current (A)", torques, currents);
-    drawChart("power-graph", "Power (W)", torques, powers);
-    drawChart("eff-graph", "Efficiency (%)", torques, effs);
+    drawChart("speed-graph", "Speed", "Speed (rpm)", torques, speeds);
+    drawChart("current-graph", "Current", "Total Current (A)", torques, currents);
+    drawChart("power-graph", "Power", "Power (W)", torques, powers);
+    drawChart("eff-graph", "Efficiency", "Efficiency (%)", torques, effs);
 
 }
 
-function drawChart(id, ylabel, torques, plot_vals) {
+function drawChart(id, title, ylabel, torques, plot_vals) {
     var graph = new Chart(id, {
         type: "line",
         data: {
@@ -253,7 +253,11 @@ function drawChart(id, ylabel, torques, plot_vals) {
                     position: "left",
                     title: {
                         display: true,
-                        text: ylabel
+                        text: ylabel,
+                        font: {
+                            size: 14,
+                            weight: "bold"
+                        }
                     },
                     beginAtZero: true,
                     min: 0

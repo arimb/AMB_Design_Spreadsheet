@@ -92,13 +92,14 @@ div.graphs {
 }
 
 div.page-element#graphs {
-    width: 70vw;
+    /* width: 70vw; */
     min-width: min(700px, 100vw);
     max-width: 100%;
 }
 
 canvas {
     background-color: white;
+    /* width: 100% !important; */
 }
 
 /* @media only screen and (max-width: 600px) {
