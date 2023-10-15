@@ -11,6 +11,7 @@
         <script src="js/chart.js"></script>
         <script src="js/jquery.min.js"></script>
         <link rel="stylesheet" href="css/tipso.min.css">
+        <script src="js/html2canvas.min.js"></script>
         <script src="js/tipso.min.js"></script>
         <script src="js/calculators.js"></script>
         <script src="js/motor_curves.js"></script>
@@ -27,6 +28,7 @@
             <div style="flex: 1;"></div>
             <div class="header-left">
                 <button class="header-button docs" data-link="mechanism">DOCS</button>
+                <button class="header-button save-img">SAVE<br>GRAPHS</button>
                 <button class="header-button copy-link">COPY<br>LINK</button>
                 <button class="header-button reset">RESET</button>
             </div>
@@ -98,6 +100,8 @@
                 <canvas id="power-graph"></canvas>
                 <canvas id="eff-graph"></canvas>
             </div>
+            
+            <div id="previewImage"></div>
         </main>
         <footer>
             <a href="https://firstupdatesnow.com/" class="fun-logo">
