@@ -1,6 +1,7 @@
 div.page-element#motors {
     width: 100%;
     align-items: flex-start;
+    max-width: 900px;
 }
 
 button.add {
@@ -32,6 +33,12 @@ div.motor {
 
 div.motor:last-child {
     border: none;
+}
+
+h4.mot_title {
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    text-align: center;
 }
 
 div.motor label {

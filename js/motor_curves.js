@@ -6,6 +6,7 @@ $(document).ready(function(){
     function insert_motor(i){
         $("div.motor-list").append(
             `<div class="motor" id="${i}">
+                <h4 class="mot_title"></h4>
                 <select id="motor-type${i}" class="motor-type">
                     <option>Custom</option>
                 </select>
@@ -56,6 +57,9 @@ $(document).ready(function(){
             </div>`
         );
 
+        // Write title number
+        $("div.motor:not(#0) h4.mot_title").each(function(i, el){ $(el).text(i+1); });
+
         // Populate motor type dropdown
         const motor_names = Object.keys(motors);
         for (let i = motor_names.length-1; i >= 0; i--) {
@@ -83,11 +87,13 @@ $(document).ready(function(){
             let motors = JSON.parse($("input#num-motors").val());
             motors = motors.filter(el => el != $(this).parent().attr("id"));
             $("input#num-motors").val(JSON.stringify(motors)).change();
+            $(this).parent().remove();
             if($("div.motor").length == 1) {
                 $("div.motor").show();
                 $("div.motor-list").css("background-color", "#b3bdb3");
             }
-            $(this).parent().remove();
+            $("button.add").prop("disabled", false);
+            $("div.motor:not(#0) h4.mot_title").each(function(i, el){ $(el).text(i+1); });
         });
 
         // Set up unit conversion
@@ -122,6 +128,8 @@ $(document).ready(function(){
         insert_motor(i);
         motors.push(i);
         $("input#num-motors").val( JSON.stringify(motors) ).change();
+        if (motors.length >= 7)
+            $("button.add").prop("disabled", true);
     });
     $("input, select").change(graph);
 
@@ -208,8 +216,6 @@ function graph() {
         <canvas id="power-graph"></canvas>
         <canvas id="eff-graph"></canvas>`
     );
-
-    console.log(currents, effs);
 
     drawChart("speed-graph", "Speed (rpm)", torques, speeds);
     drawChart("current-graph", "Total Current (A)", torques, currents);
