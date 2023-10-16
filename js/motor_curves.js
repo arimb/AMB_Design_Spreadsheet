@@ -209,7 +209,7 @@ function graph() {
             let mv = motor_vals[j];
             if (torques[i] < mv.maxT) {
                 speeds[i][j] = mv.wf * (1 - torques[i] / (mv.Ts*mv.n*mv.ratio*(mv.volt/12))) / mv.ratio * (mv.volt/12);
-                currents[i][j] = mv.n * (mv.If + (mv.Is - mv.If) * torques[i] / (mv.Ts*mv.n*mv.ratio*(mv.volt/12)));
+                currents[i][j] = mv.If*mv.n*(mv.volt/12) + (mv.Is - mv.If) * torques[i] / (mv.Ts*mv.ratio);
                 powers[i][j] = speeds[i][j] * torques[i] * (Math.PI / 30);
                 effs[i][j] = powers[i][j] / (mv.volt * currents[i][j]) * 100;
             } else {
