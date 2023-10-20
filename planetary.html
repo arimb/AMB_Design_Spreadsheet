@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Planetary Gearbox Calculator - AMB Robotics Calculator</title>
+        <link rel="icon" href="img/logo.png">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/calculators.css">
+        <link rel="stylesheet" href="css/planetary.css">
+        <script src="js/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/tipso.min.css">
+        <script src="js/tipso.min.js"></script>
+        <script src="js/calculators.js"></script>
+        <script src="js/planetary.js"></script>
+    </head>
+    <body>
+        <header>
+            <a href="index.html">
+                <img src="img/logo.png" class="logo" alt="logo">
+            </a>
+            <div class="header-title">
+                <h1>Planetary Gearbox Calculator</h1>
+                <input class="title" type="text">
+            </div>
+            <div style="flex: 1;"></div>
+            <div class="header-left">
+                <button class="header-button docs" data-link="chain_belt">DOCS</button>
+                <div class="units-buttons">
+                    <button class="header-button imperial" value="inch">IMPERIAL</button>
+                    <button class="header-button metric" value="mm">METRIC</button>
+                </div>
+                <button class="header-button copy-link">COPY<br>LINK</button>
+                <button class="header-button reset">RESET</button>
+            </div>
+        </header>
+        <main>
+            <div class="page-element" id="inputs">
+                <div style="flex-direction: column;">
+                    <label for="type" data-tipso="Select the manufacturer and brand of planetary gearbox">Planetary Type</label>
+                    <select id="type"></select>
+                </div>
+                <div class="field" id="ratio-options">
+                    <label data-tipso="Single-stage ratio options for stackable planetaries, or overall ratio options for non-stackable planetaries">Stage Options</label>
+                    <textarea class="ratio-options" rows="10" disabled></textarea>
+                </div>
+                <div class="field">
+                    <label for="desired">Desired Ratio</label>
+                    <input id="desired" type="number" step="any">
+                    &nbsp;: 1
+                </div>
+            </div>
+            <div class="page-element" id="combinations">
+                <h3>Planetary Combination Options</h3>
+                <table class="combinations">
+                    <thead>
+                        <tr>
+                            <th>
+                                <h4 data-tipso="Total ratio of the planetary gearbox with the given combination of stages">Overall</h4>
+                            </th>
+                            <th>
+                                <h4  data-tipso="Total number of stages in the given planetary gearbox">#</h4>
+                            </th>
+                            <th id="list">
+                                <h4 data-tipso="List of stages in the given planetary gearbox">List of Stages</h4>
+                            </th>
+                            <th>
+                                <h4 data-tipso='Additional gear ratio needed to achieve the desired reduction. "OD" refers to a reverse or overdrive ratio'>Additional</h4>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <footer>
+            <a href="https://firstupdatesnow.com/" class="fun-logo">
+                <img src="img/fun_logo.jpg">
+            </a>
+            <span>
+                Created by Ari Meles-Braverman &copy; 2023. For educational purposes only. Contact <a class="contact" href="https://www.chiefdelphi.com/u/arimb/summary" style="text-decoration: underline;">&commat;AriMB</a> on ChiefDelphi with questions or suggestions.
+            </span>
+            <div></div>
+        </footer>
+    </body>
+</html>

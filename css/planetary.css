@@ -1,0 +1,66 @@
+main {
+    align-items: flex-start;
+}
+
+div.page-element {
+    align-items: center;
+    justify-content: space-evenly;
+    row-gap: 0.4em;
+}
+
+div#inputs {
+    align-self: flex-start;
+}
+
+div#inputs > label {
+    align-self: flex-start;
+}
+
+div#inputs select, div#inputs option {
+    font-size: medium;
+}
+
+div#inputs select {
+    font-weight: bold;
+}
+
+div#ratio-options {
+    align-items: flex-start;
+}
+
+div#ratio-options label {
+    margin: 3px;
+}
+
+textarea {
+    resize: none;
+    width: 5em;
+    text-align: right;
+    font-size: 1.3em;
+}
+
+div#combinations {
+    justify-content: flex-start;
+}
+
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    background-color: whitesmoke;
+}
+
+td, th {
+    border: 1px solid black;
+    padding: 0.2em 0.4em;
+    text-align: center;
+}
+
+th#list {
+    min-width: 15em;
+    /* width: 100%; */
+}
+
+h4 {
+    width: fit-content;
+    margin: 0 auto;
+}
