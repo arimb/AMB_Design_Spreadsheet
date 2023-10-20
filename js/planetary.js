@@ -36,7 +36,7 @@ $(document).ready(function(){
             let row = `<tr>
             <td>${comb[0]} : 1</td>
             <td>${comb[1].reduce((x,a) => x+a, 0)}</td>
-            <td>`;
+            <td class="list">`;
             for (let j = 0; j < comb[1].length; j++)
                 if (comb[1][j] > 0)
                     row += `${comb[1][j]}x ${stages[j]}:1,  `;

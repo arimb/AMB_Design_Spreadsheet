@@ -56,11 +56,15 @@ td, th {
 }
 
 th#list {
-    min-width: 15em;
-    /* width: 100%; */
+    min-width: 20em;
 }
 
 h4 {
     width: fit-content;
     margin: 0 auto;
+}
+
+td.list {
+    padding-left: 10px;
+    text-align: left;
 }
