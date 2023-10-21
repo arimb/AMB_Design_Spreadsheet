@@ -16,7 +16,7 @@
                     window.open("docs/" + $(this).attr("data-link") + ".pdf", "_blank");
                 });
                 $("button.header-button.excel").click(() => { window.open("archive/index.html"); });
-                $("button.header-button.app").click(() => { window.location.href = "out/make/squirrel.windows/x64/AMB Robotics Calculator-1.0.3 Setup.exe" });
+                $("button.header-button.app").click(() => { window.location.href = "out/make/squirrel.windows/x64/AMB Robotics Calculator-1.1.0 Setup.exe" });
                 let userAgent = navigator.userAgent.toLowerCase();
                 if (userAgent.indexOf(' electron/') == -1) {
                     $("button.header-button.web-only").show();
@@ -49,26 +49,14 @@
         <main>
             <a href="mechanism.html">
                 <button class="sheet" data-tipso="This calculator finds the properties of a mechanism by its gear ratio, or finds the proper gear ratio needed to give the mechanism certain properties.">
-                    <img src="img/motor.png" alt="Mechanism Ratios">
+                    <img src="img/robotic.png" alt="Mechanism Ratios">
                     <h2>Mechanism Ratio</h2>
                 </button>
             </a>
-            <a href="gearbox_options.html">
-                <button class="sheet" data-tipso="This calculator allows the user to find sets of gears that produce the desired overall ratio, filtered by certain restrictions.">
-                    <img src="img/find_gear.png" alt="Gearbox Options">
-                    <h2>Gearbox Options</h2>
-                </button>
-            </a>
-            <a href="chain_belt.html">
-                <button class="sheet" data-tipso="This calculator determines the proper center-to-center spacing between two sprockets or pulleys.">
-                    <img src="img/chain.png" alt="Chain/Belt C-C Dist">
-                    <h2>Chain/Belt C-C Dist</h2>
-                </button>
-            </a>
-            <a href="reduction_swap.html">
-                <button class="sheet" data-tipso="This calculator is designed to help in the case where the robot is already manufactured and the team realizes they need to change the reduction for a mechanism.">
-                    <img src="img/2gears.png" alt="Reduction Swap">
-                    <h2>Reduction Swap</h2>
+            <a href="motor_curves.html">
+                <button class="sheet" data-tipso="This calculator generates motor curves in order to compare the speed, torque, current, power, and efficiency of various motors.">
+                    <img src="img/dc.png" alt="Motor Curves">
+                    <h2>Motor Curves</h2>
                 </button>
             </a>
             <a href="drivetrain.html">
@@ -77,10 +65,34 @@
                     <h2>Drivetrain Simulator</h2>
                 </button>
             </a>
+            <a href="chain_belt.html">
+                <button class="sheet" data-tipso="This calculator determines the proper center-to-center spacing between two sprockets or pulleys.">
+                    <img src="img/chain.png" alt="Chain/Belt C-C Dist">
+                    <h2>Chain/Belt C-C Dist</h2>
+                </button>
+            </a>
+            <a href="gearbox_options.html">
+                <button class="sheet" data-tipso="This calculator allows the user to find sets of gears that produce the desired overall ratio, filtered by certain restrictions.">
+                    <img src="img/find_gear.png" alt="Gearbox Options">
+                    <h2>Gearbox Options</h2>
+                </button>
+            </a>
+            <a href="reduction_swap.html">
+                <button class="sheet" data-tipso="This calculator is designed to help in the case where the robot is already manufactured and the team realizes they need to change the reduction for a mechanism.">
+                    <img src="img/2gears.png" alt="Reduction Swap">
+                    <h2>Reduction Swap</h2>
+                </button>
+            </a>
             <a href="projectile.html">
                 <button class="sheet" data-tipso="This calculator is used to help plan the trajectory of an object launched by a shooter.">
                     <img src="img/catapult.png" alt="Projectile Trajectory">
                     <h2>Projectile Trajectory</h2>
+                </button>
+            </a>
+            <a href="planetary.html">
+                <button class="sheet" data-tipso="This calculator is used to help find the combination of planetary gearbox stages to get closest to the desired ratio.">
+                    <img src="img/planetary.png" alt="Planetary Gearbox">
+                    <h2>Planetary Gearbox</h2>
                 </button>
             </a>
             <a href="pneumatics.html">
@@ -107,7 +119,7 @@
                 <img src="img/fun_logo.jpg">
             </a>
             <span>
-                Created by Ari Meles-Braverman &copy; 2022. For educational purposes only. Contact <a class="contact" href="https://www.chiefdelphi.com/u/arimb/summary" style="text-decoration: underline;">&commat;AriMB</a> on ChiefDelphi with questions or suggestions.
+                Created by Ari Meles-Braverman &copy; 2023. For educational purposes only. Contact <a class="contact" href="https://www.chiefdelphi.com/u/arimb/summary" style="text-decoration: underline;">&commat;AriMB</a> on ChiefDelphi with questions or suggestions.
             </span>
             <div></div>
         </footer>

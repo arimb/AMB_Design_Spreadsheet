@@ -1,0 +1,109 @@
+div.page-element#motors {
+    width: 100%;
+    align-items: flex-start;
+    max-width: 900px;
+}
+
+button.add {
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 8px;
+    margin: 0;
+}
+button.add:hover:disabled {
+    cursor: default;
+    background-color: var(--med-light);
+}
+
+div.motor-list {
+    flex-direction: row;
+    justify-content: flex-start;
+    overflow-x: scroll;
+    width: 100%;
+    border-top: 2px solid black;
+    background-color: #b3bdb3;
+}
+
+div.motor {
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0 0.5em;
+    border-right: 1px solid black;
+}
+
+div.motor:last-child {
+    border: none;
+}
+
+h4.mot_title {
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    text-align: center;
+}
+
+div.motor label {
+    white-space: nowrap;
+    margin-right: auto;
+    margin-left: 0;
+}
+
+input.mot_num {
+    width: 2em;
+}
+
+div.field {
+    justify-content: flex-end;
+}
+
+select.units {
+    align-self: flex-end;
+}
+
+button.delete {
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 4px 8px;
+    margin: 8px;
+    align-self: center;
+    background-color: gray;
+    border: 1px solid black;
+    border-radius: 0px;
+    box-shadow: none;
+    cursor: default;
+}
+
+button.delete:hover:not(:disabled) {
+    cursor: pointer;
+    background-color: dimgray;
+}
+
+div.col {
+    flex-direction: column;
+    align-items: center;
+}
+
+div.graph {
+    width: 50vw;
+    max-width: 700px;
+}
+
+div.graphs {
+    flex-direction: column;
+}
+
+div.page-element#graphs {
+    width: 60vw;
+    min-width: min(700px, 100vw);
+    max-width: 100%;
+}
+
+canvas {
+    background-color: white;
+    /* width: 100% !important; */
+}
+
+/* @media only screen and (max-width: 600px) {
+    div.graph {
+        display: none;
+    }
+} */

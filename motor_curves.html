@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Motor Curve Display - AMB Robotics Calculator</title>
+        <link rel="icon" href="img/logo.png">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/calculators.css">
+        <link rel="stylesheet" href="css/motor_curves.css">
+        <script src="js/chart.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/tipso.min.css">
+        <script src="js/html2canvas.min.js"></script>
+        <script src="js/tipso.min.js"></script>
+        <script src="js/calculators.js"></script>
+        <script src="js/motor_curves.js"></script>
+    </head>
+    <body>
+        <header>
+            <a href="index.html">
+                <img src="img/logo.png" class="logo" alt="logo">
+            </a>
+            <div class="header-title">
+                <h1>Motor Curve Generator</h1>
+                <input class="title" type="text">
+            </div>
+            <div style="flex: 1;"></div>
+            <div class="header-left">
+                <button class="header-button docs" data-link="mechanism">DOCS</button>
+                <button class="header-button save-img">SAVE<br>GRAPHS</button>
+                <button class="header-button copy-link">COPY<br>LINK</button>
+                <button class="header-button reset">RESET</button>
+            </div>
+        </header>
+        <main>
+            <div class="page-element" id="motors">
+                <div style="display: flex; flex-direction: row; align-items: center;">
+                    <h2 style="margin-right: 0.7em;">Motors</h2>
+                    <button class="add">ADD</button>
+                </div>
+                <input id="num-motors" type="text" value="[0]" disabled hidden>
+                <div class="motor-list">
+                    <div class="motor" id="0">
+                        <h4 class="mot_title">&nbsp;</h4>
+                        <select class="motor-type" disabled>
+                            <option>Custom</option>
+                        </select>
+                        <label>Free Speed</label>
+                        <div class="field">
+                            <input class="mot_wf motor-prop" type="number" step="any" min="0" disabled>
+                            &nbsp;rpm
+                        </div>
+                        <label>Stall Torque</label>
+                        <div class="field">
+                            <input class="mot_ts motor-prop" type="number" step="any" min="0" disabled>
+                            <select class="mot_ts-u motor-update motor-prop" disabled>
+                                <option value="1">Nm</option>
+                                <option value="0.00706">oz-in</option>
+                                <option value="1.35582">ft-lbs</option>
+                            </select>
+                        </div>
+                        <label>Free Current</label>
+                        <div class="field">
+                            <input class="mot_if motor-prop" type="number" step="any" min="0" disabled>
+                            &nbsp;Amps
+                        </div>
+                        <label>Stall Current</label>
+                        <div class="field">
+                            <input class="mot_is motor-prop" type="number" step="any" min="0" disabled>
+                            &nbsp;Amps
+                        </div>
+                        <label data-tipso="Voltage at the motor leads">Voltage</label>
+                        <div class="field">
+                            <input class="mot_volt" type="number" step="any" min="0" value="12" disabled>
+                            &nbsp;Volts
+                        </div>
+                        <label data-tipso="Motor-side current limit (per motor)">Max Current</label>
+                        <div class="field">
+                            <input class="mot_maxi" type="number" step="any" min="0" disabled>
+                            &nbsp;Amps
+                        </div>
+                        <div class="field">
+                            <label># Motors</label>
+                            <input class="mot_num" type="number" min="1" step="1" value="1" disabled>
+                        </div>
+                        <label>Gear Ratio</label>
+                        <div class="field">
+                            <input class="mot_rat" type="number" min="1" step="1" value="1" disabled>
+                            <span>&nbsp;: 1</span>
+                        </div>
+                        <button class="delete" id="btn-0" disabled>DELETE</button>
+                    </div>
+                </div>
+            </div>
+            <div class="break"></div>
+            <div class="page-element" id="graphs">
+                <canvas id="speed-graph"></canvas>
+                <canvas id="current-graph"></canvas>
+                <canvas id="power-graph"></canvas>
+                <canvas id="eff-graph"></canvas>
+            </div>
+            
+            <div id="previewImage"></div>
+        </main>
+        <footer>
+            <a href="https://firstupdatesnow.com/" class="fun-logo">
+                <img src="img/fun_logo.jpg">
+            </a>
+            <span>
+                Created by Ari Meles-Braverman &copy; 2023. For educational purposes only. Contact <a class="contact" href="https://www.chiefdelphi.com/u/arimb/summary" style="text-decoration: underline;">&commat;AriMB</a> on ChiefDelphi with questions or suggestions.
+            </span>
+            <div></div>
+        </footer>
+    </body>
+</html>
