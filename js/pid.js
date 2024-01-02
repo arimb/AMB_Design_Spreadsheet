@@ -24,8 +24,7 @@ $(document).ready(function(){
         If = $("input#mot_if").val() * ($("input#volt").val()/12) * parseInt($("input#mot_num").val());
         Is = $("input#mot_is").val() * ($("input#volt").val()/12) * parseInt($("input#mot_num").val());
         
-        graph_lims();
-        update_vals();
+        update();
     });
 
     // Load motor properties
@@ -41,6 +40,7 @@ $(document).ready(function(){
     request.open("GET", "ref/motors.json", false);
     request.send();
 
+    // Switch Linear/Rotational inputs
     $("input[name=lin-rot]").change(() => {
         $(".lin, .rot").hide();
         $("." + $("input[name=lin-rot]:checked").prop("id")).show();
@@ -49,7 +49,7 @@ $(document).ready(function(){
 });
 
 function update(){
-    
+    var x=0, v=0, a=0, t=0, dt=0.001;
 
     // Draw graph
     var max = Math.max(Math.max.apply(null, output[0].map(x => x[0])), Math.max.apply(null, output[0].map(x => x[1]))) / $("select#h0-u").val();

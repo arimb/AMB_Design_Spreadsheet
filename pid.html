@@ -98,6 +98,66 @@
                             <input id="rot" name="lin-rot" type="radio">
                         </div>
                     </div>
+                    <div class="field lin pos">
+                        <label for="start_pos_lin" data-tipso="Starting position of the mechanism">Start Position</label>
+                        <input id="start_pos_lin" type="number" step="any" value="0">
+                        <select id="start_pos_lin-u">
+                            <option value="0.0254" class="imperial">inch</option>
+                            <option value="0.001" class="metric">mm</option>
+                            <option value="0.3048">foot</option>
+                            <option value="1">meter</option>
+                        </select>
+                    </div>
+                    <div class="field lin pos">
+                        <label for="goal_pos_lin" data-tipso="Desired final position of the mechanism">Target Position</label>
+                        <input id="goal_pos_lin" type="number" step="any">
+                        <select id="goal_pos_lin-u">
+                            <option value="0.0254" class="imperial">inch</option>
+                            <option value="0.001" class="metric">mm</option>
+                            <option value="0.3048">foot</option>
+                            <option value="1">meter</option>
+                        </select>
+                    </div>
+                    <div class="field rot pos">
+                        <label for="start_pos_rot" data-tipso="Starting angle of the mechanism">Start Position</label>
+                        <input id="start_pos_rot" type="number" step="any" value="0">
+                        <span>&nbsp;&deg;</span>
+                    </div>
+                    <div class="field rot pos">
+                        <label for="goal_pos_rot" data-tipso="Desired final position of the mechanism">Target Position</label>
+                        <input id="goal_pos_rot" type="number" step="any">
+                        <span>&nbsp;&deg;</span>
+                    </div>
+                    <div class="field lin vel">
+                        <label for="start_vel_lin" data-tipso="Starting speed of the mechanism">Start Speed</label>
+                        <input id="start_vel_lin" type="number" step="any" value="0">
+                        <select id="start_vel_lin-u">
+                            <option value="0.0254" class="imperial">in/s</option>
+                            <option value="0.001" class="metric">mm/s</option>
+                            <option value="0.3048">ft/s</option>
+                            <option value="1">m/s</option>
+                        </select>
+                    </div>
+                    <div class="field lin vel">
+                        <label for="goal_vel_lin" data-tipso="Desired final speed of the mechanism">Target Speed</label>
+                        <input id="goal_vel_lin" type="number" step="any">
+                        <select id="goal_vel_lin-u">
+                            <option value="0.0254" class="imperial">in/s</option>
+                            <option value="0.001" class="metric">mm/s</option>
+                            <option value="0.3048">ft/s</option>
+                            <option value="1">m/s</option>
+                        </select>
+                    </div>
+                    <div class="field rot vel">
+                        <label for="start_vel_rot" data-tipso="Starting speed of the mechanism">Start Speed</label>
+                        <input id="start_vel_rot" type="number" step="any" value="0">
+                        <span>&nbsp;rpm</span>
+                    </div>
+                    <div class="field rot vel">
+                        <label for="goal_vel_rot" data-tipso="Desired final speed of the mechanism">Target Speed</label>
+                        <input id="goal_vel_rot" type="number" step="any">
+                        <span>&nbsp;rpm</span>
+                    </div>
                 </div>
                 <div class="page-element" id="mechanism">
                     <div class="field">
@@ -105,8 +165,17 @@
                         <input id="rat" type="number" step="any" min="0">
                         <span>&nbsp;: 1</span>
                     </div>
-                    <div class="field lin">
-                        <label for="radius" data-tipso="Radius used to translate rotational to linear motion">Radius</label>
+                    <div class="field">
+                        <label for="mass" data-tipso="Mass of the mechanism">Mass</label>
+                        <input id="mass" type="number" step="any" min="0">
+                        <select id="mass-u">
+                            <option value="4.448" class="imperial">lbs</option>
+                            <option value="9.81" class="metric">kg</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="radius" class="lin" data-tipso="Radius used to translate rotational to linear motion">Radius</label>
+                        <label for="radius" class="rot" data-tipso="Distance between Center of Mass and rotation axis (used to calculate Moment of Inertia, to enter MoI use radius of 1)">Radius</label>
                         <input id="radius" type="number" step="any" min="0">
                         <select id="radius-u">
                             <option value="0.0254" class="imperial">inch</option>
@@ -163,11 +232,11 @@
                 </div>
                 <div class="page-element" id="constants">
                     <div class="field">
-                        <label for="pv_units" data-tipso="Process variable units per rotation of the motor shaft. Must account for ratio between motor and encoder if one exists. (Note: 2048 for Falcon 500 internal encoder, 1 for NEO & NEO 550 unless modified by setting the conversion factor)">PV Units</label>
+                        <label for="pv_units" data-tipso="Process variable units per rotation of the motor shaft.<br>Leave blank for internal encoder.<br>For quadrature encoder, number of ticks per rotation of the motor shaft.<br>For absolute encoder, 1&nbsp;/&nbsp;gear&nbsp;ratio between motor and encoder">Units Per Rotation</label>
                         <input id="pv_units" type="number" min="0">
                     </div>
                     <div class="field">
-                        <label for="full_scale" data-tipso="Value representing a full 12V output.<br>(Note: 1023 for CTRE devices,<br>1 for SPARK MAX)">Full Scale</label>
+                        <label for="full_scale" data-tipso="Value representing the maximum allowable output regardless of units. 1&nbsp;for Duty Cycle control (CTRE/REV), 12&nbsp;for Voltage control&nbsp;(CTRE), current limit value for Current Limit control&nbsp;(CTRE)">Full Scale</label>
                         <input id="full_scale" type="number" min="0">
                     </div>
                     <div class="field">

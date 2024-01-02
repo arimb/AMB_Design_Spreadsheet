@@ -23,9 +23,13 @@ div#radios {
     align-items: stretch;
 }
 
-div#radios div {
+div#radios div:not(.field) {
     flex-direction: row;
     justify-content: space-evenly;
+}
+
+div#radios div.field {
+    justify-content: center;
 }
 
 div.graph {
