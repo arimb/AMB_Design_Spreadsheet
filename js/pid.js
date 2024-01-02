@@ -40,11 +40,21 @@ $(document).ready(function(){
     request.open("GET", "ref/motors.json", false);
     request.send();
 
-    // Switch Linear/Rotational inputs
-    $("input[name=lin-rot]").change(() => {
-        $(".lin, .rot").hide();
-        $("." + $("input[name=lin-rot]:checked").prop("id")).show();
+    // Switch Linear/Rotational, Position/Velocity inputs
+    $("input[name=lin-rot], input[name=pid-type]").change(() => {
+        $(".lin, .rot, .pos, .vel").show();
+        $("." + $("input[name=lin-rot]:not(:checked)").prop("id")).hide();
+        $("." + $("input[name=pid-type]:not(:checked)").prop("id")).hide();
     }).change();
+
+    // Show/hide PID coeffs
+    $("input#closedloop").change(() => {
+        if ($("input#closedloop").prop("checked")) {
+            $("div.closedloop").show();
+        } else {
+            $("div.closedloop").hide();
+        }
+    });
 
 });
 

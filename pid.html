@@ -80,12 +80,12 @@
                 <div class="page-element" id="radios">
                     <div class="pid-type">
                         <div>
-                            <label for="type_pos" data-tipso="Closed-loop control on the mechanism's position (e.g. elevator)">Position</label>
-                            <input id="type_pos" name="pid-type" type="radio" checked>
+                            <label for="pos" data-tipso="Closed-loop control on the mechanism's position (e.g. elevator)">Position</label>
+                            <input id="pos" name="pid-type" type="radio" checked>
                         </div>
                         <div>
-                            <label for="type_vel" data-tipso="Closed-loop control on the mechanism's velocity (e.g. shooter)">Velocity</label>
-                            <input id="type_vel" name="pid-type" type="radio">
+                            <label for="vel" data-tipso="Closed-loop control on the mechanism's velocity (e.g. shooter)">Velocity</label>
+                            <input id="vel" name="pid-type" type="radio">
                         </div>
                     </div>
                     <div class="lin-rot">
@@ -232,28 +232,50 @@
                 </div>
                 <div class="page-element" id="constants">
                     <div class="field">
-                        <label for="pv_units" data-tipso="Process variable units per rotation of the motor shaft.<br>Leave blank for internal encoder.<br>For quadrature encoder, number of ticks per rotation of the motor shaft.<br>For absolute encoder, 1&nbsp;/&nbsp;gear&nbsp;ratio between motor and encoder">Units Per Rotation</label>
-                        <input id="pv_units" type="number" min="0">
+                        <label for="pv_units" data-tipso="Process variable units per rotation of the motor shaft.<br>For internal encoder, set to 1.<br>For quadrature encoder, number of ticks per rotation of the motor shaft.<br>For absolute encoder, 1&nbsp;/&nbsp;gear&nbsp;ratio between motor and encoder">Units Per Rotation</label>
+                        <input id="pv_units" type="number" min="0" value="1">
                     </div>
                     <div class="field">
                         <label for="full_scale" data-tipso="Value representing the maximum allowable output regardless of units. 1&nbsp;for Duty Cycle control (CTRE/REV), 12&nbsp;for Voltage control&nbsp;(CTRE), current limit value for Current Limit control&nbsp;(CTRE)">Full Scale</label>
-                        <input id="full_scale" type="number" min="0">
+                        <input id="full_scale" type="number" min="0" value="1">
                     </div>
                     <div class="field">
-                        <label for="kp" data-tipso="Proportional coefficient">kP</label>
-                        <input id="kp" type="number" min="0">
+                        <input id="closedloop" type="checkbox" checked>
+                        <label for="closedloop" data-tipso="Enable closed-loop control (when disabled, motor runs at full power)">Closed Loop</label>
                     </div>
-                    <div class="field">
-                        <label for="ki" data-tipso="Integral coefficient">kI</label>
-                        <input id="ki" type="number" min="0">
+                    <div class="row closedloop">
+                        <div class="field">
+                            <label for="kp" data-tipso="Proportional coefficient">kP</label>
+                            <input id="kp" type="number" min="0" value="0">
+                        </div>
+                        <div class="field">
+                            <label for="ki" data-tipso="Integral coefficient">kI</label>
+                            <input id="ki" type="number" min="0" value="0">
+                        </div>
                     </div>
-                    <div class="field">
-                        <label for="kd" data-tipso="Derivative coefficient">kD</label>
-                        <input id="kd" type="number" min="0">
+                    <div class="row closedloop">
+                        <div class="field">
+                            <label for="kd" data-tipso="Derivative coefficient">kD</label>
+                            <input id="kd" type="number" min="0" value="0">
+                        </div>
+                        <div class="field lin">
+                            <label for="kg_lin" data-tipso="Gravity-based feed-forward coefficient (constant)">kG</label>
+                            <input id="kg_lin" type="number" min="0" value="0">
+                        </div>
+                        <div class="field rot">
+                            <label for="kg_rot" data-tipso="Gravity-based feed-forward coefficient (proportional to cosine of angle)">kG</label>
+                            <input id="kg_rot" type="number" min="0" value="0">
+                        </div>
                     </div>
-                    <div class="field">
-                        <label for="kf" data-tipso="Feed-forward coefficient">kF</label>
-                        <input id="kf" type="number" min="0">
+                    <div class="row closedloop">
+                        <div class="field">
+                            <label for="kv" data-tipso="Velocity feed-forward coefficient">kV</label>
+                            <input id="kv" type="number" min="0" value="0">
+                        </div>
+                        <div class="field">
+                            <label for="ka" data-tipso="Acceleration feed-forward coefficient">kA</label>
+                            <input id="ka" type="number" min="0" value="0">
+                        </div>
                     </div>
                 </div>
             </div>
