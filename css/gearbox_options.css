@@ -1,5 +1,5 @@
 div.page-element#options {
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-evenly;
     width: 253px;
 }
@@ -24,7 +24,7 @@ div.page-element#options span {
 div.num_stages {
     flex-direction: row;
     width: 100%;
-    justify-content: flex-end;
+    justify-content: center;
     gap: 0.7em;
 }
 
