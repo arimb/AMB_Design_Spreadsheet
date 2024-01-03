@@ -91,11 +91,11 @@
                     <div class="lin-rot">
                         <div>
                             <label for="lin" data-tipso="Output of the mechanism is linear motion (e.g. wheel, pulley)">Linear</label>
-                            <input id="lin" name="lin-rot" type="radio" checked>
+                            <input id="lin" name="lin-rot" type="radio">
                         </div>
                         <div>
                             <label for="rot" data-tipso="Output of the mechanism is rotational motion (e.g. arm, flywheel)">Rotational</label>
-                            <input id="rot" name="lin-rot" type="radio">
+                            <input id="rot" name="lin-rot" type="radio" checked>
                         </div>
                     </div>
                     <div class="field lin pos">
@@ -103,9 +103,9 @@
                         <input id="start_pos_lin" type="number" step="any" value="0">
                         <select id="start_pos_lin-u">
                             <option value="0.0254" class="imperial">inch</option>
-                            <option value="0.001" class="metric">mm</option>
+                            <option value="1" class="metric">meter</option>
                             <option value="0.3048">foot</option>
-                            <option value="1">meter</option>
+                            <option value="0.001">mm</option>
                         </select>
                     </div>
                     <div class="field lin pos">
@@ -113,9 +113,9 @@
                         <input id="goal_pos_lin" type="number" step="any">
                         <select id="goal_pos_lin-u">
                             <option value="0.0254" class="imperial">inch</option>
-                            <option value="0.001" class="metric">mm</option>
+                            <option value="1" class="metric">meter</option>
                             <option value="0.3048">foot</option>
-                            <option value="1">meter</option>
+                            <option value="0.001">mm</option>
                         </select>
                     </div>
                     <div class="field rot pos">
@@ -125,7 +125,7 @@
                     </div>
                     <div class="field rot pos">
                         <label for="goal_pos_rot" data-tipso="Desired final position of the mechanism">Target Position</label>
-                        <input id="goal_pos_rot" type="number" step="any">
+                        <input id="goal_pos_rot" type="number" step="any" value="180">
                         <span>&nbsp;&deg;</span>
                     </div>
                     <div class="field lin vel">
@@ -133,9 +133,9 @@
                         <input id="start_vel_lin" type="number" step="any" value="0">
                         <select id="start_vel_lin-u">
                             <option value="0.0254" class="imperial">in/s</option>
-                            <option value="0.001" class="metric">mm/s</option>
+                            <option value="1" class="metric">m/s</option>
                             <option value="0.3048">ft/s</option>
-                            <option value="1">m/s</option>
+                            <option value="0.001">mm/s</option>
                         </select>
                     </div>
                     <div class="field lin vel">
@@ -143,9 +143,9 @@
                         <input id="goal_vel_lin" type="number" step="any">
                         <select id="goal_vel_lin-u">
                             <option value="0.0254" class="imperial">in/s</option>
-                            <option value="0.001" class="metric">mm/s</option>
+                            <option value="1" class="metric">m/s</option>
                             <option value="0.3048">ft/s</option>
-                            <option value="1">m/s</option>
+                            <option value="0.001">mm/s</option>
                         </select>
                     </div>
                     <div class="field rot vel">
@@ -162,21 +162,37 @@
                 <div class="page-element" id="mechanism">
                     <div class="field">
                         <label for="rat" data-tipso="Total gear ratio between the motor and mechanism output">Gear Ratio</label>
-                        <input id="rat" type="number" step="any" min="0">
+                        <input id="rat" type="number" step="any" min="0" value="10">
                         <span>&nbsp;: 1</span>
                     </div>
-                    <div class="field">
-                        <label for="mass" data-tipso="Mass of the mechanism">Mass</label>
-                        <input id="mass" type="number" step="any" min="0">
-                        <select id="mass-u">
-                            <option value="4.448" class="imperial">lbs</option>
-                            <option value="9.81" class="metric">kg</option>
+                    <div class="field lin">
+                        <label for="mass_lin" data-tipso="Mass of the mechanism">Mass</label>
+                        <input id="mass_lin" type="number" step="any" min="0">
+                        <select id="mass_lin-u">
+                            <option value="0.455" class="imperial">lbs</option>
+                            <option value="1" class="metric">kg</option>
+                        </select>
+                    </div>
+                    <div class="field rot pos">
+                        <label for="mass_rot" data-tipso="Mass of the mechanism">Mass</label>
+                        <input id="mass_rot" type="number" step="any" min="0" value="10">
+                        <select id="mass_rot-u">
+                            <option value="0.455" class="imperial">lbs</option>
+                            <option value="1" class="metric">kg</option>
+                        </select>
+                    </div>
+                    <div class="field rot vel">
+                        <label for="moi" data-tipso="Moment of inertia of the spinning mechanism">MoI</label>
+                        <input id="moi" type="number" step="any" min="0">
+                        <select id="moi-u">
+                            <option value="0.04214" class="imperial">lb*ft²</option>
+                            <option value="1" class="metric">kg*m²</option>
                         </select>
                     </div>
                     <div class="field">
                         <label for="radius" class="lin" data-tipso="Radius used to translate rotational to linear motion">Radius</label>
                         <label for="radius" class="rot" data-tipso="Distance between Center of Mass and rotation axis (used to calculate Moment of Inertia, to enter MoI use radius of 1)">Radius</label>
-                        <input id="radius" type="number" step="any" min="0">
+                        <input id="radius" type="number" step="any" min="0" value="1">
                         <select id="radius-u">
                             <option value="0.0254" class="imperial">inch</option>
                             <option value="0.001" class="metric">mm</option>
@@ -186,7 +202,7 @@
                     </div>
                     <div class="field lin">
                         <label for="load_cnst_lin" data-tipso="Force always applied to the system not dependant on mechanism position or velocity">Constant Load</label>
-                        <input id="load_cnst_lin" type="number" step="any" min="0">
+                        <input id="load_cnst_lin" type="number" step="any" min="0" value="0">
                         <select id="load_cnst_lin-u">
                             <option value="4.448" class="imperial">lbs</option>
                             <option value="9.81">kg</option>
@@ -195,7 +211,7 @@
                     </div>
                     <div class="field lin">
                         <label for="load_visc_lin" data-tipso="Force applied to the system proportional to the mechanism velocity">Viscous Load</label>
-                        <input id="load_visc_lin" type="number" step="any" min="0">
+                        <input id="load_visc_lin" type="number" step="any" min="0" value="0">
                         <select id="load_visc_lin-u">
                             <option value="1.355" class="imperial">lbs/(ft/s)</option>
                             <option value="9.81">kg/(m/s)</option>
@@ -211,7 +227,7 @@
                             <option value="0.00706">oz-in</option>
                         </select>
                     </div>
-                    <div class="field rot">
+                    <!-- <div class="field rot">
                         <label for="load_cos" data-tipso="Torque applied to the system proportional to the cosine of the mechanism angle">Cosine Load</label>
                         <input id="load_cos" type="number" step="any" min="0">
                         <select id="load_cos-u">
@@ -219,7 +235,7 @@
                             <option value="1" class="metric">Nm</option>
                             <option value="0.00706">oz-in</option>
                         </select>
-                    </div>
+                    </div> -->
                     <div class="field rot">
                         <label for="load_visc_rot" data-tipso="Torque applied to the system proportional to the mechanism velocity">Viscous Load</label>
                         <input id="load_visc_rot" type="number" step="any" min="0">
@@ -229,16 +245,20 @@
                             <option value="0.00706">oz-in/rpm</option>
                         </select>
                     </div>
+                    <div class="field rot pos">
+                        <label for="grv" data-tipso="Add a load due to gravity (where 0° is horizontal)">Gravity Load</label>
+                        <input id="grv" type="checkbox">
+                    </div>
                 </div>
                 <div class="page-element" id="constants">
                     <div class="field">
                         <label for="pv_units" data-tipso="Process variable units per rotation of the motor shaft.<br>For internal encoder, set to 1.<br>For quadrature encoder, number of ticks per rotation of the motor shaft.<br>For absolute encoder, 1&nbsp;/&nbsp;gear&nbsp;ratio between motor and encoder">Units Per Rotation</label>
                         <input id="pv_units" type="number" min="0" value="1">
                     </div>
-                    <div class="field">
+                    <!-- <div class="field">
                         <label for="full_scale" data-tipso="Value representing the maximum allowable output regardless of units. 1&nbsp;for Duty Cycle control (CTRE/REV), 12&nbsp;for Voltage control&nbsp;(CTRE), current limit value for Current Limit control&nbsp;(CTRE)">Full Scale</label>
                         <input id="full_scale" type="number" min="0" value="1">
-                    </div>
+                    </div> -->
                     <div class="field">
                         <input id="closedloop" type="checkbox" checked>
                         <label for="closedloop" data-tipso="Enable closed-loop control (when disabled, motor runs at full power)">Closed Loop</label>
@@ -246,36 +266,48 @@
                     <div class="row closedloop">
                         <div class="field">
                             <label for="kp" data-tipso="Proportional coefficient">kP</label>
-                            <input id="kp" type="number" min="0" value="0">
+                            <input id="kp" type="number" min="0" step="any" value="1">
                         </div>
                         <div class="field">
-                            <label for="ki" data-tipso="Integral coefficient">kI</label>
-                            <input id="ki" type="number" min="0" value="0">
+                            <label for="kd" data-tipso="Derivative coefficient">kD</label>
+                            <input id="kd" type="number" min="0" step="any" value="0">
                         </div>
                     </div>
                     <div class="row closedloop">
                         <div class="field">
-                            <label for="kd" data-tipso="Derivative coefficient">kD</label>
-                            <input id="kd" type="number" min="0" value="0">
+                            <label for="ki" data-tipso="Integral coefficient">kI</label>
+                            <input id="ki" type="number" min="0" step="any" value="0">
                         </div>
+                        <div class="field">
+                            <label for="imax" data-tipso="Maximum contribution to the output by the integrator term (-1 to 1)">Imax</label>
+                            <input id="imax" type="number" min="-1" max="1" step="any" value="1">
+                        </div>
+                    </div>
+                    <div class="row closedloop">
                         <div class="field lin">
                             <label for="kg_lin" data-tipso="Gravity-based feed-forward coefficient (constant)">kG</label>
-                            <input id="kg_lin" type="number" min="0" value="0">
+                            <input id="kg_lin" type="number" min="0" step="any" value="0">
                         </div>
                         <div class="field rot">
                             <label for="kg_rot" data-tipso="Gravity-based feed-forward coefficient (proportional to cosine of angle)">kG</label>
-                            <input id="kg_rot" type="number" min="0" value="0">
+                            <input id="kg_rot" type="number" min="0" step="any" value="0">
                         </div>
-                    </div>
-                    <div class="row closedloop">
                         <div class="field">
                             <label for="kv" data-tipso="Velocity feed-forward coefficient">kV</label>
-                            <input id="kv" type="number" min="0" value="0">
+                            <input id="kv" type="number" min="0" step="any" value="0">
                         </div>
-                        <div class="field">
-                            <label for="ka" data-tipso="Acceleration feed-forward coefficient">kA</label>
-                            <input id="ka" type="number" min="0" value="0">
-                        </div>
+                    </div>
+                </div>
+                <div class="page-element" id="params">
+                    <div class="field">
+                        <label for="maxt" data-tipso="Maximum simulation time">Max Time</label>
+                        <input id="maxt" type="number" min="0" value="5">
+                        <span>&nbsp;s</span>
+                    </div>
+                    <div class="field">
+                        <label for="dt" data-tipso="Time per simulation step">Timestep</label>
+                        <input id="dt" type="number" min="0" value="5">
+                        <span>&nbsp;ms</span>
                     </div>
                 </div>
             </div>

@@ -18,13 +18,11 @@ $(document).ready(function(){
     });
 
     // Update motor properties
-    $(".motor-prop, input#mot_num, input#volt").change(() => {
-        wf = $("input#mot_wf").val() * (Math.PI/30) * ($("input#volt").val()/12);
-        Ts = $("input#mot_ts").val() * $("select#mot_ts-u").val() * ($("input#volt").val()/12) * ($("input#gbx_eff").val()/100) * parseInt($("input#mot_num").val());
-        If = $("input#mot_if").val() * ($("input#volt").val()/12) * parseInt($("input#mot_num").val());
-        Is = $("input#mot_is").val() * ($("input#volt").val()/12) * parseInt($("input#mot_num").val());
-        
-        update();
+    $(".motor-prop, input#mot_num").change(() => {
+        wf = $("input#mot_wf").val() * (Math.PI/30);
+        Ts = $("input#mot_ts").val() * $("select#mot_ts-u").val() * parseInt($("input#mot_num").val());
+        If = $("input#mot_if").val()  * parseInt($("input#mot_num").val());
+        Is = $("input#mot_is").val() * parseInt($("input#mot_num").val());
     });
 
     // Load motor properties
@@ -56,60 +54,213 @@ $(document).ready(function(){
         }
     });
 
+    // Update on any change
+    $("input, select").change(update);
+
 });
 
 function update(){
-    var x=0, v=0, a=0, t=0, dt=0.001;
-
-    // Draw graph
-    var max = Math.max(Math.max.apply(null, output[0].map(x => x[0])), Math.max.apply(null, output[0].map(x => x[1]))) / $("select#h0-u").val();
-    if ($("input#obs-e").prop("checked")) {
-        var obs_x = parseFloat($("input#obs_dist").val() * $("select#obs_dist-u").val() / $("select#h0-u").val());
-        var obs_y = parseFloat($("input#obs_h").val() * $("select#obs_h-u").val() / $("select#h0-u").val());
+    // Get input values
+    const position = $("input#pos").prop("checked");
+    const linear = $("input#lin").prop("checked");
+    const radius = parseFloat($("input#radius").val()) * $("select#radius-u").val();
+    if (linear) {
+        if (position) {
+            var start = parseFloat($("input#start_pos_lin").val()) * $("select#start_pos_lin-u").val() / radius;
+            var target = parseFloat($("input#goal_pos_lin").val()) * $("select#goal_pos_lin-u").val() / radius;
+        } else {
+            var start = parseFloat($("input#start_vel_lin").val()) * $("select#start_vel_lin-u").val() / radius;
+            var target = parseFloat($("input#goal_vel_lin").val()) * $("select#goal_vel_lin-u").val() / radius;
+        }
+        var load_const = $("input#load_cnst_lin").val() ? (parseFloat($("input#load_cnst_lin").val()) * $("select#load_cnst_lin-u").val() * radius) : 0;
+        var load_visc = $("input#load_visc_lin").val() ? (parseFloat($("input#load_visc_lin").val()) * $("select#load_visc_lin-u").val() * radius) : 0;
+        var load_cos = 0;
+        var MOI = parseFloat($("input#mass_lin").val()) * $("select#mass_lin-u").val() * radius**2;
+        var kg = parseFloat($("input#kg_lin").val());
+        var kcos = 0;
     } else {
-        var obs_x = 0, obs_y = 0;
+        if (position) {
+            var start = parseFloat($("input#start_pos_rot").val()) * Math.PI/180;
+            var target = parseFloat($("input#goal_pos_rot").val()) * Math.PI/180;
+            var load_cos = $("input#grv").prop("checked") ? (parseFloat($("input#mass_rot").val()) * radius * 9.8) : 0;
+            var MOI = parseFloat($("input#mass_rot").val()) * $("select#mass_rot-u").val() * radius**2;
+        } else {
+            var start = parseFloat($("input#start_vel_lin").val()) * Math.PI/180;
+            var target = parseFloat($("input#goal_vel_lin").val()) * Math.PI/180;
+            var load_cos = 0;
+            var MOI = parseFloat($("input#moi").val()) * $("select#moi-u").val();
+        }
+        var load_const = $("input#load_cnst_rot").val() ? (parseFloat($("input#load_cnst_rot").val()) * $("select#load_cnst_rot-u").val()) : 0;
+        var load_visc = $("input#load_visc_rot").val() ? (parseFloat($("input#load_visc_rot").val()) * $("select#load_visc_rot-u").val()) : 0;
+        var kg = 0;
+        var kcos = parseFloat($("input#kg_rot").val());
     }
+    const ilim = $("input#ilim").val() ? parseFloat($("input#ilim").val()) : Infinity;
+    const gear = parseFloat($("input#rat").val());
+    const pv_units = parseFloat($("input#pv_units").val());
+    const closedloop = $("input#closedloop").prop("checked");
+    const kp = parseFloat($("input#kp").val());
+    const ki = parseFloat($("input#ki").val());
+    const imax = parseFloat($("input#imax").val());
+    const kd = parseFloat($("input#kd").val());
+    const kv = parseFloat($("input#kv").val());
+    const maxt = parseFloat($("input#maxt").val());
+    const dt = parseFloat($("input#dt").val()) / 1000;
+    const R = 12 / (Is - If);
+    const Kt = Ts / (Is - If);
+    const Ke = 12 / wf;
 
+    console.log(position, linear, start, target, load_const, load_visc, load_cos, MOI, kg, kcos, ilim, gear, closedloop, kp, ki, imax, kd, kv, maxt, dt, R, Kt, Ke);
+
+    // Initialize variables
+    var t = [0];
+    if (position) {
+        var x = [start];
+        var v = [0];
+    } else {
+        var x = [0];
+        var v = [start];
+    }
+    var a = [0];
+    var I = [0];
+    var V = [0];
+    var inte = 0;
+    var laste = target - start;
+    target *= pv_units;
+
+    // Simulate
+    while (t.slice(-1)[0] <= maxt) {
+        if (!closedloop) {
+            var Vtmp = 12;
+        } else {
+            if (position) 
+                e = target - x.slice(-1)[0] * pv_units;
+            else 
+                e = target - v.slice(-1)[0] * pv_units;
+            inte += e * dt;
+            de = (e - laste) / dt;
+            laste = e;
+
+            var Vtmp = kp*e + Math.min(Math.max(ki*inte, -imax), imax) + kd*de + kg - kcos*Math.cos(x.slice(-1)[0]) + kv*v.slice(-1)[0];
+            Vtmp = Math.min(Math.max(Vtmp, -12), 12);
+        }
+        var Ides = (Vtmp - Ke*v.slice(-1)[0]) / R + If;
+        I.push(Vtmp!=0 ? Math.min(Math.max(Ides * (Vtmp/12), -ilim), ilim) / (Vtmp/12) : 0);
+        V.push(Ke*v.slice(-1)[0] + R*(I.slice(-1)[0] - If));
+
+        a.push((I.slice(-1)[0]*Kt*gear - load_const - load_visc*v.slice(-1)[0] - load_cos*Math.cos(x.slice(-1)[0])) / MOI);
+        v.push(v.slice(-1)[0] + a.slice(-1)[0]*dt);
+        x.push(x.slice(-1)[0] + v.slice(-1)[0]*dt + a.slice(-1)[0]*dt**2/2);
+        t.push(t.slice(-1)[0] + dt);
+    }
+    
+    // Draw graph
     $("canvas#graph").remove();
-    if (output[0].length > 1) {
+    if (x.length > 1) {
         $("span.warn").hide();
         $("div.graph").prepend('<canvas id="graph"></canvas>');
         var graph = new Chart("graph", {
             data: {
-                labels: output[0].map(x => (x[0] / $("select#h0-u").val()).toFixed(2)),
+                labels: t.map(t => t.toFixed(2)),
                 datasets: [{
+                    label: "Position",
                     type: "line",
-                    data: output[0].map(x => x[1] / $("select#h0-u").val()),
+                    data: position ? x.map(x => x) : [],
                     borderColor: "black",
                     fill: false,
-                    pointRadius: 0
+                    pointRadius: 0,
+                    yAxisID: "x1"
                 },{
+                    label: "Target",
                     type: "line",
-                    data: [{x: obs_x, y: 0}, {x: obs_x, y: obs_y}],
+                    data: t.map(t => target),
+                    borderColor: "red",
+                    borderDash: [5, 5],
+                    fill: false,
+                    pointRadius: 0,
+                    yAxisID: position ? "x1" : "v"
+                },{
+                    label: "Velocity",
+                    type: "line",
+                    data: v.map(v => v),
+                    borderColor: "green",
+                    fill: false,
+                    pointRadius: 0,
+                    yAxisID: "v"
+                },{
+                    label: "Acceleration",
+                    type: "line",
+                    data: a.map(a => a),
                     borderColor: "red",
                     fill: false,
-                    pointRadius: 0
+                    pointRadius: 0,
+                    yAxisID: "a"
+                },{
+                    label: "Rotor Current",
+                    type: "line",
+                    data: I.map(I => I),
+                    borderColor: "yellow",
+                    fill: false,
+                    pointRadius: 0,
+                    yAxisID: "i"
+                },{
+                    label: "Applied Voltage",
+                    type: "line",
+                    data: V.map(V => V),
+                    borderColor: "blue",
+                    fill: false,
+                    pointRadius: 0,
+                    yAxisID: "V"
                 }]
             },
             options: {
                 responsive: true,
                 aspectRatio: 1,
                 plugins: {
-                    legend: {display: false}
+                    // legend: {display: false}
                 },
                 scales: {
-                    y: {
-                        position: "left",
-                        min: 0,
-                        max: max,
-                        ticks: {stepSize: 0.5, includeBounds: false}
+                    t: {
+                        title: {
+                            display: true,
+                            text: "Time (s)"
+                        },
+                        position: "bottom"
                     },
-                    x: {
-                        type: "linear",
-                        position: "bottom",
-                        min: 0,
-                        max: max,
-                        ticks: {stepSize: 0.5}
+                    x1: {
+                        title: {
+                            display: true,
+                            text: "Position (m)"
+                        },
+                        position: "left"
+                    },
+                    v: {
+                        title: {
+                            display: true,
+                            text: "Velocity (m/s)"
+                        },
+                        position: "left"
+                    },
+                    a: {
+                        title: {
+                            display: true,
+                            text: "Acceleration (m/s²)"
+                        },
+                        position: "left"
+                    },
+                    i: {
+                        title: {
+                            display: true,
+                            text: "Current (A)"
+                        },
+                        position: "right"
+                    },
+                    V: {
+                        title: {
+                            display: true,
+                            text: "Voltage (V)"
+                        },
+                        position: "right"
                     }
                 },
                 animation: {
@@ -119,47 +270,4 @@ function update(){
         });
     } else $("span.warn").show();
     
-}
-
-function simulate(h0, v0, theta0, end_fcn) {
-    var t = 0;
-    var x = [0, h0];
-    var v = [v0*Math.cos(theta0), v0*Math.sin(theta0)];
-    const dt = 0.001;
-
-    const drag = $("input#drag-e").prop("checked") && !$("input#drag-e").prop("disabled");
-    const Cd = parseFloat($("input#cd").val());
-    const r = $("input#diam").val() * $("select#diam-u").val() / 2;
-    const m = $("input#mass").val() * $("select#mass-u").val();
-    const w = $("input#rotation").val() * $("select#rotation-u").val();
-    const rho = 1.2754; // kg/m^3
-    if (!drag) {
-        delete m;
-        const m = 1;
-    }
-    
-    var s, Cl, a;
-    var traj = [];
-    while (x[1] >= 0 && !eval(end_fcn)) {
-        if (drag) {
-            s = r*w/mag(v);
-            Cl = s<0.1 ? 1.6*s : 0.6*s+0.1;
-            a = [-Math.PI/2*rho*r**2*mag(v)/m*(Cl*v[1]+Cd*v[0]), Math.PI/2*rho*r**2*mag(v)/m*(Cl*v[0]-Cd*v[1]) - 9.8];
-        } else {
-            a = [0, -9.8];
-        }
-        
-        v = [v[0]+dt*a[0], v[1]+dt*a[1]];
-        x = [x[0]+dt*v[0]+dt**2*a[0]/2, x[1]+dt*v[1]+dt**2*a[1]/2];
-        traj.push(x);
-    }
-    return [traj, v];
-}
-
-function mag(x) {
-    return Math.sqrt(x[0]**2 + x[1]**2);
-}
-
-function angle(x) {
-    return Math.atan2(x[1], x[0]) * 180/Math.PI;
 }
