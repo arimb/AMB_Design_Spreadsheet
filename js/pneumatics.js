@@ -31,10 +31,20 @@ $(document).ready(function(){
                     <input id="ppush${i}" class="ppush" type="number" min="0" max="60" value="60">
                     &nbsp;<span>psig</span>
                 </div>
+                <label data-tipso="Piston extension force">Push Force</label>
+                <div class="field">
+                    <input class="fpush" type="number" step="any" min="0" max="60" value="60" disabled>
+                    &nbsp;<span class="force-unit">lbs</span>
+                </div>
                 <label data-tipso="Pressure used to retract the cylinder">Pull Pressure</label>
                 <div class="field">
                     <input id="ppull${i}" class="ppull" type="number" min="0" max="60" value="60">
                     &nbsp;<span>psig</span>
+                </div>
+                <label data-tipso="Piston retraction force">Pull Force</label>
+                <div class="field">
+                    <input class="fpull" type="number" step="any" min="0" max="60" value="60" disabled>
+                    &nbsp;<span class="force-unit">lbs</span>
                 </div>
                 <br>
                 <label data-tipso="Average time from the start of one cylinder extension to the start of the next one. Time between extension and retraction does not matter here">Time per Cycle</label>
@@ -68,6 +78,7 @@ $(document).ready(function(){
         });
         $("div.cyl:last select.units").change(function(){
             $(this).parent().find("span.unit").text($(this).children(":selected").text());
+            $(this).parent().find("span.force-unit").text($(this).children(":selected").hasClass("imperial") ? "lbs" : "N");
             $(this).parent().find("input.dist").each( (i, el) => {
                 if ($(el).val() != "") 
                     $(el).val(+(($(el).val() * $(this).data("unit-factor") / $(this).val()).toFixed(3)));
@@ -147,6 +158,10 @@ function simulate(){
         const push_pressure = $(cyl).find("input.ppush").val();
         const pull_pressure = $(cyl).find("input.ppull").val();
         min_press = Math.max(min_press, push_pressure, pull_pressure);
+
+        console.log($(cyl).find("select.units"));
+        $(cyl).find("input.fpush").val((Math.PI*((bore/2)**2) * push_pressure * ($(cyl).find("select.units option:selected").hasClass("imperial") ? 1 : 4.448)).toFixed(1));
+        $(cyl).find("input.fpull").val((Math.PI*((bore/2)**2-(rod/2)**2) * pull_pressure * ($(cyl).find("select.units option:selected").hasClass("imperial") ? 1 : 4.448)).toFixed(1));
 
         const period = $(cyl).find("input.period").val();
         return {
