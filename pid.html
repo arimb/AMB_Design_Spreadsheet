@@ -284,15 +284,12 @@
                         </div>
                     </div>
                     <div class="row closedloop">
-                        <div class="field lin">
-                            <label for="kg_lin" data-tipso="Gravity-based feed-forward coefficient (constant)">kG</label>
-                            <input id="kg_lin" type="number" min="0" step="any" value="0">
-                        </div>
                         <div class="field rot">
-                            <label for="kg_rot" data-tipso="Gravity-based feed-forward coefficient (proportional to cosine of angle)">kG</label>
-                            <input id="kg_rot" type="number" min="0" step="any" value="0">
+                            <label for="kg" class="lin" data-tipso="Gravity-based feed-forward coefficient (constant)">kG</label>
+                            <label for="kg" class="rot" data-tipso="Gravity-based feed-forward coefficient (proportional to cosine of angle)">kG</label>
+                            <input id="kg" type="number" min="0" step="any" value="0">
                         </div>
-                        <div class="field">
+                        <div class="field vel">
                             <label for="kv" data-tipso="Velocity feed-forward coefficient">kV</label>
                             <input id="kv" type="number" min="0" step="any" value="0">
                         </div>
@@ -308,6 +305,12 @@
                         <label for="dt" data-tipso="Time per simulation step">Timestep</label>
                         <input id="dt" type="number" min="0" value="5">
                         <span>&nbsp;ms</span>
+                    </div>
+                    <div class="field">
+                        <label for="ss" data-tipso="The maximum rate of change allowed for the mechanism to reach steady-state and for the simulation to end">Steady-State Limit</label>
+                        <input id="ss" type="number" min="0" value="0.01">
+                        <span class="pos">&nbsp;m/s</span>
+                        <span class="vel">&nbsp;m/s²</span>
                     </div>
                 </div>
             </div>

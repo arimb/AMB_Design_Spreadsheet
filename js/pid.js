@@ -45,6 +45,13 @@ $(document).ready(function(){
         $("." + $("input[name=pid-type]:not(:checked)").prop("id")).hide();
     }).change();
 
+    $("select[id$='_pos_lin-u']").change((event) => {
+        $("select[id$='_pos_lin-u']").val($(event.target).val());
+    });
+    $("select[id$='_vel_lin-u']").change((event) => {
+        $("select[id$='_vel_lin-u']").val($(event.target).val());
+    });
+
     // Show/hide PID coeffs
     $("input#closedloop").change(() => {
         if ($("input#closedloop").prop("checked")) {
@@ -68,15 +75,19 @@ function update(){
         if (position) {
             var start = parseFloat($("input#start_pos_lin").val()) * $("select#start_pos_lin-u").val() / radius;
             var target = parseFloat($("input#goal_pos_lin").val()) * $("select#goal_pos_lin-u").val() / radius;
+            var kv = 0;
+            var unitfactor = parseFloat($("select#start_pos_lin-u").val());
         } else {
             var start = parseFloat($("input#start_vel_lin").val()) * $("select#start_vel_lin-u").val() / radius;
             var target = parseFloat($("input#goal_vel_lin").val()) * $("select#goal_vel_lin-u").val() / radius;
+            var kv = parseFloat($("input#kv").val());
+            var unitfactor = parseFloat($("select#start_vel_lin-u").val());
         }
         var load_const = $("input#load_cnst_lin").val() ? (parseFloat($("input#load_cnst_lin").val()) * $("select#load_cnst_lin-u").val() * radius) : 0;
         var load_visc = $("input#load_visc_lin").val() ? (parseFloat($("input#load_visc_lin").val()) * $("select#load_visc_lin-u").val() * radius) : 0;
         var load_cos = 0;
         var MOI = parseFloat($("input#mass_lin").val()) * $("select#mass_lin-u").val() * radius**2;
-        var kg = parseFloat($("input#kg_lin").val());
+        var kg = parseFloat($("input#kg").val());
         var kcos = 0;
     } else {
         if (position) {
@@ -84,16 +95,20 @@ function update(){
             var target = parseFloat($("input#goal_pos_rot").val()) * Math.PI/180;
             var load_cos = $("input#grv").prop("checked") ? (parseFloat($("input#mass_rot").val()) * radius * 9.8) : 0;
             var MOI = parseFloat($("input#mass_rot").val()) * $("select#mass_rot-u").val() * radius**2;
+            var kv = 0;
+            var unitfactor = Math.PI/180;
         } else {
-            var start = parseFloat($("input#start_vel_lin").val()) * Math.PI/180;
-            var target = parseFloat($("input#goal_vel_lin").val()) * Math.PI/180;
+            var start = parseFloat($("input#start_vel_rot").val()) * Math.PI/30;
+            var target = parseFloat($("input#goal_vel_rot").val()) * Math.PI/30;
             var load_cos = 0;
             var MOI = parseFloat($("input#moi").val()) * $("select#moi-u").val();
+            var kv = parseFloat($("input#kv").val());
+            var unitfactor = Math.PI/30;
         }
         var load_const = $("input#load_cnst_rot").val() ? (parseFloat($("input#load_cnst_rot").val()) * $("select#load_cnst_rot-u").val()) : 0;
         var load_visc = $("input#load_visc_rot").val() ? (parseFloat($("input#load_visc_rot").val()) * $("select#load_visc_rot-u").val()) : 0;
         var kg = 0;
-        var kcos = parseFloat($("input#kg_rot").val());
+        var kcos = parseFloat($("input#kg").val());
     }
     const ilim = $("input#ilim").val() ? parseFloat($("input#ilim").val()) : Infinity;
     const gear = parseFloat($("input#rat").val());
@@ -103,9 +118,9 @@ function update(){
     const ki = parseFloat($("input#ki").val());
     const imax = parseFloat($("input#imax").val());
     const kd = parseFloat($("input#kd").val());
-    const kv = parseFloat($("input#kv").val());
     const maxt = parseFloat($("input#maxt").val());
     const dt = parseFloat($("input#dt").val()) / 1000;
+    const ss = parseFloat($("input#ss").val());
     const R = 12 / (Is - If);
     const Kt = Ts / (Is - If);
     const Ke = 12 / wf;
@@ -141,7 +156,7 @@ function update(){
             de = (e - laste) / dt;
             laste = e;
 
-            var Vtmp = kp*e + Math.min(Math.max(ki*inte, -imax), imax) + kd*de + kg - kcos*Math.cos(x.slice(-1)[0]) + kv*v.slice(-1)[0];
+            var Vtmp = kp*e + Math.min(Math.max(ki*inte, -imax), imax) - kd*de + kg - kcos*Math.cos(x.slice(-1)[0]) + kv*target;
             Vtmp = Math.min(Math.max(Vtmp, -12), 12);
         }
         var Ides = (Vtmp - Ke*v.slice(-1)[0]) / R + If;
@@ -152,6 +167,9 @@ function update(){
         v.push(v.slice(-1)[0] + a.slice(-1)[0]*dt);
         x.push(x.slice(-1)[0] + v.slice(-1)[0]*dt + a.slice(-1)[0]*dt**2/2);
         t.push(t.slice(-1)[0] + dt);
+
+        if (position && (Math.abs(Math.max(...x.slice(-10)) - Math.min(...x.slice(-10))) < 10*ss*dt)) break;
+        if (!position && (Math.abs(Math.max(...v.slice(-10)) - Math.min(...v.slice(-10))) < 10*ss*dt)) break;
     }
     
     // Draw graph
@@ -163,26 +181,26 @@ function update(){
             data: {
                 labels: t.map(t => t.toFixed(2)),
                 datasets: [{
-                    label: "Position",
-                    type: "line",
-                    data: position ? x.map(x => x) : [],
-                    borderColor: "black",
-                    fill: false,
-                    pointRadius: 0,
-                    yAxisID: "x1"
-                },{
                     label: "Target",
                     type: "line",
-                    data: t.map(t => target),
+                    data: Array(t.length).fill(target / unitfactor),
                     borderColor: "red",
                     borderDash: [5, 5],
                     fill: false,
                     pointRadius: 0,
                     yAxisID: position ? "x1" : "v"
                 },{
+                    label: "Position",
+                    type: "line",
+                    data: position ? x.map(x => x / unitfactor) : [],
+                    borderColor: "black",
+                    fill: false,
+                    pointRadius: 0,
+                    yAxisID: "x1"
+                },{
                     label: "Velocity",
                     type: "line",
-                    data: v.map(v => v),
+                    data: v.map(v => v / unitfactor),
                     borderColor: "green",
                     fill: false,
                     pointRadius: 0,
@@ -190,7 +208,7 @@ function update(){
                 },{
                     label: "Acceleration",
                     type: "line",
-                    data: a.map(a => a),
+                    data: a.map(a => a / unitfactor),
                     borderColor: "red",
                     fill: false,
                     pointRadius: 0,
@@ -217,7 +235,14 @@ function update(){
                 responsive: true,
                 aspectRatio: 1,
                 plugins: {
-                    // legend: {display: false}
+                    legend: {
+                        display: true,
+                        labels: {
+                            filter: function(item, chart) {
+                                return position || !item.text.includes('Position');
+                            }
+                        }
+                    }
                 },
                 scales: {
                     t: {
@@ -232,7 +257,8 @@ function update(){
                             display: true,
                             text: "Position (m)"
                         },
-                        position: "left"
+                        position: "left",
+                        display: position
                     },
                     v: {
                         title: {

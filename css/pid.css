@@ -32,6 +32,11 @@ div#radios div.field {
     justify-content: center;
 }
 
+div.row {
+    width: 100%;
+    justify-content: space-around;
+}
+
 div.graph {
     align-items: stretch;
     width: 600px;
