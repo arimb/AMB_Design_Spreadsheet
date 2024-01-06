@@ -255,7 +255,7 @@ function update(){
                     x1: {
                         title: {
                             display: true,
-                            text: "Position (m)"
+                            text: "Position (" + (position ? (linear ? $("select#start_pos_lin-u option:selected").html())) + ")"
                         },
                         position: "left",
                         display: position
