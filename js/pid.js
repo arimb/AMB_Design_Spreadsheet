@@ -67,6 +67,7 @@ $(document).ready(function(){
 });
 
 function update(){
+    console.clear();
     // Get input values
     const position = $("input#pos").prop("checked");
     const linear = $("input#lin").prop("checked");
@@ -96,6 +97,7 @@ function update(){
             var load_cos = $("input#grv").prop("checked") ? (parseFloat($("input#mass_rot").val()) * radius * 9.8) : 0;
             var MOI = parseFloat($("input#mass_rot").val()) * $("select#mass_rot-u").val() * radius**2;
             var kv = 0;
+            var load_const = 0;
             var unitfactor = Math.PI/180;
         } else {
             var start = parseFloat($("input#start_vel_rot").val()) * Math.PI/30;
@@ -103,9 +105,10 @@ function update(){
             var load_cos = 0;
             var MOI = parseFloat($("input#moi").val()) * $("select#moi-u").val();
             var kv = parseFloat($("input#kv").val());
+            var load_const = $("input#load_cnst_rot").val() ? (parseFloat($("input#load_cnst_rot").val()) * $("select#load_cnst_rot-u").val()) : 0;
             var unitfactor = Math.PI/30;
         }
-        var load_const = $("input#load_cnst_rot").val() ? (parseFloat($("input#load_cnst_rot").val()) * $("select#load_cnst_rot-u").val()) : 0;
+        
         var load_visc = $("input#load_visc_rot").val() ? (parseFloat($("input#load_visc_rot").val()) * $("select#load_visc_rot-u").val()) : 0;
         var kg = 0;
         var kcos = parseFloat($("input#kg").val());
@@ -125,7 +128,7 @@ function update(){
     const Kt = Ts / (Is - If);
     const Ke = 12 / wf;
 
-    console.log(position, linear, start, target, load_const, load_visc, load_cos, MOI, kg, kcos, ilim, gear, closedloop, kp, ki, imax, kd, kv, maxt, dt, R, Kt, Ke);
+    console.log(position, linear, start, target, load_const, load_visc, load_cos, MOI, kg, kcos, ilim, gear, closedloop, kp, ki, imax, kd, kv, maxt, dt, R, Kt, Ke, Ts, wf, If, Is);
 
     // Initialize variables
     var t = [0];
@@ -156,11 +159,14 @@ function update(){
             de = (e - laste) / dt;
             laste = e;
 
-            var Vtmp = kp*e + Math.min(Math.max(ki*inte, -imax), imax) - kd*de + kg - kcos*Math.cos(x.slice(-1)[0]) + kv*target;
+            var Vtmp = kp*e + Math.min(Math.max(ki*inte, -imax), imax) + kd*de + kg + kcos*Math.cos(x.slice(-1)[0]) + kv*target;
             Vtmp = Math.min(Math.max(Vtmp, -12), 12);
         }
         var Ides = (Vtmp - Ke*v.slice(-1)[0]) / R + If;
-        I.push(Vtmp!=0 ? Math.min(Math.max(Ides * (Vtmp/12), -ilim), ilim) / (Vtmp/12) : 0);
+        var Istatorlim = ilim ? ilim / Math.min(((v.slice(-1)[0]/2*wf) + Math.sqrt((v.slice(-1)[0]/(2*wf))**2 + ilim/Is)), 1) : Infinity;
+        console.log(Istatorlim);
+        I.push(Math.min(Math.max(Ides, -Istatorlim), Istatorlim));
+        // I.push(Vtmp!=0 ? Math.min(Math.max(Ides * (Vtmp/12), -ilim), ilim) / (Vtmp/12) : 0);
         V.push(Ke*v.slice(-1)[0] + R*(I.slice(-1)[0] - If));
 
         a.push((I.slice(-1)[0]*Kt*gear - load_const - load_visc*v.slice(-1)[0] - load_cos*Math.cos(x.slice(-1)[0])) / MOI);
@@ -168,8 +174,10 @@ function update(){
         x.push(x.slice(-1)[0] + v.slice(-1)[0]*dt + a.slice(-1)[0]*dt**2/2);
         t.push(t.slice(-1)[0] + dt);
 
-        if (position && (Math.abs(Math.max(...x.slice(-10)) - Math.min(...x.slice(-10))) < 10*ss*dt)) break;
-        if (!position && (Math.abs(Math.max(...v.slice(-10)) - Math.min(...v.slice(-10))) < 10*ss*dt)) break;
+        console.log(t.slice(-1)[0], x.slice(-1)[0], v.slice(-1)[0], a.slice(-1)[0], I.slice(-1)[0], V.slice(-1)[0]);
+
+        if (x.length > 10 && position && (Math.abs(Math.max(...x.slice(-10)) - Math.min(...x.slice(-10))) < 10*ss*dt)) break;
+        if (x.length > 10 && !position && (Math.abs(Math.max(...v.slice(-10)) - Math.min(...v.slice(-10))) < 10*ss*dt)) break;
     }
     
     // Draw graph
@@ -208,7 +216,7 @@ function update(){
                 },{
                     label: "Acceleration",
                     type: "line",
-                    data: a.map(a => a / unitfactor),
+                    data: position ? [] : a.map(a => a / unitfactor),
                     borderColor: "red",
                     fill: false,
                     pointRadius: 0,
@@ -239,7 +247,7 @@ function update(){
                         display: true,
                         labels: {
                             filter: function(item, chart) {
-                                return position || !item.text.includes('Position');
+                                return position ? !item.text.includes('Acceleration') : !item.text.includes('Position');
                             }
                         }
                     }
@@ -253,24 +261,29 @@ function update(){
                         position: "bottom"
                     },
                     x1: {
+                        display: position,
                         title: {
                             display: true,
-                            text: "Position (" + (position ? (linear ? $("select#start_pos_lin-u option:selected").html())) + ")"
+                            text: "Position (" + (linear ? $("select#start_pos_lin-u option:selected").html() : "deg") + ")"
                         },
-                        position: "left",
-                        display: position
+                        position: "left"
                     },
                     v: {
                         title: {
                             display: true,
-                            text: "Velocity (m/s)"
+                            text: "Velocity (" + (position ? 
+                                (linear ? $("select#start_pos_lin-u option:selected").html() : "deg") + "/s" : 
+                                (linear ? $("select#start_vel_lin-u option:selected").html() : "rpm")) + ")"
                         },
                         position: "left"
                     },
                     a: {
+                        display: !position,
                         title: {
                             display: true,
-                            text: "Acceleration (m/s²)"
+                            text: "Acceleration (" + (position ? 
+                                (linear ? $("select#start_pos_lin-u option:selected").html() : "deg") + "/s²" : 
+                                (linear ? $("select#start_vel_lin-u option:selected").html() + "²" : "rpm/s")) + ")"
                         },
                         position: "left"
                     },
