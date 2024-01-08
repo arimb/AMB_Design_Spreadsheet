@@ -77,12 +77,12 @@ function update(){
             var start = parseFloat($("input#start_pos_lin").val()) * $("select#start_pos_lin-u").val() / radius;
             var target = parseFloat($("input#goal_pos_lin").val()) * $("select#goal_pos_lin-u").val() / radius;
             var kv = 0;
-            var unitfactor = parseFloat($("select#start_pos_lin-u").val());
+            var unitfactor = parseFloat($("select#start_pos_lin-u").val()) / radius;
         } else {
             var start = parseFloat($("input#start_vel_lin").val()) * $("select#start_vel_lin-u").val() / radius;
             var target = parseFloat($("input#goal_vel_lin").val()) * $("select#goal_vel_lin-u").val() / radius;
             var kv = parseFloat($("input#kv").val());
-            var unitfactor = parseFloat($("select#start_vel_lin-u").val());
+            var unitfactor = parseFloat($("select#start_vel_lin-u").val()) / radius;
         }
         var load_const = $("input#load_cnst_lin").val() ? (parseFloat($("input#load_cnst_lin").val()) * $("select#load_cnst_lin-u").val() * radius) : 0;
         var load_visc = $("input#load_visc_lin").val() ? (parseFloat($("input#load_visc_lin").val()) * $("select#load_visc_lin-u").val() * radius) : 0;
@@ -176,8 +176,15 @@ function update(){
 
         console.log(t.slice(-1)[0], x.slice(-1)[0], v.slice(-1)[0], a.slice(-1)[0], I.slice(-1)[0], V.slice(-1)[0]);
 
-        if (x.length > 10 && position && (Math.abs(Math.max(...x.slice(-10)) - Math.min(...x.slice(-10))) < 10*ss*dt)) break;
-        if (x.length > 10 && !position && (Math.abs(Math.max(...v.slice(-10)) - Math.min(...v.slice(-10))) < 10*ss*dt)) break;
+        if (x.length > 10) {
+            if (position) {
+                if (Math.abs(Math.max(...x.slice(-10)) - Math.min(...x.slice(-10))) < 10*ss*dt) break;
+                if (!closedloop && Math.sign(target - x.slice(-1)[0]) != Math.sign(target - x.slice(-2)[0])) break;
+            } else {
+                if (Math.abs(Math.max(...v.slice(-10)) - Math.min(...v.slice(-10))) < 10*ss*dt) break;
+                if (!closedloop && Math.sign(target - v.slice(-1)[0]) != Math.sign(target - v.slice(-2)[0])) break;
+            }
+        }
     }
     
     // Draw graph
@@ -241,7 +248,7 @@ function update(){
             },
             options: {
                 responsive: true,
-                aspectRatio: 1,
+                aspectRatio: 1.5,
                 plugins: {
                     legend: {
                         display: true,

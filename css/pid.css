@@ -1,3 +1,7 @@
+main {
+    align-items: flex-start;
+}
+
 div.inputs {
     flex-direction: column;
     align-self: flex-start;
@@ -42,6 +46,7 @@ div.graph {
     /* width: 600px; */
     width: 70%;
     max-width: 100%;
+    max-height: 800px;
     align-content: center;
 }
 
