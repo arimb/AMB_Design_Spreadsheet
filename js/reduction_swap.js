@@ -1,33 +1,33 @@
 var current_cc, unit = 1;
 
-$(document).ready(function(){
+$(function(){
 
-    $("input[name=current]").change(function(){
+    $("input[name=current]").on("change", function(){
         $("div.input").hide();
         $("div." + $("input[name=current]:checked").prop("id")).show();
     });
-    $("input[name=current]").change();
+    $("input[name=current]").trigger("change");
 
-    $("input[name=current], select[id$=_cc-u]").change(() => {
+    $("input[name=current], select[id$=_cc-u]").on("change", () => {
         let el = $(`div.${$("input[name=current]:checked").prop("id")} select[id$=_cc-u]`);
         unit = el.val();
         $(".unit").html(`C-C (${el.children("option:selected").text().substr(0,2)})`);
     });
 
-    $("input#gears, div.gears input, div.gears select").change(function(){
+    $("input#gears, div.gears input, div.gears select").on("change", function(){
         let gear1 = parseInt($("input#g1").val());
         let gear2 = parseInt($("input#g2").val());
         let dp = parseInt($("input#g_dp").val());
         let D = (gear1+gear2)/(2*dp);
         if (!isNaN(D)) {
             $("input#g_cc").val(+((D / $("select#g_cc-u").val()).toFixed(3)));
-            if ($("input[name=current]:checked").prop("id") == "gears")
+            if ($("input[name=current]:checked").prop("id") === "gears")
                 current_cc = D;
         } else
             current_cc = 0;
     });
 
-    $("input#belt, div.belt input, div.belt select").change(function(){
+    $("input#belt, div.belt input, div.belt select").on("change", function(){
         let pitch = $("input#pitch").val() * $("select#pitch-u").val();
         let diam1 = $("input#p1").val() * pitch / Math.PI;
         let diam2 = $("input#p2").val() * pitch / Math.PI;
@@ -47,17 +47,17 @@ $(document).ready(function(){
         } while (Math.abs(target - current) > 0.001);
         if (!isNaN(D)) {
             $("input#belt_cc").val(+((D / $("select#belt_cc-u").val()).toFixed(3)));
-            if ($("input[name=current]:checked").prop("id") == "belt")
+            if ($("input[name=current]:checked").prop("id") === "belt")
                 current_cc = D;
         } else
             current_cc = 0;
     });
 
-    $("input#dist, input#dist_cc").change(() => 
+    $("input#dist, input#dist_cc").on("change", () => 
         current_cc = $("input#dist_cc").val() * $("select#dist_cc-u").val()
     );
 
-    $("input, select").change(calculate);
+    $("input, select").on("change", calculate);
 
 });
 
@@ -142,11 +142,11 @@ function calculate(){
                 <td>${el[2]}</td>
                 <td>${+(el[3].toFixed(2))} : 1</td>
                 <td>${+((el[4] / unit).toFixed(3))}</td>
-                <td>${el[5]=="" ? "" : Math.round(el[5])}</td>
+                <td>${el[5]==="" ? "" : Math.round(el[5])}</td>
             </tr>`
         )
     );
-    if (options.length == 0)
+    if (options.length === 0)
         $("tbody").html("<tr><td colspan='6'>No options found</td></tr>");
 }
 

@@ -4,11 +4,11 @@ let min = 3;
 let max = 20;
     
 
-$(document).ready(function(){
+$(function(){
 
     // Set motor properties
-    $("select#motor").change(function(){
-        if($("select#motor").val() == "Custom"){
+    $("select#motor").on("change", function(){
+        if($("select#motor").val() === "Custom"){
             $(".motor-prop").prop("disabled", false);
         }else{
             $("input#mot_wf").val(motors[$("select#motor").val()][0]);
@@ -30,7 +30,7 @@ $(document).ready(function(){
             $("select#motor").prepend("<option>" + motor_names[i] + "</option>");
         }
         $("select#motor").val(motor_names[0]);
-        $("select#motor").change();
+        $("select#motor").trigger("change");
     };
     request.open("GET", "ref/motors.json", false);
     request.send();
@@ -43,10 +43,10 @@ $(document).ready(function(){
         If = $("input#mot_if").val() * $("input#mot_num").val();
         Is = $("input#mot_is").val() * $("input#mot_num").val();
     }
-    $("div#motor-el *").change(update_motor);
+    $("div#motor-el *").on("change", update_motor);
 
     // Update gear ratio
-    $("div#gear-ratio input:not(disabled)").change(function(){
+    $("div#gear-ratio input:not(disabled)").on("change", function(){
         G = ($("input#g1b").val() ? $("input#g1b").val() : 1) /
             ($("input#g1a").val() ? $("input#g1a").val() : 1) *
             ($("input#g2b").val() ? $("input#g2b").val() : 1) /
@@ -55,7 +55,7 @@ $(document).ready(function(){
             ($("input#g3a").val() ? $("input#g3a").val() : 1);
         $("input#total_ratio").val(+(G.toFixed(2)));
     });
-    $("div#gear-ratio input:first").change();
+    $("div#gear-ratio input:first").trigger("change");
 
     function update(){ 
         let output = simulate(G);
@@ -65,8 +65,8 @@ $(document).ready(function(){
     }
 
     setTimeout(() => {
-        $("input, select").change(update);
-        $("input:not(.gear), select").change(update_all_ratios);
+        $("input, select").on("change", update);
+        $("input:not(.gear), select").on("change", update_all_ratios);
         update();
         update_all_ratios();
     }, 100);
@@ -135,7 +135,7 @@ function simulate(ratio){
 
         // console.log(t, stop, x, v, a, V, connected, slip, T, Tmotor, I);
 
-        if (stop_method != "Reverse" && stop) I = 0;
+        if (stop_method !== "Reverse" && stop) I = 0;
         times.push(t);
         data.push([x, v, a, I, V, T, slip]);
 
@@ -153,7 +153,7 @@ function simulate(ratio){
                 }
                 break;
             case "Predictive":
-                if (x > xmax - v**2/(2*(stop_method == "Coast" ? 2*Tloss/r/m : 9.8*mu_k))) {
+                if (x > xmax - v**2/(2*(stop_method === "Coast" ? 2*Tloss/r/m : 9.8*mu_k))) {
                     stop = true;
                 }
                 if (stop && v < 0.1) break main;
@@ -199,7 +199,7 @@ function update_graph(output){
     const data = output[1];
     $("canvas#simulation").remove();
     $("div.graphs").prepend('<canvas id="simulation"></canvas>');
-    let dist_unit = $("select#dist-u option:selected").text() == "meters" ? "m" : "ft";
+    let dist_unit = $("select#dist-u option:selected").text() === "meters" ? "m" : "ft";
     var graph = new Chart("simulation", {
         type: "line",
         data: {
@@ -398,7 +398,7 @@ function update_ratios_graph(){
                 legend: {
                     labels: {
                         filter: function(legend_item, data) {
-                            return legend_item["lineDash"].length == 0;
+                            return legend_item["lineDash"].length === 0;
                         },
                         font: {
                             size: 10

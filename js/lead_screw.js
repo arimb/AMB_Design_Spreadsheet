@@ -17,31 +17,31 @@ var friction = {
     }
 }
 
-$(document).ready(function(){
+$(function(){
 
-    $("select#od-u").change(() => $("span.pitch").text($("select#od-u option:selected").text()));
+    $("select#od-u").on("change", () => $("span.pitch").text($("select#od-u option:selected").text()));
 
-    $("div#params, div#material").find("input, select").change(function(){
+    $("div#params, div#material").find("input, select").on("change", function(){
         let d = $("input#od").val() * $("select#od-u").val();
         let p = $("input#pitch").val() * $("select#od-u").val();
         let dp = d - p/2;
         let n = $("input#starts").val();
         let a = $("input#angle").val() / 2 * Math.PI / 180;
         let mu = friction[$("select#nut-mat").val()][$("select#screw-mat").val()][$("input#lube").prop("checked") ? 1 : 0];
-        if (d==0 || p==0 || n=="" || a==0) return;
+        if (d===0 || p===0 || n==="" || a===0) return;
         $("input#eff").val(+(( n*p/(Math.PI*dp) * (Math.PI*dp*Math.cos(a)-mu*n*p)/(Math.PI*mu*dp+n*p*Math.cos(a)) * 100 ).toFixed(1)));
         $("input#equiv_radius").val(+(( n*p/(2*Math.PI) / $("select#od-u").val() ).toFixed(4)));
         $("input#backdrive").val( (n*p*Math.cos(a) > Math.PI*mu*dp) ? "Yes" : "No" );
     });
 
-    $("div#forces input[type=radio]").change(() => {
+    $("div#forces input[type=radio]").on("change", () => {
         let d = $("input#od").val() * $("select#od-u").val();
         let p = $("input#pitch").val() * $("select#od-u").val();
         let dp = d - p/2;
         let n = $("input#starts").val();
         let a = $("input#angle").val() / 2 * Math.PI / 180;
         let mu = friction[$("select#nut-mat").val()][$("select#screw-mat").val()][$("input#lube").prop("checked") ? 1 : 0];
-        if (d==0 || p==0 || n=="" || a==0) return;
+        if (d===0 || p===0 || n==="" || a===0) return;
         switch ($("div#forces input[type=radio]:checked").prop("id")) {
             case "force-c": {
                 let F = $("input#force").val() * $("select#force-u").val();
@@ -93,7 +93,7 @@ $(document).ready(function(){
         }
     });
 
-    $("div#speeds input[type=radio]").change(() => {
+    $("div#speeds input[type=radio]").on("change", () => {
         let lead = ($("input#pitch").val() * $("select#od-u").val()) * $("input#starts").val();
         switch ($("div#speeds input[type=radio]:checked").prop("id")) {
             case "lin-c": {
@@ -109,30 +109,30 @@ $(document).ready(function(){
         }
     });
 
-    $("input[type=number]").change(function(){
-        $(this).siblings("input[type=radio]").prop("checked", true).change();
+    $("input[type=number]").on("change", function(){
+        $(this).siblings("input[type=radio]").prop("checked", true).trigger("change");
     });
 
-    $("input[type=radio]").change(() => {
+    $("input[type=radio]").on("change", () => {
         $("div#forces, div#speeds").find("input[type=number]").css("background-color", "white");
         $("input[type=radio]:checked").siblings("input[type=number]").css("background-color", "var(--selected)");
     });
 
-    $("button.insert").click(() => {
+    $("button.insert").on("click", () => {
         window.open(`mechanism.html?gbx_eff=${$("input#eff").val()}&radius-u=${$("select#od-u").val()}&radius=${$("input#equiv_radius").val()}`, "_blank");
     });
 
-    $("select#od-u").change(function(){
+    $("select#od-u").on("change", function(){
         let input = $("input#pitch");
-        if (input.val() != "") {
+        if (input.val() !== "") {
             let old_val = input.val();
-            if (input.data("full-val") && +(+(input.data("full-val") || 0).toFixed(3)) == old_val)
+            if (input.data("full-val") && +(+(input.data("full-val") || 0).toFixed(3)) === old_val)
                 old_val = input.data("full-val");
             console.log(old_val);
             let new_val = old_val * $(this).data("unit-factor") / $(this).val();
             console.log($(this).data("unit-factor"));
             console.log(new_val);
-            input.val(+(new_val.toFixed(3))).change();
+            input.val(+(new_val.toFixed(3))).trigger("change");
             input.data("full-val", new_val)
         }
     });

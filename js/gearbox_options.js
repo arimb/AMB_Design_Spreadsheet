@@ -1,9 +1,9 @@
 var gears;
 var min_ratio, max_ratio;
 
-$(document).ready(function(){
+$(function(){
     
-    $("div.sources input").change(function(){
+    $("div.sources input").on("change", function(){
         gears = {};
         $("div.sources input:checked").each((i,el) => {
             let request = new XMLHttpRequest();
@@ -11,7 +11,7 @@ $(document).ready(function(){
                 let data = JSON.parse(this.responseText);
                 const shaft_types = Object.keys(data);
                 for (let i = shaft_types.length-1; i >= 0; i--) {
-                    if ($("select.gear-type option").map((i,el) => el.text).get().indexOf(shaft_types[i]) == -1)
+                    if ($("select.gear-type option").map((i,el) => el.text).get().indexOf(shaft_types[i]) === -1)
                         $("select.gear-type").prepend("<option value='" + data[shaft_types[i]]["diam"] + "'>" + shaft_types[i] + "</option>");
                 }
                 $("select.gear-type>:first-child").attr('selected', 'selected');
@@ -20,23 +20,23 @@ $(document).ready(function(){
                 $("div.gear-list span").remove();
                 Object.keys(data).forEach(geartype => {
                     let geartype_name = geartype.replaceAll(/\s|"|\//g, '');
-                    if ($("div.gear-list").map((i,el) => el.id).get().indexOf(geartype_name) == -1) {
+                    if ($("div.gear-list").map((i,el) => el.id).get().indexOf(geartype_name) === -1) {
                         $("div.stock").append(
                             `<div class="gear-list" id="${geartype_name}">
                                 <h4>${geartype}</h4>
                             </div>`
                         );
                     }
-                    if (prev_keys.indexOf(geartype) == -1)
+                    if (prev_keys.indexOf(geartype) === -1)
                         gears[geartype] = [];
                     
                     data[geartype]["gears"].forEach(gear => {
-                        if (gears[geartype].map(x=>x.toString()).indexOf(gear.toString()) == -1)
+                        if (gears[geartype].map(x=>x.toString()).indexOf(gear.toString()) === -1)
                             gears[geartype].push(gear);
                     });
                     gears[geartype].sort();
                     gears[geartype].forEach(gear => {
-                        if (gear.length == 1)
+                        if (gear.length === 1)
                             $("div.gear-list#" + geartype_name).append(`<span>${gear[0]}</span>`);
                         else
                             $("div.gear-list#" + geartype_name).append(`<span>${gear[0]} (${gear[1]})</span>`);
@@ -49,9 +49,9 @@ $(document).ready(function(){
         
         update_gearbox();
     });
-    $("input#vex").change();
+    $("input#vex").trigger("change");
 
-    $("input[type=radio][name=num_stages]").change(function(){
+    $("input[type=radio][name=num_stages]").on("change", function(){
         switch ($("input[type=radio][name=num_stages]:checked").prop("id")) {
             case "1st":
                 $(".1stage").show();    
@@ -63,31 +63,31 @@ $(document).ready(function(){
                 break;
         }
     });
-    $("input[type=radio][name=num_stages]").change();
+    $("input[type=radio][name=num_stages]").trigger("change");
 
-    $("select#type2").change(function(){
+    $("select#type2").on("change", function(){
         $("select#type3").val($("select#type2").val());
     })
 
-    $("select#type3").change(function(){
+    $("select#type3").on("change", function(){
         $("select#type2").val($("select#type3").val());
     })
 
-    $("select#clr1").change(function(){
-        $("div#clearance div.field:has(input#clr1cstm)").css("visibility", ($("select#clr1").val() == "Custom" ? "visible" : "hidden"));
+    $("select#clr1").on("change", function(){
+        $("div#clearance div.field:has(input#clr1cstm)").css("visibility", ($("select#clr1").val() === "Custom" ? "visible" : "hidden"));
     });
 
-    $("select#clr4").change(function(){
-        $("div#clearance div.field:has(input#clr4cstm)").css("visibility", ($("select#clr4").val() == "Custom" ? "visible" : "hidden"));
+    $("select#clr4").on("change", function(){
+        $("div#clearance div.field:has(input#clr4cstm)").css("visibility", ($("select#clr4").val() === "Custom" ? "visible" : "hidden"));
     });
 
     //Calculate Gearbox Options
     function calc_gearbox(){
-        if (Object.keys(gears).length == 0)
+        if (Object.keys(gears).length === 0)
             return [];
         
         var gearboxes = [];
-        var two_stage = ($("input[type=radio][name=num_stages]:checked").prop("id") == "2st");
+        var two_stage = ($("input[type=radio][name=num_stages]:checked").prop("id") === "2st");
         min_ratio = $("input#ratio").val()*(1-$("input#rat_dev").val()/100);
         max_ratio = $("input#ratio").val()*(1+$("input#rat_dev").val()/100);
 
@@ -138,9 +138,9 @@ $(document).ready(function(){
                             if ($("input#max12").val() && (gear1.last()+gear2.last())/40 > $("input#max12").val()/$("select#min12-u").val()) return;
                             if ($("input#min34").val() && (gear3.last()+gear4.last())/40 < $("input#min34").val()/$("select#min34-u").val()) return;
                             if ($("input#max34").val() && (gear3.last()+gear4.last())/40 > $("input#max34").val()/$("select#min34-u").val()) return;
-                            if ($("select#clr1").val() != "None" && (gear1.last()+gear2.last()-(gear3.last()+2))/40 < ($("select#clr1").val() == "Custom" ? 
+                            if ($("select#clr1").val() !== "None" && (gear1.last()+gear2.last()-(gear3.last()+2))/40 < ($("select#clr1").val() === "Custom" ?
                                 $("input#clr1cstm").val()/$("select#clr1cstm-u").val() : $("select#type1").val())) return;
-                            if ($("select#clr4").val() != "None" && (gear3.last()+gear4.last()-(gear2.last()+2))/40 < ($("select#clr4").val() == "Custom" ? 
+                            if ($("select#clr4").val() !== "None" && (gear3.last()+gear4.last()-(gear2.last()+2))/40 < ($("select#clr4").val() === "Custom" ?
                                 $("input#clr4cstm").val()/$("select#clr4cstm-u").val() : $("select#type4").val())) return;
                             gearboxes.push([gear1, gear2, gear3, gear4, ratio]);
                         });
@@ -160,7 +160,7 @@ $(document).ready(function(){
 
     function update_gearbox(){
         var gearboxes = calc_gearbox();
-        var two_stage = ($("input[type=radio][name=num_stages]:checked").prop("id") == "2st");
+        var two_stage = ($("input[type=radio][name=num_stages]:checked").prop("id") === "2st");
         console.log(gearboxes);
 
         $("table.gearbox-options tbody").empty();
@@ -193,7 +193,7 @@ $(document).ready(function(){
             $("div#gearbox-options").css("justify-content", "center");
             if (!$("input#ratio").val())
                 $("span#no_ratio").show();
-            if (Object.keys(gears).length == 0)
+            if (Object.keys(gears).length === 0)
                 $("span#no_sources").show();
             else if ($("input#ratio").val())
                 $("span#no_gearboxes").show();
@@ -203,7 +203,7 @@ $(document).ready(function(){
     }
     
     setTimeout(() => {
-        $("input:not([type=checkbox]), select").change(update_gearbox);
+        $("input:not([type=checkbox]), select").on("change", update_gearbox);
         update_gearbox();
     }, 100);
     
@@ -219,14 +219,14 @@ if (!Array.prototype.last){
 };
 
 function formatGear(gear){
-    if (gear.length == 1)
+    if (gear.length === 1)
         return gear[0];
     else
         return gear[0] + "(" + gear[1] + ")";
 }
 
 function gearboxSize(gearbox){
-    if (gearbox.length == 5){
+    if (gearbox.length === 5){
         return gearbox[0].last()**2 + gearbox[1].last()**2 + gearbox[2].last()**2 + gearbox[3].last()**2;
     } else {
         return gearbox[0].last()**2 + gearbox[1].last()**2;

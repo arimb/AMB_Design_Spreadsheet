@@ -1,10 +1,10 @@
 var planetaries;
 var stages;
 
-$(document).ready(function(){
+$(function(){
 
     // Update planetary type
-    $("select#type").change(() => {
+    $("select#type").on("change", () => {
         const type = $("select#type").val();
         stages = planetaries[type];
         $("textarea.ratio-options").val(stages.join(" : 1\n") + " : 1");
@@ -18,12 +18,12 @@ $(document).ready(function(){
         for (let i = types.length-1; i >= 0; i--) {
             $("select#type").prepend("<option value='" + types[i] + "'>" + types[i] + "</option>");
         }
-        $("select#type").val(types[0]).change();
+        $("select#type").val(types[0]).trigger("change");
     };
     request.open("GET", "ref/planetaries.json", false);
     request.send();
 
-    $("select, input#desired").change(() => {
+    $("select, input#desired").on("change", () => {
         $("tbody").html("");
         
         const desired = parseFloat($("input#desired").val());
@@ -68,7 +68,7 @@ function recalculate(desired) {
 }
 
 function addLevels(tree, desired) {
-    if (tree.children.length == 0) {
+    if (tree.children.length === 0) {
         for (let i = tree.start; i < tree.node.length; i++) {
             let tmp = structuredClone(tree.node);
             tmp[i] += 1;

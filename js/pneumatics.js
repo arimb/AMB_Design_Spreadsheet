@@ -1,6 +1,6 @@
 var total_vol;
 
-$(document).ready(function(){
+$(function(){
 
     function insert_cyl(i){
         $("div.cyl-list").append(
@@ -66,27 +66,27 @@ $(document).ready(function(){
             </div>`
         );
 
-        $("div.cyl:last button.delete").click(function(){
+        $("div.cyl:last button.delete").on("click", function(){
             let cyls = JSON.parse($("input#num-cyls").val());
-            cyls = cyls.filter(el => el != $(this).parent().attr("id"));
-            $("input#num-cyls").val(JSON.stringify(cyls)).change();
-            if($("div.cyl").length == 1) {
+            cyls = cyls.filter(el => el !== $(this).parent().attr("id"));
+            $("input#num-cyls").val(JSON.stringify(cyls)).trigger("change");
+            if($("div.cyl").length === 1) {
                 $("div.cyl").show();
                 $("div.cyl-list").css("background-color", "#b3bdb3");
             }
             $(this).parent().remove();
         });
-        $("div.cyl:last select.units").change(function(){
+        $("div.cyl:last select.units").on("change", function(){
             $(this).parent().find("span.unit").text($(this).children(":selected").text());
             $(this).parent().find("span.force-unit").text($(this).children(":selected").hasClass("imperial") ? "lbs" : "N");
             $(this).parent().find("input.dist").each( (i, el) => {
-                if ($(el).val() != "") 
+                if ($(el).val() !== "")
                     $(el).val(+(($(el).val() * $(this).data("unit-factor") / $(this).val()).toFixed(3)));
             });
             $(this).data("unit-factor", $(this).val());
-        }).change();
-        $("div.cyl:last input, div.cyl:last select").change(simulate).change(url_query_set);
-        $("div.cyl:last button").click(simulate);
+        }).trigger("change");
+        $("div.cyl:last input, div.cyl:last select").on("change", simulate).on("change", url_query_set);
+        $("div.cyl:last button").on("click", simulate);
 
         $("div.cyl:last [data-tipso]").tipso({
             width: null,
@@ -97,7 +97,7 @@ $(document).ready(function(){
         });
     }
 
-    $("button.add").click(function(){
+    $("button.add").on("click", function(){
         $("div.cyl#0").hide();
         $("div.cyl-list").css("background-color", "inherit");
         let cyls = JSON.parse($("input#num-cyls").val());
@@ -106,11 +106,11 @@ $(document).ready(function(){
         console.log(i);
         insert_cyl(i);
         cyls.push(i);
-        $("input#num-cyls").val( JSON.stringify(cyls) ).change();
+        $("input#num-cyls").val( JSON.stringify(cyls) ).trigger("change");
     });
-    $("input, select").change(simulate);
+    $("input, select").on("change", simulate);
 
-    $("input#num-cyls").change(function(){
+    $("input#num-cyls").on("change", function(){
         let cyls = JSON.parse($("input#num-cyls").val());
         if (cyls.length > 1) {
             $("div.cyl#0").hide();
@@ -118,7 +118,7 @@ $(document).ready(function(){
         }
         for (let j = 0; j < cyls.length; j++) {
             const i = cyls[j];
-            if ($("div.cyl#" + i).length == 0) {
+            if ($("div.cyl#" + i).length === 0) {
                 insert_cyl(i);
             }
         }
@@ -133,10 +133,10 @@ $(document).ready(function(){
         $("input#tanks_total").val(+((total_vol / $("select#tanks_total-u").val()).toFixed(2)));
     }
 
-    $("div#tanks").find("input:not(.name), select").change(update_tanks);
+    $("div#tanks").find("input:not(.name), select").on("change", update_tanks);
     update_tanks();
 
-    $("select.tank_vol-u").each((i, el) => $(el).data("unit-factor", $(el).val())).change(function(){
+    $("select.tank_vol-u").each((i, el) => $(el).data("unit-factor", $(el).val())).on("change", function(){
         let input = $(this).siblings("input." + $(this).prop("class").split("-")[0]);
         input.val(+((input.val() * $(this).data("unit-factor") / $(this).val()).toFixed(3)));
         $(this).data("unit-factor", $(this).val());
@@ -166,7 +166,7 @@ function simulate(){
         const period = $(cyl).find("input.period").val();
         return {
             vol: Math.PI*(bore/2)**2 * stroke * (push_pressure/120) + Math.PI*((bore/2)**2 - (rod/2)**2) * stroke * (pull_pressure/120),
-            period: period=="" ? Infinity : period,
+            period: period==="" ? Infinity : period,
             start: $(cyl).find("input.start").val(),
             end: $(cyl).find("input.end").val()
         };

@@ -1,9 +1,9 @@
 var motors, motor_vals;
 const colors = ["#0072BD", "#D95319", "#EDB120", "#7E2F8E", "#77AC30", "#4DBEEE"];
 
-$(document).ready(function(){
+$(function(){
 
-    $("button.save-img").click(() => {
+    $("button.save-img").on("click", () => {
         html2canvas($("div#graphs")[0]).then(canvas => {
             // var imageData = canvas.toDataURL("image/png");
             // // var newData = imageData.replace(/^data:image\/png/, "data:application/octet-stream");
@@ -14,20 +14,20 @@ $(document).ready(function(){
         });
     });
 
-    $("button.add").click(function(){
+    $("button.add").on("click", function(){
         $("div.motor#0").hide();
         $("div.motor-list").css("background-color", "inherit");
         let motors = JSON.parse($("input#num-motors").val());
         let i = Math.max.apply(null, motors) + 1;
         insert_motor(i);
         motors.push(i);
-        $("input#num-motors").val( JSON.stringify(motors) ).change();
+        $("input#num-motors").val( JSON.stringify(motors) ).trigger("change");
         if (motors.length >= 7)
             $("button.add").prop("disabled", true);
     });
-    $("input, select").change(graph);
+    $("input, select").on("change", graph);
 
-    $("input#num-motors").change(function(){
+    $("input#num-motors").on("change", function(){
         let motors = JSON.parse($("input#num-motors").val());
         if (motors.length > 1) {
             $("div.motor#0").hide();
@@ -35,7 +35,7 @@ $(document).ready(function(){
         }
         for (let j = 0; j < motors.length; j++) {
             const i = motors[j];
-            if ($("div.motor#" + i).length == 0) {
+            if ($("div.motor#" + i).length === 0) {
                 insert_motor(i);
             }
         }
@@ -49,7 +49,7 @@ $(document).ready(function(){
         for (let i = motor_names.length-1; i >= 0; i--) {
             $("select#motor").prepend("<option>" + motor_names[i] + "</option>");
         }
-        $("select#motor").val(motor_names[0]).change();
+        $("select#motor").val(motor_names[0]).trigger("change");
     };
     request.open("GET", "ref/motors.json", false);
     request.send();
@@ -121,9 +121,9 @@ function insert_motor(i){
     }
 
     // Set up motor type dropdown
-    $("div.motor:last select.motor-type").change(function(){
+    $("div.motor:last select.motor-type").on("change", function(){
         let el = $(this).parent();
-        if(el.find("select.motor-type").val() == "Custom") {
+        if(el.find("select.motor-type").val() === "Custom") {
             el.find(".motor-prop").prop("disabled", false);
         } else {
             el.find("input.mot_wf").val(motors[el.find("select.motor-type").val()][0]);
@@ -134,15 +134,15 @@ function insert_motor(i){
             el.find(".motor-prop").prop("disabled", true);
         }
     });
-    $("div.motor:last select.motor-type").val(motor_names[0]).change();
+    $("div.motor:last select.motor-type").val(motor_names[0]).trigger("change");
     
     // Set up delete button
-    $("div.motor:last button.delete").click(function(){
+    $("div.motor:last button.delete").on("click", function(){
         let motors = JSON.parse($("input#num-motors").val());
-        motors = motors.filter(el => el != $(this).parent().attr("id"));
-        $("input#num-motors").val(JSON.stringify(motors)).change();
+        motors = motors.filter(el => el !== $(this).parent().attr("id"));
+        $("input#num-motors").val(JSON.stringify(motors)).trigger("change");
         $(this).parent().remove();
-        if($("div.motor").length == 1) {
+        if($("div.motor").length === 1) {
             $("div.motor").show();
             $("div.motor-list").css("background-color", "#b3bdb3");
         }
@@ -151,18 +151,18 @@ function insert_motor(i){
     });
 
     // Set up unit conversion
-    $("div.motor:last select.units").change(function(){
+    $("div.motor:last select.units").on("change", function(){
         $(this).parent().find("span.unit").text($(this).children(":selected").text());
         $(this).parent().find("input.dist").each( (i, el) => {
-            if ($(el).val() != "") 
+            if ($(el).val() !== "")
                 $(el).val(+(($(el).val() * $(this).data("unit-factor") / $(this).val()).toFixed(3)));
         });
         $(this).data("unit-factor", $(this).val());
-    }).change();
+    }).trigger("change");
 
     // Update graph on change
-    $("div.motor:last input, div.motor:last select").change(graph).change(url_query_set);
-    $("div.motor:last button").click(graph);
+    $("div.motor:last input, div.motor:last select").on("change", graph).on("change", url_query_set);
+    $("div.motor:last button").on("click", graph);
 
     // Set up tooltips
     $("div.motor:last [data-tipso]").tipso({
@@ -189,7 +189,7 @@ function graph() {
         };
     });
 
-    if (motor_vals.length == 0) return;
+    if (motor_vals.length === 0) return;
 
     for (let i = 0; i < motor_vals.length; i++) {
         let el = motor_vals[i];
@@ -288,6 +288,6 @@ function download(content, filename) {
     var link = document.createElement('a');
     link.setAttribute('download', filename);
     link.setAttribute('href', content);
-    link.click();
+    link.trigger("click");
     link.remove();
 }

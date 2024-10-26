@@ -1,14 +1,15 @@
-$(document).ready(function(){
+$(function(){
 
     // Handle tabs
-    $("div.tab").click(function(){
+    // noinspection JSJQueryEfficiency
+    $("div.tab").on("click", function(){
         $("div.tab").css("background-color", "var(--med-light)");
         $(this).css("background-color", "var(--selected)").children("input").prop("checked", true);
         $("div.tab-content").hide();
-        $(`div#${this.id}-content`).show().find("select.cross_section").change();
+        $(`div#${this.id}-content`).show().find("select.cross_section").trigger("change");
     });
-    $("div.tab#btwn").click();
-    $("div.tab").hover(function(){
+    $("div.tab#btwn").trigger("click");
+    $("div.tab").on("hover", function(){
         if (!$(this).children("input").prop("checked"))
             $(this).css("background-color", "var(--dark)")
     }, function(){
@@ -17,9 +18,9 @@ $(document).ready(function(){
     });
 
     // Custom material properties
-    $("select.material").change(function(){
+    $("select.material").on("change", function(){
         let type = this.id.split("-")[0];
-        if ($(this).val() == "Custom") {
+        if ($(this).val() === "Custom") {
             $("input#" + type + "-E").prop("disabled", false);
             $("input#" + type + "-G").prop("disabled", false);
             $("input#" + type + "-dens").prop("disabled", false);
@@ -41,33 +42,33 @@ $(document).ready(function(){
             $("select.material").prepend(`<option value="[${materials[x]}]">${x}</option>`);
         }
         $("select.material option:first-child").prop("selected", true);
-        $("select.material").change();
+        $("select.material").trigger("change");
     };
     request.open("GET", "ref/materials.json", false);
     request.send();
 
     // Geometry calculations
-    $("div.hex").find("input, select").change(function(){
+    $("div.hex").find("input, select").on("change", function(){
         let parent = $(this).parents("div.cross_section");
-        if(parent.find("select.cross_section").val() == "Hex") {
+        if(parent.find("select.cross_section").val() === "Hex") {
             let hex_width = parent.find("input[id$=-hex]").val() * parent.find("select[id$=-hex-u]").val();
             parent.find("input[id$=-I]").val( +((0.0601*Math.pow(hex_width, 4)).toFixed(0)) );
             parent.find("input[id$=-J]").val( +((0.1154*Math.pow(hex_width, 4)).toFixed(0)) );
             parent.find("input[id$=-A]").val( +((3*Math.sqrt(3)/8*Math.pow(hex_width, 2)).toFixed(0)) );
         }
     });
-    $("div.round").find("input, select").change(function(){
+    $("div.round").find("input, select").on("change", function(){
         let parent = $(this).parents("div.cross_section");
-        if(parent.find("select.cross_section").val() == "Round") {
+        if(parent.find("select.cross_section").val() === "Round") {
             let od = parent.find("input[id$=-od]").val() * parent.find("select[id$=-od-u]").val();
             parent.find("input[id$=-I]").val( +((Math.PI/64*Math.pow(od, 4)).toFixed(0)) );
             parent.find("input[id$=-J]").val( +((Math.PI/32*Math.pow(od, 4)).toFixed(0)) );
             parent.find("input[id$=-A]").val( +((Math.PI/4*Math.pow(od, 2)).toFixed(0)) );
         }
     });
-    $("div.round-tube").find("input, select").change(function(){
+    $("div.round-tube").find("input, select").on("change", function(){
         let parent = $(this).parents("div.cross_section");
-        if(parent.find("select.cross_section").val() == "Round Tube") {
+        if(parent.find("select.cross_section").val() === "Round Tube") {
             let od = parent.find("input[id$=-od]").val() * parent.find("select[id$=-od-u]").val();
             let thick = parent.find("input[id$=-thick]").val() * parent.find("select[id$=-thick-u]").val();
             parent.find("input[id$=-I]").val( +((Math.PI/8*Math.pow(od, 3)*thick).toFixed(0)) );
@@ -75,9 +76,9 @@ $(document).ready(function(){
             parent.find("input[id$=-A]").val( +((Math.PI*od*thick).toFixed(0)) );
         }
     });
-    $("div.rect").find("input, select").change(function(){
+    $("div.rect").find("input, select").on("change", function(){
         let parent = $(this).parents("div.cross_section");
-        if(parent.find("select.cross_section").val() == "Rectangle") {
+        if(parent.find("select.cross_section").val() === "Rectangle") {
             let b = parent.find("input[id$=-width]").val() * parent.find("select[id$=-width-u]").val();
             let a = parent.find("input[id$=-height]").val() * parent.find("select[id$=-height-u]").val();
             parent.find("input[id$=-I]").val( +((b*Math.pow(a, 3)/12).toFixed(0)) );
@@ -91,9 +92,9 @@ $(document).ready(function(){
             parent.find("input[id$=-A]").val( +((a*b).toFixed(0)) );
         }
     });
-    $("div.rect-tube").find("input, select").change(function(){
+    $("div.rect-tube").find("input, select").on("change", function(){
         let parent = $(this).parents("div.cross_section");
-        if(parent.find("select.cross_section").val() == "Rectangular Tube") {
+        if(parent.find("select.cross_section").val() === "Rectangular Tube") {
             let b = parent.find("input[id$=-width]").val() * parent.find("select[id$=-width-u]").val();
             let a = parent.find("input[id$=-height]").val() * parent.find("select[id$=-height-u]").val();
             let thick = parent.find("input[id$=-thick]").val() * parent.find("select[id$=-thick-u]").val();
@@ -104,35 +105,35 @@ $(document).ready(function(){
     });
 
     // Select geometry type
-    $("select.cross_section").change(function(){
+    $("select.cross_section").on("change", function(){
         let parent = $(this).parents("div.cross_section");
         parent.find("div.field:not(:first-of-type)").hide();
         switch(this.value) {
             case "Hex":
-                parent.children("div.hex").show().find("input:first-of-type").change();
+                parent.children("div.hex").show().find("input:first-of-type").trigger("change");
                 break;
             case "Round":
-                parent.children("div.round").show().find("input:first-of-type").change();
+                parent.children("div.round").show().find("input:first-of-type").trigger("change");
                 break;
             case "Round Tube":
-                parent.children("div.round-tube").show().find("input:first-of-type").change();
+                parent.children("div.round-tube").show().find("input:first-of-type").trigger("change");
                 break;
             case "Rectangle":
-                parent.children("div.rect").show().find("input:first-of-type").change();
+                parent.children("div.rect").show().find("input:first-of-type").trigger("change");
                 break;
             case "Rectangular Tube":
-                parent.children("div.rect-tube").show().find("input:first-of-type").change();
+                parent.children("div.rect-tube").show().find("input:first-of-type").trigger("change");
                 break;
             case "Custom":
-                parent.children("div.custom").show().find("input:first-of-type").change();
+                parent.children("div.custom").show().find("input:first-of-type").trigger("change");
                 break;
         }
 
     });
-    $("select.cross_section").change();
+    $("select.cross_section").trigger("change");
 
     // Between fixtures
-    $("div#btwn-content").find("input, select").change(() => {
+    $("div#btwn-content").find("input, select").on("change", () => {
         let l = parseFloat($("input#btwn-l").val() * $("select#btwn-l-u").val());
         let a = parseFloat($("input#btwn-a").val() * $("select#btwn-a-u").val());
         let F = parseFloat($("input#btwn-F").val() * $("select#btwn-F-u").val());
@@ -146,7 +147,7 @@ $(document).ready(function(){
     });
 
     // Cantilevered load
-    $("div#cant-content").find("input, select").change(() => {
+    $("div#cant-content").find("input, select").on("change", () => {
         let l = parseFloat($("input#cant-l").val() * $("select#cant-l-u").val());
         let a = parseFloat($("input#cant-a").val() * $("select#cant-a-u").val());
         let F = parseFloat($("input#cant-F").val() * $("select#cant-F-u").val());
@@ -159,7 +160,7 @@ $(document).ready(function(){
     });
 
     // Twist load
-    $("div#twist-content").find("input, select").change(() => {
+    $("div#twist-content").find("input, select").on("change", () => {
         let l = parseFloat($("input#twist-l").val() * $("select#twist-l-u").val());
         let T = parseFloat($("input#twist-T").val() * $("select#twist-T-u").val());
         let G = parseFloat($("input#twist-G").val() * 1e9);

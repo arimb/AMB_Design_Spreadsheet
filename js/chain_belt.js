@@ -6,7 +6,7 @@ var units = {
 
 var dimensions, pitch, diam1, diam2;
 
-$(document).ready(function(){
+$(function(){
 
     // Load belt/chain types
     const request = new XMLHttpRequest();
@@ -16,14 +16,14 @@ $(document).ready(function(){
         for (let i = types.length-1; i >= 0; i--) {
             $("select#type").prepend("<option>" + types[i] + "</option>");
         }
-        $("select#type").val(types[0]).change();
+        $("select#type").val(types[0]).trigger("change");
     };
     request.open("GET", "ref/chain-belt.json", false);
     request.send();
 
     // Update belt/chain type
-    $("select#type").change(() => {
-        if($("select#type").val() == "Custom"){
+    $("select#type").on("change", () => {
+        if($("select#type").val() === "Custom"){
             $("input#p").prop("disabled", false);
             $("div#dimensions input").val("");
             $(".belt").hide();
@@ -38,7 +38,7 @@ $(document).ready(function(){
             $("input#weight").val(+((dimensions[$("select#type").val()][4] / tmp[5]).toFixed(3)));
             $("input#load_rating").val(+((dimensions[$("select#type").val()][6] / tmp[3]).toFixed(0)));
             $("input#p").prop("disabled", true);
-            if (dimensions[$("select#type").val()][5] == "b") {
+            if (dimensions[$("select#type").val()][5] === "b") {
                 $(".belt").show();
                 $(".chain").hide();
             } else {
@@ -46,34 +46,34 @@ $(document).ready(function(){
                 $(".chain").show();
             }
         }
-        $("input#t1, input#t2").change();
+        $("input#t1, input#t2").trigger("change");
     });
-    $("input#p").change(() => pitch = $("input#p").val() );
+    $("input#p").on("change", () => pitch = $("input#p").val() );
 
     // Update pitch diameters
-    $("input#t1").change(function(){
+    $("input#t1").on("change", function(){
         diam1 = $("input#t1").val() * pitch / Math.PI;
         $("input#diam1").val(+(diam1.toFixed(dist_decimals)));
     });
-    $("input#t2").change(function(){
+    $("input#t2").on("change", function(){
         diam2 = $("input#t2").val() * pitch / Math.PI;
         $("input#diam2").val(+(diam2.toFixed(dist_decimals)));
     });
 
     // Switch units
-    $("select#p-u").change(function(){
+    $("select#p-u").on("change", function(){
         const tmp = units[$("select#p-u option:selected").prop("class")];
-        dist_decimals = tmp[0]=="in" ? 3 : 2;
+        dist_decimals = tmp[0]==="in" ? 3 : 2;
         $("span.dist_unit").html(tmp[0]);
         $("span.force_unit").html(tmp[2]);
         $("span.weight_unit").html(tmp[4])
-        $("select#type").change();
-        if ($("input#approx").val()!="")   $("input#approx").val(+(($("input#approx").val() * 25.4**(tmp[0]=="in"?-1:1)).toFixed(dist_decimals)));
+        $("select#type").trigger("change");
+        if ($("input#approx").val()!=="")   $("input#approx").val(+(($("input#approx").val() * 25.4**(tmp[0]==="in"?-1:1)).toFixed(dist_decimals)));
     });
-    $("select#p-u").change();
+    $("select#p-u").trigger("change");
     
     // Switch forward/backward calculation
-    $("input[type=radio][name=driving]").change(function(){
+    $("input[type=radio][name=driving]").on("change", function(){
         $("div.geometry div.field").hide();
         switch( $("input[type=radio][name=driving]:checked").attr("id") ){
             case "by_l":
@@ -91,7 +91,7 @@ $(document).ready(function(){
     });
 
     // Run calculation
-    $("input, select").change(function(){
+    $("input, select").on("change", function(){
         switch( $("input[type=radio][name=driving]:checked").attr("id") ){
             case "by_l":
                 var target = parseInt($("input#links").val());
@@ -111,7 +111,7 @@ $(document).ready(function(){
                 break;
             case "by_d":
                 var D = parseFloat($("input#approx").val());
-                var mod = parseInt($("input#mod").val()=="" ? 1 : $("input#mod").val());
+                var mod = parseInt($("input#mod").val()==="" ? 1 : $("input#mod").val());
                 var lastD = NaN, lastD2, alpha, L, current, last, target = NaN, dydx;
                 do {
                     alpha = Math.acos((diam2 - diam1) / (2*D));

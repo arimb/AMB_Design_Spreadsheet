@@ -1,10 +1,10 @@
 let wf, Ts, If, Is, radius, load, motors;
 
-$(document).ready(function(){
+$(function(){
     
     // Set motor properties
-    $("select#motor").change(() => {
-        if($("select#motor").val() == "Custom"){
+    $("select#motor").on("change", () => {
+        if($("select#motor").val() === "Custom"){
             $(".motor-prop").prop("disabled", false);
         }else{
             $("input#mot_wf").val(motors[$("select#motor").val()][0]);
@@ -14,11 +14,11 @@ $(document).ready(function(){
             $("input#mot_is").val(motors[$("select#motor").val()][3]);
             $(".motor-prop").prop("disabled", true);
         }
-        $("input#mot_num").change();
+        $("input#mot_num").trigger("change");
     });
 
     // Update motor properties
-    $(".motor-prop, input#mot_num, input#volt, input#gbx_eff").change(() => {
+    $(".motor-prop, input#mot_num, input#volt, input#gbx_eff").on("change", () => {
         wf = $("input#mot_wf").val() * (Math.PI/30) * ($("input#volt").val()/12);
         Ts = $("input#mot_ts").val() * $("select#mot_ts-u").val() * ($("input#volt").val()/12) * ($("input#gbx_eff").val()/100) * parseInt($("input#mot_num").val());
         If = $("input#mot_if").val() * ($("input#volt").val()/12) * parseInt($("input#mot_num").val());
@@ -36,37 +36,37 @@ $(document).ready(function(){
         for (let i = motor_names.length-1; i >= 0; i--) {
             $("select#motor").prepend("<option>" + motor_names[i] + "</option>");
         }
-        $("select#motor").val(motor_names[0]).change();
+        $("select#motor").val(motor_names[0]).trigger("change");
     };
     request.open("GET", "ref/motors.json", false);
     request.send();
 
     // Update radius
-    $("input#radius, select#radius-u").change(() => {
+    $("input#radius, select#radius-u").on("change", () => {
         radius = $("input#radius").val() * $("select#radius-u").val();
         graph_lims();
         update_vals();
     });
-    $("input#radius").change();
+    $("input#radius").trigger("change");
 
     // Update load
-    $("input#load, select#load-u").change(() => {
+    $("input#load, select#load-u").on("change", () => {
         load = $("input#load").val() * $("select#load-u").val();
         graph_lims();
         update_vals();
     });
-    $("input#load").change();
+    $("input#load").trigger("change");
 
     // Ratio tester
-    $("div#ratio-tester input").change(() => {
+    $("div#ratio-tester input").on("change", () => {
         let ratio = 1;
-        $("input.gearB").each((i,el) => ratio *= $(el).val()=="" ? 1 : parseFloat($(el).val()));
-        $("input.gearA").each((i,el) => ratio /= $(el).val()=="" ? 1 : parseFloat($(el).val()));
+        $("input.gearB").each((i,el) => ratio *= $(el).val()==="" ? 1 : parseFloat($(el).val()));
+        $("input.gearA").each((i,el) => ratio /= $(el).val()==="" ? 1 : parseFloat($(el).val()));
         $("input#total-ratio").val(+(ratio.toFixed(2)));
     });
-    $("input#total-ratio").click(() => {
-        if ($("input#total-ratio").val() != "")
-            $("input#rat").val($("input#total-ratio").val()).change();
+    $("input#total-ratio").on("click", () => {
+        if ($("input#total-ratio").val() !== "")
+            $("input#rat").val($("input#total-ratio").val()).trigger("change");
     });
 
     // Calculate outputs from ratio
@@ -88,7 +88,7 @@ $(document).ready(function(){
     function update_vals(){
         switch( $("input[type=radio][name=driving]:checked").attr("id") ) {
             case "rat-c":
-                if ($("input#rat").val() == "") {
+                if ($("input#rat").val() === "") {
                     draw_graph(0);
                     return;
                 }
@@ -100,7 +100,7 @@ $(document).ready(function(){
                 break;
             case "rot_l-c":
                 var rot_speed = $("input#rot_l").val() * $("select#rot_l-u").val();
-                if (rot_speed == 0) {
+                if (rot_speed === 0) {
                     var ratio = NaN;
                     break;
                 }
@@ -112,7 +112,7 @@ $(document).ready(function(){
                 break;
             case "lin_l-c":
                 var lin_speed = $("input#lin_l").val() * $("select#lin_l-u").val();
-                if (lin_speed == 0) {
+                if (lin_speed === 0) {
                     var ratio = NaN;
                     break;
                 }
@@ -161,11 +161,11 @@ $(document).ready(function(){
         }
         
     }
-    $("div.field select").change(update_vals);
+    $("div.field select").on("change", update_vals);
 
-    $("div.inputs input[type=number]").change(function(){
-        $(this).siblings("input[type=radio]").prop("checked", true).change();
-        if ($(this).val() == "") {
+    $("div.inputs input[type=number]").on("change", function(){
+        $(this).siblings("input[type=radio]").prop("checked", true).trigger("change");
+        if ($(this).val() === "") {
             $("div.inputs input").not(this).val("");
             draw_graph(0);
             return
@@ -179,19 +179,19 @@ $(document).ready(function(){
         update_vals();
     });
 
-    $("input[type=radio]").change(function(){
+    $("input[type=radio]").on("change", function(){
         $("button.max").css("background-color", "var(--med-light)");
         $("div.inputs input[type=number]").css("background-color", "white");
         $("input[type=radio]:checked").siblings("input[type=number]").css("background-color", "var(--selected)");
     })
 
-    $("button.max").click(function(){
+    $("button.max").on("click", function(){
         $("button.max").css("background-color", "var(--med-light)");
-        $(this).find("input").prop("checked", true).change();
+        $(this).find("input").prop("checked", true).trigger("change");
         $(this).css("background-color", "var(--selected)");
         update_vals();
     });
-    $("button.max").hover(function(){
+    $("button.max").on("hover", function(){
         if (!$(this).children("input").prop("checked"))
             $(this).css("background-color", "var(--dark)");
     }, function(){
@@ -320,7 +320,7 @@ $(document).ready(function(){
                         position: "top",
                         labels: {
                             filter: function(legend_item, data) {
-                                return legend_item["lineDash"].length == 0;
+                                return legend_item["lineDash"].length === 0;
                             },
                             font: {
                                 size: 11
@@ -333,5 +333,5 @@ $(document).ready(function(){
         })
     }
     setTimeout(() => { draw_graph(); }, 100);
-    $("div.graph-limits input").change(draw_graph);
+    $("div.graph-limits input").on("change", draw_graph);
 });

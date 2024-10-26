@@ -1,10 +1,10 @@
-$(document).ready(function(){
+$(function(){
 
-    $("input#drag-e").change(() => { 
+    $("input#drag-e").on("change", () => { 
         $("input#drag-e").parent().nextAll().children("input,select").attr("disabled", !$("input#drag-e").prop("checked"));
     });
 
-    $("input#hf-dir").change(() => {
+    $("input#hf-dir").on("change", () => {
         if ($("input#hf-dir").prop("checked")){
             $("img#up_arrow").show();
             $("img#down_arrow").hide();
@@ -12,12 +12,12 @@ $(document).ready(function(){
             $("img#up_arrow").hide();
             $("img#down_arrow").show();
         }
-    }).change();
-    $("img#up_arrow").click(() => $("input#hf-dir").prop("checked", false).change());
-    $("img#down_arrow").click(() => $("input#hf-dir").prop("checked", true).change());
+    }).trigger("change");
+    $("img#up_arrow").on("click", () => $("input#hf-dir").prop("checked", false).trigger("change"));
+    $("img#down_arrow").on("click", () => $("input#hf-dir").prop("checked", true).trigger("change"));
     
-    $("input, select").change(update);
-    $("input#h0").change();
+    $("input, select").on("change", update);
+    $("input#h0").trigger("change");
 
 });
 
@@ -82,7 +82,7 @@ function update(){
             output = simulate(h0, v0, theta0, end_fcn);
             console.log(output);
 
-            if (output[0].length==0 || Math.abs(output[0][output[0].length-1][0] - d) <= 0.05) {
+            if (output[0].length===0 || Math.abs(output[0][output[0].length-1][0] - d) <= 0.05) {
                 $("input#v0").val( +((v0 / $("select#v0-u").val()).toFixed(2)) );
                 $("input#th0").val( +((theta0 * 180/Math.PI).toFixed(2)) );
             } else {

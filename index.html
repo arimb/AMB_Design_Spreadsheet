@@ -11,17 +11,17 @@
         <link rel="stylesheet" href="css/tipso.min.css">
         <script src="js/tipso.min.js"></script>
         <script type="text/javascript">
-            $(document).ready(function(){
-                $("button.header-button.docs").click(function(){
+            $(function(){
+                $("button.header-button.docs").on("click", function(){
                     window.open("docs/" + $(this).attr("data-link") + ".pdf", "_blank");
                 });
-                $("button.header-button.excel").click(() => { window.open("archive/index.html"); });
-                $("button.header-button.app").click(() => { window.location.href = "out/make/squirrel.windows/x64/AMB Robotics Calculator-1.1.2 Setup.exe" });
+                $("button.header-button.excel").on("click", () => { window.open("archive/index.html"); });
+                $("button.header-button.app").on("click", () => { window.location.href = "out/make/squirrel.windows/x64/AMB Robotics Calculator-1.1.2 Setup.exe" });
                 let userAgent = navigator.userAgent.toLowerCase();
-                if (userAgent.indexOf(' electron/') == -1) {
+                if (userAgent.indexOf(' electron/') === -1) {
                     $("button.header-button.web-only").show();
                 } else {
-                    $("a.fun-logo, a.contact").click(e => e.preventDefault());
+                    $("a.fun-logo, a.contact").on("click", e => e.preventDefault());
                 }
                 $("[data-tipso]").tipso({
                     width: null,
