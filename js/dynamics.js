@@ -1,4 +1,6 @@
 let wf, Ts, If, Is, motors;
+let min_ratio = 1;
+let max_ratio = 500;
 
 $(function(){
 
@@ -24,8 +26,7 @@ $(function(){
         If = $("input#mot_if").val() * parseInt($("input#mot_num").val());
         Is = $("input#mot_is").val() * parseInt($("input#mot_num").val());
 
-        graph_lims();
-        update_vals();
+        ratio_graph();
     });
 
     // Load motor properties
@@ -65,20 +66,36 @@ $(function(){
     });
     $(".vel").hide();
 
-    //Adjust linear and rotational targets
-    $("input#stop-pos-lin, input#radius").on("change", () => {
+    // Adjust linear and rotational targets
+    $("input#stop-pos-lin").on("change", () => {
         $("input#stop-pos-rot").val(($("input#stop-pos-lin").val() * $("select#stop-pos-lin-u").val() / ($("input#radius").val() * $("select#radius-u").val()) / $("select#stop-pos-rot-u").val()).toFixed(3));
+        ratio_graph();
     });
     $("input#stop-pos-rot, input#radius").on("change", () => {
         $("input#stop-pos-lin").val(($("input#stop-pos-rot").val() * $("select#stop-pos-rot-u").val() * ($("input#radius").val() * $("select#radius-u").val()) / $("select#stop-pos-lin-u").val()).toFixed(3));
+        ratio_graph();
     });
-    $("input#stop-vel-lin, input#radius").on("change", () => {
+    $("input#stop-vel-lin").on("change", () => {
         $("input#stop-vel-rot").val(($("input#stop-vel-lin").val() * $("select#stop-vel-lin-u").val() / ($("input#radius").val() * $("select#radius-u").val()) / $("select#stop-vel-rot-u").val()).toFixed(3));
+        ratio_graph();
     });
     $("input#stop-vel-rot, input#radius").on("change", () => {
         $("input#stop-vel-lin").val(($("input#stop-vel-rot").val() * $("select#stop-vel-rot-u").val() * ($("input#radius").val() * $("select#radius-u").val()) / $("select#stop-vel-lin-u").val()).toFixed(3));
+        ratio_graph();
     });
 
+    // Update ratio min max
+    $("input#min-ratio, input#max-ratio").on("change", () => {
+        min_ratio = parseFloat($("input#min-ratio").val());
+        max_ratio = parseFloat($("input#max-ratio").val());
+        ratio_graph();
+    });
+
+    // Update all inputs
+    $("input#mass, input#load, input#maxI, input[name=by_pos], input#stop-pos-rot, input#stop-vel-rot, input#dt, input#tmax").on("change", () => {
+        ratio_graph();
+        // single_ratio
+    });
 
     // Run simulation
     function simulate(ratio) {
@@ -92,98 +109,81 @@ $(function(){
         const dt = parseFloat($("input#dt").val()) / 1000;
         const tmax = parseFloat($("input#tmax").val());
         const V = parseFloat($("input#volt").val());
-        const ilim = parseFloat($("input#maxI").val());
+        const ilim = parseFloat($("input#maxI").val()) || 200;  // limit current to 200A even without provided limit
         const radius = parseFloat($("input#radius").val()) * $("select#radius-u").val();
-        const MoI = parseFloat($("input#mass").val()) * $("select#mass-u").val() * radius^2;
+        const MoI = parseFloat($("input#mass").val()) * $("select#mass-u").val() * radius**2;
         const load = parseFloat($("input#load").val()) * $("select#load-u").val() * radius;
 
         const kT = Ts / (Is - If);
         const kB = 12 / wf;
         const R = 12 / (Is - If);
 
-        while (t[-1] <= tmax) {
-            t.push(t[-1] + dt)
+        console.log(ratio, dt, tmax, V, ilim, radius, MoI, load, kT, kB, R);
 
-            let i = (V - v[-1] * ratio * kB) / R + If;
-            i = min(i, ilim);
+        while (t.slice(-1)[0] <= tmax) {
+            t.push(t.slice(-1)[0] + dt)
+
+            let i = (V - v.slice(-1)[0] * ratio * kB) / R + If;
+            i = Math.min(i, ilim);
+            // console.log(i)
             current.push(i);
             current_limited.push(i === ilim);
 
             let T = kT * (i-If) * ratio;
-            a.push((T-load)/MoI);
-            v.push(v[-1] + a[-1]*dt);
-            x.push(x[-1] + v[-1]*dt + (a[-1]*dt^2)/2);
+            // console.log(T)
+            a.push((T-load)/MoI/ratio);
+            // console.log(a.slice(-1)[0])
+            v.push(v.slice(-1)[0] + a.slice(-1)[0]*dt);
+            // console.log(v.slice(-1)[0])
+            x.push(x.slice(-1)[0] + v.slice(-1)[0]*dt + (a.slice(-1)[0]*dt**2)/2);
+            // console.log(x.slice(-1)[0])
 
             if ($("input[name=pos-vel][checked]").attr("id") === "by_pos") {
-                if (x > parseFloat($("input#stop-pos-rot").val()) * $("select#stop-pos-rot-u").val())
+                if (x.slice(-1)[0] > parseFloat($("input#stop-pos-rot").val()) * $("select#stop-pos-rot-u").val()){
+                    // console.log(x.slice(-1)[0])
                     break
+                }
+
             } else {
-                if (v > parseFloat($("input#stop-vel-rot").val()) * $("select#stop-vel-rot-u").val())
+                if (v.slice(-1)[0] > parseFloat($("input#stop-vel-rot").val()) * $("select#stop-vel-rot-u").val()) {
+                    // console.log(v.slice(-1)[0])
                     break
+                }
             }
         }
+
+        a.unshift(a[0]);
+        current.unshift(current[0]);
+        current_limited.unshift(current_limited[0]);
+        return [t, x, v, a, current, current_limited];
     }
 
-    // Draw graph
-    function draw_graph(ratio){
-        $("canvas#graph").remove();
-        $("div.graph").prepend('<canvas id="graph"></canvas>');
-
-        var ratios = [];
-        var data = [];
-        const min = parseFloat($("input#gr-min").val());
-        const max = parseFloat($("input#gr-max").val());
-        for (let r = min; r < max+1e-3; r*=Math.pow(max/min, 1/30)) {
+    // Update ratio graph
+    function ratio_graph() {
+        let ratios = [];
+        let times = [];
+        for (let r = min_ratio; r <= max_ratio+1e-3; r*=Math.pow(max_ratio/min_ratio, 1/30)) {
             ratios.push(r);
-            data.push(calculate_vals(r));
+            let output = simulate(r);
+            times.push(output[0].slice(-1)[0])
+            // break           //!!!!!!!!!!!!!!!!!!
         }
-        var graph = new Chart("graph", {
+        console.log(ratios)
+        console.log(times)
+
+        $("canvas#ratio-graph").remove();
+        $("div.ratio-graph").prepend('<canvas id="ratio-graph"></canvas>');
+
+        new Chart("ratio-graph", {
             type: "line",
             data: {
                 labels: ratios,
                 datasets: [{
-                    data: data.map(function(value,index) { return value[0]*$("select#rot_f-u").val()/6.283; }),
-                    label: "Free Rot. Speed",
-                    borderColor: "red",
+                    data: times,
+                    borderColor: "black",
                     fill: false,
                     pointRadius: 0
-                },{
-                    data: data.map(function(value,index) { return value[3]*$("select#rot_l-u").val()/6.283; }),
-                    label: "Loaded Rot. Speed",
-                    borderColor: "magenta",
-                    fill: false,
-                    pointRadius: 0
-                },{
-                    data: data.map(function(value,index) { return value[5]; }),
-                    label: "Current",
-                    borderColor: "orange",
-                    fill: false,
-                    pointRadius: 0,
-                    yAxisID: "y3"
-                },{
-                    data: data.map(function(value,index) { return value[6]; }),
-                    label: "Stall Voltage",
-                    borderColor: "green",
-                    fill: false,
-                    yAxisID: "y2",
-                    pointRadius: 0
-                },{
-                    data: data.map(function(value,index) { return 100*value[7]; }),
-                    label: "Efficiency",
-                    borderColor: "blue",
-                    fill: false,
-                    pointRadius: 0,
-                    yAxisID: "y3"
-                },
-                    {
-                        data: [{x: (ratio ? ratio : 0), y: 0}, {x: (ratio ? ratio : 0), y: (ratio ? 1 : 0)}],
-                        borderColor: "red",
-                        borderDash: [5, 5],
-                        fill: false,
-                        pointRadius: 0,
-                        yAxisID: "hidden",
-                        hiddenLegend: true
-                    }]
+                }]
             },
             options: {
                 responsive: true,
@@ -201,56 +201,25 @@ $(function(){
                                 top: 0
                             }
                         },
-                        min: min,
-                        max: max
+                        min: min_ratio,
+                        max: max_ratio
                     },
                     y: {
                         display: true,
                         position: "left",
                         title: {
                             display: true,
-                            text: "Speed (rev/s)"
+                            text: "Time to Target (s)"
                         }
-                    },
-                    y3: {
-                        display: true,
-                        position: "right",
-                        title: {
-                            display: true,
-                            text: "Current (A), Efficiency (%)"
-                        }
-                    },
-                    y2: {
-                        display: true,
-                        position: "right",
-                        title: {
-                            display: true,
-                            text: "Voltage (V)"
-                        }
-                    },
-                    hidden: {
-                        display: false,
-                        position: "right"
                     }
                 },
                 plugins: {
                     legend: {
-                        display: true,
-                        position: "top",
-                        labels: {
-                            filter: function(legend_item, data) {
-                                return legend_item["lineDash"].length === 0;
-                            },
-                            font: {
-                                size: 11
-                            },
-                            color: "black"
-                        }
+                        display: false
                     }
                 }
             }
         })
     }
-    setTimeout(() => { draw_graph(); }, 100);
-    $("div.graph-limits input").on("change", draw_graph);
+    setTimeout(() => { ratio_graph(); }, 100);
 });
