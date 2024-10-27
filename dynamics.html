@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+      <html lang="en">
+      <head>
+      <title>Dynamic Mechanism Calculator - AMB Robotics Calculator</title>
+  <link rel="icon" href="img/logo.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/calculators.css">
+  <link rel="stylesheet" href="css/dynamics.css">
+  <script src="js/chart.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <link rel="stylesheet" href="css/tipso.min.css">
+  <script src="js/tipso.min.js"></script>
+  <script src="js/calculators.js"></script>
+  <script src="js/dynamics.js"></script>
+</head>
+<body>
+<header>
+  <a href="index.html">
+    <img src="img/logo.png" class="logo" alt="logo">
+  </a>
+  <div class="header-title">
+    <h1>Dynamic Mechanism Calculator</h1>
+    <input class="title" type="text">
+  </div>
+  <div style="flex: 1;"></div>
+  <div class="header-left">
+    <button class="header-button docs" data-link="mechanism">DOCS</button>
+    <div class="units-buttons">
+      <button class="header-button imperial">IMPERIAL</button>
+      <button class="header-button metric">METRIC</button>
+    </div>
+    <button class="header-button copy-link">COPY<br>LINK</button>
+    <button class="header-button reset">RESET</button>
+  </div>
+</header>
+<main>
+  <div class="page-element" id="motor-el">
+    <select id="motor">
+      <option>Custom</option>
+    </select>
+    <div class="break"></div>
+    <div class="field">
+      <label for="mot_wf">Free Speed</label>
+      <input id="mot_wf" class="motor-update motor-prop" type="number" step="any" min="0" disabled>
+      &nbsp;rpm
+    </div>
+    <div class="field">
+      <label for="mot_ts">Stall Torque</label>
+      <input id="mot_ts" class="motor-update motor-prop" type="number" step="any" min="0" disabled>
+      <select id="mot_ts-u" class="motor-update motor-prop">
+        <option value="1">Nm</option>
+        <option value="0.00706">oz-in</option>
+        <option value="1.35582">ft-lbs</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="mot_if">Free Current</label>
+      <input id="mot_if" class="motor-update motor-prop" type="number" step="any" min="0" disabled>
+      &nbsp;Amps
+    </div>
+    <div class="field">
+      <label for="mot_is">Stall Current</label>
+      <input id="mot_is" class="motor-update motor-prop" type="number" step="any" min="0" disabled>
+      &nbsp;Amps
+    </div>
+    <div class="field">
+      <label for="mot_num">Number of Motors</label>
+      <input id="mot_num" class="motor-update" type="number" min="1" step="1" value="1">
+    </div>
+    <div class="field">
+      <label for="volt" data-tipso="Voltage at the motor leads">Provided Voltage</label>
+      <input id="volt" class="motor-update" type="number" step="any" min="0" value="12">
+      &nbsp;Volts
+    </div>
+    <div class="field">
+      <label for="maxI" data-tipso="Maximum stator current the motor controller will provide">Stator Current Limit</label>
+      <input id="maxI" type="number" step="any" min="0">
+      <span>&nbsp;Amps</span>
+    </div>
+  </div>
+  <div class="page-element" id="load-el">
+    <div class="field">
+      <label for="radius" data-tipso="Distance from the axis of rotation to the center of mass and the point where the load force is applied. Also the radius used to translate rotational to linear motion">Radius</label>
+      <input id="radius" type="number" step="any" min="0" value="1">
+      <select id="radius-u">
+        <option value="0.0254" class="imperial">inch</option>
+        <option value="0.001" class="metric">mm</option>
+        <option value="0.3048">foot</option>
+        <option value="1">meter</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="mass" data-tipso="Mass of the mechanism (approximated as a point mass at the radius distance)">Mass</label>
+      <input id="mass" type="number" step="any" min="0" value="1">
+      <select id="mass-u">
+        <option value="0.4535" class="imperial">lbs</option>
+        <option value="1" class="metric">kg</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="load" data-tipso="Steady-state force applied on the mechanism at the above radius">Load Force</label>
+      <input id="load" type="number" step="any" min="0" value="50">
+      <select id="load-u">
+        <option value="4.448" class="imperial">lbs</option>
+        <option value="9.81">kg</option>
+        <option value="1" class="metric">N</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="gbx_eff" data-tipso="Percent of mechanical power transfered from the motor to the mechanism output">Efficiency</label>
+      <input id="gbx_eff" type="number" step="any" min="0" max="100" value="90">
+      <span>&nbsp;%</span>
+    </div>
+  </div>
+  <div class="page-element" id="ratio-tester">
+    <h4 data-tipso="Sandbox to test different reductions. Click on the total ratio to copy below.">Ratio Tester</h4>
+    <div class="field">
+      <input class="gearA" id="gA1" type="number" step="any" min="0">
+      <span>&nbsp;:&nbsp;</span>
+      <input class="gearB" id="gB1" type="number" step="any" min="0">
+    </div>
+    <div class="field">
+      <input class="gearA" id="gA2" type="number" step="any" min="0">
+      <span>&nbsp;:&nbsp;</span>
+      <input class="gearB" id="gB2" type="number" step="any" min="0">
+    </div>
+    <div class="field">
+      <input class="gearA" id="gA3" type="number" step="any" min="0">
+      <span>&nbsp;:&nbsp;</span>
+      <input class="gearB" id="gB3" type="number" step="any" min="0">
+    </div>
+    <div class="field">
+      <input class="gearA" id="gA4" type="number" step="any" min="0">
+      <span>&nbsp;:&nbsp;</span>
+      <input class="gearB" id="gB4" type="number" step="any" min="0">
+    </div>
+    <div class="field">
+      <label>Total: </label>
+      <input id="total-ratio" type="number" step="any" min="0" readonly>
+      <span>&nbsp;: 1</span>
+    </div>
+  </div>
+  <div class="break"></div>
+  <div class="page-element" id="sim-settings">
+    <div class="field" id="pos-vel">
+      <div>
+        <label for="by_pos">Position</label>
+        <input type="radio" id="by_pos" name="pos-vel" checked>
+      </div>
+      <div>
+        <label for="by_vel">Velocity</label>
+        <input type="radio" id="by_vel" name="pos-vel">
+      </div>
+    </div>
+    <div class="field pos">
+      <label for="stop-pos-lin" data-tipso="Goal position at which to end the simulation">Target Distance</label>
+      <div>
+        <div>
+          <input id="stop-pos-lin" type="number" step="any" min="0" value="0.131">
+          <select id="stop-pos-lin-u">
+            <option value="0.3048" class="imperial">feet</option>
+            <option value="1" class="metric">meter</option>
+            <option value="0.0254">inch</option>
+            <option value="0.001">mm</option>
+          </select>
+        </div>
+        <div>
+          <input id="stop-pos-rot" type="number" step="any" min="0" value="90">
+          <select id="stop-pos-rot-u">
+            <option value="0.01745">degrees</option>
+            <option value="6.2832">rotations</option>
+            <option value="1">radians</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="field vel">
+      <label for="stop-vel-lin" data-tipso="Goal velocity at which to end the simulation">Target Velocity</label>
+      <div>
+        <div>
+          <input id="stop-vel-lin" type="number" step="any" min="0" value="43.63">
+          <select id="stop-vel-lin-u">
+            <option value="0.3048" class="imperial">ft/s</option>
+            <option value="1" class="metric">m/s</option>
+            <option value="0.0254">in/s</option>
+            <option value="0.001">mm/s</option>
+          </select>
+        </div>
+        <div>
+          <input id="stop-vel-rot" type="number" step="any" min="0" value="5000">
+          <select id="stop-vel-rot-u">
+            <option value="0.01667">rpm</option>
+            <option value="1">rev/s</option>
+            <option value="6.283">rad/s</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="dt" data-tipso="Smaller timestep gives higher resolution but increases calculation time. Too small timesteps may cause simulation instability">Timestep</label>
+      <input id="dt" type="number" step="any" min="0" value="5">
+      <span>&nbsp;ms</span>
+    </div>
+    <div class="field">
+      <label for="tmax" data-tipso="Maximum time allowed for the mechanism to reach its target">Max Time</label>
+      <input id="tmax" type="number" step="any" min="0" value="4">
+      <span>&nbsp;sec</span>
+    </div>
+  </div>
+  <div style="width: 100%; height: 15px;"></div>
+  <div class="page-element" id="examples">
+    <details>
+      <summary>
+        <h3>
+          Example Uses
+        </h3>
+      </summary>
+      <div style="width: 100%; height: 10px;"></div>
+      <p>
+        <b>Winch:</b> As an endgame, you need to winch up the robot by spinning a cable around a circular drum. For radius, enter the drum's radius. For load, enter the weight of the robot (154lb max = 125lb robot + 15lb bumpers + 14lb battery). Since this is an end game task, change Voltage Applied to 10V to account for battery drop throughout the match. Then specify a desired loaded linear speed that the winch should climb, a maximum allowable current draw to keep the breakers from tripping, or a maximum allowable stall load to protect the motors. Change the number and type of motors to find a combination that gives acceptible values. Then use the ratio tester to find a set of reductions (e.g. spur gears, chains, belts, planetaries) that approximates the desired ratio.
+      </p>
+      <p>
+        <b>Elevator:</b> You need to lift a load with a motor connected to a linear elevator system. For radius, enter the radius of the pulley, sprocket, or drum driving the elevator. For load, enter the weight of the elevator carriage. Then specify a desired loaded linear speed that the elevator should raise, a maximum allowable current draw to keep the breakers from tripping, or a maximum allowable stall load to protect the motors. Change the number and type of motors to find a combination that gives acceptible values. Then use the ratio tester to find a set of reductions (e.g. spur gears, chains, belts, planetaries) that approximates the desired ratio.
+      </p>
+      <p>
+        <b>Arm:</b> You need to lift a load using an arm driven by a motor. For radius, enter the length of the arm (specifically the distance from axis of rotation to arm's center of mass). For load, enter the weight of the arm + the load it needs to lift. Then specify a desired loaded rotational speed that the arm should rotate, a maximum allowable current draw to keep the breakers from tripping, or a maximum allowable stall load to protect the motors. Change the number and type of motors to find a combination that gives acceptible values. Then use the ratio tester to find a set of reductions (e.g. spur gears, chains, belts, planetaries) that approximates the desired ratio.
+      </p>
+    </details>
+  </div>
+</main>
+<footer>
+  <a href="https://firstupdatesnow.com/" class="fun-logo">
+    <img src="img/fun_logo.jpg">
+  </a>
+  <span>
+                Created by Ari Meles-Braverman &copy; 2024. For educational purposes only. Contact <a class="contact" href="https://www.chiefdelphi.com/u/arimb/summary" style="text-decoration: underline;">&commat;AriMB</a> on ChiefDelphi with questions or suggestions.
+            </span>
+  <div></div>
+</footer>
+</body>
+</html>

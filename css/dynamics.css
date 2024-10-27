@@ -1,0 +1,60 @@
+div.page-element#motor-el {
+    flex-direction: row;
+    align-content: space-around;
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+}
+
+div.page-element#load-el {
+    align-items: flex-end;
+    justify-content: space-around;
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
+div.page-element#load span {
+    min-width: calc(4.5em - 3px);
+    box-sizing: border-box;
+}
+
+div.page-element#load select {
+    min-width: 4.5em;
+    box-sizing: border-box;
+}
+
+input#total-ratio {
+    cursor: pointer;
+    background-color: lightgray;
+    border: 1px solid gray;
+}
+
+h4 {
+    margin: -3px 1em 0 1em;
+    text-align: center;
+}
+
+div.page-element#examples {
+    max-width: none;
+}
+
+summary > * {
+    cursor: pointer;
+    display: inline;
+}
+
+p {
+    margin-block: 0.3em;
+}
+
+div#sim-settings {
+    align-items: center;
+}
+
+div#lin-rot {
+    width: 80%;
+    justify-content: space-around;
+}
+
+div.pos > div, div.vel > div {
+    flex-direction: column;
+}
