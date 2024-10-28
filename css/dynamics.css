@@ -62,11 +62,16 @@ div.pos > div, div.vel > div {
 canvas {
     background-color: white;
     border: 2px solid black;
-    width: 70vw;
-    min-width: min(700px, 100vw);
+    /*width: 70vw;*/
+    min-width: min(600px, 100vw);
     max-width: 100%;
 }
 
-div#ratio-range input {
+div.sim-graph {
+    width: 70%;
+    min-width: min(700px, 100vw);
+}
+
+div#ratio-range input, input#sim-ratio {
     width: 2.5em;
 }

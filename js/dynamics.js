@@ -27,6 +27,7 @@ $(function(){
         Is = $("input#mot_is").val() * parseInt($("input#mot_num").val());
 
         ratio_graph();
+        sim_graph();
     });
 
     // Load motor properties
@@ -63,6 +64,8 @@ $(function(){
             $(".vel").show();
             $(".pos").hide();
         }
+        ratio_graph();
+        sim_graph();
     });
     $(".vel").hide();
 
@@ -70,18 +73,22 @@ $(function(){
     $("input#stop-pos-lin").on("change", () => {
         $("input#stop-pos-rot").val(($("input#stop-pos-lin").val() * $("select#stop-pos-lin-u").val() / ($("input#radius").val() * $("select#radius-u").val()) / $("select#stop-pos-rot-u").val()).toFixed(3));
         ratio_graph();
+        sim_graph();
     });
     $("input#stop-pos-rot, input#radius").on("change", () => {
         $("input#stop-pos-lin").val(($("input#stop-pos-rot").val() * $("select#stop-pos-rot-u").val() * ($("input#radius").val() * $("select#radius-u").val()) / $("select#stop-pos-lin-u").val()).toFixed(3));
         ratio_graph();
+        sim_graph();
     });
     $("input#stop-vel-lin").on("change", () => {
         $("input#stop-vel-rot").val(($("input#stop-vel-lin").val() * $("select#stop-vel-lin-u").val() / ($("input#radius").val() * $("select#radius-u").val()) / $("select#stop-vel-rot-u").val()).toFixed(3));
         ratio_graph();
+        sim_graph();
     });
     $("input#stop-vel-rot, input#radius").on("change", () => {
         $("input#stop-vel-lin").val(($("input#stop-vel-rot").val() * $("select#stop-vel-rot-u").val() * ($("input#radius").val() * $("select#radius-u").val()) / $("select#stop-vel-lin-u").val()).toFixed(3));
         ratio_graph();
+        sim_graph();
     });
 
     // Update ratio min max
@@ -94,8 +101,11 @@ $(function(){
     // Update all inputs
     $("input#mass, input#load, input#maxI, input[name=by_pos], input#stop-pos-rot, input#stop-vel-rot, input#dt, input#tmax").on("change", () => {
         ratio_graph();
-        // single_ratio
+        sim_graph();
     });
+
+    // Update simulation
+    $("input#sim-ratio").on("change", sim_graph);
 
     // Run simulation
     function simulate(ratio) {
@@ -131,14 +141,14 @@ $(function(){
 
             let T = kT * (i-If) * ratio;
             // console.log(T)
-            a.push((T-load)/MoI/ratio);
+            a.push((T-load)/MoI);
             // console.log(a.slice(-1)[0])
             v.push(v.slice(-1)[0] + a.slice(-1)[0]*dt);
             // console.log(v.slice(-1)[0])
             x.push(x.slice(-1)[0] + v.slice(-1)[0]*dt + (a.slice(-1)[0]*dt**2)/2);
             // console.log(x.slice(-1)[0])
 
-            if ($("input[name=pos-vel][checked]").attr("id") === "by_pos") {
+            if ($("input[name=pos-vel]:checked").attr("id") === "by_pos") {
                 if (x.slice(-1)[0] > parseFloat($("input#stop-pos-rot").val()) * $("select#stop-pos-rot-u").val()){
                     // console.log(x.slice(-1)[0])
                     break
@@ -166,10 +176,9 @@ $(function(){
             ratios.push(r);
             let output = simulate(r);
             times.push(output[0].slice(-1)[0])
-            // break           //!!!!!!!!!!!!!!!!!!
         }
-        console.log(ratios)
-        console.log(times)
+        // console.log(ratios)
+        // console.log(times)
 
         $("canvas#ratio-graph").remove();
         $("div.ratio-graph").prepend('<canvas id="ratio-graph"></canvas>');
@@ -179,6 +188,11 @@ $(function(){
             data: {
                 labels: ratios,
                 datasets: [{
+                    data: times.map(function(val, ind) { return val >= parseFloat($("input#tmax").val()) ? val : NaN; }),
+                    borderColor: "red",
+                    fill: false,
+                    pointRadius: 0
+                },{
                     data: times,
                     borderColor: "black",
                     fill: false,
@@ -216,6 +230,127 @@ $(function(){
                 plugins: {
                     legend: {
                         display: false
+                    }
+                }
+            }
+        })
+    }
+
+    // Update simulation graph
+    function sim_graph() {
+        let output = simulate(parseFloat($("input#sim-ratio").val()));
+        let scale = ($("input[name=pos-vel]:checked").attr("id") === "by_pos") ? $("select#stop-pos-rot-u").val() : $("select#stop-vel-rot-u").val();
+
+        $("canvas#sim-graph").remove();
+        $("div.sim-graph").append('<canvas id="sim-graph"></canvas>');
+
+        let datasets = [
+            {
+                data: output[2].map(function(value,index) { return value / scale; }),
+                label: "Velocity",
+                borderColor: "green",
+                fill: false,
+                pointRadius: 0
+            },{
+                data: output[3],
+                label: "Acceleration",
+                borderColor: "magenta",
+                fill: false,
+                pointRadius: 0,
+                yAxisID: "y3"
+            },{
+                data: output[4].map(function(value,index) { return value / $("input#mot_num").val(); }),
+                label: "Current Per Motor",
+                borderColor: "orange",
+                fill: false,
+                pointRadius: 0,
+                yAxisID: "y2"
+            }
+        ]
+        let y1;
+        if ($("input[name=pos-vel]:checked").attr("id") === "by_pos") {
+            datasets.unshift({
+                data: output[1].map(function(value,index) { return value / scale; }),
+                label: "Position",
+                borderColor: "blue",
+                fill: false,
+                pointRadius: 0
+            });
+            y1 = `Position (${$("select#stop-pos-rot-u option:selected").html()}), Velocity (${$("select#stop-pos-rot-u option:selected").html()}/s)`;
+        } else {
+            y1 = `Velocity (${$("select#stop-vel-rot-u option:selected").html()})`;
+        }
+        if ($("input#maxI").val() !== "") {
+            datasets.splice(-1, 0, {
+                data: output[5].map(function(value,index) { return value ? output[4][index] / $("input#mot_num").val() : NaN; }),
+                label: "Current Limited",
+                borderColor: "red",
+                fill: false,
+                pointRadius: 0,
+                yAxisID: "y2"
+            });
+        }
+
+
+        new Chart("sim-graph", {
+            type: "line",
+            data: {
+                labels: output[0].map(function(value,index) { return +value.toFixed(3); }),
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: "Time (s)",
+                            padding: {
+                                top: 0
+                            }
+                        },
+                        ticks: {
+                            callback: function(value, index, ticks) {
+                                return output[0][index].toFixed(2);
+                            }
+                        }
+                    },
+                    y: {
+                        type: "linear",
+                        display: true,
+                        position: "left",
+                        title: {
+                            display: true,
+                            text: y1
+                        }
+                    },
+                    y3: {
+                        type: "linear",
+                        display: true,
+                        position: "right",
+                        title: {
+                            display: true,
+                            text: `Acceleration (rad/s²)`
+                        }
+                    },
+                    y2: {
+                        type: "linear",
+                        display: true,
+                        position: "right",
+                        title: {
+                            display: true,
+                            text: "Current (A)"
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            font: {
+                                size: 10
+                            }
+                        }
                     }
                 }
             }
