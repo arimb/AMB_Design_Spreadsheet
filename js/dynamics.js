@@ -46,8 +46,8 @@ $(function(){
     // Ratio tester
     $("div#ratio-tester input").on("change", () => {
         let ratio = 1;
-        $("input.gearB").each((i,el) => ratio *= $(el).val()==="" ? 1 : parseFloat($(el).val()));
-        $("input.gearA").each((i,el) => ratio /= $(el).val()==="" ? 1 : parseFloat($(el).val()));
+        $("input.gearB").each((i,el) => { ratio *= $(el).val() === "" ? 1 : parseFloat($(el).val()); });
+        $("input.gearA").each((i,el) => { ratio /= $(el).val() === "" ? 1 : parseFloat($(el).val()); });
         $("input#total-ratio").val(+(ratio.toFixed(2)));
     });
     $("input#total-ratio").on("click", () => {
@@ -188,7 +188,7 @@ $(function(){
             data: {
                 labels: ratios,
                 datasets: [{
-                    data: times.map(function(val, ind) { return val >= parseFloat($("input#tmax").val()) ? val : NaN; }),
+                    data: times.map(function(value, _) { return value >= parseFloat($("input#tmax").val()) ? value : NaN; }),
                     borderColor: "red",
                     fill: false,
                     pointRadius: 0
@@ -246,7 +246,7 @@ $(function(){
 
         let datasets = [
             {
-                data: output[2].map(function(value,index) { return value / scale; }),
+                data: output[2].map(function(value,_) { return value / scale; }),
                 label: "Velocity",
                 borderColor: "green",
                 fill: false,
@@ -259,7 +259,7 @@ $(function(){
                 pointRadius: 0,
                 yAxisID: "y3"
             },{
-                data: output[4].map(function(value,index) { return value / $("input#mot_num").val(); }),
+                data: output[4].map(function(value,_) { return value / $("input#mot_num").val(); }),
                 label: "Current Per Motor",
                 borderColor: "orange",
                 fill: false,
@@ -270,7 +270,7 @@ $(function(){
         let y1;
         if ($("input[name=pos-vel]:checked").attr("id") === "by_pos") {
             datasets.unshift({
-                data: output[1].map(function(value,index) { return value / scale; }),
+                data: output[1].map(function(value,_) { return value / scale; }),
                 label: "Position",
                 borderColor: "blue",
                 fill: false,
@@ -295,7 +295,7 @@ $(function(){
         new Chart("sim-graph", {
             type: "line",
             data: {
-                labels: output[0].map(function(value,index) { return +value.toFixed(3); }),
+                labels: output[0].map(function(value,_) { return +value.toFixed(3); }),
                 datasets: datasets
             },
             options: {
@@ -311,7 +311,7 @@ $(function(){
                             }
                         },
                         ticks: {
-                            callback: function(value, index, ticks) {
+                            callback: function(value, index, _) {
                                 return output[0][index].toFixed(2);
                             }
                         }
