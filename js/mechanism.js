@@ -60,8 +60,8 @@ $(function(){
     // Ratio tester
     $("div#ratio-tester input").on("change", () => {
         let ratio = 1;
-        $("input.gearB").each((i,el) => ratio *= $(el).val()==="" ? 1 : parseFloat($(el).val()));
-        $("input.gearA").each((i,el) => ratio /= $(el).val()==="" ? 1 : parseFloat($(el).val()));
+        $("input.gearB").each((i,el) => { ratio *= $(el).val() === "" ? 1 : parseFloat($(el).val()); });
+        $("input.gearA").each((i,el) => { ratio /= $(el).val() === "" ? 1 : parseFloat($(el).val()); });
         $("input#total-ratio").val(+(ratio.toFixed(2)));
     });
     $("input#total-ratio").on("click", () => {
@@ -71,7 +71,7 @@ $(function(){
 
     // Calculate outputs from ratio
     function calculate_vals(ratio){
-        tmp = [
+        let tmp = [
             wf / ratio / $("select#rot_f-u").val(),     // rot_speed
             wf/ratio * radius / $("select#lin_f-u").val(),      // lin_speed
             Ts * ratio  / radius / $("select#st_load-u").val(),      // stall_load
@@ -86,63 +86,64 @@ $(function(){
 
     // Update ratio based on driving output
     function update_vals(){
+        let ratio;
         switch( $("input[type=radio][name=driving]:checked").attr("id") ) {
             case "rat-c":
                 if ($("input#rat").val() === "") {
                     draw_graph(0);
                     return;
                 }
-                var ratio = parseFloat($("input#rat").val());
+                ratio = parseFloat($("input#rat").val());
                 break;
             case "rot_f-c":
-                var rot_speed = $("input#rot_f").val() * $("select#rot_f-u").val();
-                var ratio = wf / rot_speed;
+                let rot_speed_free = $("input#rot_f").val() * $("select#rot_f-u").val();
+                ratio = wf / rot_speed_free;
                 break;
             case "rot_l-c":
-                var rot_speed = $("input#rot_l").val() * $("select#rot_l-u").val();
-                if (rot_speed === 0) {
-                    var ratio = NaN;
+                let rot_speed_loaded = $("input#rot_l").val() * $("select#rot_l-u").val();
+                if (rot_speed_loaded === 0) {
+                    ratio = NaN;
                     break;
                 }
-                var ratio = wf/(2*rot_speed) * (1 + Math.sqrt(1 - 4*(radius*load/Ts)*(rot_speed/wf)));
+                ratio = wf/(2*rot_speed_loaded) * (1 + Math.sqrt(1 - 4*(radius*load/Ts)*(rot_speed_loaded/wf)));
                 break;
             case "lin_f-c":
-                var lin_speed = $("input#lin_f").val() * $("select#lin_f-u").val();
-                var ratio = wf / lin_speed * radius;
+                let lin_speed_free = $("input#lin_f").val() * $("select#lin_f-u").val();
+                ratio = wf / lin_speed_free * radius;
                 break;
             case "lin_l-c":
-                var lin_speed = $("input#lin_l").val() * $("select#lin_l-u").val();
-                if (lin_speed === 0) {
-                    var ratio = NaN;
+                let lin_speed_loaded = $("input#lin_l").val() * $("select#lin_l-u").val();
+                if (lin_speed_loaded === 0) {
+                    ratio = NaN;
                     break;
                 }
-                var ratio = wf/(2*lin_speed/radius) * (1 + Math.sqrt(1 - 4*(radius*load/Ts)*(lin_speed/radius/wf)));
+                ratio = wf/(2*lin_speed_loaded/radius) * (1 + Math.sqrt(1 - 4*(radius*load/Ts)*(lin_speed_loaded/radius/wf)));
                 break;
             case "current-c":
-                var current = $("input#current").val();
-                var ratio = radius*load / (Ts/(Is-If)) / (parseInt($("input#mot_num").val()) * current - If);
+                let current = $("input#current").val();
+                ratio = radius*load / (Ts/(Is-If)) / (parseInt($("input#mot_num").val()) * current - If);
                 break;
             case "st_load-c":
-                var stall_load = $("input#st_load").val() * $("select#st_load-u").val();
-                var ratio = radius*stall_load/Ts;
+                let stall_load = $("input#st_load").val() * $("select#st_load-u").val();
+                ratio = radius*stall_load/Ts;
                 break;
             case "st_volt-c":
-                var stall_volt = $("input#st_volt").val();
-                var ratio = radius*load/(Ts * stall_volt / $("input#volt").val() );
+                let stall_volt = $("input#st_volt").val();
+                ratio = radius*load/(Ts * stall_volt / $("input#volt").val() );
                 break;
             case "max_power-c":
-                var ratio = 2*load*radius/Ts;
+                ratio = 2*load*radius/Ts;
                 break;
             case "max_eff-c":
-                var ratio = radius*load / Ts * (1 + Math.sqrt(Is/If));
+                ratio = radius*load / Ts * (1 + Math.sqrt(Is/If));
                 break;
             case "stall-c":
-                var ratio = radius*load / Ts;
+                ratio = radius*load / Ts;
                 break;
         }
         
         if (!isNaN(ratio)) {
-            var vals = calculate_vals(ratio);
+            let vals = calculate_vals(ratio);
             $("input#rat").val( +(ratio.toFixed(2)) );
             $("input#rot_f").val( +(vals[0].toFixed(2)) );
             $("input#lin_f").val( +(vals[1].toFixed(2)) );
@@ -210,46 +211,46 @@ $(function(){
         $("canvas#graph").remove();
         $("div.graph").prepend('<canvas id="graph"></canvas>');
         
-        var ratios = [];
-        var data = [];
+        let ratios = [];
+        let data = [];
         const min = parseFloat($("input#gr-min").val());
         const max = parseFloat($("input#gr-max").val());
         for (let r = min; r < max+1e-3; r*=Math.pow(max/min, 1/30)) {
             ratios.push(r);
             data.push(calculate_vals(r));
         }
-        var graph = new Chart("graph", {
+        new Chart("graph", {
             type: "line",
             data: {
                 labels: ratios,
                 datasets: [{
-                    data: data.map(function(value,index) { return value[0]*$("select#rot_f-u").val()/6.283; }),
+                    data: data.map(function(value,_) { return value[0]*$("select#rot_f-u").val()/6.283; }),
                     label: "Free Rot. Speed",
                     borderColor: "red",
                     fill: false,
                     pointRadius: 0
                 },{
-                    data: data.map(function(value,index) { return value[3]*$("select#rot_l-u").val()/6.283; }),
+                    data: data.map(function(value,_) { return value[3]*$("select#rot_l-u").val()/6.283; }),
                     label: "Loaded Rot. Speed",
                     borderColor: "magenta",
                     fill: false,
                     pointRadius: 0
                 },{
-                    data: data.map(function(value,index) { return value[5]; }),
+                    data: data.map(function(value,_) { return value[5]; }),
                     label: "Current",
                     borderColor: "orange",
                     fill: false,
                     pointRadius: 0,
                     yAxisID: "y3"
                 },{
-                    data: data.map(function(value,index) { return value[6]; }),
+                    data: data.map(function(value,_) { return value[6]; }),
                     label: "Stall Voltage",
                     borderColor: "green",
                     fill: false,
                     yAxisID: "y2",
                     pointRadius: 0
                 },{
-                    data: data.map(function(value,index) { return 100*value[7]; }),
+                    data: data.map(function(value,_) { return 100*value[7]; }),
                     label: "Efficiency",
                     borderColor: "blue",
                     fill: false,
@@ -319,7 +320,7 @@ $(function(){
                         display: true,
                         position: "top",
                         labels: {
-                            filter: function(legend_item, data) {
+                            filter: function(legend_item, _) {
                                 return legend_item["lineDash"].length === 0;
                             },
                             font: {
