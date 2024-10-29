@@ -78,7 +78,7 @@ $(function(){
     $("input#min-ratio, input#max-ratio").on("change", () => {
         min_ratio = parseFloat($("input#min-ratio").val());
         max_ratio = parseFloat($("input#max-ratio").val());
-        ratio_graph_redraw();
+        ratio_graph();
     });
 
     // Update all inputs
