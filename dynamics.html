@@ -199,7 +199,7 @@
       </div>
     </div>
     <div class="field">
-      <label for="dt" data-tipso="Smaller timestep gives higher resolution but increases calculation time. Too small timesteps may cause simulation instability">Timestep</label>
+      <label for="dt" data-tipso="Smaller timestep gives higher resolution but increases calculation time. Too large timesteps may cause simulation instability">Timestep</label>
       <input id="dt" type="number" step="any" min="0" value="5">
       <span>&nbsp;ms</span>
     </div>
@@ -221,10 +221,17 @@
   </div>
   <div class="break"></div>
   <div class="page-element sim-graph">
-    <div>
-      <label for="sim-ratio">Simulation Ratio:&nbsp;&nbsp;</label>
-      <input id="sim-ratio" type="number" step="any" value="5">
-      <span>&nbsp;: 1</span>
+    <div class="sim-graph-inputs">
+      <div>
+        <label for="sim-ratio">Simulation Ratio:&nbsp;&nbsp;</label>
+        <input id="sim-ratio" type="number" step="any" value="5">
+        <span>&nbsp;: 1</span>
+      </div>
+      <div>
+        <label for="time_to_target">Time To Target:&nbsp;</label>
+        <input id="time_to_target" type="number" disabled>
+        <span>&nbsp;s</span>
+      </div>
     </div>
     <canvas id="sim-graph"></canvas>
   </div>

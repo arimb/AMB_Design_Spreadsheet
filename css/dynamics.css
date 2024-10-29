@@ -72,6 +72,13 @@ div.sim-graph {
     min-width: min(700px, 100vw);
 }
 
-div#ratio-range input, input#sim-ratio {
+div#ratio-range input, input#sim-ratio, input#time_to_target {
     width: 2.5em;
+}
+
+
+
+div.sim-graph-inputs {
+    width: 100%;
+    justify-content: space-between;
 }

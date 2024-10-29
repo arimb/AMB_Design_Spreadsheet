@@ -239,6 +239,8 @@ $(function(){
     // Update simulation graph
     function sim_graph() {
         let output = simulate(parseFloat($("input#sim-ratio").val()));
+        $("input#time_to_target").val(+output[0].slice(-1)[0].toFixed(2));
+
         let scale = ($("input[name=pos-vel]:checked").attr("id") === "by_pos") ? $("select#stop-pos-rot-u").val() : $("select#stop-vel-rot-u").val();
 
         $("canvas#sim-graph").remove();
