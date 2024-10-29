@@ -83,7 +83,7 @@
   <div class="page-element" id="load-el">
     <div class="field">
       <label for="radius" data-tipso="Distance from the axis of rotation to the center of mass and the point where the load force is applied. Also the radius used to translate rotational to linear motion">Radius</label>
-      <input id="radius" type="number" step="any" min="0" value="1">
+      <input id="radius" type="number" step="any" min="0" value="24">
       <select id="radius-u">
         <option value="0.0254" class="imperial">inch</option>
         <option value="0.001" class="metric">mm</option>
@@ -93,7 +93,7 @@
     </div>
     <div class="field">
       <label for="mass" data-tipso="Mass of the mechanism (approximated as a point mass at the radius distance)">Mass</label>
-      <input id="mass" type="number" step="any" min="0" value="1">
+      <input id="mass" type="number" step="any" min="0" value="10">
       <select id="mass-u">
         <option value="0.4535" class="imperial">lbs</option>
         <option value="1" class="metric">kg</option>
@@ -114,35 +114,35 @@
       <span>&nbsp;%</span>
     </div>
   </div>
-  <div class="page-element" id="ratio-tester">
-    <h4 data-tipso="Sandbox to test different reductions. Click on the total ratio to copy below.">Ratio Tester</h4>
-    <div class="field">
-      <input class="gearA" id="gA1" type="number" step="any" min="0">
-      <span>&nbsp;:&nbsp;</span>
-      <input class="gearB" id="gB1" type="number" step="any" min="0">
-    </div>
-    <div class="field">
-      <input class="gearA" id="gA2" type="number" step="any" min="0">
-      <span>&nbsp;:&nbsp;</span>
-      <input class="gearB" id="gB2" type="number" step="any" min="0">
-    </div>
-    <div class="field">
-      <input class="gearA" id="gA3" type="number" step="any" min="0">
-      <span>&nbsp;:&nbsp;</span>
-      <input class="gearB" id="gB3" type="number" step="any" min="0">
-    </div>
-    <div class="field">
-      <input class="gearA" id="gA4" type="number" step="any" min="0">
-      <span>&nbsp;:&nbsp;</span>
-      <input class="gearB" id="gB4" type="number" step="any" min="0">
-    </div>
-    <div class="field">
-      <label>Total: </label>
-      <input id="total-ratio" type="number" step="any" min="0" readonly>
-      <span>&nbsp;: 1</span>
-    </div>
-  </div>
-  <div class="break"></div>
+<!--  <div class="page-element" id="ratio-tester">-->
+<!--    <h4 data-tipso="Sandbox to test different reductions. Click on the total ratio to copy below.">Ratio Tester</h4>-->
+<!--    <div class="field">-->
+<!--      <input class="gearA" id="gA1" type="number" step="any" min="0">-->
+<!--      <span>&nbsp;:&nbsp;</span>-->
+<!--      <input class="gearB" id="gB1" type="number" step="any" min="0">-->
+<!--    </div>-->
+<!--    <div class="field">-->
+<!--      <input class="gearA" id="gA2" type="number" step="any" min="0">-->
+<!--      <span>&nbsp;:&nbsp;</span>-->
+<!--      <input class="gearB" id="gB2" type="number" step="any" min="0">-->
+<!--    </div>-->
+<!--    <div class="field">-->
+<!--      <input class="gearA" id="gA3" type="number" step="any" min="0">-->
+<!--      <span>&nbsp;:&nbsp;</span>-->
+<!--      <input class="gearB" id="gB3" type="number" step="any" min="0">-->
+<!--    </div>-->
+<!--    <div class="field">-->
+<!--      <input class="gearA" id="gA4" type="number" step="any" min="0">-->
+<!--      <span>&nbsp;:&nbsp;</span>-->
+<!--      <input class="gearB" id="gB4" type="number" step="any" min="0">-->
+<!--    </div>-->
+<!--    <div class="field">-->
+<!--      <label>Total: </label>-->
+<!--      <input id="total-ratio" type="number" step="any" min="0" readonly>-->
+<!--      <span>&nbsp;: 1</span>-->
+<!--    </div>-->
+<!--  </div>-->
+
   <div class="page-element" id="sim-settings">
     <div class="field" id="pos-vel">
       <div>
@@ -209,6 +209,7 @@
       <span>&nbsp;sec</span>
     </div>
   </div>
+  <div class="break"></div>
   <div class="page-element ratio-graph">
     <canvas id="ratio-graph"></canvas>
     <div id="ratio-range">
@@ -224,7 +225,7 @@
     <div class="sim-graph-inputs">
       <div>
         <label for="sim-ratio">Simulation Ratio:&nbsp;&nbsp;</label>
-        <input id="sim-ratio" type="number" step="any" value="5">
+        <input id="sim-ratio" type="number" step="any" value="">
         <span>&nbsp;: 1</span>
       </div>
       <div>
