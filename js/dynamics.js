@@ -151,6 +151,8 @@ $(function(){
             times.push(output[0].slice(-1)[0])
         }
 
+        times = times.map(function(value,_) {return value > (parseFloat($("input#dt").val()) / 1000) ? value : parseFloat($("input#tmax").val())});
+
         if ($("input#sim-ratio").val() === "")
             $("input#sim-ratio").val(+ratios[times.indexOf(Math.min(...times))].toFixed(1));
 
@@ -356,7 +358,7 @@ $(function(){
                 plugins: {
                     legend: {
                         labels: {
-                            filter: function(legend_item, data) {
+                            filter: function(legend_item,_) {
                                 return legend_item["lineDash"].length === 0;
                             },
                             font: {
