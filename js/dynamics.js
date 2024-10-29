@@ -49,18 +49,6 @@ $(function(){
     request.open("GET", "ref/motors.json", false);
     request.send();
 
-    // // Ratio tester
-    // $("div#ratio-tester input").on("change", () => {
-    //     let ratio = 1;
-    //     $("input.gearB").each((i,el) => { ratio *= $(el).val() === "" ? 1 : parseFloat($(el).val()); });
-    //     $("input.gearA").each((i,el) => { ratio /= $(el).val() === "" ? 1 : parseFloat($(el).val()); });
-    //     $("input#total-ratio").val(+(ratio.toFixed(2)));
-    // });
-    // $("input#total-ratio").on("click", () => {
-    //     if ($("input#total-ratio").val() !== "")
-    //         $("input#rat").val($("input#total-ratio").val()).trigger("change");
-    // });
-
     // Switch between linear and rotational simulation
     $("input[name=pos-vel]").on("change", function() {
         if ($(this).attr("id") === "by_pos") {
