@@ -85,9 +85,13 @@ div#ratio-range input, input#sim-ratio, input#time_to_target {
     width: 2.5em;
 }
 
-
-
-div.sim-graph-inputs {
+div.sim-graph-inputs, div.ratio-graph-inputs {
     width: 100%;
     justify-content: space-between;
+    align-items: center;
+}
+
+button#best_ratio {
+    margin-top: 0;
+    margin-bottom: 0;
 }

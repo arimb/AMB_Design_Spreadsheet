@@ -5,12 +5,6 @@ let ratios, times;
 
 $(function(){
 
-    // Update simulation
-    $("input#sim-ratio").on("change", () => {
-        ratio_graph_redraw();
-        sim_graph();
-    });
-
     // Set motor properties
     $("select#motor").on("change", () => {
         if($("select#motor").val() === "Custom"){
@@ -92,6 +86,17 @@ $(function(){
         ratio_graph();
     });
 
+    // Update simulation
+    $("input#sim-ratio").on("change", () => {
+        ratio_graph_redraw();
+        sim_graph();
+    });
+
+    // Optimal ratio button
+    $("button#opt_ratio").on("click", () => {
+        $("input#sim-ratio").val(+ratios[times.indexOf(Math.min(...times))].toFixed(1)).trigger("change");
+    })
+
     // Run simulation
     function simulate(ratio) {
         let t = [0];
@@ -145,16 +150,13 @@ $(function(){
     function ratio_graph() {
         ratios = [];
         times = [];
-        for (let r = min_ratio; r <= max_ratio + 1e-3; r *= Math.pow(max_ratio / min_ratio, 1 / 30)) {
+        for (let r = min_ratio; r <= max_ratio + 1e-3; r *= Math.pow(max_ratio / min_ratio, 1 / 40)) {
             ratios.push(r);
             let output = simulate(r);
             times.push(output[0].slice(-1)[0])
         }
 
         times = times.map(function(value,_) {return value > (parseFloat($("input#dt").val()) / 1000) ? value : parseFloat($("input#tmax").val())});
-
-        if ($("input#sim-ratio").val() === "")
-            $("input#sim-ratio").val(+ratios[times.indexOf(Math.min(...times))].toFixed(1));
 
         ratio_graph_redraw();
     }
