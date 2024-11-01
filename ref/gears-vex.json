@@ -118,5 +118,9 @@
     "MAXSpline": {
         "diam": 1.376,
         "gears": []
+    },
+    "SplineXL": {
+        "diam": 1.375,
+        "gears": []
     }
 }

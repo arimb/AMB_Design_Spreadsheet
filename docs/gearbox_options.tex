@@ -35,7 +35,7 @@
 	
 	This calculator allows the user to find sets of gears that produce the desired overall ratio, filtered by certain restrictions.\\
 	
-	Gears lists are taken from the websites of Vex, WCP, REV, and AndyMark. Last updated on 1/2/2024. All gears are 20dp, with various bores.\\
+	Gears lists are taken from the websites of Vex, WCP, REV, and AndyMark. Last updated on 11/1/2024. All gears are 20dp, with various bores.\\
 	
 	To calculate the center-to-center distance between two gears $ x $ and $ y $ in a stage, we use the following formula:
 	
@@ -55,7 +55,7 @@
 		\text{clearance}_{xyz} = d_{yz} - \tfrac{1}{2} OD_x
 	\end{equation}
 	\\
-	When "Axle Bore" is chosen for the clearance requirement, the any gearboxes with clearance less than the radius of the corresponding axle are ignored.\\
+	When "Axle Bore" is chosen for the clearance requirement, any gearboxes with clearance less than the radius of the corresponding axle are ignored.\\
 	
 	The calculator works by running a brute-force search for all combinations of the possible gears. Only those within the allowable deviation of the desired ratio are shown, in order of their deviation. If no allowable deviation is given, only exact matches are shown. Combinations with the same deviation from the desired ratio are sorted by the total size of the gears (i.e. the sum of their areas).
 	
