@@ -95,3 +95,8 @@ button#best_ratio {
     margin-top: 0;
     margin-bottom: 0;
 }
+
+.warning {
+    max-width: 70vw;
+    text-align: center;
+}

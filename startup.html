@@ -126,7 +126,7 @@
       </div>
     </div>
     <div class="field pos">
-      <label for="stop-pos-lin" data-tipso="Goal position at which to end the simulation">Target Distance</label>
+      <label for="stop-pos-lin" data-tipso="Goal position at which to end the simulation. Can be set in either linear or rotational units.">Target Distance</label>
       <div>
         <div>
           <input id="stop-pos-lin" type="number" step="any" min="0" value="0.131">
@@ -209,6 +209,10 @@
       </div>
     </div>
     <canvas id="sim-graph"></canvas>
+  </div>
+  <div class="break"></div>
+  <div class="warning">
+    <span>Note: This simulation runs the motor constantly at the specified voltage until the target is reached. It does not account for closed-loop control or deceleration time. To account for this, consider increasing the gear ratio slightly.</span>
   </div>
   <div style="width: 100%; height: 15px;"></div>
   <div class="page-element" id="examples">
