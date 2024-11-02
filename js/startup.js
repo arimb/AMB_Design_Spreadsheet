@@ -58,19 +58,47 @@ $(function(){
 
     // Adjust linear and rotational targets
     $("input#stop-pos-lin").on("change", () => {
-        $("input#stop-pos-rot").val(($("input#stop-pos-lin").val() * $("select#stop-pos-lin-u").val() / ($("input#radius").val() * $("select#radius-u").val()) / $("select#stop-pos-rot-u").val()).toFixed(3));
+        let lin = parseFloat($("input#stop-pos-lin").val());
+        if ($("input#stop-pos-lin").data("full-val") && +(+($("input#stop-pos-lin").data("full-val") || 0).toFixed(3)) === lin)
+            lin = $("input#stop-pos-lin").data("full-val");
+        let radius = parseFloat($("input#radius").val());
+        if ($("input#radius").data("full-val") && +(+($("input#radius").data("full-val") || 0).toFixed(3)) === radius)
+            radius = $("input#radius").data("full-val");
+        let rot = lin * $("select#stop-pos-lin-u").val() / (2*Math.PI * radius * $("select#radius-u").val()) / $("select#stop-pos-rot-u").val();
+        $("input#stop-pos-rot").data("full-val", rot).val(+(rot.toFixed(3)));
         ratio_graph();
     });
     $("input#stop-pos-rot, input#radius").on("change", () => {
-        $("input#stop-pos-lin").val(($("input#stop-pos-rot").val() * $("select#stop-pos-rot-u").val() * ($("input#radius").val() * $("select#radius-u").val()) / $("select#stop-pos-lin-u").val()).toFixed(3));
+        let rot = parseFloat($("input#stop-pos-rot").val());
+        if ($("input#stop-pos-rot").data("full-val") && +(+($("input#stop-pos-rot").data("full-val") || 0).toFixed(3)) === rot)
+            rot = $("input#stop-pos-rot").data("full-val");
+        let radius = parseFloat($("input#radius").val());
+        if ($("input#radius").data("full-val") && +(+($("input#radius").data("full-val") || 0).toFixed(3)) === radius)
+            radius = $("input#radius").data("full-val");
+        let lin = rot * $("select#stop-pos-rot-u").val() * (2*Math.PI * radius * $("select#radius-u").val()) / $("select#stop-pos-lin-u").val();
+        $("input#stop-pos-lin").data("full-val", lin).val(+(lin.toFixed(3)));
         ratio_graph();
     });
     $("input#stop-vel-lin").on("change", () => {
-        $("input#stop-vel-rot").val(($("input#stop-vel-lin").val() * $("select#stop-vel-lin-u").val() / ($("input#radius").val() * $("select#radius-u").val()) / $("select#stop-vel-rot-u").val()).toFixed(3));
+        let lin = parseFloat($("input#stop-vel-lin").val());
+        if ($("input#stop-vel-lin").data("full-val") && +(+($("input#stop-vel-lin").data("full-val") || 0).toFixed(3)) === lin)
+            lin = $("input#stop-vel-lin").data("full-val");
+        let radius = parseFloat($("input#radius").val());
+        if ($("input#radius").data("full-val") && +(+($("input#radius").data("full-val") || 0).toFixed(3)) === radius)
+            radius = $("input#radius").data("full-val");
+        let rot = lin * $("select#stop-vel-lin-u").val() / (2*Math.PI * radius * $("select#radius-u").val()) / $("select#stop-vel-rot-u").val();
+        $("input#stop-vel-rot").data("full-val", rot).val(+(rot.toFixed(3)));
         ratio_graph();
     });
     $("input#stop-vel-rot, input#radius").on("change", () => {
-        $("input#stop-vel-lin").val(($("input#stop-vel-rot").val() * $("select#stop-vel-rot-u").val() * ($("input#radius").val() * $("select#radius-u").val()) / $("select#stop-vel-lin-u").val()).toFixed(3));
+        let rot = parseFloat($("input#stop-vel-rot").val());
+        if ($("input#stop-vel-rot").data("full-val") && +(+($("input#stop-vel-rot").data("full-val") || 0).toFixed(3)) === rot)
+            rot = $("input#stop-vel-rot").data("full-val");
+        let radius = parseFloat($("input#radius").val());
+        if ($("input#radius").data("full-val") && +(+($("input#radius").data("full-val") || 0).toFixed(3)) === radius)
+            radius = $("input#radius").data("full-val");
+        let lin = rot * $("select#stop-vel-rot-u").val() * (2*Math.PI * radius * $("select#radius-u").val()) / $("select#stop-vel-lin-u").val();
+        $("input#stop-vel-lin").data("full-val", lin).val(+(lin.toFixed(3)));
         ratio_graph();
     });
 

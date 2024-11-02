@@ -64,12 +64,11 @@ $(function(){
 function update_units(){
     let input = $(this).siblings("input#" + $(this).prop("id").split("-").slice(0, -1).join("-"));
     if (input.val() !== "") {
-        let old_val = input.val();
+        let old_val = parseFloat(input.val());
         if (input.data("full-val") && +(+(input.data("full-val") || 0).toFixed(3)) === old_val)
             old_val = input.data("full-val");
         let new_val = old_val * $(this).data("unit-factor") / $(this).val();
-        input.val(+(new_val.toFixed(3))).trigger("change");
-        input.data("full-val", new_val)
+        input.val(+(new_val.toFixed(3))).data("full-val", new_val).trigger("change");
     }
     $(this).data("unit-factor", $(this).val());
 }
