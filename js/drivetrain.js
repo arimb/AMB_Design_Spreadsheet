@@ -62,6 +62,7 @@ $(function(){
         update_graph(output);
         $("input#free_speed").val(+(output[2].toFixed(2)));
         $("input#push_current").val(+(output[3].toFixed(1)));
+        $("input#sprint_time").val(+(output[0].slice(-1)[0].toFixed(2)));
     }
 
     setTimeout(() => {
@@ -78,8 +79,8 @@ function simulate(ratio){
     const xmax = $("input#dist").val() * $("select#dist-u").val();
     const tmax = $("input#tmax").val();
     const dt = $("input#dt").val() / 1000;
-    const filtering = 0.6;
-    
+    // const filtering = 0.6;
+
     const Vrest = parseFloat($("input#vrest").val());
     const Rtot = $("input#resistance").val() / 1000;
     const Imax = $("input#ilim").val() ? $("input#ilim").val() * $("input#mot_num").val() : Infinity;
@@ -176,7 +177,7 @@ function simulate(ratio){
                     break;
             }
         }
-        V = (Math.abs(Vnew-V)>dVmax ? V+dVmax*Math.sign(Vnew-V) : Vnew*filtering + V*(1-filtering));
+        V = (Math.abs(Vnew-V)>dVmax ? V+dVmax*Math.sign(Vnew-V) : Vnew);//*filtering + V*(1-filtering));
         t += dt;
     }
     return [times, data, free_speed, push_current];
