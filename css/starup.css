@@ -1,0 +1,102 @@
+div.page-element#motor-el {
+    flex-direction: row;
+    align-content: space-around;
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+}
+
+div.page-element#load-el, div.page-element#sim-settings {
+    align-items: flex-end;
+    justify-content: space-around;
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
+div.page-element#sim-settings {
+    align-items: center;
+}
+
+div.page-element#load span {
+    min-width: calc(4.5em - 3px);
+    box-sizing: border-box;
+}
+
+div.page-element#load select {
+    min-width: 4.5em;
+    box-sizing: border-box;
+}
+
+input#total-ratio {
+    cursor: pointer;
+    background-color: lightgray;
+    border: 1px solid gray;
+}
+
+h4 {
+    margin: -3px 1em 0 1em;
+    text-align: center;
+}
+
+div.page-element#examples {
+    max-width: none;
+}
+
+summary > * {
+    cursor: pointer;
+    display: inline;
+}
+
+p {
+    margin-block: 0.3em;
+}
+
+/*div#sim-settings {*/
+/*    align-items: center;*/
+/*    justify-content: space-around;*/
+/*}*/
+
+div#lin-rot {
+    width: 80%;
+    justify-content: space-around;
+}
+
+div.pos > div, div.vel > div {
+    flex-direction: column;
+}
+
+canvas {
+    background-color: white;
+    border: 2px solid black;
+    width: 70vw;
+    min-width: min(600px, 100vw);
+    max-width: 100%;
+}
+
+div.page-element:has(canvas) {
+    max-width: 70vw;
+}
+
+/*div.sim-graph {*/
+/*    width: 70%;*/
+/*    min-width: min(700px, 100vw);*/
+/*}*/
+
+div#ratio-range input, input#sim-ratio, input#time_to_target {
+    width: 2.5em;
+}
+
+div.sim-graph-inputs, div.ratio-graph-inputs {
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+button#best_ratio {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.warning {
+    max-width: 70vw;
+    text-align: center;
+}
