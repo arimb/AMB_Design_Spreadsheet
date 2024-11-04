@@ -173,7 +173,7 @@ function simulate(ratio){
                     Vnew = 0;
                     break;
                 case "Reverse":
-                    V = -(Vrest - Rtot*I);
+                    Vnew = -(Vrest - Rtot*I);
                     break;
             }
         }
