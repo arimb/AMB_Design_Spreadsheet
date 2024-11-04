@@ -79,7 +79,6 @@ function simulate(ratio){
     const xmax = $("input#dist").val() * $("select#dist-u").val();
     const tmax = $("input#tmax").val();
     const dt = $("input#dt").val() / 1000;
-    // const filtering = 0.6;
 
     const Vrest = parseFloat($("input#vrest").val());
     const Rtot = $("input#resistance").val() / 1000;
@@ -94,6 +93,7 @@ function simulate(ratio){
     const km = Ts/(Is-If);
     const ke = 12/wf;
     const R = 12/(Is-If);
+    const L = 1e-4;  // [H], approximately
     const Tslip_s = 9.8*m*mu_s*r;
     const Tslip_k = 9.8*m*mu_k*r;
     const Tloss = Ts * (1-eff);
@@ -108,11 +108,11 @@ function simulate(ratio){
     // console.clear();
     // console.log(Vrest, Rtot, Imax, dVmax, m, r, mu_s, mu_k, xmax, tmax, dt, km, Tslip_s, Tslip_k, Tloss, vmax);
 
-    var t=0, x=0, v=0, a, V=Vrest, Vnew, I, slip=false, T, Tmotor, F, stop=false, connected=true;
+    var t=0, x=0, v=0, a, V=Vrest, Vnew, I=0, slip=false, T, Tmotor, F, stop=false, connected=true;
     var times = [], data = [];
     main: while (t < tmax) {
         // current calculation
-        I = connected ? (V-v*ratio/r*ke)/R : 0;
+        I = connected ? (V + L/dt*I - v*ratio/r*ke)/(R + L/dt) : 0;
         I = Math.min(Math.abs(I), Imax) * Math.sign(I);
 
         // torque calculation
@@ -177,9 +177,10 @@ function simulate(ratio){
                     break;
             }
         }
-        V = (Math.abs(Vnew-V)>dVmax ? V+dVmax*Math.sign(Vnew-V) : Vnew);//*filtering + V*(1-filtering));
+        V = (Math.abs(Vnew-V)>dVmax ? V+dVmax*Math.sign(Vnew-V) : Vnew);
         t += dt;
     }
+    console.log(data.slice(720)[0].map((_, colIndex) => data.slice(720).map(row => row[colIndex])))
     return [times, data, free_speed, push_current];
 }
 
