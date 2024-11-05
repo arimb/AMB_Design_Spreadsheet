@@ -128,36 +128,8 @@ $(function(){
         $("input#sim-ratio").val(+ratios[times.indexOf(Math.min(...times))].toFixed(1)).trigger("change");
     })
 
-    // Stop condition solver
-    function simulate_stop(ratio) {
-        console.log(ratio)
-        if ($("select#stop-type").val() === "At Speed") {
-            return simulate(ratio, null);
-        } else {
-            let stop_times = [0, simulate(ratio, null)[0].slice(-1)[0]];
-            let sim_outs = stop_times.map(x => simulate(ratio, x));
-            let stop_dists = sim_outs.map(x => x[1].slice(-1)[0]);
-            let target_dist = parseFloat($("input#stop-pos-rot").val()) * $("select#stop-pos-rot-u").val();
-            if (sim_outs[1][1].slice(-1)[0] > target_dist) {
-                for (let i = 1; i < 1e3; i++) {    // while loop with limit for safety
-                    stop_times.push(stop_times[i] + (stop_times[i]-stop_times[i-1]) / (stop_dists[i]-stop_dists[i-1]) * (target_dist - stop_dists[i]));
-                    sim_outs.push(simulate(ratio, stop_times[i+1]));
-                    stop_dists.push(sim_outs[i+1][1].slice(-1)[0]);
-                    if (Math.abs(stop_dists[i+1]-target_dist) <= 1e-2)
-                        break
-                    if (stop_times.slice(-1)[0] === Infinity) {
-                        stop_times.pop();
-                        sim_outs.pop();
-                        break
-                    }
-                }
-            }
-            return sim_outs[sim_outs.length-1];
-        }
-    }
-
     // Run simulation
-    function simulate(ratio, stop_time) {
+    function simulate(ratio) {
         let t = [0];
         let x = [0];
         let v = [0];
@@ -178,30 +150,32 @@ $(function(){
         const kB = 12 / wf;
         const R = 12 / (Is - If);
 
+        const target = $("input[name=pos-vel]:checked").attr("id") === "by_pos" ?
+            [parseFloat($("input#stop-pos-rot").val()) * $("select#stop-pos-rot-u").val(), Infinity] :
+            [Infinity, ($("input#stop-vel-rot").val()) * $("select#stop-vel-rot-u").val()];
+        let stop_dist;
+
         while (t.slice(-1)[0] <= tmax) {
             t.push(t.slice(-1)[0] + dt)
 
-            if (stop_time !== null) {
-                if (t.slice(-1)[0] >= stop_time)
+
+            if ($("select#stop-type").val() === "Stopped") {
+                stop_dist = target[0] - v.slice(-1)[0]**2/(2*((kT*(ilim-If)*ratio + load)/MoI));
+                if (x.slice(-1)[0] >= stop_dist)
                     V = -Vbatt;
-                if (v.slice(-1)[0] < 0){
-                    // console.log([x, v])
+                if (v.slice(-1)[0] < 0)
                     break
-                }
             } else {
-                if ($("input[name=pos-vel]:checked").attr("id") === "by_pos") {
-                    if (x.slice(-1)[0] > parseFloat($("input#stop-pos-rot").val()) * $("select#stop-pos-rot-u").val())
-                        break
-                } else {
-                    if (v.slice(-1)[0] > parseFloat($("input#stop-vel-rot").val()) * $("select#stop-vel-rot-u").val())
-                        break
-                }
+                if (x.slice(-1)[0] > target[0])
+                    break
+                if (v.slice(-1)[0] > target[1])
+                    break
             }
 
             let i = (V - v.slice(-1)[0] * ratio * kB) / R + If;
-            i = Math.min(i, ilim);
+            i = Math.min(Math.abs(i), ilim) * Math.sign(i);
             current.push(i);
-            current_limited.push(i === ilim);
+            current_limited.push(Math.abs(i) === ilim);
 
             let T = kT * (i-If) * ratio;
             a.push((T-load)/MoI);
@@ -221,7 +195,7 @@ $(function(){
         times = [];
         for (let r = min_ratio; r <= max_ratio + 1e-3; r *= Math.pow(max_ratio / min_ratio, 1 / 40)) {
             ratios.push(r);
-            let output = simulate_stop(r);
+            let output = simulate(r);
             times.push(output[0].slice(-1)[0])
         }
 
@@ -305,7 +279,7 @@ $(function(){
 
     // Update simulation graph
     function sim_graph() {
-        let output = simulate_stop(parseFloat($("input#sim-ratio").val()));
+        let output = simulate(parseFloat($("input#sim-ratio").val()));
         $("input#time_to_target").val(+output[0].slice(-1)[0].toFixed(2));
 
         let scale, target;
@@ -329,6 +303,7 @@ $(function(){
                 pointRadius: 0
             },{
                 data: output[0].map(() => target),
+                label: "Target",
                 borderColor: "red",
                 borderDash: [5, 5],
                 fill: false,
@@ -369,6 +344,7 @@ $(function(){
                 data: output[5].map(function(value,index) { return value ? output[4][index] / $("input#mot_num").val() : NaN; }),
                 label: "Current Limited",
                 borderColor: "red",
+                borderDash: [10, 10],
                 fill: false,
                 pointRadius: 0,
                 yAxisID: "y2"
@@ -432,7 +408,7 @@ $(function(){
                     legend: {
                         labels: {
                             filter: function(legend_item,_) {
-                                return legend_item["lineDash"].length === 0;
+                                return legend_item["text"] !== "Target";
                             },
                             font: {
                                 size: 10
