@@ -1,6 +1,6 @@
 let wf, Ts, If, Is, motors;
 let min_ratio = 1;
-let max_ratio = 500;
+let max_ratio = 1000;
 let ratios, times;
 
 $(function(){
@@ -47,10 +47,12 @@ $(function(){
     $("input[name=pos-vel]").on("change", function() {
         if ($(this).attr("id") === "by_pos") {
             $(".pos").show();
+            $("select#stop-type").removeAttr("disabled");
             $(".vel").hide();
         } else {
             $(".vel").show();
             $(".pos").hide();
+            $("select#stop-type").prop("selectedIndex", 0).attr("disabled", "disabled");
         }
         ratio_graph();
     });
@@ -110,7 +112,7 @@ $(function(){
     });
 
     // Update all inputs
-    $("input#mass, input#load, input#maxI, input[name=by_pos], input#stop-pos-rot, input#stop-vel-rot, input#dt, input#tmax").on("change", () => {
+    $("input#mass, input#load, input#maxI, input[name=by_pos], input#stop-pos-rot, input#stop-vel-rot, input#dt, input#tmax, select#stop-type").on("change", () => {
         ratio_graph();
         sim_graph();
     });
@@ -126,8 +128,36 @@ $(function(){
         $("input#sim-ratio").val(+ratios[times.indexOf(Math.min(...times))].toFixed(1)).trigger("change");
     })
 
+    // Stop condition solver
+    function simulate_stop(ratio) {
+        console.log(ratio)
+        if ($("select#stop-type").val() === "At Speed") {
+            return simulate(ratio, null);
+        } else {
+            let stop_times = [0, simulate(ratio, null)[0].slice(-1)[0]];
+            let sim_outs = stop_times.map(x => simulate(ratio, x));
+            let stop_dists = sim_outs.map(x => x[1].slice(-1)[0]);
+            let target_dist = parseFloat($("input#stop-pos-rot").val()) * $("select#stop-pos-rot-u").val();
+            if (sim_outs[1][1].slice(-1)[0] > target_dist) {
+                for (let i = 1; i < 1e3; i++) {    // while loop with limit for safety
+                    stop_times.push(stop_times[i] + (stop_times[i]-stop_times[i-1]) / (stop_dists[i]-stop_dists[i-1]) * (target_dist - stop_dists[i]));
+                    sim_outs.push(simulate(ratio, stop_times[i+1]));
+                    stop_dists.push(sim_outs[i+1][1].slice(-1)[0]);
+                    if (Math.abs(stop_dists[i+1]-target_dist) <= 1e-2)
+                        break
+                    if (stop_times.slice(-1)[0] === Infinity) {
+                        stop_times.pop();
+                        sim_outs.pop();
+                        break
+                    }
+                }
+            }
+            return sim_outs[sim_outs.length-1];
+        }
+    }
+
     // Run simulation
-    function simulate(ratio) {
+    function simulate(ratio, stop_time) {
         let t = [0];
         let x = [0];
         let v = [0];
@@ -137,7 +167,8 @@ $(function(){
 
         const dt = parseFloat($("input#dt").val()) / 1000;
         const tmax = parseFloat($("input#tmax").val());
-        const V = parseFloat($("input#volt").val());
+        const Vbatt = parseFloat($("input#volt").val());
+        let V = Vbatt;
         const ilim = parseFloat($("input#maxI").val()) || 200;  // limit current to 200A even without provided limit
         const radius = parseFloat($("input#radius").val()) * $("select#radius-u").val();
         const MoI = parseFloat($("input#mass").val()) * $("select#mass-u").val() * radius**2;
@@ -150,6 +181,23 @@ $(function(){
         while (t.slice(-1)[0] <= tmax) {
             t.push(t.slice(-1)[0] + dt)
 
+            if (stop_time !== null) {
+                if (t.slice(-1)[0] >= stop_time)
+                    V = -Vbatt;
+                if (v.slice(-1)[0] < 0){
+                    // console.log([x, v])
+                    break
+                }
+            } else {
+                if ($("input[name=pos-vel]:checked").attr("id") === "by_pos") {
+                    if (x.slice(-1)[0] > parseFloat($("input#stop-pos-rot").val()) * $("select#stop-pos-rot-u").val())
+                        break
+                } else {
+                    if (v.slice(-1)[0] > parseFloat($("input#stop-vel-rot").val()) * $("select#stop-vel-rot-u").val())
+                        break
+                }
+            }
+
             let i = (V - v.slice(-1)[0] * ratio * kB) / R + If;
             i = Math.min(i, ilim);
             current.push(i);
@@ -159,14 +207,6 @@ $(function(){
             a.push((T-load)/MoI);
             v.push(v.slice(-1)[0] + a.slice(-1)[0]*dt);
             x.push(x.slice(-1)[0] + v.slice(-1)[0]*dt + (a.slice(-1)[0]*dt**2)/2);
-
-            if ($("input[name=pos-vel]:checked").attr("id") === "by_pos") {
-                if (x.slice(-1)[0] > parseFloat($("input#stop-pos-rot").val()) * $("select#stop-pos-rot-u").val())
-                    break
-            } else {
-                if (v.slice(-1)[0] > parseFloat($("input#stop-vel-rot").val()) * $("select#stop-vel-rot-u").val())
-                    break
-            }
         }
 
         a.unshift(a[0]);
@@ -181,11 +221,11 @@ $(function(){
         times = [];
         for (let r = min_ratio; r <= max_ratio + 1e-3; r *= Math.pow(max_ratio / min_ratio, 1 / 40)) {
             ratios.push(r);
-            let output = simulate(r);
+            let output = simulate_stop(r);
             times.push(output[0].slice(-1)[0])
         }
 
-        times = times.map(function(value,_) {return value > (parseFloat($("input#dt").val()) / 1000) ? value : parseFloat($("input#tmax").val())});
+        times = times.map(function(value,_) {return value > 3*(parseFloat($("input#dt").val())/1000) ? value : parseFloat($("input#tmax").val())});
 
         ratio_graph_redraw();
     }
@@ -245,7 +285,9 @@ $(function(){
                         title: {
                             display: true,
                             text: "Time to Target (s)"
-                        }
+                        },
+                        min: 0,
+                        max: parseFloat($("input#tmax").val())*1.05
                     },
                     hidden: {
                         display: false,
@@ -263,7 +305,7 @@ $(function(){
 
     // Update simulation graph
     function sim_graph() {
-        let output = simulate(parseFloat($("input#sim-ratio").val()));
+        let output = simulate_stop(parseFloat($("input#sim-ratio").val()));
         $("input#time_to_target").val(+output[0].slice(-1)[0].toFixed(2));
 
         let scale, target;
