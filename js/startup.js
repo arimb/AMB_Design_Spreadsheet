@@ -112,6 +112,7 @@ $(function(){
     // Update all inputs
     $("input#mass, input#load, input#maxI, input[name=by_pos], input#stop-pos-rot, input#stop-vel-rot, input#dt, input#tmax").on("change", () => {
         ratio_graph();
+        sim_graph();
     });
 
     // Update simulation
