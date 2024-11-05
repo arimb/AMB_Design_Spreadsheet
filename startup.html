@@ -170,8 +170,15 @@
       </div>
     </div>
     <div class="field">
+      <label for="stop-type" data-tipso="Choose whether the mechanism should hit the target at full speed or zero speed">Stopping Type</label>
+      <select id="stop-type">
+        <option>At Speed</option>
+        <option>Stopped</option>
+      </select>
+    </div>
+    <div class="field">
       <label for="dt" data-tipso="Smaller timestep gives higher resolution but increases calculation time. Too large timesteps may cause simulation instability">Timestep</label>
-      <input id="dt" type="number" step="any" min="0" value="5">
+      <input id="dt" type="number" step="any" min="0" value="1">
       <span>&nbsp;ms</span>
     </div>
     <div class="field">
@@ -188,7 +195,7 @@
         <span>Ratio Range:&nbsp;</span>
         <input id="min-ratio" type="number" value="1">
         <span>:1 &#8211;&nbsp;</span>
-        <input id="max-ratio" type="number" value="500">
+        <input id="max-ratio" type="number" value="1000">
         <span>:1</span>
       </div>
       <button id="opt_ratio" data-tipso="Choose the &quot;optimal&quot; ratio from the above graph">&downarrow; SHOW OPTIMAL RATIO &downarrow;</button>
@@ -212,7 +219,7 @@
   </div>
   <div class="break"></div>
   <div class="warning">
-    <span>Note: This simulation runs the motor constantly at the specified voltage until the target is reached. It does not account for closed-loop control or deceleration time. To account for this, consider increasing the gear ratio slightly.</span>
+    <span>Note: This simulation runs the motor constantly at the specified voltage until the target is reached. It does not account for closed-loop control, motion profiling, etc. To account for this, consider increasing the gear ratio slightly.</span>
   </div>
   <div style="width: 100%; height: 15px;"></div>
   <div class="page-element" id="examples">
