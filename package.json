@@ -1,7 +1,7 @@
 {
   "name": "amb-calc",
   "productName": "AMB Robotics Calculator",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "AMB Robotics Calculator for FIRST Robotics",
   "main": "main.js",
   "directories": {
