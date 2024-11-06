@@ -160,7 +160,7 @@ $(function(){
 
 
             if ($("select#stop-type").val() === "Stopped") {
-                stop_dist = target[0] - v.slice(-1)[0]**2/(2*((kT*(ilim-If)*ratio + load)/MoI));
+                stop_dist = target[0] - v.slice(-1)[0]**2/(2*((kT*(ilim+If)*ratio + load)/MoI));
                 if (x.slice(-1)[0] >= stop_dist)
                     V = -Vbatt;
                 if (v.slice(-1)[0] < 0)
