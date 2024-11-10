@@ -66,7 +66,7 @@ $(function(){
         let radius = parseFloat($("input#radius").val());
         if ($("input#radius").data("full-val") && +(+($("input#radius").data("full-val") || 0).toFixed(3)) === radius)
             radius = $("input#radius").data("full-val");
-        let rot = lin * $("select#stop-pos-lin-u").val() / (2*Math.PI * radius * $("select#radius-u").val()) / $("select#stop-pos-rot-u").val();
+        let rot = lin * $("select#stop-pos-lin-u").val() / (radius * $("select#radius-u").val()) / $("select#stop-pos-rot-u").val();
         $("input#stop-pos-rot").data("full-val", rot).val(+(rot.toFixed(3)));
         ratio_graph();
     });
@@ -77,7 +77,7 @@ $(function(){
         let radius = parseFloat($("input#radius").val());
         if ($("input#radius").data("full-val") && +(+($("input#radius").data("full-val") || 0).toFixed(3)) === radius)
             radius = $("input#radius").data("full-val");
-        let lin = rot * $("select#stop-pos-rot-u").val() * (2*Math.PI * radius * $("select#radius-u").val()) / $("select#stop-pos-lin-u").val();
+        let lin = rot * $("select#stop-pos-rot-u").val() * (radius * $("select#radius-u").val()) / $("select#stop-pos-lin-u").val();
         $("input#stop-pos-lin").data("full-val", lin).val(+(lin.toFixed(3)));
         ratio_graph();
     });
@@ -88,7 +88,7 @@ $(function(){
         let radius = parseFloat($("input#radius").val());
         if ($("input#radius").data("full-val") && +(+($("input#radius").data("full-val") || 0).toFixed(3)) === radius)
             radius = $("input#radius").data("full-val");
-        let rot = lin * $("select#stop-vel-lin-u").val() / (2*Math.PI * radius * $("select#radius-u").val()) / $("select#stop-vel-rot-u").val();
+        let rot = lin * $("select#stop-vel-lin-u").val() / (radius * $("select#radius-u").val()) / $("select#stop-vel-rot-u").val();
         $("input#stop-vel-rot").data("full-val", rot).val(+(rot.toFixed(3)));
         ratio_graph();
     });
@@ -99,7 +99,7 @@ $(function(){
         let radius = parseFloat($("input#radius").val());
         if ($("input#radius").data("full-val") && +(+($("input#radius").data("full-val") || 0).toFixed(3)) === radius)
             radius = $("input#radius").data("full-val");
-        let lin = rot * $("select#stop-vel-rot-u").val() * (2*Math.PI * radius * $("select#radius-u").val()) / $("select#stop-vel-lin-u").val();
+        let lin = rot * $("select#stop-vel-rot-u").val() * (radius * $("select#radius-u").val()) / $("select#stop-vel-lin-u").val();
         $("input#stop-vel-lin").data("full-val", lin).val(+(lin.toFixed(3)));
         ratio_graph();
     });
