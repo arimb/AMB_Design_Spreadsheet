@@ -1,7 +1,20 @@
 let wf, Ts, If, Is, radius, load, motors;
 
 $(function(){
-    
+
+    // Copy to startup calculator
+    $("button.copy").on("click", function(){
+        window.open("startup.html?motor=" + $("#motor").val() +
+            "&mot_num=" + $("#mot_num").val() +
+            "&volt=" + $("#volt").val() +
+            "&radius=" + $("#radius").val() +
+            "&radius-u=" + $("#radius-u").val() +
+            "&load=" + $("#load").val() +
+            "&load-u=" + $("#load-u").val() +
+            "&gbx_eff=" + $("#gbx_eff").val() +
+            "&sim-ratio=" + $("#rat").val(), "_blank");
+    });
+
     // Set motor properties
     $("select#motor").on("change", () => {
         if($("select#motor").val() === "Custom"){

@@ -7,9 +7,9 @@ div.page-element#motor-el {
 
 div.page-element#load-el, div.page-element#sim-settings {
     align-items: flex-end;
-    justify-content: space-around;
-    padding-top: 2em;
-    padding-bottom: 2em;
+    justify-content: space-between;
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
 }
 
 div.page-element#sim-settings {
@@ -99,4 +99,9 @@ button#best_ratio {
 .warning {
     max-width: 70vw;
     text-align: center;
+}
+
+button.copy {
+    font-size: small;
+    margin: 0 auto;
 }

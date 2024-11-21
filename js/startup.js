@@ -5,6 +5,19 @@ let ratios, times;
 
 $(function(){
 
+    // Copy to mechanism calculator
+    $("button.copy").on("click", function(){
+        window.open("mechanism.html?motor=" + $("#motor").val() +
+                    "&mot_num=" + $("#mot_num").val() +
+                    "&volt=" + $("#volt").val() +
+                    "&radius=" + $("#radius").val() +
+                    "&radius-u=" + $("#radius-u").val() +
+                    "&load=" + $("#load").val() +
+                    "&load-u=" + $("#load-u").val() +
+                    "&gbx_eff=" + $("#gbx_eff").val() +
+                    "&rat=" + $("#sim-ratio").val(), "_blank");
+    });
+
     // Set motor properties
     $("select#motor").on("change", () => {
         if($("select#motor").val() === "Custom"){

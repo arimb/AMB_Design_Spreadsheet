@@ -7,9 +7,9 @@ div.page-element#motor-el {
 
 div.page-element#load-el {
     align-items: flex-end;
-    justify-content: space-around;
-    padding-top: 2em;
-    padding-bottom: 2em;
+    justify-content: space-between;
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
 }
 
 div.page-element#load span {
@@ -116,4 +116,9 @@ p {
     div.graph {
         display: none;
     }
+}
+
+button.copy {
+    font-size: small;
+    margin: 0 auto;
 }
