@@ -154,7 +154,7 @@ $(function(){
         const tmax = parseFloat($("input#tmax").val());
         const Vbatt = parseFloat($("input#volt").val());
         let V = Vbatt;
-        const ilim = parseFloat($("input#maxI").val()) || 200;  // limit current to 200A even without provided limit
+        const ilim = (parseFloat($("input#maxI").val()) || 200) * parseInt($("input#mot_num").val());  // limit current to 200A even without provided limit
         const radius = parseFloat($("input#radius").val()) * $("select#radius-u").val();
         const MoI = parseFloat($("input#mass").val()) * $("select#mass-u").val() * radius**2;
         const load = parseFloat($("input#load").val()) * $("select#load-u").val() * radius;
