@@ -2,6 +2,7 @@ let wf, Ts, If, Is, motors;
 let min_ratio = 1;
 let max_ratio = 1000;
 let ratios, times;
+let timestep_warn_flag;
 
 $(function(){
 
@@ -142,7 +143,7 @@ $(function(){
     })
 
     // Run simulation
-    function simulate(ratio) {
+    function simulate(ratio, dt) {
         let t = [0];
         let x = [0];
         let v = [0];
@@ -150,7 +151,6 @@ $(function(){
         let current = [];
         let current_limited = [];
 
-        const dt = parseFloat($("input#dt").val()) / 1000;
         const tmax = parseFloat($("input#tmax").val());
         const Vbatt = parseFloat($("input#volt").val());
         let V = Vbatt;
@@ -187,8 +187,13 @@ $(function(){
 
             let i = (V - v.slice(-1)[0] * ratio * kB) / R + If;
             i = Math.min(Math.abs(i), ilim) * Math.sign(i);
+            // if (Math.sign(i) !== Math.sign(current.slice(-1)[0])) direction_flips++;
+            // if (direction_flips >= 5) {
+            //     return [t, x, v, a, current, current_limited, true];
+            // }
             current.push(i);
             current_limited.push(Math.abs(i) === ilim);
+
 
             let T = kT * (i-If) * ratio;
             a.push((T-load)/MoI);
@@ -199,21 +204,41 @@ $(function(){
         a.unshift(a[0]);
         current.unshift(current[0]);
         current_limited.unshift(current_limited[0]);
-        return [t, x, v, a, current, current_limited];
+
+        let direction = current.map(x => Math.sign(x));
+        let timestep_warn = direction.slice(0,-1).map((x,i) => direction[i+1] - x).filter(x => x!==0).length > 5;
+        timestep_warn |= t.slice(-1)[0] < 10*dt;
+
+        return [t, x, v, a, current, current_limited, timestep_warn];
     }
 
     // Update ratio graph
     function ratio_graph() {
         ratios = [];
         times = [];
+        timestep_warn_flag = false;
+        dts = [];
         for (let r = min_ratio; r <= max_ratio + 1e-3; r *= Math.pow(max_ratio / min_ratio, 1 / 40)) {
             ratios.push(r);
-            let output = simulate(r);
+            let dt = parseFloat($("input#dt").val()) / 1000;
+            let output;
+            for (let i=0; i<3; i++) {
+                output = simulate(r, dt);
+                if (!output[6]) break;
+                dt /= 3.16;     // sqrt(10)
+            }
+            if (output[6])
+                timestep_warn_flag = true;
+            dts.push(output[6]);
             times.push(output[0].slice(-1)[0])
         }
+        console.log(ratios);
+        console.log(dts);
 
-        times = times.map(function(value,_) {return value > 3*(parseFloat($("input#dt").val())/1000) ? value : parseFloat($("input#tmax").val())});
+        times = times.map(function(value,_) {return value > 10*(parseFloat($("input#dt").val())/1000) ? value : parseFloat($("input#tmax").val())});
 
+        $("div#timestep-warn").toggle(timestep_warn_flag);
+        $("input#dt").css("background-color", (timestep_warn_flag ? "yellow" : "white"));
         ratio_graph_redraw();
     }
 
@@ -221,78 +246,86 @@ $(function(){
         let sim_ratio = parseFloat($("input#sim-ratio").val());
 
         $("canvas#ratio-graph").remove();
-        $("div.ratio-graph").prepend('<canvas id="ratio-graph"></canvas>');
+        $("div.ratio-graph").children(":first-child").after('<canvas id="ratio-graph"></canvas>');
 
-        new Chart("ratio-graph", {
-            type: "line",
-            data: {
-                labels: ratios,
-                datasets: [{
-                    data: times.map(function(value, _) { return value >= parseFloat($("input#tmax").val()) ? value : NaN; }),
-                    borderColor: "red",
-                    fill: false,
-                    pointRadius: 0
-                },{
-                    data: times,
-                    borderColor: "black",
-                    fill: false,
-                    pointRadius: 0
-                },{
-                    data: [{x: (sim_ratio ? sim_ratio : 0), y: 0}, {x: (sim_ratio ? sim_ratio : 0), y: (sim_ratio ? 1 : 0)}],
-                    borderColor: "red",
-                    borderDash: [5, 5],
-                    fill: false,
-                    pointRadius: 0,
-                    yAxisID: "hidden",
-                    hiddenLegend: true
-                }]
-            },
-            options: {
-                responsive: true,
-                animation: {
-                    duration: 0
+        // if (timestep_warn_flag) {
+        if(true){
+            new Chart("ratio-graph", {
+                type: "line",
+                data: {
+                    labels: ratios,
+                    datasets: [{
+                        data: times.map(function (value, _) {
+                            return value >= parseFloat($("input#tmax").val()) ? value : NaN;
+                        }),
+                        borderColor: "red",
+                        fill: false,
+                        pointRadius: 0
+                    }, {
+                        data: times,
+                        borderColor: "black",
+                        fill: false,
+                        pointRadius: 0
+                    }, {
+                        data: [{x: (sim_ratio ? sim_ratio : 0), y: 0}, {
+                            x: (sim_ratio ? sim_ratio : 0),
+                            y: (sim_ratio ? 1 : 0)
+                        }],
+                        borderColor: "red",
+                        borderDash: [5, 5],
+                        fill: false,
+                        pointRadius: 0,
+                        yAxisID: "hidden",
+                        hiddenLegend: true
+                    }]
                 },
-                scales: {
-                    x: {
-                        display: true,
-                        type: "logarithmic",
-                        title: {
-                            display: true,
-                            text: "Gear Ratio (X:1)",
-                            padding: {
-                                top: 0
-                            }
-                        },
-                        min: min_ratio,
-                        max: max_ratio
+                options: {
+                    responsive: true,
+                    animation: {
+                        duration: 0
                     },
-                    y: {
-                        display: true,
-                        position: "left",
-                        title: {
+                    scales: {
+                        x: {
                             display: true,
-                            text: "Time to Target (s)"
+                            type: "logarithmic",
+                            title: {
+                                display: true,
+                                text: "Gear Ratio (X:1)",
+                                padding: {
+                                    top: 0
+                                }
+                            },
+                            min: min_ratio,
+                            max: max_ratio
                         },
-                        min: 0,
-                        max: parseFloat($("input#tmax").val())*1.05
+                        y: {
+                            display: true,
+                            position: "left",
+                            title: {
+                                display: true,
+                                text: "Time to Target (s)"
+                            },
+                            min: 0,
+                            max: parseFloat($("input#tmax").val()) * 1.05
+                        },
+                        hidden: {
+                            display: false,
+                            position: "right"
+                        }
                     },
-                    hidden: {
-                        display: false,
-                        position: "right"
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: false
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
                     }
                 }
-            }
-        })
+            });
+        }
     }
 
     // Update simulation graph
     function sim_graph() {
-        let output = simulate(parseFloat($("input#sim-ratio").val()));
+        let output = simulate(parseFloat($("input#sim-ratio").val()), parseFloat($("input#dt").val()));
         $("input#time_to_target").val(+output[0].slice(-1)[0].toFixed(2));
 
         let scale, target;

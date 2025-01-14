@@ -105,3 +105,12 @@ button.copy {
     font-size: small;
     margin: 0 auto;
 }
+
+div#timestep-warn span {
+    width: 100%;
+    color: red;
+    font-size: x-large;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 5px;
+}
