@@ -10,3 +10,4 @@ out/*
 out/make/squirrel.windows/x64/*
 !out/make/squirrel.windows/x64/*.exe
 .netlify
+.idea
