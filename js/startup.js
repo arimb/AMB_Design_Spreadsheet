@@ -136,11 +136,6 @@ $(function(){
         sim_graph();
     });
 
-    // Optimal ratio button
-    $("button#opt_ratio").on("click", () => {
-        $("input#sim-ratio").val(+ratios[times.indexOf(Math.min(...times))].toFixed(1)).trigger("change");
-    })
-
     // Run simulation
     function simulate(ratio) {
         let t = [0];
