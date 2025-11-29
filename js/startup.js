@@ -480,5 +480,11 @@ $(function(){
             }
         })
     }
-    setTimeout(() => { ratio_graph(); }, 100);
+    setTimeout(
+        () => { 
+            if ($("input#tmax").val() == 0.001) {
+                $("input#tmax").val(3);
+                ratio_graph();
+            }
+        }, 100);
 });

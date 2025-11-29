@@ -181,12 +181,12 @@
     </div>
     <div class="field">
       <label for="dt" data-tipso="Smaller timestep gives higher resolution but increases calculation time. Too large timesteps may cause simulation instability">Timestep</label>
-      <input id="dt" type="number" step="any" min="0" value="0.1">
+      <input id="dt" type="number" step="any" min="0" value="1">
       <span>&nbsp;ms</span>
     </div>
     <div class="field">
-      <label for="tmax" data-tipso="Maximum time allowed for the mechanism to reach its target">Max Time</label>
-      <input id="tmax" type="number" step="any" min="0" value="4">
+      <label for="tmax" data-tipso="Maximum time the simulation will run. If the mechanism doesn't reach its target by then, it will be showed with a red line">Max Time</label>
+      <input id="tmax" type="number" step="any" min="0" value="0.001">
       <span>&nbsp;sec</span>
     </div>
   </div>
