@@ -150,18 +150,30 @@ $(function(){
         const Vbatt = parseFloat($("input#volt").val());
         let V = Vbatt;
         const ilim = (parseFloat($("input#maxI").val()) || 60) * parseInt($("input#mot_num").val());  // limit current to 200A even without provided limit
-        const radius = parseFloat($("input#radius").val()) * $("select#radius-u").val();
-        const MoI = parseFloat($("input#mass").val()) * $("select#mass-u").val() * radius**2;
-        const load = parseFloat($("input#load").val()) * $("select#load-u").val() * radius;
+        const radius = parseFloat($("input#radius").val()) * $("select#radius-u").val();  // m
+        const MoI = parseFloat($("input#mass").val()) * $("select#mass-u").val() * radius**2;  // kg·m²
+        const load = parseFloat($("input#load").val()) * $("select#load-u").val() * radius;  // Nm
 
-        const kT = Ts / (Is - If);
-        const kB = 12 / wf;
-        const R = 12 / (Is - If);
+        const kT = Ts / (Is - If);  // Nm/A
+        const kB = 12 / wf;  // V/(rad/s)
+        const R = 12 / (Is - If);  // Ohm
 
         const target = $("input[name=pos-vel]:checked").attr("id") === "by_pos" ?
             [parseFloat($("input#stop-pos-rot").val()) * $("select#stop-pos-rot-u").val(), Infinity] :
             [Infinity, ($("input#stop-vel-rot").val()) * $("select#stop-vel-rot-u").val()];
         let stop_dist;
+
+        // Check if load is too high to move
+        if (kT * ilim * ratio <= load) {
+            console.timeEnd("simulate");
+            t.push(tmax);
+            x.push(0);
+            v.push(0);
+            a.push(0);
+            current.push(0);
+            current_limited.push(false);
+            return [t, x, v, a, current, current_limited];
+        }
 
         while (t.slice(-1)[0] <= tmax) {
             t.push(t.slice(-1)[0] + dt)
