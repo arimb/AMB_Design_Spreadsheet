@@ -76,18 +76,19 @@ function update_units(){
 function url_query(){
     var params = new URLSearchParams(window.location.search);
     $("input.title").val(params.get(""));
-    for (key of params.keys()) {
-        if (!key || !params.get(key)) continue;
+    for ([key, val] of params.entries()) {
+        if (!key || !val) continue;
+        console.log("Setting", key, "to", val);
         let input = $("#" + key);
-        if (params.get(key) === "^")
+        if (val === "^")
             input.prop("checked", true);
-        else if (params.get(key) === "$")
+        else if (val === "$")
             input.prop("checked", false);
         else
-            input.val(params.get(key));
+            input.val(val);
         
         if (key.endsWith("-u"))
-            input.data("unit-factor", params.get(key));
+            input.data("unit-factor", val);
         input.trigger("change");
     }
     $("input, select").on("change", url_query_set);
