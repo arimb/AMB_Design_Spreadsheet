@@ -175,32 +175,73 @@ $(function(){
             return [t, x, v, a, current, current_limited];
         }
 
-        while (t.slice(-1)[0] <= tmax) {
-            t.push(t.slice(-1)[0] + dt)
+        // derivative: given current velocity, return [dx/dt, dv/dt, current]
+        function deriv(v_local) {
+            // electrical current based on angular velocity
+            let i = (V - v_local * ratio * kB) / R + If;
+            i = Math.min(Math.abs(i), ilim) * Math.sign(i);
+            const T = kT * (i - If) * ratio;
+            const a_local = (T - load) / MoI;
+            return [v_local, a_local, i];
+        }
 
+        while (t.slice(-1)[0] <= tmax) {
+            const t0 = t.slice(-1)[0];
+            t.push(t0 + dt);
+
+            // current state
+            const x0 = x.slice(-1)[0];
+            const v0 = v.slice(-1)[0];
 
             if ($("select#stop-type").val() === "Stopped") {
-                stop_dist = target[0] - v.slice(-1)[0]**2/(2*((kT*(ilim+If)*ratio + load)/MoI));
-                if (x.slice(-1)[0] >= stop_dist)
+                stop_dist = target[0] - v0**2/(2*((kT*(ilim+If)*ratio + load)/MoI));
+                if (x0 >= stop_dist)
                     V = -Vbatt;
-                if (v.slice(-1)[0] < 0)
-                    break
+                if (v0 < 0)
+                    break;
             } else {
-                if (x.slice(-1)[0] > target[0])
-                    break
-                if (v.slice(-1)[0] > target[1])
-                    break
+                if (x0 > target[0])
+                    break;
+                if (v0 > target[1])
+                    break;
             }
 
-            let i = (V - v.slice(-1)[0] * ratio * kB) / R + If;
-            i = Math.min(Math.abs(i), ilim) * Math.sign(i);
-            current.push(i);
-            current_limited.push(Math.abs(i) === ilim);
+            // let i = (V - v.slice(-1)[0] * ratio * kB) / R + If;
+            // i = Math.min(Math.abs(i), ilim) * Math.sign(i);
+            // let T = kT * (i-If) * ratio;
 
-            let T = kT * (i-If) * ratio;
-            a.push((T-load)/MoI);
-            v.push(v.slice(-1)[0] + a.slice(-1)[0]*dt);
-            x.push(x.slice(-1)[0] + v.slice(-1)[0]*dt + (a.slice(-1)[0]*dt**2)/2);
+            // a.push((T-load)/MoI);
+            // v.push(v.slice(-1)[0] + a.slice(-1)[0]*dt);
+            // x.push(x.slice(-1)[0] + v.slice(-1)[0]*dt + (a.slice(-1)[0]*dt**2)/2);
+            // current.push(i);
+            // current_limited.push(Math.abs(i) === ilim);
+
+            // RK4 integration for [x, v]
+            const k1 = deriv(v0); // [dx/dt, dv/dt, i, limited]
+            const s1 = [x0 + 0.5 * dt * k1[0], v0 + 0.5 * dt * k1[1]];
+
+            const k2 = deriv(s1[1]);
+            const s2 = [x0 + 0.5 * dt * k2[0], v0 + 0.5 * dt * k2[1]];
+
+            const k3 = deriv(s2[1]);
+            const s3 = [x0 + dt * k3[0], v0 + dt * k3[1]];
+
+            const k4 = deriv(s3[1]);
+
+            const dx = (dt / 6) * (k1[0] + 2 * k2[0] + 2 * k3[0] + k4[0]);
+            const dv = (dt / 6) * (k1[1] + 2 * k2[1] + 2 * k3[1] + k4[1]);
+
+            const x_next = x0 + dx;
+            const v_next = v0 + dv;
+
+            // For reporting, use acceleration and current evaluated at start of step (k1)
+            a.push(k1[1]);
+            // current based on v0 (consistent with previous behavior)
+            current.push(k1[2]);
+            current_limited.push(Math.abs(k1[2]) === ilim);
+
+            v.push(v_next);
+            x.push(x_next);
         }
 
         a.unshift(a[0]);
