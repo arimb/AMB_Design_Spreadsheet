@@ -4,15 +4,21 @@ $(function(){
 
     // Copy to startup calculator
     $("button.copy").on("click", function(){
-        window.open("startup.html?motor=" + $("#motor").val() +
+        var mass = $("#load").val() * ({ 1: 0.10197}[$("#load-u").val()] ?? 1);
+        var mass_u = {4.448: 0.4535}[$("#load-u").val()] ?? 1;
+        window.open("startup.html?" + 
+            "&motor=" + $("#motor").val() +
             "&mot_num=" + $("#mot_num").val() +
             "&volt=" + $("#volt").val() +
             "&radius=" + $("#radius").val() +
             "&radius-u=" + $("#radius-u").val() +
             "&load=" + $("#load").val() +
             "&load-u=" + $("#load-u").val() +
+            "&mass=" + mass +
+            "&mass-u=" + mass_u +
             "&gbx_eff=" + $("#gbx_eff").val() +
-            "&sim-ratio=" + $("#rat").val(), "_blank");
+            "&sim-ratio=" + $("#rat").val()
+            , "_blank");
     });
 
     // Set motor properties
