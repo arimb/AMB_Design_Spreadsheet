@@ -484,6 +484,7 @@ $(function(){
         () => { 
             if ($("input#tmax").val() == 0.001) {
                 $("input#tmax").val(3);
+                sim_graph();
                 ratio_graph();
             }
         }, 100);
